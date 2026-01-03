@@ -7,11 +7,19 @@ import Features from '@/components/landing/Features'
 import ExamplePreview from '@/components/landing/ExamplePreview'
 import FAQ from '@/components/landing/FAQ'
 import CTASection from '@/components/landing/CTASection'
-import { generateStructuredData, generateBreadcrumbStructuredData } from '@/utils/seo'
+import { buildMetadata } from '@/lib/seo'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { breadcrumbJsonLd, organizationJsonLd, websiteJsonLd, webAppJsonLd } from '@/lib/jsonld'
+import { SITE_URL } from '@/lib/site'
 
-export const metadata: Metadata = {
+/**
+ * Homepage metadata and JSON-LD structured data.
+ * Includes: Organization, WebSite, WebApplication, and BreadcrumbList schemas.
+ */
+export const metadata = buildMetadata({
   title: 'NJ Property Tax Calculator | Estimate Your New Jersey Property Taxes',
   description: 'Calculate your New Jersey property taxes in seconds. Get accurate estimates with county and town breakdowns, exemptions support, and detailed analysis—all free and no sign-up required.',
+  path: '/',
   keywords: 'New Jersey property tax, NJ property tax calculator, property tax estimator, New Jersey real estate taxes, NJ tax calculator',
   openGraph: {
     title: 'NJ Property Tax Calculator | Estimate Your New Jersey Property Taxes',
@@ -20,34 +28,34 @@ export const metadata: Metadata = {
     images: [
       {
         url: '/logo-icon.png',
-        width: 1200,
-        height: 630,
+        width: 512,
+        height: 512,
         alt: 'NJ Property Tax Calculator',
       },
     ],
   },
-}
-
-const structuredData = generateStructuredData({
-  title: 'NJ Property Tax Calculator',
-  description: 'Calculate your New Jersey property taxes in seconds. Get accurate estimates with county and town breakdowns, exemptions support, and detailed analysis.',
-  type: 'WebApplication',
 })
 
-const breadcrumbData = generateBreadcrumbStructuredData([
-  { name: 'Home', url: 'https://yoursite.com/' },
-])
-
 export default function Home() {
+  const pageUrl = `${SITE_URL}/`
+
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      {/* Organization schema - identifies the site owner */}
+      <JsonLd data={organizationJsonLd()} />
+      {/* WebSite schema - identifies the website */}
+      <JsonLd data={websiteJsonLd()} />
+      {/* WebApplication schema - describes the calculator tool */}
+      <JsonLd
+        data={webAppJsonLd({
+          pageUrl,
+          description:
+            'Calculate your New Jersey property taxes in seconds. Get accurate estimates with county and town breakdowns, exemptions support, and detailed analysis.',
+        })}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
+      {/* BreadcrumbList schema - navigation hierarchy */}
+      <JsonLd
+        data={breadcrumbJsonLd([{ name: 'Home', url: pageUrl }])}
       />
       <Header />
       <main className="min-h-screen">

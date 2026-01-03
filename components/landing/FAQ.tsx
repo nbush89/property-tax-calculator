@@ -9,7 +9,7 @@ type FAQItem = {
   answer: string
 }
 
-const faqData: FAQItem[] = [
+export const faqData: FAQItem[] = [
   {
     question: 'Is this an official government tool?',
     answer:

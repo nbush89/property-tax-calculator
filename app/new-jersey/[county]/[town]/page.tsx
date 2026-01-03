@@ -1,7 +1,10 @@
 import type { Metadata } from 'next'
 import TaxForm from '@/components/TaxForm'
 import TaxResults from '@/components/TaxResults'
-import { generateStructuredData, generateBreadcrumbStructuredData } from '@/utils/seo'
+import { buildMetadata } from '@/lib/seo'
+import { breadcrumbJsonLd, webAppJsonLd } from '@/lib/jsonld'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { SITE_URL } from '@/lib/site'
 
 type Props = {
   params: Promise<{
@@ -10,49 +13,55 @@ type Props = {
   }>
 }
 
+/**
+ * New Jersey town-level property tax calculator page.
+ * Includes: WebApplication and BreadcrumbList schemas.
+ */
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { county: countyParam, town: townParam } = await params
   const county = decodeURIComponent(countyParam)
   const town = decodeURIComponent(townParam)
-  return {
+  const path = `/new-jersey/${encodeURIComponent(county)}/${encodeURIComponent(town)}`
+
+  return buildMetadata({
     title: `${town}, ${county} County Property Tax Calculator | New Jersey`,
     description: `Calculate property taxes for ${town}, ${county} County, New Jersey. Get accurate estimates based on current tax rates.`,
+    path,
     keywords: `${town} property tax, ${town} ${county} County tax calculator, New Jersey property tax ${town}`,
     openGraph: {
       title: `${town}, ${county} County Property Tax Calculator`,
       description: `Calculate property taxes for ${town}, ${county} County, New Jersey.`,
       type: 'website',
     },
-  }
+  })
 }
 
 export default async function TownPropertyTaxCalculatorPage({ params }: Props) {
   const { county: countyParam, town: townParam } = await params
   const county = decodeURIComponent(countyParam)
   const town = decodeURIComponent(townParam)
-  
-  const structuredData = generateStructuredData({
-    title: `${town}, ${county} County Property Tax Calculator`,
-    description: `Calculate property taxes for ${town}, ${county} County, New Jersey.`,
-    type: 'WebApplication',
-  })
 
-  const breadcrumbData = generateBreadcrumbStructuredData([
-    { name: 'Home', url: 'https://yoursite.com/' },
-    { name: 'New Jersey', url: 'https://yoursite.com/new-jersey' },
-    { name: county, url: `https://yoursite.com/new-jersey/${encodeURIComponent(county)}` },
-    { name: town, url: `https://yoursite.com/new-jersey/${encodeURIComponent(county)}/${encodeURIComponent(town)}` },
-  ])
+  const pageUrl = `${SITE_URL}/new-jersey/${encodeURIComponent(county)}/${encodeURIComponent(town)}`
+  const njUrl = `${SITE_URL}/new-jersey`
+  const countyUrl = `${SITE_URL}/new-jersey/${encodeURIComponent(county)}`
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      {/* BreadcrumbList schema - navigation hierarchy */}
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: 'Home', url: `${SITE_URL}/` },
+          { name: 'New Jersey', url: njUrl },
+          { name: county, url: countyUrl },
+          { name: town, url: pageUrl },
+        ])}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
+      {/* WebApplication schema - describes the calculator tool */}
+      <JsonLd
+        data={webAppJsonLd({
+          pageUrl,
+          description: `Calculate property taxes for ${town}, ${county} County, New Jersey. Get accurate estimates based on current tax rates.`,
+        })}
       />
       <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
         <div className="container mx-auto px-4 py-8">

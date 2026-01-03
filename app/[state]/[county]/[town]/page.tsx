@@ -1,9 +1,12 @@
 import type { Metadata } from 'next'
 import TaxForm from '@/components/TaxForm'
 import TaxResults from '@/components/TaxResults'
-import { generateStructuredData, generateBreadcrumbStructuredData } from '@/utils/seo'
+import { buildMetadata } from '@/lib/seo'
+import { breadcrumbJsonLd, webAppJsonLd } from '@/lib/jsonld'
+import { JsonLd } from '@/components/seo/JsonLd'
 import { formatStateName, isValidState } from '@/utils/stateUtils'
 import { notFound } from 'next/navigation'
+import { SITE_URL } from '@/lib/site'
 
 type Props = {
   params: Promise<{
@@ -13,23 +16,29 @@ type Props = {
   }>
 }
 
+/**
+ * Dynamic town-level property tax calculator page.
+ * Includes: WebApplication and BreadcrumbList schemas.
+ */
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { state: stateParam, county: countyParam, town: townParam } = await params
   const state = decodeURIComponent(stateParam)
   const county = decodeURIComponent(countyParam)
   const town = decodeURIComponent(townParam)
   const stateName = formatStateName(state)
-  
-  return {
+  const path = `/${encodeURIComponent(state)}/${encodeURIComponent(county)}/${encodeURIComponent(town)}`
+
+  return buildMetadata({
     title: `${town}, ${county} County Property Tax Calculator | ${stateName}`,
     description: `Calculate property taxes for ${town}, ${county} County, ${stateName}. Get accurate estimates based on current tax rates.`,
+    path,
     keywords: `${town} property tax, ${town} ${county} County tax calculator, ${stateName} property tax ${town}`,
     openGraph: {
       title: `${town}, ${county} County Property Tax Calculator`,
       description: `Calculate property taxes for ${town}, ${county} County, ${stateName}.`,
       type: 'website',
     },
-  }
+  })
 }
 
 export default async function TownPropertyTaxCalculatorPage({ params }: Props) {
@@ -38,34 +47,33 @@ export default async function TownPropertyTaxCalculatorPage({ params }: Props) {
   const county = decodeURIComponent(countyParam)
   const town = decodeURIComponent(townParam)
   const stateName = formatStateName(state)
-  
+
   // Validate state is supported
   if (!isValidState(state)) {
     notFound()
   }
-  
-  const structuredData = generateStructuredData({
-    title: `${town}, ${county} County Property Tax Calculator`,
-    description: `Calculate property taxes for ${town}, ${county} County, ${stateName}.`,
-    type: 'WebApplication',
-  })
 
-  const breadcrumbData = generateBreadcrumbStructuredData([
-    { name: 'Home', url: 'https://yoursite.com/' },
-    { name: stateName, url: `https://yoursite.com/${encodeURIComponent(state)}` },
-    { name: county, url: `https://yoursite.com/${encodeURIComponent(state)}/${encodeURIComponent(county)}` },
-    { name: town, url: `https://yoursite.com/${encodeURIComponent(state)}/${encodeURIComponent(county)}/${encodeURIComponent(town)}` },
-  ])
+  const pageUrl = `${SITE_URL}/${encodeURIComponent(state)}/${encodeURIComponent(county)}/${encodeURIComponent(town)}`
+  const stateUrl = `${SITE_URL}/${encodeURIComponent(state)}`
+  const countyUrl = `${SITE_URL}/${encodeURIComponent(state)}/${encodeURIComponent(county)}`
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      {/* BreadcrumbList schema - navigation hierarchy */}
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: 'Home', url: `${SITE_URL}/` },
+          { name: stateName, url: stateUrl },
+          { name: county, url: countyUrl },
+          { name: town, url: pageUrl },
+        ])}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
+      {/* WebApplication schema - describes the calculator tool */}
+      <JsonLd
+        data={webAppJsonLd({
+          pageUrl,
+          description: `Calculate property taxes for ${town}, ${county} County, ${stateName}. Get accurate estimates based on current tax rates.`,
+        })}
       />
       <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
         <div className="container mx-auto px-4 py-8">

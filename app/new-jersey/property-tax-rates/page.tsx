@@ -1,21 +1,39 @@
 import type { Metadata } from 'next'
 import Header from '@/components/site/Header'
 import Footer from '@/components/site/Footer'
+import { buildMetadata } from '@/lib/seo'
+import { breadcrumbJsonLd } from '@/lib/jsonld'
+import { JsonLd } from '@/components/seo/JsonLd'
 import { getAllCountyRates } from '@/utils/getCountyRates'
 import njMunicipalRates from '@/data/nj_municipal_rates.json'
+import { SITE_URL } from '@/lib/site'
 
-export const metadata: Metadata = {
+/**
+ * New Jersey property tax rates page.
+ * Includes: BreadcrumbList schema.
+ */
+export const metadata = buildMetadata({
   title: 'New Jersey Property Tax Rates by County | NJ Tax Rates',
   description: 'View current property tax rates for all 21 counties in New Jersey. Find county and municipal tax rates for accurate property tax estimates.',
+  path: '/new-jersey/property-tax-rates',
   keywords: 'New Jersey tax rates, NJ county tax rates, property tax rates by county, New Jersey municipal tax rates',
-}
+})
 
 export default function PropertyTaxRatesPage() {
   const countyRates = getAllCountyRates()
   const counties = Object.keys(countyRates).sort()
+  const pageUrl = `${SITE_URL}/new-jersey/property-tax-rates`
 
   return (
     <>
+      {/* BreadcrumbList schema - navigation hierarchy */}
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: 'Home', url: `${SITE_URL}/` },
+          { name: 'New Jersey', url: `${SITE_URL}/new-jersey` },
+          { name: 'Property Tax Rates', url: pageUrl },
+        ])}
+      />
       <Header />
       <main className="min-h-screen bg-white dark:bg-slate-900">
         <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">

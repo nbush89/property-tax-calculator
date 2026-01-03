@@ -1,12 +1,13 @@
 import type { Metadata } from 'next'
 import Header from '@/components/site/Header'
 import Footer from '@/components/site/Footer'
+import { buildMetadata } from '@/lib/seo'
 
-export const metadata: Metadata = {
+export const metadata = buildMetadata({
   title: 'Privacy Policy | NJ Property Tax Calculator',
   description: 'Privacy policy for the NJ Property Tax Calculator. Learn how we handle your data and protect your privacy.',
   keywords: 'privacy policy, data protection, NJ property tax calculator privacy',
-}
+})
 
 export default function PrivacyPage() {
   return (
