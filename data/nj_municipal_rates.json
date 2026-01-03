@@ -1,0 +1,149 @@
+{
+  "Bergen": {
+    "Ridgewood": 0.0034,
+    "Teaneck": 0.0032,
+    "Fort Lee": 0.0036,
+    "Hackensack": 0.0038,
+    "Paramus": 0.0030
+  },
+  "Essex": {
+    "Montclair": 0.0029,
+    "Bloomfield": 0.0031,
+    "Newark": 0.0040,
+    "West Orange": 0.0032,
+    "Livingston": 0.0028
+  },
+  "Monmouth": {
+    "Red Bank": 0.0025,
+    "Long Branch": 0.0027,
+    "Freehold": 0.0024,
+    "Middletown": 0.0026,
+    "Tinton Falls": 0.0023
+  },
+  "Middlesex": {
+    "New Brunswick": 0.0032,
+    "Edison": 0.0029,
+    "Piscataway": 0.0028,
+    "Woodbridge": 0.0027,
+    "East Brunswick": 0.0026
+  },
+  "Hudson": {
+    "Hoboken": 0.0035,
+    "Jersey City": 0.0033,
+    "Union City": 0.0034,
+    "Bayonne": 0.0031,
+    "Weehawken": 0.0032
+  },
+  "Atlantic": {
+    "Atlantic City": 0.0028,
+    "Egg Harbor Township": 0.0025,
+    "Galloway": 0.0024,
+    "Hammonton": 0.0023,
+    "Absecon": 0.0022
+  },
+  "Burlington": {
+    "Mount Laurel": 0.0024,
+    "Evesham": 0.0023,
+    "Medford": 0.0022,
+    "Moorestown": 0.0021,
+    "Burlington": 0.0020
+  },
+  "Camden": {
+    "Camden": 0.0038,
+    "Cherry Hill": 0.0028,
+    "Voorhees": 0.0027,
+    "Gloucester Township": 0.0026,
+    "Pennsauken": 0.0025
+  },
+  "Cape May": {
+    "Wildwood": 0.0020,
+    "Ocean City": 0.0019,
+    "Cape May": 0.0018,
+    "Avalon": 0.0017,
+    "Sea Isle City": 0.0016
+  },
+  "Cumberland": {
+    "Vineland": 0.0028,
+    "Millville": 0.0027,
+    "Bridgeton": 0.0026,
+    "Upper Deerfield": 0.0025,
+    "Maurice River": 0.0024
+  },
+  "Gloucester": {
+    "Washington Township": 0.0025,
+    "Deptford": 0.0024,
+    "Glassboro": 0.0023,
+    "Monroe": 0.0022,
+    "Mantua": 0.0021
+  },
+  "Hunterdon": {
+    "Raritan Township": 0.0022,
+    "Clinton Township": 0.0021,
+    "Readington": 0.0020,
+    "Flemington": 0.0019,
+    "Lebanon": 0.0018
+  },
+  "Mercer": {
+    "Trenton": 0.0036,
+    "Princeton": 0.0028,
+    "Hamilton": 0.0026,
+    "Lawrence": 0.0025,
+    "West Windsor": 0.0024
+  },
+  "Morris": {
+    "Morristown": 0.0028,
+    "Parsippany": 0.0026,
+    "Madison": 0.0025,
+    "Chatham": 0.0024,
+    "Randolph": 0.0023
+  },
+  "Ocean": {
+    "Toms River": 0.0020,
+    "Brick": 0.0019,
+    "Lakewood": 0.0018,
+    "Jackson": 0.0017,
+    "Point Pleasant": 0.0016
+  },
+  "Passaic": {
+    "Paterson": 0.0036,
+    "Clifton": 0.0034,
+    "Wayne": 0.0032,
+    "Passaic": 0.0033,
+    "Little Falls": 0.0030
+  },
+  "Salem": {
+    "Pennsville": 0.0020,
+    "Carneys Point": 0.0019,
+    "Salem": 0.0018,
+    "Pilesgrove": 0.0017,
+    "Elsinboro": 0.0016
+  },
+  "Somerset": {
+    "Bridgewater": 0.0025,
+    "Franklin": 0.0024,
+    "Hillsborough": 0.0023,
+    "Montgomery": 0.0022,
+    "Bernards": 0.0021
+  },
+  "Sussex": {
+    "Vernon": 0.0020,
+    "Sparta": 0.0019,
+    "Hopatcong": 0.0018,
+    "Hamburg": 0.0017,
+    "Frankford": 0.0016
+  },
+  "Union": {
+    "Elizabeth": 0.0034,
+    "Plainfield": 0.0033,
+    "Summit": 0.0028,
+    "Westfield": 0.0027,
+    "Cranford": 0.0026
+  },
+  "Warren": {
+    "Phillipsburg": 0.0020,
+    "Hackettstown": 0.0019,
+    "Washington": 0.0018,
+    "Belvidere": 0.0017,
+    "Oxford": 0.0016
+  }
+}

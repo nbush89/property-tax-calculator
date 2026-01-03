@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    /* stylelint-disable-next-line at-rule-no-unknown */
+    @apply bg-bg text-text antialiased;
+  }
+}
+
+@layer components {
+  /* Container utility */
+  .container-page {
+    /* stylelint-disable-next-line at-rule-no-unknown */
+    @apply mx-auto max-w-6xl px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Card utility */
+  .card {
+    /* stylelint-disable-next-line at-rule-no-unknown */
+    @apply rounded-xl border border-border bg-surface shadow-sm;
+  }
+
+  /* Section title utility */
+  .section-title {
+    /* stylelint-disable-next-line at-rule-no-unknown */
+    @apply text-3xl font-semibold tracking-tight text-text sm:text-4xl;
+  }
+
+  /* Muted text utility */
+  .muted {
+    /* stylelint-disable-next-line at-rule-no-unknown */
+    @apply text-text-muted;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Tabular numbers for consistent numeric display */
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum';
+  }
+}
