@@ -6,13 +6,14 @@ import { formatStateName, isValidState } from '@/utils/stateUtils'
 import { notFound } from 'next/navigation'
 
 type Props = {
-  params: {
+  params: Promise<{
     state: string
-  }
+  }>
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const state = decodeURIComponent(params.state)
+  const { state: stateParam } = await params
+  const state = decodeURIComponent(stateParam)
   const stateName = formatStateName(state)
   
   return {
@@ -27,8 +28,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default function StatePropertyTaxCalculatorPage({ params }: Props) {
-  const state = decodeURIComponent(params.state)
+export default async function StatePropertyTaxCalculatorPage({ params }: Props) {
+  const { state: stateParam } = await params
+  const state = decodeURIComponent(stateParam)
   const stateName = formatStateName(state)
   
   // Validate state is supported

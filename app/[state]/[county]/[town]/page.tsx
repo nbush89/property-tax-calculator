@@ -6,17 +6,18 @@ import { formatStateName, isValidState } from '@/utils/stateUtils'
 import { notFound } from 'next/navigation'
 
 type Props = {
-  params: {
+  params: Promise<{
     state: string
     county: string
     town: string
-  }
+  }>
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const state = decodeURIComponent(params.state)
-  const county = decodeURIComponent(params.county)
-  const town = decodeURIComponent(params.town)
+  const { state: stateParam, county: countyParam, town: townParam } = await params
+  const state = decodeURIComponent(stateParam)
+  const county = decodeURIComponent(countyParam)
+  const town = decodeURIComponent(townParam)
   const stateName = formatStateName(state)
   
   return {
@@ -31,10 +32,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default function TownPropertyTaxCalculatorPage({ params }: Props) {
-  const state = decodeURIComponent(params.state)
-  const county = decodeURIComponent(params.county)
-  const town = decodeURIComponent(params.town)
+export default async function TownPropertyTaxCalculatorPage({ params }: Props) {
+  const { state: stateParam, county: countyParam, town: townParam } = await params
+  const state = decodeURIComponent(stateParam)
+  const county = decodeURIComponent(countyParam)
+  const town = decodeURIComponent(townParam)
   const stateName = formatStateName(state)
   
   // Validate state is supported

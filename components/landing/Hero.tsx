@@ -8,14 +8,14 @@ export default function Hero() {
       <div className="container-page">
         <div className="flex flex-col items-center text-center">
           {/* Logo Icon */}
-          <div className="mb-8">
+          <div className="mb-4">
             <Image
-              src="/logo-icon.png"
+              src="/logo-light.svg"
               alt="NJ Property Tax Calculator"
-              width={80}
-              height={80}
+              width={150}
+              height={150}
               priority
-              className="mx-auto h-20 w-20"
+              className="mx-auto h-48 w-48"
             />
           </div>
 

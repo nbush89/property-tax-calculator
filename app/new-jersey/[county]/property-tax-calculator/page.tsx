@@ -4,13 +4,14 @@ import TaxResults from '@/components/TaxResults'
 import { generateStructuredData, generateBreadcrumbStructuredData } from '@/utils/seo'
 
 type Props = {
-  params: {
+  params: Promise<{
     county: string
-  }
+  }>
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const county = decodeURIComponent(params.county)
+  const { county: countyParam } = await params
+  const county = decodeURIComponent(countyParam)
   return {
     title: `${county} County Property Tax Calculator | New Jersey`,
     description: `Calculate property taxes for ${county} County, New Jersey. Get accurate estimates based on current tax rates.`,
@@ -23,8 +24,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default function CountyPropertyTaxCalculatorPage({ params }: Props) {
-  const county = decodeURIComponent(params.county)
+export default async function CountyPropertyTaxCalculatorPage({ params }: Props) {
+  const { county: countyParam } = await params
+  const county = decodeURIComponent(countyParam)
   
   const structuredData = generateStructuredData({
     title: `${county} County Property Tax Calculator`,
