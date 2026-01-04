@@ -14,6 +14,8 @@ import LocationFAQ from '@/components/location/LocationFAQ'
 import { getStateData, getCountyBySlug, formatUSD } from '@/lib/geo'
 import { slugifyLocation } from '@/utils/locationUtils'
 import { getCountyFaqData } from '@/data/countyFaqData'
+import { getCountyLatestTaxBill } from '@/lib/data/adapter'
+import HistoricalMetrics from '@/components/location/HistoricalMetrics'
 
 type Props = {
   params: Promise<{
@@ -44,7 +46,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const path = `/new-jersey/${countySlug}`
-  const avgTaxBill = formatUSD(county.avgResidentialTaxBill2024)
+  const latestTaxBill = getCountyLatestTaxBill(county)
+  const avgTaxBill = latestTaxBill ? formatUSD(latestTaxBill) : 'N/A'
 
   return buildMetadata({
     title: `${county.name} County NJ Property Tax Calculator | 2024 Avg Tax Bill`,
@@ -74,7 +77,8 @@ export default async function CountyPropertyTaxPage({ params }: Props) {
 
   const pageUrl = `${SITE_URL}/new-jersey/${countySlug}`
   const faqs = getCountyFaqData(county.name)
-  const avgTaxBill = formatUSD(county.avgResidentialTaxBill2024)
+  const latestTaxBill = getCountyLatestTaxBill(county)
+  const avgTaxBill = latestTaxBill ? formatUSD(latestTaxBill) : 'N/A'
   const neighborCounties =
     county.neighborCounties
       ?.map(name => getCountyBySlug(stateData, slugifyLocation(name)))
@@ -202,6 +206,16 @@ export default async function CountyPropertyTaxPage({ params }: Props) {
                 </Link>
               </div>
             </div>
+
+            {/* Historical Metrics Section */}
+            {county.metrics?.averageResidentialTaxBill &&
+              county.metrics.averageResidentialTaxBill.length >= 2 && (
+                <HistoricalMetrics
+                  series={county.metrics.averageResidentialTaxBill}
+                  title={`${county.name} County Average Residential Tax Bill (Last 5 Years)`}
+                  formatValue={value => formatUSD(value)}
+                />
+              )}
 
             {/* FAQ Section */}
             <LocationFAQ

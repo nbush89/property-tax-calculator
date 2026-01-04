@@ -58,11 +58,7 @@ export function LinkButton({
   ...props
 }: BaseButtonProps & { href: string } & React.ComponentProps<typeof Link>) {
   return (
-    <Link
-      href={href}
-      className={baseClasses(variant, size, className)}
-      {...props}
-    >
+    <Link href={href} className={baseClasses(variant, size, className)} {...props}>
       {children}
     </Link>
   )

@@ -18,11 +18,8 @@ export default function Logo({ showText = true, className = '' }: LogoProps) {
         className="h-16 w-16"
       />
       {showText && (
-        <span className="text-lg font-semibold text-slate-800 dark:text-slate-100">
-          NJ Property Tax Calculator
-        </span>
+        <span className="text-lg font-semibold text-text">NJ Property Tax Calculator</span>
       )}
     </Link>
   )
 }
-

@@ -4,7 +4,7 @@ import Badge from '@/components/ui/Badge'
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-primary-soft via-surface to-primary-soft/50 py-20 sm:py-24 lg:py-32">
+    <section className="relative overflow-hidden bg-gradient-to-b from-bg-gradient-from to-bg-gradient-to py-20 sm:py-24 lg:py-32">
       <div className="container-page">
         <div className="flex flex-col items-center text-center">
           {/* Logo Icon */}
@@ -28,23 +28,16 @@ export default function Hero() {
 
           {/* Subheadline */}
           <p className="mb-8 max-w-2xl text-lg text-text-muted sm:text-xl">
-            Get accurate property tax estimates with county and town breakdowns, exemption support, and detailed analysis—all without signing up.
+            Get accurate property tax estimates with county and town breakdowns, exemption support,
+            and detailed analysis—all without signing up.
           </p>
 
           {/* CTAs */}
           <div className="mb-12 flex flex-col gap-4 sm:flex-row sm:justify-center">
-            <LinkButton
-              href="/new-jersey/property-tax-calculator"
-              variant="primary"
-              size="lg"
-            >
+            <LinkButton href="/new-jersey/property-tax-calculator" variant="primary" size="lg">
               Calculate NJ Taxes
             </LinkButton>
-            <LinkButton
-              href="/new-jersey/property-tax-rates"
-              variant="secondary"
-              size="lg"
-            >
+            <LinkButton href="/new-jersey/property-tax-rates" variant="secondary" size="lg">
               See County Rates
             </LinkButton>
           </div>
@@ -52,12 +45,7 @@ export default function Hero() {
           {/* Trust Badges */}
           <div className="flex flex-wrap items-center justify-center gap-4">
             <Badge variant="success">
-              <svg
-                className="h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -68,12 +56,7 @@ export default function Hero() {
               Free
             </Badge>
             <Badge variant="success">
-              <svg
-                className="h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -84,12 +67,7 @@ export default function Hero() {
               No sign-up
             </Badge>
             <Badge variant="success">
-              <svg
-                className="h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"

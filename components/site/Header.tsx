@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import Logo from './Logo'
 import { LinkButton } from '@/components/ui/Button'
+import ThemeToggle from '@/components/theme/ThemeToggle'
 
 export default function Header() {
   return (
@@ -10,7 +11,7 @@ export default function Header() {
       <div className="container-page">
         <div className="flex h-16 items-center justify-between">
           <Logo />
-          
+
           <nav className="hidden items-center gap-6 md:flex">
             <Link
               href="/new-jersey/property-tax-calculator"
@@ -32,13 +33,12 @@ export default function Header() {
             </Link>
           </nav>
 
-          <LinkButton
-            href="/new-jersey/property-tax-calculator"
-            variant="primary"
-            size="sm"
-          >
-            Calculate now
-          </LinkButton>
+          <div className="flex items-center gap-4">
+            <ThemeToggle />
+            <LinkButton href="/new-jersey/property-tax-calculator" variant="primary" size="sm">
+              Calculate now
+            </LinkButton>
+          </div>
         </div>
       </div>
     </header>

@@ -2,6 +2,51 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --primary: 29 78 216; /* #1D4ED8 */
+  --primary-hover: 37 99 235; /* #2563EB */
+  --primary-soft: 239 246 255; /* #EFF6FF */
+
+  --success: 5 150 105; /* #059669 */
+  --success-soft: 236 253 245; /* #ECFDF5 */
+
+  --text: 15 23 42; /* #0F172A */
+  --text-muted: 71 85 105; /* #475569 */
+
+  --border: 226 232 240; /* #E2E8F0 */
+  --bg: 247 249 252; /* #F7F9FC */
+  --surface: 255 255 255; /* #FFFFFF */
+  --bg-gradient-from: 232 240 254; /* #E8F0FE */
+  --bg-gradient-to: 247 249 252; /* #F7F9FC */
+
+  --warning: 217 119 6; /* #D97706 */
+  --error: 220 38 38; /* #DC2626 */
+  --info: 2 132 199; /* #0284C7 */
+}
+
+.dark {
+  /* your existing dark palette translated to rgb() triples */
+  --primary: 59 106 230; /* #3B6AE6 */
+  --primary-hover: 91 130 245; /* #5B82F5 */
+  --primary-soft: 30 58 138; /* #1E3A8A */
+
+  --success: 16 185 129; /* #10B981 */
+  --success-soft: 6 78 59; /* #064E3B */
+
+  --text: 241 245 249; /* #F1F5F9 */
+  --text-muted: 209 213 219; /* #D1D5DB */
+
+  --border: 71 85 105; /* #475569 */
+  --bg: 15 23 42; /* #0F172A */
+  --surface: 30 41 59; /* #1E293B */
+  --bg-gradient-from: 30 42 68; /* #1E2A44 */
+  --bg-gradient-to: 15 23 42; /* #0F172A */
+
+  --warning: 245 158 11; /* #F59E0B */
+  --error: 239 68 68; /* #EF4444 */
+  --info: 59 130 246; /* #3B82F6 */
+}
+
 @layer base {
   body {
     /* stylelint-disable-next-line at-rule-no-unknown */

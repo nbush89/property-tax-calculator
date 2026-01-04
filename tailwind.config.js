@@ -8,41 +8,31 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Primary (Trust Blue) - darker shades
         primary: {
-          DEFAULT: '#3B6AE6', // Slightly lighter for better contrast on dark
-          hover: '#5B82F5',
-          soft: '#1E3A8A', // Dark blue background
+          DEFAULT: 'rgb(var(--primary) / <alpha-value>)',
+          hover: 'rgb(var(--primary-hover) / <alpha-value>)',
+          soft: 'rgb(var(--primary-soft) / <alpha-value>)',
         },
-        // Secondary (Property Green) - darker shades
         success: {
-          DEFAULT: '#10B981', // Slightly lighter for contrast
-          soft: '#064E3B', // Dark green background
+          DEFAULT: 'rgb(var(--success) / <alpha-value>)',
+          soft: 'rgb(var(--success-soft) / <alpha-value>)',
         },
-        // Neutrals - inverted for dark theme
         text: {
-          DEFAULT: '#F1F5F9', // Light text on dark background
-          muted: '#94A3B8', // Lighter muted text
+          DEFAULT: 'rgb(var(--text) / <alpha-value>)',
+          muted: 'rgb(var(--text-muted) / <alpha-value>)',
         },
         border: {
-          DEFAULT: '#475569', // Darker borders
+          DEFAULT: 'rgb(var(--border) / <alpha-value>)',
         },
         bg: {
-          DEFAULT: '#0F172A', // Dark background (slate-900)
+          DEFAULT: 'rgb(var(--bg) / <alpha-value>)',
         },
         surface: {
-          DEFAULT: '#1E293B', // Dark surface (slate-800)
+          DEFAULT: 'rgb(var(--surface) / <alpha-value>)',
         },
-        // Status - adjusted for dark theme
-        warning: {
-          DEFAULT: '#F59E0B',
-        },
-        error: {
-          DEFAULT: '#EF4444', // Slightly brighter red for dark theme
-        },
-        info: {
-          DEFAULT: '#3B82F6', // Slightly brighter blue
-        },
+        warning: { DEFAULT: 'rgb(var(--warning) / <alpha-value>)' },
+        error: { DEFAULT: 'rgb(var(--error) / <alpha-value>)' },
+        info: { DEFAULT: 'rgb(var(--info) / <alpha-value>)' },
       },
       fontFamily: {
         sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
@@ -65,7 +55,5 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    require('@tailwindcss/typography'),
-  ],
+  plugins: [require('@tailwindcss/typography')],
 }
