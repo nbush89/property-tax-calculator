@@ -4,6 +4,7 @@ import Footer from '@/components/site/Footer'
 import TaxForm from '@/components/TaxForm'
 import TaxResults from '@/components/TaxResults'
 import { Card } from '@/components/ui/Card'
+import LocationDirectory from '@/components/location/LocationDirectory'
 import { buildMetadata } from '@/lib/seo'
 import { SITE_URL } from '@/lib/site'
 import { breadcrumbJsonLd, webAppJsonLd } from '@/lib/jsonld'
@@ -57,7 +58,7 @@ export default function PropertyTaxCalculatorPage() {
               Enter your property details to calculate your estimated property taxes
             </p>
           </div>
-          <div className="grid lg:grid-cols-2 gap-8">
+          <div className="grid lg:grid-cols-2 gap-8 mb-12">
             <Card className="p-6">
               <TaxForm />
             </Card>
@@ -65,6 +66,8 @@ export default function PropertyTaxCalculatorPage() {
               <TaxResults />
             </Card>
           </div>
+
+          <LocationDirectory />
         </div>
       </main>
       <Footer />

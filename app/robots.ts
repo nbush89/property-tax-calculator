@@ -1,14 +1,15 @@
 import { MetadataRoute } from 'next'
-import { SITE_URL } from '@/lib/site'
+import { getBaseUrl } from '@/lib/sitemaps'
 
 /**
  * Robots.txt generation for Next.js App Router
- * 
+ *
  * Configures search engine crawling behavior.
+ * References the sitemap index at /sitemap.xml
  * Accessible at: /robots.txt
  */
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = SITE_URL.replace(/\/$/, '') // Remove trailing slash
+  const baseUrl = getBaseUrl()
 
   return {
     rules: [
@@ -21,4 +22,3 @@ export default function robots(): MetadataRoute.Robots {
     sitemap: `${baseUrl}/sitemap.xml`,
   }
 }
-

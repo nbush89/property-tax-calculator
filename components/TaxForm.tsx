@@ -1,12 +1,14 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import CountyDropdown from './CountyDropdown'
 import MunicipalityDropdown from './MunicipalityDropdown'
 import Input from '@/components/ui/Input'
 import Select from '@/components/ui/Select'
 import Button from '@/components/ui/Button'
 import njExemptions from '@/data/nj_exemptions.json'
+import { slugifyLocation } from '@/utils/locationUtils'
 
 type TaxFormProps = {
   defaultCounty?: string
@@ -121,6 +123,27 @@ export default function TaxForm({ defaultCounty, defaultMunicipality }: TaxFormP
           onChange={setTown}
           disabled={!county}
         />
+        {county && (
+          <div className="mt-2 text-sm">
+            <Link
+              href={`/new-jersey/${slugifyLocation(county)}-county-property-tax`}
+              className="text-primary hover:text-primary-hover underline"
+            >
+              View {county} County property tax page →
+            </Link>
+            {town && (
+              <span className="text-text-muted"> | </span>
+            )}
+            {town && (
+              <Link
+                href={`/new-jersey/${slugifyLocation(county)}/${slugifyLocation(town)}-property-tax`}
+                className="text-primary hover:text-primary-hover underline"
+              >
+                View {town} property tax page →
+              </Link>
+            )}
+          </div>
+        )}
       </div>
 
       <div>

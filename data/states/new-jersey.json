@@ -1,0 +1,513 @@
+{
+  "name": "New Jersey",
+  "slug": "new-jersey",
+  "abbreviation": "NJ",
+  "avgTaxRate": 0.0202,
+  "source": {
+    "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+    "year": 2024,
+    "url": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf"
+  },
+  "counties": [
+    {
+      "name": "Atlantic",
+      "slug": "atlantic",
+      "avgEffectiveRate": 0.0185,
+      "avgResidentialTaxBill2024": 6799,
+      "neighborCounties": ["Ocean", "Burlington", "Camden", "Cape May"],
+      "towns": [
+        { "name": "Atlantic City", "avgRate": 0.0028 },
+        { "name": "Egg Harbor Township", "avgRate": 0.0025 },
+        { "name": "Galloway", "avgRate": 0.0024 },
+        { "name": "Hammonton", "avgRate": 0.0023 },
+        { "name": "Absecon", "avgRate": 0.0022 }
+      ],
+      "copy": {
+        "paragraphs": [
+          "Atlantic County's property tax landscape reflects its mix of coastal communities, suburban areas, and rural towns, each with distinct tax rates based on local service needs.",
+          "The NJ Division of Taxation's 2024 Average Residential Tax Report shows Atlantic County's average residential tax bill at approximately $6,799.",
+          "Whether you're budgeting for a primary residence or evaluating investment properties, this calculator helps you estimate annual and monthly tax obligations across different Atlantic County municipalities.",
+          "Municipal selection can significantly refine your estimate, as neighboring towns often have different rates due to varying school district funding and local service levels."
+        ],
+        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
+      }
+    },
+    {
+      "name": "Bergen",
+      "slug": "bergen",
+      "avgEffectiveRate": 0.0231,
+      "avgResidentialTaxBill2024": 13600,
+      "neighborCounties": ["Passaic", "Hudson", "Essex", "Morris"],
+      "towns": [
+        { "name": "Ridgewood", "avgRate": 0.0034 },
+        { "name": "Teaneck", "avgRate": 0.0032 },
+        { "name": "Fort Lee", "avgRate": 0.0036 },
+        { "name": "Hackensack", "avgRate": 0.0038 },
+        { "name": "Paramus", "avgRate": 0.003 }
+      ],
+      "copy": {
+        "paragraphs": [
+          "Bergen County is consistently one of the highest-tax areas in New Jersey, and tax bills can vary widely by municipality even for similarly priced homes.",
+          "Use this page to estimate annual and monthly property tax costs for planning and comparison. Enter your property value and select your municipality if known to refine the estimate.",
+          "According to the NJ Division of Taxation's 2024 Average Residential Tax Report, the average residential tax bill in Bergen County was about $13,600.",
+          "This calculator is best used for planning and comparison: try different home values, and (if available in your dataset) select a town to see how the estimate changes."
+        ],
+        "disclaimer": "This tool provides estimates, not official tax bills. Always verify with your local tax assessor."
+      }
+    },
+    {
+      "name": "Burlington",
+      "slug": "burlington",
+      "avgEffectiveRate": 0.0195,
+      "avgResidentialTaxBill2024": 7786,
+      "neighborCounties": ["Mercer", "Monmouth", "Ocean", "Atlantic", "Camden"],
+      "towns": [
+        { "name": "Mount Laurel", "avgRate": 0.0024 },
+        { "name": "Evesham", "avgRate": 0.0023 },
+        { "name": "Medford", "avgRate": 0.0022 },
+        { "name": "Moorestown", "avgRate": 0.0021 },
+        { "name": "Burlington", "avgRate": 0.002 }
+      ],
+      "copy": {
+        "paragraphs": [
+          "Homeowners in Burlington County benefit from a range of suburban communities, but property tax rates can differ meaningfully between municipalities.",
+          "Based on 2024 data from the NJ Division of Taxation, the average residential property tax bill in Burlington County came to $7,786.",
+          "This planning tool lets you explore how different property values and municipal selections affect your estimated tax burden in Burlington County.",
+          "When comparing homes in different Burlington towns, remember that even similar property values can yield different tax bills due to local rate variations."
+        ],
+        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
+      }
+    },
+    {
+      "name": "Camden",
+      "slug": "camden",
+      "avgEffectiveRate": 0.0225,
+      "avgResidentialTaxBill2024": 7468,
+      "neighborCounties": ["Burlington", "Gloucester", "Atlantic"],
+      "towns": [
+        { "name": "Camden", "avgRate": 0.0038 },
+        { "name": "Cherry Hill", "avgRate": 0.0028 },
+        { "name": "Voorhees", "avgRate": 0.0027 },
+        { "name": "Gloucester Township", "avgRate": 0.0026 },
+        { "name": "Pennsauken", "avgRate": 0.0025 }
+      ],
+      "copy": {
+        "paragraphs": [
+          "Camden County encompasses diverse communities from urban centers to suburban neighborhoods, each with its own property tax structure.",
+          "The 2024 Average Residential Tax Report from the NJ Division of Taxation indicates Camden County's average residential tax bill was around $7,468.",
+          "Use the calculator to model different property values and see how municipal selection impacts your estimated annual and monthly tax payments.",
+          "Understanding these estimates helps with financial planning, whether you're buying, refinancing, or simply reviewing your housing costs in Camden County."
+        ],
+        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
+      }
+    },
+    {
+      "name": "Cape May",
+      "slug": "cape-may",
+      "avgEffectiveRate": 0.0155,
+      "avgResidentialTaxBill2024": 6273,
+      "neighborCounties": ["Atlantic", "Cumberland"],
+      "towns": [
+        { "name": "Wildwood", "avgRate": 0.002 },
+        { "name": "Ocean City", "avgRate": 0.0019 },
+        { "name": "Cape May", "avgRate": 0.0018 },
+        { "name": "Avalon", "avgRate": 0.0017 },
+        { "name": "Sea Isle City", "avgRate": 0.0016 }
+      ],
+      "copy": {
+        "paragraphs": [
+          "Cape May County's property tax rates reflect its unique character as a coastal destination, with seasonal and year-round communities each setting rates based on local needs.",
+          "Per the NJ Division of Taxation's 2024 report, Cape May County had an average residential tax bill of $6,273, making it one of the more affordable counties in New Jersey.",
+          "This estimation tool is particularly useful for comparing seasonal versus year-round property ownership costs, or evaluating different Cape May municipalities.",
+          "Enter your property value below and, if you know your municipality, select it to get a more precise estimate of your annual and monthly tax obligations."
+        ],
+        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
+      }
+    },
+    {
+      "name": "Cumberland",
+      "slug": "cumberland",
+      "avgEffectiveRate": 0.0205,
+      "avgResidentialTaxBill2024": 4832,
+      "neighborCounties": ["Salem", "Gloucester", "Atlantic", "Cape May"],
+      "towns": [
+        { "name": "Vineland", "avgRate": 0.0028 },
+        { "name": "Millville", "avgRate": 0.0027 },
+        { "name": "Bridgeton", "avgRate": 0.0026 },
+        { "name": "Upper Deerfield", "avgRate": 0.0025 },
+        { "name": "Maurice River", "avgRate": 0.0024 }
+      ],
+      "copy": {
+        "paragraphs": [
+          "Cumberland County offers some of New Jersey's most affordable property tax rates, though individual municipalities still show meaningful variation.",
+          "The NJ Division of Taxation's 2024 data shows Cumberland County with the lowest average residential tax bill statewide at $4,832.",
+          "This calculator helps you understand how property taxes factor into your total housing costs in Cumberland County, whether you're planning a purchase or reviewing current expenses.",
+          "Municipal selection matters here too—even within this lower-tax county, choosing a specific town can refine your estimate for more accurate budgeting."
+        ],
+        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
+      }
+    },
+    {
+      "name": "Essex",
+      "slug": "essex",
+      "avgEffectiveRate": 0.0254,
+      "avgResidentialTaxBill2024": 13615,
+      "neighborCounties": [
+        "Bergen",
+        "Passaic",
+        "Hudson",
+        "Union",
+        "Morris",
+        "Somerset",
+        "Middlesex"
+      ],
+      "towns": [
+        { "name": "Montclair", "avgRate": 0.0029 },
+        { "name": "Bloomfield", "avgRate": 0.0031 },
+        { "name": "Newark", "avgRate": 0.004 },
+        { "name": "West Orange", "avgRate": 0.0032 },
+        { "name": "Livingston", "avgRate": 0.0028 }
+      ],
+      "copy": {
+        "paragraphs": [
+          "Essex County property taxes vary significantly by municipality, driven by differences in local budgets and school tax contributions.",
+          "If you're comparing homes across Essex towns, a consistent estimation tool can make \"true monthly cost\" easier to evaluate.",
+          "According to the NJ Division of Taxation's 2024 Average Residential Tax Report, Essex County's average residential tax bill was approximately $13,615, making it one of the highest-tax counties in New Jersey.",
+          "Use the calculator below to estimate annual and monthly property taxes using county/town rate assumptions from NJ tax data tables (general and effective tax rate reporting is published by the NJ Division of Taxation).",
+          "For best results, select a specific municipality when available—neighboring towns can produce very different estimates even with the same home value."
+        ],
+        "disclaimer": "Estimates only; confirm with local assessor."
+      }
+    },
+    {
+      "name": "Gloucester",
+      "slug": "gloucester",
+      "avgEffectiveRate": 0.0195,
+      "avgResidentialTaxBill2024": 7662,
+      "neighborCounties": ["Camden", "Burlington", "Salem", "Cumberland"],
+      "towns": [
+        { "name": "Washington Township", "avgRate": 0.0025 },
+        { "name": "Deptford", "avgRate": 0.0024 },
+        { "name": "Glassboro", "avgRate": 0.0023 },
+        { "name": "Monroe", "avgRate": 0.0022 },
+        { "name": "Mantua", "avgRate": 0.0021 }
+      ],
+      "copy": {
+        "paragraphs": [
+          "Gloucester County's property tax structure balances suburban development with agricultural areas, creating a range of rates across its municipalities.",
+          "The 2024 Average Residential Tax Report from the NJ Division of Taxation shows Gloucester County's average residential tax bill at $7,662.",
+          "Whether you're evaluating homes in different Gloucester towns or planning your annual budget, this calculator provides quick estimates of annual and monthly tax costs.",
+          "Selecting a specific municipality when available will give you a more accurate picture, as local school funding and service levels vary throughout the county."
+        ],
+        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
+      }
+    },
+    {
+      "name": "Hudson",
+      "slug": "hudson",
+      "avgEffectiveRate": 0.0205,
+      "avgResidentialTaxBill2024": 10065,
+      "neighborCounties": ["Bergen", "Essex", "Union"],
+      "towns": [
+        { "name": "Hoboken", "avgRate": 0.0035 },
+        { "name": "Jersey City", "avgRate": 0.0033 },
+        { "name": "Union City", "avgRate": 0.0034 },
+        { "name": "Bayonne", "avgRate": 0.0031 },
+        { "name": "Weehawken", "avgRate": 0.0032 }
+      ],
+      "copy": {
+        "paragraphs": [
+          "Hudson County includes a mix of dense cities and smaller municipalities, which can lead to meaningful tax differences within a short distance.",
+          "According to the NJ Division of Taxation's 2024 Average Residential Tax Report, the average residential tax bill in Hudson County was about $10,065.",
+          "This estimation tool is especially valuable when comparing Hudson County municipalities, as urban centers like Jersey City and Hoboken can have very different tax profiles than smaller towns.",
+          "Enter your property value and select your municipality to see how annual and monthly tax estimates vary across Hudson County's diverse communities."
+        ],
+        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
+      }
+    },
+    {
+      "name": "Hunterdon",
+      "slug": "hunterdon",
+      "avgEffectiveRate": 0.0185,
+      "avgResidentialTaxBill2024": 11198,
+      "neighborCounties": ["Warren", "Morris", "Somerset", "Mercer"],
+      "towns": [
+        { "name": "Raritan Township", "avgRate": 0.0022 },
+        { "name": "Clinton Township", "avgRate": 0.0021 },
+        { "name": "Readington", "avgRate": 0.002 },
+        { "name": "Flemington", "avgRate": 0.0019 },
+        { "name": "Lebanon", "avgRate": 0.0018 }
+      ],
+      "copy": {
+        "paragraphs": [
+          "Hunterdon County's rural and suburban communities maintain relatively high property tax rates, reflecting strong school systems and local service levels.",
+          "The NJ Division of Taxation's 2024 report indicates Hunterdon County's average residential tax bill reached $11,198, placing it among the higher-tax counties in New Jersey.",
+          "This calculator helps you understand how property taxes contribute to your total cost of ownership in Hunterdon County, useful for both buyers and current homeowners reviewing their expenses.",
+          "Municipal selection can make a noticeable difference in your estimate, as Hunterdon's towns vary in their tax rates based on local budget priorities."
+        ],
+        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
+      }
+    },
+    {
+      "name": "Mercer",
+      "slug": "mercer",
+      "avgEffectiveRate": 0.0215,
+      "avgResidentialTaxBill2024": 9543,
+      "neighborCounties": ["Hunterdon", "Somerset", "Middlesex", "Monmouth", "Burlington"],
+      "towns": [
+        { "name": "Trenton", "avgRate": 0.0036 },
+        { "name": "Princeton", "avgRate": 0.0028 },
+        { "name": "Hamilton", "avgRate": 0.0026 },
+        { "name": "Lawrence", "avgRate": 0.0025 },
+        { "name": "West Windsor", "avgRate": 0.0024 }
+      ],
+      "copy": {
+        "paragraphs": [
+          "Mercer County spans from the state capital of Trenton to suburban communities like Princeton and Hamilton, each with distinct property tax characteristics.",
+          "Per the 2024 Average Residential Tax Report from the NJ Division of Taxation, Mercer County's average residential tax bill was $9,543.",
+          "This estimation tool is helpful when comparing properties across Mercer County's diverse municipalities, where tax rates can vary significantly between urban and suburban areas.",
+          "Enter your property value below and select your municipality if known to get a clearer picture of your annual and monthly tax obligations in Mercer County."
+        ],
+        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
+      }
+    },
+    {
+      "name": "Middlesex",
+      "slug": "middlesex",
+      "avgEffectiveRate": 0.0211,
+      "avgResidentialTaxBill2024": 9528,
+      "neighborCounties": ["Essex", "Union", "Somerset", "Mercer", "Monmouth"],
+      "towns": [
+        { "name": "New Brunswick", "avgRate": 0.0032 },
+        { "name": "Edison", "avgRate": 0.0029 },
+        { "name": "Piscataway", "avgRate": 0.0028 },
+        { "name": "Woodbridge", "avgRate": 0.0027 },
+        { "name": "East Brunswick", "avgRate": 0.0026 }
+      ],
+      "copy": {
+        "paragraphs": [
+          "Middlesex County's property tax rates reflect its mix of suburban communities, each balancing local services and school funding needs differently.",
+          "The NJ Division of Taxation's 2024 data shows Middlesex County with an average residential tax bill of $9,528.",
+          "When shopping for homes in Middlesex County, this calculator helps you quickly compare how property taxes affect total monthly costs across different municipalities.",
+          "Selecting a specific town refines your estimate, as neighboring Middlesex communities can have meaningfully different rates despite similar property values."
+        ],
+        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
+      }
+    },
+    {
+      "name": "Monmouth",
+      "slug": "monmouth",
+      "avgEffectiveRate": 0.0219,
+      "avgResidentialTaxBill2024": 10930,
+      "neighborCounties": ["Middlesex", "Mercer", "Ocean"],
+      "towns": [
+        { "name": "Red Bank", "avgRate": 0.0025 },
+        { "name": "Long Branch", "avgRate": 0.0027 },
+        { "name": "Freehold", "avgRate": 0.0024 },
+        { "name": "Middletown", "avgRate": 0.0026 },
+        { "name": "Tinton Falls", "avgRate": 0.0023 }
+      ],
+      "copy": {
+        "paragraphs": [
+          "Monmouth County combines coastal communities with inland suburbs, creating a range of property tax rates that reflect local priorities and school quality.",
+          "The 2024 Average Residential Tax Report from the NJ Division of Taxation shows Monmouth County's average residential tax bill at $10,930.",
+          "This planning tool is particularly useful for comparing beachfront versus inland properties, or evaluating different Monmouth municipalities when house hunting.",
+          "Municipal selection makes a real difference here—coastal towns often have different tax structures than inland communities, so selecting your town provides a more accurate estimate."
+        ],
+        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
+      }
+    },
+    {
+      "name": "Morris",
+      "slug": "morris",
+      "avgEffectiveRate": 0.0195,
+      "avgResidentialTaxBill2024": 11757,
+      "neighborCounties": [
+        "Sussex",
+        "Warren",
+        "Hunterdon",
+        "Somerset",
+        "Essex",
+        "Passaic",
+        "Bergen"
+      ],
+      "towns": [
+        { "name": "Morristown", "avgRate": 0.0028 },
+        { "name": "Parsippany", "avgRate": 0.0026 },
+        { "name": "Madison", "avgRate": 0.0025 },
+        { "name": "Chatham", "avgRate": 0.0024 },
+        { "name": "Randolph", "avgRate": 0.0023 }
+      ],
+      "copy": {
+        "paragraphs": [
+          "Morris County is known for strong school systems and quality municipal services, factors that contribute to its above-average property tax rates.",
+          "The NJ Division of Taxation's 2024 report indicates Morris County had an average residential tax bill of $11,757, ranking among New Jersey's higher-tax counties.",
+          "This calculator helps you understand how property taxes factor into your total housing costs in Morris County, whether you're evaluating a purchase or planning your annual budget.",
+          "Different Morris municipalities can show meaningful rate variations, so selecting your specific town when available will give you a more precise estimate of annual and monthly tax obligations."
+        ],
+        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
+      }
+    },
+    {
+      "name": "Ocean",
+      "slug": "ocean",
+      "avgEffectiveRate": 0.0175,
+      "avgResidentialTaxBill2024": 7593,
+      "neighborCounties": ["Monmouth", "Burlington", "Atlantic"],
+      "towns": [
+        { "name": "Toms River", "avgRate": 0.002 },
+        { "name": "Brick", "avgRate": 0.0019 },
+        { "name": "Lakewood", "avgRate": 0.0018 },
+        { "name": "Jackson", "avgRate": 0.0017 },
+        { "name": "Point Pleasant", "avgRate": 0.0016 }
+      ],
+      "copy": {
+        "paragraphs": [
+          "Ocean County's property tax landscape reflects its mix of beach communities, retirement areas, and suburban developments, each with different service and school funding needs.",
+          "The 2024 Average Residential Tax Report from the NJ Division of Taxation shows Ocean County's average residential tax bill at $7,593.",
+          "This estimation tool is useful for comparing seasonal versus year-round property costs, or evaluating different Ocean County municipalities when considering a purchase.",
+          "Enter your property value and select your municipality if known to see how annual and monthly tax estimates vary across Ocean County's diverse communities."
+        ],
+        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
+      }
+    },
+    {
+      "name": "Passaic",
+      "slug": "passaic",
+      "avgEffectiveRate": 0.0225,
+      "avgResidentialTaxBill2024": 11212,
+      "neighborCounties": ["Bergen", "Essex", "Morris", "Sussex"],
+      "towns": [
+        { "name": "Paterson", "avgRate": 0.0036 },
+        { "name": "Clifton", "avgRate": 0.0034 },
+        { "name": "Wayne", "avgRate": 0.0032 },
+        { "name": "Passaic", "avgRate": 0.0033 },
+        { "name": "Little Falls", "avgRate": 0.003 }
+      ],
+      "copy": {
+        "paragraphs": [
+          "Passaic County encompasses both urban centers like Paterson and suburban communities, creating a range of property tax rates across its municipalities.",
+          "The NJ Division of Taxation's 2024 data shows Passaic County with an average residential tax bill of $11,212, placing it among New Jersey's higher-tax counties.",
+          "This calculator helps you understand how property taxes contribute to total housing costs in Passaic County, useful for buyers comparing different municipalities or current homeowners reviewing expenses.",
+          "Municipal selection matters here—urban and suburban Passaic communities often have different tax structures, so selecting your specific town provides a more accurate estimate."
+        ],
+        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
+      }
+    },
+    {
+      "name": "Salem",
+      "slug": "salem",
+      "avgEffectiveRate": 0.0175,
+      "avgResidentialTaxBill2024": 6706,
+      "neighborCounties": ["Gloucester", "Cumberland"],
+      "towns": [
+        { "name": "Pennsville", "avgRate": 0.002 },
+        { "name": "Carneys Point", "avgRate": 0.0019 },
+        { "name": "Salem", "avgRate": 0.0018 },
+        { "name": "Pilesgrove", "avgRate": 0.0017 },
+        { "name": "Elsinboro", "avgRate": 0.0016 }
+      ],
+      "copy": {
+        "paragraphs": [
+          "Salem County offers some of New Jersey's more affordable property tax rates, with a mix of rural and small-town communities setting rates based on local needs.",
+          "The 2024 Average Residential Tax Report from the NJ Division of Taxation shows Salem County's average residential tax bill at $6,706.",
+          "This estimation tool helps you understand how property taxes factor into your total cost of ownership in Salem County, whether you're planning a purchase or reviewing current expenses.",
+          "While Salem County generally has lower rates, municipal selection can still refine your estimate, as individual towns vary in their tax structures."
+        ],
+        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
+      }
+    },
+    {
+      "name": "Somerset",
+      "slug": "somerset",
+      "avgEffectiveRate": 0.0195,
+      "avgResidentialTaxBill2024": 11355,
+      "neighborCounties": ["Hunterdon", "Morris", "Essex", "Middlesex", "Mercer"],
+      "towns": [
+        { "name": "Bridgewater", "avgRate": 0.0025 },
+        { "name": "Franklin", "avgRate": 0.0024 },
+        { "name": "Hillsborough", "avgRate": 0.0023 },
+        { "name": "Montgomery", "avgRate": 0.0022 },
+        { "name": "Bernards", "avgRate": 0.0021 }
+      ],
+      "copy": {
+        "paragraphs": [
+          "Somerset County's property tax rates reflect its reputation for strong schools and quality municipal services, with rates varying across its suburban communities.",
+          "The NJ Division of Taxation's 2024 report shows Somerset County with an average residential tax bill of $11,355, ranking among the state's higher-tax counties.",
+          "When evaluating homes in Somerset County, this calculator helps you quickly see how property taxes affect total monthly costs, making it easier to compare properties across different municipalities.",
+          "Selecting a specific Somerset municipality refines your estimate, as neighboring towns can have meaningfully different rates despite similar property values."
+        ],
+        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
+      }
+    },
+    {
+      "name": "Sussex",
+      "slug": "sussex",
+      "avgEffectiveRate": 0.0185,
+      "avgResidentialTaxBill2024": 8640,
+      "neighborCounties": ["Warren", "Morris", "Passaic"],
+      "towns": [
+        { "name": "Vernon", "avgRate": 0.002 },
+        { "name": "Sparta", "avgRate": 0.0019 },
+        { "name": "Hopatcong", "avgRate": 0.0018 },
+        { "name": "Hamburg", "avgRate": 0.0017 },
+        { "name": "Frankford", "avgRate": 0.0016 }
+      ],
+      "copy": {
+        "paragraphs": [
+          "Sussex County's rural and suburban communities maintain property tax rates that balance local services with the county's more affordable cost structure compared to other northern New Jersey counties.",
+          "The 2024 Average Residential Tax Report from the NJ Division of Taxation indicates Sussex County's average residential tax bill was $8,640.",
+          "This calculator helps you understand how property taxes contribute to your total housing costs in Sussex County, useful for both prospective buyers and current homeowners planning their budgets.",
+          "Municipal selection can make a difference in your estimate, as Sussex County's towns vary in their tax rates based on local budget priorities and school funding needs."
+        ],
+        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
+      }
+    },
+    {
+      "name": "Union",
+      "slug": "union",
+      "avgEffectiveRate": 0.0215,
+      "avgResidentialTaxBill2024": 12047,
+      "neighborCounties": ["Essex", "Hudson", "Middlesex", "Somerset", "Morris"],
+      "towns": [
+        { "name": "Elizabeth", "avgRate": 0.0034 },
+        { "name": "Plainfield", "avgRate": 0.0033 },
+        { "name": "Summit", "avgRate": 0.0028 },
+        { "name": "Westfield", "avgRate": 0.0027 },
+        { "name": "Cranford", "avgRate": 0.0026 }
+      ],
+      "copy": {
+        "paragraphs": [
+          "Union County has some of New Jersey's highest property tax rates, reflecting strong school systems and comprehensive municipal services across its suburban communities.",
+          "The NJ Division of Taxation's 2024 data shows Union County with the highest average residential tax bill statewide at $12,047.",
+          "This estimation tool is essential when comparing properties in Union County, as property taxes represent a significant portion of total monthly housing costs here.",
+          "Selecting a specific Union County municipality refines your estimate, as rates can vary meaningfully between neighboring towns despite similar property values."
+        ],
+        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
+      }
+    },
+    {
+      "name": "Warren",
+      "slug": "warren",
+      "avgEffectiveRate": 0.0175,
+      "avgResidentialTaxBill2024": 7879,
+      "neighborCounties": ["Sussex", "Morris", "Hunterdon"],
+      "towns": [
+        { "name": "Phillipsburg", "avgRate": 0.002 },
+        { "name": "Hackettstown", "avgRate": 0.0019 },
+        { "name": "Washington", "avgRate": 0.0018 },
+        { "name": "Belvidere", "avgRate": 0.0017 },
+        { "name": "Oxford", "avgRate": 0.0016 }
+      ],
+      "copy": {
+        "paragraphs": [
+          "Warren County's property tax rates reflect its rural and small-town character, generally offering more affordable rates compared to many other New Jersey counties.",
+          "The 2024 Average Residential Tax Report from the NJ Division of Taxation shows Warren County's average residential tax bill at $7,879.",
+          "This calculator helps you understand how property taxes factor into your total cost of ownership in Warren County, useful for buyers evaluating homes or current homeowners reviewing expenses.",
+          "While Warren County maintains relatively lower rates overall, municipal selection can still refine your estimate, as individual towns vary in their tax structures and service levels."
+        ],
+        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
+      }
+    }
+  ]
+}

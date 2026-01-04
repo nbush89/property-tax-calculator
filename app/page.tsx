@@ -7,6 +7,7 @@ import Features from '@/components/landing/Features'
 import ExamplePreview from '@/components/landing/ExamplePreview'
 import FAQ from '@/components/landing/FAQ'
 import CTASection from '@/components/landing/CTASection'
+import Feedback from '@/components/landing/Feedback'
 import { buildMetadata } from '@/lib/seo'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { breadcrumbJsonLd, organizationJsonLd, websiteJsonLd, webAppJsonLd } from '@/lib/jsonld'
@@ -64,6 +65,7 @@ export default function Home() {
         <Features />
         <ExamplePreview />
         <FAQ />
+        <Feedback />
         <CTASection />
       </main>
       <Footer />

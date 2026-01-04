@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import Header from '@/components/site/Header'
 import Footer from '@/components/site/Footer'
 import { buildMetadata } from '@/lib/seo'
@@ -7,6 +8,7 @@ import { JsonLd } from '@/components/seo/JsonLd'
 import { getAllCountyRates } from '@/utils/getCountyRates'
 import njMunicipalRates from '@/data/nj_municipal_rates.json'
 import { SITE_URL } from '@/lib/site'
+import { slugifyLocation } from '@/utils/locationUtils'
 
 /**
  * New Jersey property tax rates page.
@@ -57,12 +59,27 @@ export default function PropertyTaxRatesPage() {
                   className="rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-800"
                 >
                   <div className="border-b border-slate-200 bg-slate-50 px-6 py-4 dark:border-slate-700 dark:bg-slate-700/50">
-                    <h2 className="text-xl font-semibold text-slate-900 dark:text-white">
-                      {county} County
-                    </h2>
-                    <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
-                      County Rate: {(countyRate * 100).toFixed(2)}%
-                    </p>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h2 className="text-xl font-semibold text-slate-900 dark:text-white">
+                          <Link
+                            href={`/new-jersey/${slugifyLocation(county)}-county-property-tax`}
+                            className="hover:text-primary transition-colors"
+                          >
+                            {county} County
+                          </Link>
+                        </h2>
+                        <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
+                          County Rate: {(countyRate * 100).toFixed(2)}%
+                        </p>
+                      </div>
+                      <Link
+                        href={`/new-jersey/${slugifyLocation(county)}-county-property-tax`}
+                        className="text-sm text-primary hover:text-primary-hover font-medium"
+                      >
+                        View County Page →
+                      </Link>
+                    </div>
                   </div>
 
                   {countyData && Object.keys(countyData).length > 0 && (
@@ -73,19 +90,24 @@ export default function PropertyTaxRatesPage() {
                       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                         {Object.entries(countyData)
                           .sort(([a], [b]) => a.localeCompare(b))
-                          .map(([municipality, rate]) => (
-                            <div
-                              key={municipality}
-                              className="rounded border border-slate-200 bg-slate-50 p-3 dark:border-slate-700 dark:bg-slate-900"
-                            >
-                              <p className="font-medium text-slate-900 dark:text-white">
-                                {municipality}
-                              </p>
-                              <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
-                                {(rate * 100).toFixed(2)}%
-                              </p>
-                            </div>
-                          ))}
+                          .map(([municipality, rate]) => {
+                            const countySlug = slugifyLocation(county)
+                            const townSlug = slugifyLocation(municipality)
+                            return (
+                              <Link
+                                key={municipality}
+                                href={`/new-jersey/${countySlug}/${townSlug}-property-tax`}
+                                className="rounded border border-slate-200 bg-slate-50 p-3 dark:border-slate-700 dark:bg-slate-900 hover:border-primary hover:bg-primary/5 dark:hover:bg-primary/10 transition-colors block"
+                              >
+                                <p className="font-medium text-slate-900 dark:text-white hover:text-primary">
+                                  {municipality}
+                                </p>
+                                <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
+                                  {(rate * 100).toFixed(2)}%
+                                </p>
+                              </Link>
+                            )
+                          })}
                       </div>
                     </div>
                   )}
