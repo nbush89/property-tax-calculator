@@ -8,6 +8,7 @@ import type {
   LegacyCountyData,
   StateData,
   CountyData,
+  TownData,
   MetricSeries,
   MetricDatapoint,
 } from './types'
@@ -27,12 +28,27 @@ function normalizeCountyData(
     asOfYear: stateAsOfYear, // Use state's asOfYear
     neighborCounties: legacy.neighborCounties,
     copy: legacy.copy,
-    towns: legacy.towns.map(town => ({
-      name: town.name,
-      slug: town.name.toLowerCase().replace(/\s+/g, '-'), // Generate slug from name
-      asOfYear: stateAsOfYear, // Use state's asOfYear
-      avgRate: town.avgRate, // Keep legacy field for backward compatibility
-    })),
+    towns: legacy.towns.map(town => {
+      // Check if town is already in modern format (has slug property)
+      if ('slug' in town && town.slug) {
+        // Already modern format - preserve all fields
+        return town as TownData
+      }
+
+      // Legacy format - convert to modern format
+      const townSlug =
+        'slug' in town
+          ? town.slug || town.name.toLowerCase().replace(/\s+/g, '-')
+          : town.name.toLowerCase().replace(/\s+/g, '-')
+      const townAsOfYear = 'asOfYear' in town ? town.asOfYear || stateAsOfYear : stateAsOfYear
+
+      return {
+        name: town.name,
+        slug: townSlug,
+        asOfYear: townAsOfYear,
+        ...('avgRate' in town && town.avgRate !== undefined && { avgRate: town.avgRate }),
+      }
+    }),
   }
 
   // Create metrics object with 2024 data wrapped in arrays

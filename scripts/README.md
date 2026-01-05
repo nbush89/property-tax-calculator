@@ -30,7 +30,11 @@ npm run scrape-town-metrics > town_metrics_output.json
 Or run directly with tsx:
 
 ```bash
-npx tsx scripts/source-nj-tier1-metrics.ts > town_metrics_output.json
+npx tsx scripts/source-nj-tier1-metrics.ts > /tmp/nj-tier1-metrics.json
+npx tsx scripts/merge-nj-tier1-metrics.ts /tmp/nj-tier1-metrics.json
+npx tsx scripts/source-nj-avg-tax-bill.ts > /tmp/nj-avg-tax-bill.json
+npx tsx scripts/merge-nj-avg-tax-bill.ts /tmp/nj-avg-tax-bill.json
+
 ```
 
 ## Updating for New Years

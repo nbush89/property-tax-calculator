@@ -84,10 +84,15 @@ export interface CountyCopy {
 }
 
 /**
- * Town copy content
+ * Town copy content (structured for UI rendering)
+ * Maps to specific page sections with variant-aware content
  */
 export interface TownCopy {
-  unique?: string[] // Town-specific paragraphs
+  intro?: string[] // Section 1: 2 short paragraphs (70-100 words total) - town-specific intro context
+  snapshot?: string[] // Section 3: 1 paragraph (variant-aware: town data vs county fallback)
+  compare?: string[] // Section 6: Optional comparison paragraph with internal linking context
+  // Note: Section 2 (how it works), Section 4 (calculator), Section 5 (trends), Section 7 (disclaimer)
+  // are component-level static text, not stored in JSON
 }
 
 /**
@@ -100,6 +105,16 @@ export interface TownOverrides {
 }
 
 /**
+ * Town rollout metadata for controlled internal linking
+ */
+export interface TownRollout {
+  tier?: number // 1 = Tier-1, higher = lower priority
+  featured?: boolean // Featured towns get priority
+  isReady?: boolean // Explicit readiness flag
+  rank?: number // Stable ordering within county (lower = earlier)
+}
+
+/**
  * Town data (with optional metrics, copy, and overrides)
  */
 export interface TownData {
@@ -109,6 +124,7 @@ export interface TownData {
   metrics?: TownMetrics
   copy?: TownCopy
   overrides?: TownOverrides
+  rollout?: TownRollout
   avgRate?: number // Legacy field for backward compatibility
 }
 
@@ -159,7 +175,10 @@ export interface LegacyCountyData {
   avgEffectiveRate: number
   avgResidentialTaxBill2024: number
   neighborCounties?: string[]
-  towns: Array<{ name: string; avgRate: number }>
+  towns: Array<
+    | { name: string; avgRate: number } // Legacy format
+    | TownData // Modern format with full structure
+  >
   copy: {
     paragraphs: string[]
     disclaimer: string

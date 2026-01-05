@@ -26,6 +26,12 @@
       "reference": "General & Effective Tax Rates by County and Municipality",
       "url": "https://www.nj.gov/treasury/taxation/lpt/lpttaxrates.shtml",
       "notes": "Effective Tax Rate is published by municipality; year-specific PDFs (e.g., 2024taxrates.pdf)."
+    },
+    "nj_avg_residential_tax_report": {
+      "name": "NJ Division of Taxation",
+      "reference": "Average Residential Tax Report (MOD IV)",
+      "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
+      "notes": "Municipality and county average residential tax bills by tax year."
     }
   },
   "metrics": {
@@ -87,14 +93,34 @@
       "metrics": {
         "averageResidentialTaxBill": [
           {
+            "year": 2021,
+            "value": 6327,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2022,
+            "value": 6421,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2023,
+            "value": 5679,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2023,
+            "value": 6632,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
             "year": 2024,
             "value": 6799,
             "unit": "USD",
-            "source": {
-              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-              "year": 2024
-            }
+            "sourceRef": "nj_avg_residential_tax_report"
           }
         ],
         "effectiveTaxRate": [
@@ -126,7 +152,26 @@
           "slug": "ridgewood",
           "asOfYear": 2024,
           "metrics": {
-            "averageResidentialTaxBill": [],
+            "averageResidentialTaxBill": [
+              {
+                "year": 2022,
+                "value": 19195,
+                "unit": "USD",
+                "sourceRef": "nj_avg_residential_tax_report"
+              },
+              {
+                "year": 2023,
+                "value": 19838,
+                "unit": "USD",
+                "sourceRef": "nj_avg_residential_tax_report"
+              },
+              {
+                "year": 2024,
+                "value": 20375,
+                "unit": "USD",
+                "sourceRef": "nj_avg_residential_tax_report"
+              }
+            ],
             "effectiveTaxRate": [
               {
                 "year": 2021,
@@ -187,15 +232,26 @@
             ]
           },
           "copy": {
-            "unique": [
-              "TODO: Add 2–3 town-specific paragraphs to avoid thin content.",
-              "TODO: Include local context about property taxes, schools, and municipal services.",
-              "TODO: Mention how this town compares to county and state averages."
+            "intro": [
+              "Property taxes in Ridgewood, New Jersey are influenced by a combination of local municipal budgets, school district funding, and county-level tax rates. Homeowners in Ridgewood often see tax bills that differ meaningfully from nearby towns due to differences in home values, assessments, and local spending priorities.",
+              "This page provides a planning-level estimate of property taxes in Ridgewood, using the most recently available data and historical trends where available. It is designed to help homeowners and prospective buyers understand relative tax burden — not to replace official tax bills or municipal assessments."
+            ],
+            "snapshot": [
+              "Based on recent data, Ridgewood has an effective property tax rate that reflects both local and county funding needs. When paired with typical home values in the area, this results in property tax bills that are generally higher than the surrounding region. Historical data shows that tax levels in Ridgewood have remained relatively stable over the past several years."
+            ],
+            "compare": [
+              "Property taxes in Ridgewood are often compared with nearby towns in Bergen County. Differences in tax burden are driven by local budgets, housing stock, and assessment practices. Exploring nearby municipalities can help homeowners and buyers better understand how local taxes fit within the broader regional picture."
             ]
           },
           "overrides": {
             "seoTitle": "TODO: Add SEO-optimized title for Ridgewood",
             "seoDescription": "TODO: Add SEO-optimized description for Ridgewood"
+          },
+          "rollout": {
+            "tier": 1,
+            "featured": false,
+            "isReady": true,
+            "rank": 10
           },
           "avgRate": 0.0034
         },
@@ -216,7 +272,26 @@
           "slug": "paramus",
           "asOfYear": 2024,
           "metrics": {
-            "averageResidentialTaxBill": [],
+            "averageResidentialTaxBill": [
+              {
+                "year": 2022,
+                "value": 10930,
+                "unit": "USD",
+                "sourceRef": "nj_avg_residential_tax_report"
+              },
+              {
+                "year": 2023,
+                "value": 11600,
+                "unit": "USD",
+                "sourceRef": "nj_avg_residential_tax_report"
+              },
+              {
+                "year": 2024,
+                "value": 12095,
+                "unit": "USD",
+                "sourceRef": "nj_avg_residential_tax_report"
+              }
+            ],
             "effectiveTaxRate": [
               {
                 "year": 2021,
@@ -277,15 +352,26 @@
             ]
           },
           "copy": {
-            "unique": [
-              "TODO: Add 2–3 town-specific paragraphs to avoid thin content.",
-              "TODO: Include local context about property taxes, schools, and municipal services.",
-              "TODO: Mention how this town compares to county and state averages."
+            "intro": [
+              "Property taxes in Paramus, New Jersey are influenced by a combination of local municipal budgets, school district funding, and county-level tax rates. Homeowners in Paramus often see tax bills that differ meaningfully from nearby towns due to differences in home values, assessments, and local spending priorities.",
+              "This page provides a planning-level estimate of property taxes in Paramus, using the most recently available data and historical trends where available. It is designed to help homeowners and prospective buyers understand relative tax burden — not to replace official tax bills or municipal assessments."
+            ],
+            "snapshot": [
+              "Based on recent data, Paramus has an effective property tax rate that reflects both local and county funding needs. When paired with typical home values in the area, this results in property tax bills that are generally lower than the surrounding region. Historical data shows that tax levels in Paramus have remained relatively stable over the past several years."
+            ],
+            "compare": [
+              "Property taxes in Paramus are often compared with nearby towns in Bergen County. Differences in tax burden are driven by local budgets, housing stock, and assessment practices. Exploring nearby municipalities can help homeowners and buyers better understand how local taxes fit within the broader regional picture."
             ]
           },
           "overrides": {
             "seoTitle": "TODO: Add SEO-optimized title for Paramus",
             "seoDescription": "TODO: Add SEO-optimized description for Paramus"
+          },
+          "rollout": {
+            "tier": 1,
+            "featured": false,
+            "isReady": true,
+            "rank": 20
           },
           "avgRate": 0.003
         }
@@ -303,14 +389,34 @@
       "metrics": {
         "averageResidentialTaxBill": [
           {
+            "year": 2021,
+            "value": 12555,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2022,
+            "value": 12725,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2023,
+            "value": 16952,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2023,
+            "value": 13136,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
             "year": 2024,
             "value": 13600,
             "unit": "USD",
-            "source": {
-              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-              "year": 2024
-            }
+            "sourceRef": "nj_avg_residential_tax_report"
           }
         ],
         "effectiveTaxRate": [
@@ -372,14 +478,34 @@
       "metrics": {
         "averageResidentialTaxBill": [
           {
+            "year": 2021,
+            "value": 7194,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2022,
+            "value": 7272,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2023,
+            "value": 4790,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2023,
+            "value": 7475,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
             "year": 2024,
             "value": 7786,
             "unit": "USD",
-            "source": {
-              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-              "year": 2024
-            }
+            "sourceRef": "nj_avg_residential_tax_report"
           }
         ],
         "effectiveTaxRate": [
@@ -414,7 +540,26 @@
           "slug": "cherry-hill",
           "asOfYear": 2024,
           "metrics": {
-            "averageResidentialTaxBill": [],
+            "averageResidentialTaxBill": [
+              {
+                "year": 2022,
+                "value": 8576,
+                "unit": "USD",
+                "sourceRef": "nj_avg_residential_tax_report"
+              },
+              {
+                "year": 2023,
+                "value": 8851,
+                "unit": "USD",
+                "sourceRef": "nj_avg_residential_tax_report"
+              },
+              {
+                "year": 2024,
+                "value": 9379,
+                "unit": "USD",
+                "sourceRef": "nj_avg_residential_tax_report"
+              }
+            ],
             "effectiveTaxRate": [
               {
                 "year": 2021,
@@ -444,15 +589,26 @@
             "medianHomeValue": []
           },
           "copy": {
-            "unique": [
-              "TODO: Add 2–3 town-specific paragraphs to avoid thin content.",
-              "TODO: Include local context about property taxes, schools, and municipal services.",
-              "TODO: Mention how this town compares to county and state averages."
+            "intro": [
+              "Property taxes in Cherry Hill, New Jersey are influenced by a combination of local municipal budgets, school district funding, and county-level tax rates. Homeowners in Cherry Hill often see tax bills that differ meaningfully from nearby towns due to differences in home values, assessments, and local spending priorities.",
+              "This page provides a planning-level estimate of property taxes in Cherry Hill, using the most recently available data and historical trends where available. It is designed to help homeowners and prospective buyers understand relative tax burden — not to replace official tax bills or municipal assessments."
+            ],
+            "snapshot": [
+              "Based on recent data, Cherry Hill has an effective property tax rate that reflects both local and county funding needs. When paired with typical home values in the area, this results in property tax bills that are generally higher than the surrounding region. Historical data shows that tax levels in Cherry Hill have remained relatively stable over the past several years."
+            ],
+            "compare": [
+              "Property taxes in Cherry Hill are often compared with nearby towns in Camden County. Differences in tax burden are driven by local budgets, housing stock, and assessment practices. Exploring nearby municipalities can help homeowners and buyers better understand how local taxes fit within the broader regional picture."
             ]
           },
           "overrides": {
             "seoTitle": "TODO: Add SEO-optimized title for Cherry Hill",
             "seoDescription": "TODO: Add SEO-optimized description for Cherry Hill"
+          },
+          "rollout": {
+            "tier": 1,
+            "featured": false,
+            "isReady": true,
+            "rank": 10
           },
           "avgRate": 0.0028
         },
@@ -482,14 +638,34 @@
       "metrics": {
         "averageResidentialTaxBill": [
           {
+            "year": 2021,
+            "value": 6954,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2022,
+            "value": 7041,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2023,
+            "value": 7936,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2023,
+            "value": 7222,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
             "year": 2024,
             "value": 7468,
             "unit": "USD",
-            "source": {
-              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-              "year": 2024
-            }
+            "sourceRef": "nj_avg_residential_tax_report"
           }
         ],
         "effectiveTaxRate": [
@@ -548,14 +724,34 @@
       "metrics": {
         "averageResidentialTaxBill": [
           {
+            "year": 2021,
+            "value": 5500,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2022,
+            "value": 5726,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2023,
+            "value": 10465,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2023,
+            "value": 6048,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
             "year": 2024,
             "value": 6273,
             "unit": "USD",
-            "source": {
-              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-              "year": 2024
-            }
+            "sourceRef": "nj_avg_residential_tax_report"
           }
         ],
         "effectiveTaxRate": [
@@ -616,14 +812,34 @@
       "metrics": {
         "averageResidentialTaxBill": [
           {
+            "year": 2021,
+            "value": 4576,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2022,
+            "value": 4677,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2023,
+            "value": 3648,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2023,
+            "value": 4770,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
             "year": 2024,
             "value": 4832,
             "unit": "USD",
-            "source": {
-              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-              "year": 2024
-            }
+            "sourceRef": "nj_avg_residential_tax_report"
           }
         ],
         "effectiveTaxRate": [
@@ -658,7 +874,26 @@
           "slug": "montclair",
           "asOfYear": 2024,
           "metrics": {
-            "averageResidentialTaxBill": [],
+            "averageResidentialTaxBill": [
+              {
+                "year": 2022,
+                "value": 20776,
+                "unit": "USD",
+                "sourceRef": "nj_avg_residential_tax_report"
+              },
+              {
+                "year": 2023,
+                "value": 21416,
+                "unit": "USD",
+                "sourceRef": "nj_avg_residential_tax_report"
+              },
+              {
+                "year": 2024,
+                "value": 21635,
+                "unit": "USD",
+                "sourceRef": "nj_avg_residential_tax_report"
+              }
+            ],
             "effectiveTaxRate": [
               {
                 "year": 2021,
@@ -688,15 +923,26 @@
             "medianHomeValue": []
           },
           "copy": {
-            "unique": [
-              "TODO: Add 2–3 town-specific paragraphs to avoid thin content.",
-              "TODO: Include local context about property taxes, schools, and municipal services.",
-              "TODO: Mention how this town compares to county and state averages."
+            "intro": [
+              "Property taxes in Montclair, New Jersey are influenced by a combination of local municipal budgets, school district funding, and county-level tax rates. Homeowners in Montclair often see tax bills that differ meaningfully from nearby towns due to differences in home values, assessments, and local spending priorities.",
+              "This page provides a planning-level estimate of property taxes in Montclair, using the most recently available data and historical trends where available. It is designed to help homeowners and prospective buyers understand relative tax burden — not to replace official tax bills or municipal assessments."
+            ],
+            "snapshot": [
+              "Based on recent data, Montclair has an effective property tax rate that reflects both local and county funding needs. When paired with typical home values in the area, this results in property tax bills that are generally comparable to the surrounding region. Historical data shows that tax levels in Montclair have remained relatively stable over the past several years."
+            ],
+            "compare": [
+              "Property taxes in Montclair are often compared with nearby towns in Essex County. Differences in tax burden are driven by local budgets, housing stock, and assessment practices. Exploring nearby municipalities can help homeowners and buyers better understand how local taxes fit within the broader regional picture."
             ]
           },
           "overrides": {
             "seoTitle": "TODO: Add SEO-optimized title for Montclair",
             "seoDescription": "TODO: Add SEO-optimized description for Montclair"
+          },
+          "rollout": {
+            "tier": 1,
+            "featured": true,
+            "isReady": true,
+            "rank": 10
           },
           "avgRate": 0.0029
         },
@@ -731,14 +977,34 @@
       "metrics": {
         "averageResidentialTaxBill": [
           {
+            "year": 2021,
+            "value": 12683,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2022,
+            "value": 12910,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2023,
+            "value": 10911,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2023,
+            "value": 13283,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
             "year": 2024,
             "value": 13615,
             "unit": "USD",
-            "source": {
-              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-              "year": 2024
-            }
+            "sourceRef": "nj_avg_residential_tax_report"
           }
         ],
         "effectiveTaxRate": [
@@ -799,14 +1065,34 @@
       "metrics": {
         "averageResidentialTaxBill": [
           {
+            "year": 2021,
+            "value": 7265,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2022,
+            "value": 7315,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2023,
+            "value": 6283,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2023,
+            "value": 7466,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
             "year": 2024,
             "value": 7662,
             "unit": "USD",
-            "source": {
-              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-              "year": 2024
-            }
+            "sourceRef": "nj_avg_residential_tax_report"
           }
         ],
         "effectiveTaxRate": [
@@ -837,7 +1123,26 @@
           "slug": "hoboken",
           "asOfYear": 2024,
           "metrics": {
-            "averageResidentialTaxBill": [],
+            "averageResidentialTaxBill": [
+              {
+                "year": 2022,
+                "value": 8405,
+                "unit": "USD",
+                "sourceRef": "nj_avg_residential_tax_report"
+              },
+              {
+                "year": 2023,
+                "value": 8582,
+                "unit": "USD",
+                "sourceRef": "nj_avg_residential_tax_report"
+              },
+              {
+                "year": 2024,
+                "value": 9317,
+                "unit": "USD",
+                "sourceRef": "nj_avg_residential_tax_report"
+              }
+            ],
             "effectiveTaxRate": [
               {
                 "year": 2021,
@@ -898,15 +1203,26 @@
             ]
           },
           "copy": {
-            "unique": [
-              "TODO: Add 2–3 town-specific paragraphs to avoid thin content.",
-              "TODO: Include local context about property taxes, schools, and municipal services.",
-              "TODO: Mention how this town compares to county and state averages."
+            "intro": [
+              "Property taxes in Hoboken, New Jersey are influenced by a combination of local municipal budgets, school district funding, and county-level tax rates. Homeowners in Hoboken often see tax bills that differ meaningfully from nearby towns due to differences in home values, assessments, and local spending priorities.",
+              "This page provides a planning-level estimate of property taxes in Hoboken, using the most recently available data and historical trends where available. It is designed to help homeowners and prospective buyers understand relative tax burden — not to replace official tax bills or municipal assessments."
+            ],
+            "snapshot": [
+              "Based on recent data, Hoboken has an effective property tax rate that reflects both local and county funding needs. When paired with typical home values in the area, this results in property tax bills that are generally lower than the surrounding region. Historical data shows that tax levels in Hoboken have remained relatively stable over the past several years."
+            ],
+            "compare": [
+              "Property taxes in Hoboken are often compared with nearby towns in Hudson County. Differences in tax burden are driven by local budgets, housing stock, and assessment practices. Exploring nearby municipalities can help homeowners and buyers better understand how local taxes fit within the broader regional picture."
             ]
           },
           "overrides": {
             "seoTitle": "TODO: Add SEO-optimized title for Hoboken",
             "seoDescription": "TODO: Add SEO-optimized description for Hoboken"
+          },
+          "rollout": {
+            "tier": 1,
+            "featured": true,
+            "isReady": true,
+            "rank": 10
           },
           "avgRate": 0.0035
         },
@@ -940,14 +1256,34 @@
       "metrics": {
         "averageResidentialTaxBill": [
           {
+            "year": 2021,
+            "value": 8451,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2022,
+            "value": 9340,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2023,
+            "value": 10781,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2023,
+            "value": 9762,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
             "year": 2024,
             "value": 10065,
             "unit": "USD",
-            "source": {
-              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-              "year": 2024
-            }
+            "sourceRef": "nj_avg_residential_tax_report"
           }
         ],
         "effectiveTaxRate": [
@@ -1008,14 +1344,34 @@
       "metrics": {
         "averageResidentialTaxBill": [
           {
+            "year": 2021,
+            "value": 10172,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2022,
+            "value": 10429,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2023,
+            "value": 10769,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2023,
+            "value": 10795,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
             "year": 2024,
             "value": 11198,
             "unit": "USD",
-            "source": {
-              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-              "year": 2024
-            }
+            "sourceRef": "nj_avg_residential_tax_report"
           }
         ],
         "effectiveTaxRate": [
@@ -1052,7 +1408,26 @@
           "slug": "princeton",
           "asOfYear": 2024,
           "metrics": {
-            "averageResidentialTaxBill": [],
+            "averageResidentialTaxBill": [
+              {
+                "year": 2022,
+                "value": 20490,
+                "unit": "USD",
+                "sourceRef": "nj_avg_residential_tax_report"
+              },
+              {
+                "year": 2023,
+                "value": 21320,
+                "unit": "USD",
+                "sourceRef": "nj_avg_residential_tax_report"
+              },
+              {
+                "year": 2024,
+                "value": 22658,
+                "unit": "USD",
+                "sourceRef": "nj_avg_residential_tax_report"
+              }
+            ],
             "effectiveTaxRate": [
               {
                 "year": 2021,
@@ -1113,15 +1488,26 @@
             ]
           },
           "copy": {
-            "unique": [
-              "TODO: Add 2–3 town-specific paragraphs to avoid thin content.",
-              "TODO: Include local context about property taxes, schools, and municipal services.",
-              "TODO: Mention how this town compares to county and state averages."
+            "intro": [
+              "Property taxes in Princeton, New Jersey are influenced by a combination of local municipal budgets, school district funding, and county-level tax rates. Homeowners in Princeton often see tax bills that differ meaningfully from nearby towns due to differences in home values, assessments, and local spending priorities.",
+              "This page provides a planning-level estimate of property taxes in Princeton, using the most recently available data and historical trends where available. It is designed to help homeowners and prospective buyers understand relative tax burden — not to replace official tax bills or municipal assessments."
+            ],
+            "snapshot": [
+              "Based on recent data, Princeton has an effective property tax rate that reflects both local and county funding needs. When paired with typical home values in the area, this results in property tax bills that are generally higher than the surrounding region. Historical data shows that tax levels in Princeton have remained relatively stable over the past several years."
+            ],
+            "compare": [
+              "Property taxes in Princeton are often compared with nearby towns in Mercer County. Differences in tax burden are driven by local budgets, housing stock, and assessment practices. Exploring nearby municipalities can help homeowners and buyers better understand how local taxes fit within the broader regional picture."
             ]
           },
           "overrides": {
             "seoTitle": "TODO: Add SEO-optimized title for Princeton",
             "seoDescription": "TODO: Add SEO-optimized description for Princeton"
+          },
+          "rollout": {
+            "tier": 1,
+            "featured": false,
+            "isReady": true,
+            "rank": 10
           },
           "avgRate": 0.0028
         },
@@ -1151,14 +1537,34 @@
       "metrics": {
         "averageResidentialTaxBill": [
           {
+            "year": 2021,
+            "value": 8741,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2022,
+            "value": 8786,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2023,
+            "value": 8828,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2023,
+            "value": 9043,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
             "year": 2024,
             "value": 9543,
             "unit": "USD",
-            "source": {
-              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-              "year": 2024
-            }
+            "sourceRef": "nj_avg_residential_tax_report"
           }
         ],
         "effectiveTaxRate": [
@@ -1195,7 +1601,26 @@
           "slug": "edison",
           "asOfYear": 2024,
           "metrics": {
-            "averageResidentialTaxBill": [],
+            "averageResidentialTaxBill": [
+              {
+                "year": 2022,
+                "value": 10350,
+                "unit": "USD",
+                "sourceRef": "nj_avg_residential_tax_report"
+              },
+              {
+                "year": 2023,
+                "value": 10403,
+                "unit": "USD",
+                "sourceRef": "nj_avg_residential_tax_report"
+              },
+              {
+                "year": 2024,
+                "value": 10513,
+                "unit": "USD",
+                "sourceRef": "nj_avg_residential_tax_report"
+              }
+            ],
             "effectiveTaxRate": [
               {
                 "year": 2021,
@@ -1225,15 +1650,26 @@
             "medianHomeValue": []
           },
           "copy": {
-            "unique": [
-              "TODO: Add 2–3 town-specific paragraphs to avoid thin content.",
-              "TODO: Include local context about property taxes, schools, and municipal services.",
-              "TODO: Mention how this town compares to county and state averages."
+            "intro": [
+              "Property taxes in Edison, New Jersey are influenced by a combination of local municipal budgets, school district funding, and county-level tax rates. Homeowners in Edison often see tax bills that differ meaningfully from nearby towns due to differences in home values, assessments, and local spending priorities.",
+              "This page provides a planning-level estimate of property taxes in Edison, using the most recently available data and historical trends where available. It is designed to help homeowners and prospective buyers understand relative tax burden — not to replace official tax bills or municipal assessments."
+            ],
+            "snapshot": [
+              "Based on recent data, Edison has an effective property tax rate that reflects both local and county funding needs. When paired with typical home values in the area, this results in property tax bills that are generally comparable to the surrounding region. Historical data shows that tax levels in Edison have remained relatively stable over the past several years."
+            ],
+            "compare": [
+              "Property taxes in Edison are often compared with nearby towns in Middlesex County. Differences in tax burden are driven by local budgets, housing stock, and assessment practices. Exploring nearby municipalities can help homeowners and buyers better understand how local taxes fit within the broader regional picture."
             ]
           },
           "overrides": {
             "seoTitle": "TODO: Add SEO-optimized title for Edison",
             "seoDescription": "TODO: Add SEO-optimized description for Edison"
+          },
+          "rollout": {
+            "tier": 1,
+            "featured": false,
+            "isReady": true,
+            "rank": 10
           },
           "avgRate": 0.0029
         },
@@ -1263,14 +1699,34 @@
       "metrics": {
         "averageResidentialTaxBill": [
           {
+            "year": 2021,
+            "value": 8854,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2022,
+            "value": 9042,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2023,
+            "value": 7590,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2023,
+            "value": 9251,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
             "year": 2024,
             "value": 9528,
             "unit": "USD",
-            "source": {
-              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-              "year": 2024
-            }
+            "sourceRef": "nj_avg_residential_tax_report"
           }
         ],
         "effectiveTaxRate": [
@@ -1330,14 +1786,34 @@
       "metrics": {
         "averageResidentialTaxBill": [
           {
+            "year": 2021,
+            "value": 9738,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2022,
+            "value": 10003,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2023,
+            "value": 8182,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2023,
+            "value": 10445,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
             "year": 2024,
             "value": 10930,
             "unit": "USD",
-            "source": {
-              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-              "year": 2024
-            }
+            "sourceRef": "nj_avg_residential_tax_report"
           }
         ],
         "effectiveTaxRate": [
@@ -1372,7 +1848,26 @@
           "slug": "morristown",
           "asOfYear": 2024,
           "metrics": {
-            "averageResidentialTaxBill": [],
+            "averageResidentialTaxBill": [
+              {
+                "year": 2022,
+                "value": 10327,
+                "unit": "USD",
+                "sourceRef": "nj_avg_residential_tax_report"
+              },
+              {
+                "year": 2023,
+                "value": 10415,
+                "unit": "USD",
+                "sourceRef": "nj_avg_residential_tax_report"
+              },
+              {
+                "year": 2024,
+                "value": 10008,
+                "unit": "USD",
+                "sourceRef": "nj_avg_residential_tax_report"
+              }
+            ],
             "effectiveTaxRate": [
               {
                 "year": 2021,
@@ -1433,15 +1928,26 @@
             ]
           },
           "copy": {
-            "unique": [
-              "TODO: Add 2–3 town-specific paragraphs to avoid thin content.",
-              "TODO: Include local context about property taxes, schools, and municipal services.",
-              "TODO: Mention how this town compares to county and state averages."
+            "intro": [
+              "Property taxes in Morristown, New Jersey are influenced by a combination of local municipal budgets, school district funding, and county-level tax rates. Homeowners in Morristown often see tax bills that differ meaningfully from nearby towns due to differences in home values, assessments, and local spending priorities.",
+              "This page provides a planning-level estimate of property taxes in Morristown, using the most recently available data and historical trends where available. It is designed to help homeowners and prospective buyers understand relative tax burden — not to replace official tax bills or municipal assessments."
+            ],
+            "snapshot": [
+              "Based on recent data, Morristown has an effective property tax rate that reflects both local and county funding needs. When paired with typical home values in the area, this results in property tax bills that are generally comparable to the surrounding region. Historical data shows that tax levels in Morristown have remained relatively stable over the past several years."
+            ],
+            "compare": [
+              "Property taxes in Morristown are often compared with nearby towns in Morris County. Differences in tax burden are driven by local budgets, housing stock, and assessment practices. Exploring nearby municipalities can help homeowners and buyers better understand how local taxes fit within the broader regional picture."
             ]
           },
           "overrides": {
             "seoTitle": "TODO: Add SEO-optimized title for Morristown",
             "seoDescription": "TODO: Add SEO-optimized description for Morristown"
+          },
+          "rollout": {
+            "tier": 1,
+            "featured": false,
+            "isReady": true,
+            "rank": 10
           },
           "avgRate": 0.0028
         },
@@ -1475,14 +1981,34 @@
       "metrics": {
         "averageResidentialTaxBill": [
           {
+            "year": 2021,
+            "value": 10960,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2022,
+            "value": 11184,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2023,
+            "value": 11904,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2023,
+            "value": 11460,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
             "year": 2024,
             "value": 11757,
             "unit": "USD",
-            "source": {
-              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-              "year": 2024
-            }
+            "sourceRef": "nj_avg_residential_tax_report"
           }
         ],
         "effectiveTaxRate": [
@@ -1542,14 +2068,34 @@
       "metrics": {
         "averageResidentialTaxBill": [
           {
+            "year": 2021,
+            "value": 6703,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2022,
+            "value": 6909,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2023,
+            "value": 7158,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2023,
+            "value": 7205,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
             "year": 2024,
             "value": 7593,
             "unit": "USD",
-            "source": {
-              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-              "year": 2024
-            }
+            "sourceRef": "nj_avg_residential_tax_report"
           }
         ],
         "effectiveTaxRate": [
@@ -1610,14 +2156,34 @@
       "metrics": {
         "averageResidentialTaxBill": [
           {
+            "year": 2021,
+            "value": 10375,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2022,
+            "value": 10620,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2023,
+            "value": 11507,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2023,
+            "value": 10862,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
             "year": 2024,
             "value": 11212,
             "unit": "USD",
-            "source": {
-              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-              "year": 2024
-            }
+            "sourceRef": "nj_avg_residential_tax_report"
           }
         ],
         "effectiveTaxRate": [
@@ -1676,14 +2242,34 @@
       "metrics": {
         "averageResidentialTaxBill": [
           {
+            "year": 2021,
+            "value": 6026,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2022,
+            "value": 6205,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2023,
+            "value": 6472,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2023,
+            "value": 6441,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
             "year": 2024,
             "value": 6706,
             "unit": "USD",
-            "source": {
-              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-              "year": 2024
-            }
+            "sourceRef": "nj_avg_residential_tax_report"
           }
         ],
         "effectiveTaxRate": [
@@ -1745,14 +2331,34 @@
       "metrics": {
         "averageResidentialTaxBill": [
           {
+            "year": 2021,
+            "value": 10340,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2022,
+            "value": 10504,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2023,
+            "value": 5584,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2023,
+            "value": 10918,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
             "year": 2024,
             "value": 11355,
             "unit": "USD",
-            "source": {
-              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-              "year": 2024
-            }
+            "sourceRef": "nj_avg_residential_tax_report"
           }
         ],
         "effectiveTaxRate": [
@@ -1812,14 +2418,34 @@
       "metrics": {
         "averageResidentialTaxBill": [
           {
+            "year": 2021,
+            "value": 8024,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2022,
+            "value": 8173,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2023,
+            "value": 7719,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2023,
+            "value": 8380,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
             "year": 2024,
             "value": 8640,
             "unit": "USD",
-            "source": {
-              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-              "year": 2024
-            }
+            "sourceRef": "nj_avg_residential_tax_report"
           }
         ],
         "effectiveTaxRate": [
@@ -1860,7 +2486,26 @@
           "slug": "summit",
           "asOfYear": 2024,
           "metrics": {
-            "averageResidentialTaxBill": [],
+            "averageResidentialTaxBill": [
+              {
+                "year": 2022,
+                "value": 18245,
+                "unit": "USD",
+                "sourceRef": "nj_avg_residential_tax_report"
+              },
+              {
+                "year": 2023,
+                "value": 18658,
+                "unit": "USD",
+                "sourceRef": "nj_avg_residential_tax_report"
+              },
+              {
+                "year": 2024,
+                "value": 18977,
+                "unit": "USD",
+                "sourceRef": "nj_avg_residential_tax_report"
+              }
+            ],
             "effectiveTaxRate": [
               {
                 "year": 2021,
@@ -1921,15 +2566,26 @@
             ]
           },
           "copy": {
-            "unique": [
-              "TODO: Add 2–3 town-specific paragraphs to avoid thin content.",
-              "TODO: Include local context about property taxes, schools, and municipal services.",
-              "TODO: Mention how this town compares to county and state averages."
+            "intro": [
+              "Property taxes in Summit, New Jersey are influenced by a combination of local municipal budgets, school district funding, and county-level tax rates. Homeowners in Summit often see tax bills that differ meaningfully from nearby towns due to differences in home values, assessments, and local spending priorities.",
+              "This page provides a planning-level estimate of property taxes in Summit, using the most recently available data and historical trends where available. It is designed to help homeowners and prospective buyers understand relative tax burden — not to replace official tax bills or municipal assessments."
+            ],
+            "snapshot": [
+              "Based on recent data, Summit has an effective property tax rate that reflects both local and county funding needs. When paired with typical home values in the area, this results in property tax bills that are generally higher than the surrounding region. Historical data shows that tax levels in Summit have remained relatively stable over the past several years."
+            ],
+            "compare": [
+              "Property taxes in Summit are often compared with nearby towns in Union County. Differences in tax burden are driven by local budgets, housing stock, and assessment practices. Exploring nearby municipalities can help homeowners and buyers better understand how local taxes fit within the broader regional picture."
             ]
           },
           "overrides": {
             "seoTitle": "TODO: Add SEO-optimized title for Summit",
             "seoDescription": "TODO: Add SEO-optimized description for Summit"
+          },
+          "rollout": {
+            "tier": 1,
+            "featured": false,
+            "isReady": true,
+            "rank": 10
           },
           "avgRate": 0.0028
         },
@@ -1938,7 +2594,26 @@
           "slug": "westfield",
           "asOfYear": 2024,
           "metrics": {
-            "averageResidentialTaxBill": [],
+            "averageResidentialTaxBill": [
+              {
+                "year": 2022,
+                "value": 17427,
+                "unit": "USD",
+                "sourceRef": "nj_avg_residential_tax_report"
+              },
+              {
+                "year": 2023,
+                "value": 17931,
+                "unit": "USD",
+                "sourceRef": "nj_avg_residential_tax_report"
+              },
+              {
+                "year": 2024,
+                "value": 18487,
+                "unit": "USD",
+                "sourceRef": "nj_avg_residential_tax_report"
+              }
+            ],
             "effectiveTaxRate": [
               {
                 "year": 2021,
@@ -1999,15 +2674,26 @@
             ]
           },
           "copy": {
-            "unique": [
-              "TODO: Add 2–3 town-specific paragraphs to avoid thin content.",
-              "TODO: Include local context about property taxes, schools, and municipal services.",
-              "TODO: Mention how this town compares to county and state averages."
+            "intro": [
+              "Property taxes in Westfield, New Jersey are influenced by a combination of local municipal budgets, school district funding, and county-level tax rates. Homeowners in Westfield often see tax bills that differ meaningfully from nearby towns due to differences in home values, assessments, and local spending priorities.",
+              "This page provides a planning-level estimate of property taxes in Westfield, using the most recently available data and historical trends where available. It is designed to help homeowners and prospective buyers understand relative tax burden — not to replace official tax bills or municipal assessments."
+            ],
+            "snapshot": [
+              "Based on recent data, Westfield has an effective property tax rate that reflects both local and county funding needs. When paired with typical home values in the area, this results in property tax bills that are generally higher than the surrounding region. Historical data shows that tax levels in Westfield have remained relatively stable over the past several years."
+            ],
+            "compare": [
+              "Property taxes in Westfield are often compared with nearby towns in Union County. Differences in tax burden are driven by local budgets, housing stock, and assessment practices. Exploring nearby municipalities can help homeowners and buyers better understand how local taxes fit within the broader regional picture."
             ]
           },
           "overrides": {
             "seoTitle": "TODO: Add SEO-optimized title for Westfield",
             "seoDescription": "TODO: Add SEO-optimized description for Westfield"
+          },
+          "rollout": {
+            "tier": 1,
+            "featured": false,
+            "isReady": true,
+            "rank": 20
           },
           "avgRate": 0.0027
         },
@@ -2029,14 +2715,34 @@
       "metrics": {
         "averageResidentialTaxBill": [
           {
+            "year": 2021,
+            "value": 11496,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2022,
+            "value": 11615,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2023,
+            "value": 13382,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2023,
+            "value": 11915,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
             "year": 2024,
             "value": 12047,
             "unit": "USD",
-            "source": {
-              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-              "year": 2024
-            }
+            "sourceRef": "nj_avg_residential_tax_report"
           }
         ],
         "effectiveTaxRate": [
@@ -2096,14 +2802,34 @@
       "metrics": {
         "averageResidentialTaxBill": [
           {
+            "year": 2021,
+            "value": 7181,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2022,
+            "value": 7342,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2023,
+            "value": 7283,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
+            "year": 2023,
+            "value": 7528,
+            "unit": "USD",
+            "sourceRef": "nj_avg_residential_tax_report"
+          },
+          {
             "year": 2024,
             "value": 7879,
             "unit": "USD",
-            "source": {
-              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-              "year": 2024
-            }
+            "sourceRef": "nj_avg_residential_tax_report"
           }
         ],
         "effectiveTaxRate": [

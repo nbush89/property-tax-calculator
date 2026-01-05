@@ -16,6 +16,7 @@ import { slugifyLocation } from '@/utils/locationUtils'
 import { getCountyFaqData } from '@/data/countyFaqData'
 import { getCountyLatestTaxBill } from '@/lib/data/adapter'
 import HistoricalMetrics from '@/components/location/HistoricalMetrics'
+import CountyTownLinks from '@/components/CountyTownLinks'
 
 type Props = {
   params: Promise<{
@@ -172,6 +173,9 @@ export default async function CountyPropertyTaxPage({ params }: Props) {
                 <TaxResults />
               </Card>
             </div>
+
+            {/* Popular Towns Section */}
+            <CountyTownLinks county={county} />
 
             {/* Internal Links Section */}
             <div className="mb-12">
