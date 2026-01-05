@@ -1,50 +1,51 @@
 {
-  "name": "New Jersey",
-  "slug": "new-jersey",
-  "abbreviation": "NJ",
-  "asOfYear": 2024,
-  "source": {
-    "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-    "year": 2024,
-    "url": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf"
+  "state": {
+    "name": "New Jersey",
+    "slug": "new-jersey",
+    "abbreviation": "NJ",
+    "asOfYear": 2024,
+    "primarySources": {
+      "averageResidentialTaxBill": "nj_modiv_avg_restax",
+      "effectiveTaxRate": "nj_gtr",
+      "medianHomeValue": "us_census_acs_dp04"
+    }
   },
   "sources": {
-    "nj-tax-2024": {
-      "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-      "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-      "url": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-      "notes": "Tax Year 2024 county-level average residential tax bill data"
-    },
-    "us_census_acs_profile_dp04": {
-      "name": "U.S. Census Bureau",
-      "reference": "ACS 5-year Profile (DP04_0089E median home value)",
-      "url": "https://api.census.gov/data.html",
-      "notes": "DP04_0089E = Owner-occupied units: Median value (dollars)"
-    },
-    "nj_div_taxation_general_effective_tax_rates": {
-      "name": "NJ Division of Taxation",
-      "reference": "General & Effective Tax Rates by County and Municipality",
-      "url": "https://www.nj.gov/treasury/taxation/lpt/lpttaxrates.shtml",
-      "notes": "Effective Tax Rate is published by municipality; year-specific PDFs (e.g., 2024taxrates.pdf)."
-    },
-    "nj_avg_residential_tax_report": {
-      "name": "NJ Division of Taxation",
-      "reference": "Average Residential Tax Report (MOD IV)",
-      "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
+    "nj_modiv_avg_restax": {
+      "publisher": "NJ Division of Taxation",
+      "title": "MOD IV Average Residential Tax Report",
+      "type": "pdf",
+      "homepageUrl": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
+      "yearUrls": {
+        "2023": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2023.pdf",
+        "2024": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf"
+      },
       "notes": "Municipality and county average residential tax bills by tax year."
+    },
+    "nj_gtr": {
+      "publisher": "NJ Division of Taxation",
+      "title": "General & Effective Tax Rates by County and Municipality",
+      "type": "pdf",
+      "homepageUrl": "https://www.nj.gov/treasury/taxation/lpt/lpttaxrates.shtml",
+      "yearUrls": {
+        "2024": "https://www.nj.gov/treasury/taxation/pdf/lpt/gtr/2024taxrates.pdf"
+      }
+    },
+    "us_census_acs_dp04": {
+      "publisher": "U.S. Census Bureau",
+      "title": "ACS 5-year Profile",
+      "type": "api",
+      "homepageUrl": "https://api.census.gov/data.html",
+      "notes": "DP04_0089E = Owner-occupied units: Median value (dollars)."
     }
   },
   "metrics": {
     "averageTaxRate": [
       {
         "year": 2024,
-        "value": 0.0202,
-        "unit": "rate",
-        "source": {
-          "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-          "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-          "year": 2024
-        }
+        "value": 2.02,
+        "unit": "PERCENT",
+        "sourceRef": "nj_modiv_avg_restax"
       }
     ]
   },
@@ -96,43 +97,39 @@
             "year": 2021,
             "value": 6327,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2022,
             "value": 6421,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2023,
             "value": 5679,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2023,
             "value": 6632,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2024,
             "value": 6799,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           }
         ],
         "effectiveTaxRate": [
           {
             "year": 2024,
-            "value": 0.0185,
-            "unit": "rate",
-            "source": {
-              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-              "year": 2024
-            }
+            "value": 1.85,
+            "unit": "PERCENT",
+            "sourceRef": "nj_gtr"
           }
         ]
       }
@@ -157,45 +154,45 @@
                 "year": 2022,
                 "value": 19195,
                 "unit": "USD",
-                "sourceRef": "nj_avg_residential_tax_report"
+                "sourceRef": "nj_modiv_avg_restax"
               },
               {
                 "year": 2023,
                 "value": 19838,
                 "unit": "USD",
-                "sourceRef": "nj_avg_residential_tax_report"
+                "sourceRef": "nj_modiv_avg_restax"
               },
               {
                 "year": 2024,
                 "value": 20375,
                 "unit": "USD",
-                "sourceRef": "nj_avg_residential_tax_report"
+                "sourceRef": "nj_modiv_avg_restax"
               }
             ],
             "effectiveTaxRate": [
               {
                 "year": 2021,
-                "value": 2.324,
+                "value": 2.32,
                 "unit": "PERCENT",
-                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+                "sourceRef": "nj_gtr"
               },
               {
                 "year": 2022,
-                "value": 2.304,
+                "value": 2.3,
                 "unit": "PERCENT",
-                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+                "sourceRef": "nj_gtr"
               },
               {
                 "year": 2023,
-                "value": 2.121,
+                "value": 2.12,
                 "unit": "PERCENT",
-                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+                "sourceRef": "nj_gtr"
               },
               {
                 "year": 2024,
-                "value": 2.024,
+                "value": 2.02,
                 "unit": "PERCENT",
-                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+                "sourceRef": "nj_gtr"
               }
             ],
             "medianHomeValue": [
@@ -203,31 +200,31 @@
                 "year": 2019,
                 "value": 763300,
                 "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
+                "sourceRef": "us_census_acs_dp04"
               },
               {
                 "year": 2020,
                 "value": 744200,
                 "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
+                "sourceRef": "us_census_acs_dp04"
               },
               {
                 "year": 2021,
                 "value": 789900,
                 "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
+                "sourceRef": "us_census_acs_dp04"
               },
               {
                 "year": 2022,
                 "value": 858900,
                 "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
+                "sourceRef": "us_census_acs_dp04"
               },
               {
                 "year": 2023,
                 "value": 882700,
                 "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
+                "sourceRef": "us_census_acs_dp04"
               }
             ]
           },
@@ -277,45 +274,45 @@
                 "year": 2022,
                 "value": 10930,
                 "unit": "USD",
-                "sourceRef": "nj_avg_residential_tax_report"
+                "sourceRef": "nj_modiv_avg_restax"
               },
               {
                 "year": 2023,
                 "value": 11600,
                 "unit": "USD",
-                "sourceRef": "nj_avg_residential_tax_report"
+                "sourceRef": "nj_modiv_avg_restax"
               },
               {
                 "year": 2024,
                 "value": 12095,
                 "unit": "USD",
-                "sourceRef": "nj_avg_residential_tax_report"
+                "sourceRef": "nj_modiv_avg_restax"
               }
             ],
             "effectiveTaxRate": [
               {
                 "year": 2021,
-                "value": 1.653,
+                "value": 1.65,
                 "unit": "PERCENT",
-                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+                "sourceRef": "nj_gtr"
               },
               {
                 "year": 2022,
-                "value": 1.551,
+                "value": 1.55,
                 "unit": "PERCENT",
-                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+                "sourceRef": "nj_gtr"
               },
               {
                 "year": 2023,
-                "value": 1.461,
+                "value": 1.46,
                 "unit": "PERCENT",
-                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+                "sourceRef": "nj_gtr"
               },
               {
                 "year": 2024,
-                "value": 1.481,
+                "value": 1.48,
                 "unit": "PERCENT",
-                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+                "sourceRef": "nj_gtr"
               }
             ],
             "medianHomeValue": [
@@ -323,31 +320,31 @@
                 "year": 2019,
                 "value": 600200,
                 "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
+                "sourceRef": "us_census_acs_dp04"
               },
               {
                 "year": 2020,
                 "value": 614900,
                 "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
+                "sourceRef": "us_census_acs_dp04"
               },
               {
                 "year": 2021,
                 "value": 623900,
                 "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
+                "sourceRef": "us_census_acs_dp04"
               },
               {
                 "year": 2022,
                 "value": 684800,
                 "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
+                "sourceRef": "us_census_acs_dp04"
               },
               {
                 "year": 2023,
                 "value": 736000,
                 "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
+                "sourceRef": "us_census_acs_dp04"
               }
             ]
           },
@@ -392,43 +389,39 @@
             "year": 2021,
             "value": 12555,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2022,
             "value": 12725,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2023,
             "value": 16952,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2023,
             "value": 13136,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2024,
             "value": 13600,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           }
         ],
         "effectiveTaxRate": [
           {
             "year": 2024,
-            "value": 0.0231,
-            "unit": "rate",
-            "source": {
-              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-              "year": 2024
-            }
+            "value": 2.31,
+            "unit": "PERCENT",
+            "sourceRef": "nj_gtr"
           }
         ]
       }
@@ -481,43 +474,39 @@
             "year": 2021,
             "value": 7194,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2022,
             "value": 7272,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2023,
             "value": 4790,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2023,
             "value": 7475,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2024,
             "value": 7786,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           }
         ],
         "effectiveTaxRate": [
           {
             "year": 2024,
-            "value": 0.0195,
-            "unit": "rate",
-            "source": {
-              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-              "year": 2024
-            }
+            "value": 1.95,
+            "unit": "PERCENT",
+            "sourceRef": "nj_gtr"
           }
         ]
       }
@@ -545,45 +534,45 @@
                 "year": 2022,
                 "value": 8576,
                 "unit": "USD",
-                "sourceRef": "nj_avg_residential_tax_report"
+                "sourceRef": "nj_modiv_avg_restax"
               },
               {
                 "year": 2023,
                 "value": 8851,
                 "unit": "USD",
-                "sourceRef": "nj_avg_residential_tax_report"
+                "sourceRef": "nj_modiv_avg_restax"
               },
               {
                 "year": 2024,
                 "value": 9379,
                 "unit": "USD",
-                "sourceRef": "nj_avg_residential_tax_report"
+                "sourceRef": "nj_modiv_avg_restax"
               }
             ],
             "effectiveTaxRate": [
               {
                 "year": 2021,
-                "value": 3.291,
+                "value": 3.29,
                 "unit": "PERCENT",
-                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+                "sourceRef": "nj_gtr"
               },
               {
                 "year": 2022,
-                "value": 3.144,
+                "value": 3.14,
                 "unit": "PERCENT",
-                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+                "sourceRef": "nj_gtr"
               },
               {
                 "year": 2023,
-                "value": 2.925,
+                "value": 2.93,
                 "unit": "PERCENT",
-                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+                "sourceRef": "nj_gtr"
               },
               {
                 "year": 2024,
-                "value": 2.663,
+                "value": 2.66,
                 "unit": "PERCENT",
-                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+                "sourceRef": "nj_gtr"
               }
             ],
             "medianHomeValue": []
@@ -641,43 +630,39 @@
             "year": 2021,
             "value": 6954,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2022,
             "value": 7041,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2023,
             "value": 7936,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2023,
             "value": 7222,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2024,
             "value": 7468,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           }
         ],
         "effectiveTaxRate": [
           {
             "year": 2024,
-            "value": 0.0225,
-            "unit": "rate",
-            "source": {
-              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-              "year": 2024
-            }
+            "value": 2.25,
+            "unit": "PERCENT",
+            "sourceRef": "nj_gtr"
           }
         ]
       }
@@ -727,43 +712,39 @@
             "year": 2021,
             "value": 5500,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2022,
             "value": 5726,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2023,
             "value": 10465,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2023,
             "value": 6048,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2024,
             "value": 6273,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           }
         ],
         "effectiveTaxRate": [
           {
             "year": 2024,
-            "value": 0.0155,
-            "unit": "rate",
-            "source": {
-              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-              "year": 2024
-            }
+            "value": 1.55,
+            "unit": "PERCENT",
+            "sourceRef": "nj_gtr"
           }
         ]
       }
@@ -815,43 +796,39 @@
             "year": 2021,
             "value": 4576,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2022,
             "value": 4677,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2023,
             "value": 3648,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2023,
             "value": 4770,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2024,
             "value": 4832,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           }
         ],
         "effectiveTaxRate": [
           {
             "year": 2024,
-            "value": 0.0205,
-            "unit": "rate",
-            "source": {
-              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-              "year": 2024
-            }
+            "value": 2.05,
+            "unit": "PERCENT",
+            "sourceRef": "nj_gtr"
           }
         ]
       }
@@ -879,19 +856,19 @@
                 "year": 2022,
                 "value": 20776,
                 "unit": "USD",
-                "sourceRef": "nj_avg_residential_tax_report"
+                "sourceRef": "nj_modiv_avg_restax"
               },
               {
                 "year": 2023,
                 "value": 21416,
                 "unit": "USD",
-                "sourceRef": "nj_avg_residential_tax_report"
+                "sourceRef": "nj_modiv_avg_restax"
               },
               {
                 "year": 2024,
                 "value": 21635,
                 "unit": "USD",
-                "sourceRef": "nj_avg_residential_tax_report"
+                "sourceRef": "nj_modiv_avg_restax"
               }
             ],
             "effectiveTaxRate": [
@@ -899,25 +876,25 @@
                 "year": 2021,
                 "value": 2.84,
                 "unit": "PERCENT",
-                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+                "sourceRef": "nj_gtr"
               },
               {
                 "year": 2022,
                 "value": 2.71,
                 "unit": "PERCENT",
-                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+                "sourceRef": "nj_gtr"
               },
               {
                 "year": 2023,
-                "value": 2.447,
+                "value": 2.45,
                 "unit": "PERCENT",
-                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+                "sourceRef": "nj_gtr"
               },
               {
                 "year": 2024,
-                "value": 2.268,
+                "value": 2.27,
                 "unit": "PERCENT",
-                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+                "sourceRef": "nj_gtr"
               }
             ],
             "medianHomeValue": []
@@ -980,43 +957,39 @@
             "year": 2021,
             "value": 12683,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2022,
             "value": 12910,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2023,
             "value": 10911,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2023,
             "value": 13283,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2024,
             "value": 13615,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           }
         ],
         "effectiveTaxRate": [
           {
             "year": 2024,
-            "value": 0.0254,
-            "unit": "rate",
-            "source": {
-              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-              "year": 2024
-            }
+            "value": 2.54,
+            "unit": "PERCENT",
+            "sourceRef": "nj_gtr"
           }
         ]
       }
@@ -1068,43 +1041,39 @@
             "year": 2021,
             "value": 7265,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2022,
             "value": 7315,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2023,
             "value": 6283,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2023,
             "value": 7466,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2024,
             "value": 7662,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           }
         ],
         "effectiveTaxRate": [
           {
             "year": 2024,
-            "value": 0.0195,
-            "unit": "rate",
-            "source": {
-              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-              "year": 2024
-            }
+            "value": 1.95,
+            "unit": "PERCENT",
+            "sourceRef": "nj_gtr"
           }
         ]
       }
@@ -1128,45 +1097,45 @@
                 "year": 2022,
                 "value": 8405,
                 "unit": "USD",
-                "sourceRef": "nj_avg_residential_tax_report"
+                "sourceRef": "nj_modiv_avg_restax"
               },
               {
                 "year": 2023,
                 "value": 8582,
                 "unit": "USD",
-                "sourceRef": "nj_avg_residential_tax_report"
+                "sourceRef": "nj_modiv_avg_restax"
               },
               {
                 "year": 2024,
                 "value": 9317,
                 "unit": "USD",
-                "sourceRef": "nj_avg_residential_tax_report"
+                "sourceRef": "nj_modiv_avg_restax"
               }
             ],
             "effectiveTaxRate": [
               {
                 "year": 2021,
-                "value": 1.071,
+                "value": 1.07,
                 "unit": "PERCENT",
-                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+                "sourceRef": "nj_gtr"
               },
               {
                 "year": 2022,
-                "value": 1.116,
+                "value": 1.12,
                 "unit": "PERCENT",
-                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+                "sourceRef": "nj_gtr"
               },
               {
                 "year": 2023,
-                "value": 1.063,
+                "value": 1.06,
                 "unit": "PERCENT",
-                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+                "sourceRef": "nj_gtr"
               },
               {
                 "year": 2024,
-                "value": 1.109,
+                "value": 1.11,
                 "unit": "PERCENT",
-                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+                "sourceRef": "nj_gtr"
               }
             ],
             "medianHomeValue": [
@@ -1174,31 +1143,31 @@
                 "year": 2019,
                 "value": 720700,
                 "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
+                "sourceRef": "us_census_acs_dp04"
               },
               {
                 "year": 2020,
                 "value": 759800,
                 "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
+                "sourceRef": "us_census_acs_dp04"
               },
               {
                 "year": 2021,
                 "value": 777600,
                 "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
+                "sourceRef": "us_census_acs_dp04"
               },
               {
                 "year": 2022,
                 "value": 859300,
                 "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
+                "sourceRef": "us_census_acs_dp04"
               },
               {
                 "year": 2023,
                 "value": 872100,
                 "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
+                "sourceRef": "us_census_acs_dp04"
               }
             ]
           },
@@ -1259,43 +1228,39 @@
             "year": 2021,
             "value": 8451,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2022,
             "value": 9340,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2023,
             "value": 10781,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2023,
             "value": 9762,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2024,
             "value": 10065,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           }
         ],
         "effectiveTaxRate": [
           {
             "year": 2024,
-            "value": 0.0205,
-            "unit": "rate",
-            "source": {
-              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-              "year": 2024
-            }
+            "value": 2.05,
+            "unit": "PERCENT",
+            "sourceRef": "nj_gtr"
           }
         ]
       }
@@ -1347,43 +1312,39 @@
             "year": 2021,
             "value": 10172,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2022,
             "value": 10429,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2023,
             "value": 10769,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2023,
             "value": 10795,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2024,
             "value": 11198,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           }
         ],
         "effectiveTaxRate": [
           {
             "year": 2024,
-            "value": 0.0185,
-            "unit": "rate",
-            "source": {
-              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-              "year": 2024
-            }
+            "value": 1.85,
+            "unit": "PERCENT",
+            "sourceRef": "nj_gtr"
           }
         ]
       }
@@ -1413,45 +1374,45 @@
                 "year": 2022,
                 "value": 20490,
                 "unit": "USD",
-                "sourceRef": "nj_avg_residential_tax_report"
+                "sourceRef": "nj_modiv_avg_restax"
               },
               {
                 "year": 2023,
                 "value": 21320,
                 "unit": "USD",
-                "sourceRef": "nj_avg_residential_tax_report"
+                "sourceRef": "nj_modiv_avg_restax"
               },
               {
                 "year": 2024,
                 "value": 22658,
                 "unit": "USD",
-                "sourceRef": "nj_avg_residential_tax_report"
+                "sourceRef": "nj_modiv_avg_restax"
               }
             ],
             "effectiveTaxRate": [
               {
                 "year": 2021,
-                "value": 2.004,
+                "value": 2,
                 "unit": "PERCENT",
-                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+                "sourceRef": "nj_gtr"
               },
               {
                 "year": 2022,
-                "value": 1.964,
+                "value": 1.96,
                 "unit": "PERCENT",
-                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+                "sourceRef": "nj_gtr"
               },
               {
                 "year": 2023,
-                "value": 1.942,
+                "value": 1.94,
                 "unit": "PERCENT",
-                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+                "sourceRef": "nj_gtr"
               },
               {
                 "year": 2024,
-                "value": 1.875,
+                "value": 1.88,
                 "unit": "PERCENT",
-                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+                "sourceRef": "nj_gtr"
               }
             ],
             "medianHomeValue": [
@@ -1459,31 +1420,31 @@
                 "year": 2019,
                 "value": 866200,
                 "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
+                "sourceRef": "us_census_acs_dp04"
               },
               {
                 "year": 2020,
                 "value": 872400,
                 "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
+                "sourceRef": "us_census_acs_dp04"
               },
               {
                 "year": 2021,
                 "value": 893600,
                 "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
+                "sourceRef": "us_census_acs_dp04"
               },
               {
                 "year": 2022,
                 "value": 971200,
                 "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
+                "sourceRef": "us_census_acs_dp04"
               },
               {
                 "year": 2023,
                 "value": 1040400,
                 "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
+                "sourceRef": "us_census_acs_dp04"
               }
             ]
           },
@@ -1540,43 +1501,39 @@
             "year": 2021,
             "value": 8741,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2022,
             "value": 8786,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2023,
             "value": 8828,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2023,
             "value": 9043,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2024,
             "value": 9543,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           }
         ],
         "effectiveTaxRate": [
           {
             "year": 2024,
-            "value": 0.0215,
-            "unit": "rate",
-            "source": {
-              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-              "year": 2024
-            }
+            "value": 2.15,
+            "unit": "PERCENT",
+            "sourceRef": "nj_gtr"
           }
         ]
       }
@@ -1606,19 +1563,19 @@
                 "year": 2022,
                 "value": 10350,
                 "unit": "USD",
-                "sourceRef": "nj_avg_residential_tax_report"
+                "sourceRef": "nj_modiv_avg_restax"
               },
               {
                 "year": 2023,
                 "value": 10403,
                 "unit": "USD",
-                "sourceRef": "nj_avg_residential_tax_report"
+                "sourceRef": "nj_modiv_avg_restax"
               },
               {
                 "year": 2024,
                 "value": 10513,
                 "unit": "USD",
-                "sourceRef": "nj_avg_residential_tax_report"
+                "sourceRef": "nj_modiv_avg_restax"
               }
             ],
             "effectiveTaxRate": [
@@ -1626,25 +1583,25 @@
                 "year": 2021,
                 "value": 2.28,
                 "unit": "PERCENT",
-                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+                "sourceRef": "nj_gtr"
               },
               {
                 "year": 2022,
-                "value": 2.173,
+                "value": 2.17,
                 "unit": "PERCENT",
-                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+                "sourceRef": "nj_gtr"
               },
               {
                 "year": 2023,
-                "value": 2.169,
+                "value": 2.17,
                 "unit": "PERCENT",
-                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+                "sourceRef": "nj_gtr"
               },
               {
                 "year": 2024,
-                "value": 2.086,
+                "value": 2.09,
                 "unit": "PERCENT",
-                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+                "sourceRef": "nj_gtr"
               }
             ],
             "medianHomeValue": []
@@ -1702,43 +1659,39 @@
             "year": 2021,
             "value": 8854,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2022,
             "value": 9042,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2023,
             "value": 7590,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2023,
             "value": 9251,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2024,
             "value": 9528,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           }
         ],
         "effectiveTaxRate": [
           {
             "year": 2024,
-            "value": 0.0211,
-            "unit": "rate",
-            "source": {
-              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-              "year": 2024
-            }
+            "value": 2.11,
+            "unit": "PERCENT",
+            "sourceRef": "nj_gtr"
           }
         ]
       }
@@ -1789,43 +1742,39 @@
             "year": 2021,
             "value": 9738,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2022,
             "value": 10003,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2023,
             "value": 8182,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2023,
             "value": 10445,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2024,
             "value": 10930,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           }
         ],
         "effectiveTaxRate": [
           {
             "year": 2024,
-            "value": 0.0219,
-            "unit": "rate",
-            "source": {
-              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-              "year": 2024
-            }
+            "value": 2.19,
+            "unit": "PERCENT",
+            "sourceRef": "nj_gtr"
           }
         ]
       }
@@ -1853,45 +1802,45 @@
                 "year": 2022,
                 "value": 10327,
                 "unit": "USD",
-                "sourceRef": "nj_avg_residential_tax_report"
+                "sourceRef": "nj_modiv_avg_restax"
               },
               {
                 "year": 2023,
                 "value": 10415,
                 "unit": "USD",
-                "sourceRef": "nj_avg_residential_tax_report"
+                "sourceRef": "nj_modiv_avg_restax"
               },
               {
                 "year": 2024,
                 "value": 10008,
                 "unit": "USD",
-                "sourceRef": "nj_avg_residential_tax_report"
+                "sourceRef": "nj_modiv_avg_restax"
               }
             ],
             "effectiveTaxRate": [
               {
                 "year": 2021,
-                "value": 2.193,
+                "value": 2.19,
                 "unit": "PERCENT",
-                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+                "sourceRef": "nj_gtr"
               },
               {
                 "year": 2022,
-                "value": 2.241,
+                "value": 2.24,
                 "unit": "PERCENT",
-                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+                "sourceRef": "nj_gtr"
               },
               {
                 "year": 2023,
-                "value": 2.253,
+                "value": 2.25,
                 "unit": "PERCENT",
-                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+                "sourceRef": "nj_gtr"
               },
               {
                 "year": 2024,
-                "value": 1.735,
+                "value": 1.74,
                 "unit": "PERCENT",
-                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+                "sourceRef": "nj_gtr"
               }
             ],
             "medianHomeValue": [
@@ -1899,31 +1848,31 @@
                 "year": 2019,
                 "value": 472000,
                 "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
+                "sourceRef": "us_census_acs_dp04"
               },
               {
                 "year": 2020,
                 "value": 479100,
                 "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
+                "sourceRef": "us_census_acs_dp04"
               },
               {
                 "year": 2021,
                 "value": 469600,
                 "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
+                "sourceRef": "us_census_acs_dp04"
               },
               {
                 "year": 2022,
                 "value": 535900,
                 "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
+                "sourceRef": "us_census_acs_dp04"
               },
               {
                 "year": 2023,
                 "value": 552800,
                 "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
+                "sourceRef": "us_census_acs_dp04"
               }
             ]
           },
@@ -1984,43 +1933,39 @@
             "year": 2021,
             "value": 10960,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2022,
             "value": 11184,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2023,
             "value": 11904,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2023,
             "value": 11460,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2024,
             "value": 11757,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           }
         ],
         "effectiveTaxRate": [
           {
             "year": 2024,
-            "value": 0.0195,
-            "unit": "rate",
-            "source": {
-              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-              "year": 2024
-            }
+            "value": 1.95,
+            "unit": "PERCENT",
+            "sourceRef": "nj_gtr"
           }
         ]
       }
@@ -2071,43 +2016,39 @@
             "year": 2021,
             "value": 6703,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2022,
             "value": 6909,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2023,
             "value": 7158,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2023,
             "value": 7205,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2024,
             "value": 7593,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           }
         ],
         "effectiveTaxRate": [
           {
             "year": 2024,
-            "value": 0.0175,
-            "unit": "rate",
-            "source": {
-              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-              "year": 2024
-            }
+            "value": 1.75,
+            "unit": "PERCENT",
+            "sourceRef": "nj_gtr"
           }
         ]
       }
@@ -2159,43 +2100,39 @@
             "year": 2021,
             "value": 10375,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2022,
             "value": 10620,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2023,
             "value": 11507,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2023,
             "value": 10862,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2024,
             "value": 11212,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           }
         ],
         "effectiveTaxRate": [
           {
             "year": 2024,
-            "value": 0.0225,
-            "unit": "rate",
-            "source": {
-              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-              "year": 2024
-            }
+            "value": 2.25,
+            "unit": "PERCENT",
+            "sourceRef": "nj_gtr"
           }
         ]
       }
@@ -2245,43 +2182,39 @@
             "year": 2021,
             "value": 6026,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2022,
             "value": 6205,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2023,
             "value": 6472,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2023,
             "value": 6441,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2024,
             "value": 6706,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           }
         ],
         "effectiveTaxRate": [
           {
             "year": 2024,
-            "value": 0.0175,
-            "unit": "rate",
-            "source": {
-              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-              "year": 2024
-            }
+            "value": 1.75,
+            "unit": "PERCENT",
+            "sourceRef": "nj_gtr"
           }
         ]
       }
@@ -2334,43 +2267,39 @@
             "year": 2021,
             "value": 10340,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2022,
             "value": 10504,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2023,
             "value": 5584,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2023,
             "value": 10918,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2024,
             "value": 11355,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           }
         ],
         "effectiveTaxRate": [
           {
             "year": 2024,
-            "value": 0.0195,
-            "unit": "rate",
-            "source": {
-              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-              "year": 2024
-            }
+            "value": 1.95,
+            "unit": "PERCENT",
+            "sourceRef": "nj_gtr"
           }
         ]
       }
@@ -2421,43 +2350,39 @@
             "year": 2021,
             "value": 8024,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2022,
             "value": 8173,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2023,
             "value": 7719,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2023,
             "value": 8380,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2024,
             "value": 8640,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           }
         ],
         "effectiveTaxRate": [
           {
             "year": 2024,
-            "value": 0.0185,
-            "unit": "rate",
-            "source": {
-              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-              "year": 2024
-            }
+            "value": 1.85,
+            "unit": "PERCENT",
+            "sourceRef": "nj_gtr"
           }
         ]
       }
@@ -2491,45 +2416,45 @@
                 "year": 2022,
                 "value": 18245,
                 "unit": "USD",
-                "sourceRef": "nj_avg_residential_tax_report"
+                "sourceRef": "nj_modiv_avg_restax"
               },
               {
                 "year": 2023,
                 "value": 18658,
                 "unit": "USD",
-                "sourceRef": "nj_avg_residential_tax_report"
+                "sourceRef": "nj_modiv_avg_restax"
               },
               {
                 "year": 2024,
                 "value": 18977,
                 "unit": "USD",
-                "sourceRef": "nj_avg_residential_tax_report"
+                "sourceRef": "nj_modiv_avg_restax"
               }
             ],
             "effectiveTaxRate": [
               {
                 "year": 2021,
-                "value": 1.827,
+                "value": 1.83,
                 "unit": "PERCENT",
-                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+                "sourceRef": "nj_gtr"
               },
               {
                 "year": 2022,
-                "value": 1.795,
+                "value": 1.8,
                 "unit": "PERCENT",
-                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+                "sourceRef": "nj_gtr"
               },
               {
                 "year": 2023,
                 "value": 1.64,
                 "unit": "PERCENT",
-                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+                "sourceRef": "nj_gtr"
               },
               {
                 "year": 2024,
-                "value": 1.554,
+                "value": 1.55,
                 "unit": "PERCENT",
-                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+                "sourceRef": "nj_gtr"
               }
             ],
             "medianHomeValue": [
@@ -2537,31 +2462,31 @@
                 "year": 2019,
                 "value": 890100,
                 "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
+                "sourceRef": "us_census_acs_dp04"
               },
               {
                 "year": 2020,
                 "value": 831700,
                 "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
+                "sourceRef": "us_census_acs_dp04"
               },
               {
                 "year": 2021,
                 "value": 852300,
                 "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
+                "sourceRef": "us_census_acs_dp04"
               },
               {
                 "year": 2022,
                 "value": 907900,
                 "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
+                "sourceRef": "us_census_acs_dp04"
               },
               {
                 "year": 2023,
                 "value": 969900,
                 "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
+                "sourceRef": "us_census_acs_dp04"
               }
             ]
           },
@@ -2599,45 +2524,45 @@
                 "year": 2022,
                 "value": 17427,
                 "unit": "USD",
-                "sourceRef": "nj_avg_residential_tax_report"
+                "sourceRef": "nj_modiv_avg_restax"
               },
               {
                 "year": 2023,
                 "value": 17931,
                 "unit": "USD",
-                "sourceRef": "nj_avg_residential_tax_report"
+                "sourceRef": "nj_modiv_avg_restax"
               },
               {
                 "year": 2024,
                 "value": 18487,
                 "unit": "USD",
-                "sourceRef": "nj_avg_residential_tax_report"
+                "sourceRef": "nj_modiv_avg_restax"
               }
             ],
             "effectiveTaxRate": [
               {
                 "year": 2021,
-                "value": 2.197,
+                "value": 2.2,
                 "unit": "PERCENT",
-                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+                "sourceRef": "nj_gtr"
               },
               {
                 "year": 2022,
-                "value": 2.109,
+                "value": 2.11,
                 "unit": "PERCENT",
-                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+                "sourceRef": "nj_gtr"
               },
               {
                 "year": 2023,
                 "value": 2.02,
                 "unit": "PERCENT",
-                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+                "sourceRef": "nj_gtr"
               },
               {
                 "year": 2024,
                 "value": 1.92,
                 "unit": "PERCENT",
-                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+                "sourceRef": "nj_gtr"
               }
             ],
             "medianHomeValue": [
@@ -2645,31 +2570,31 @@
                 "year": 2019,
                 "value": 743400,
                 "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
+                "sourceRef": "us_census_acs_dp04"
               },
               {
                 "year": 2020,
                 "value": 773200,
                 "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
+                "sourceRef": "us_census_acs_dp04"
               },
               {
                 "year": 2021,
                 "value": 810400,
                 "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
+                "sourceRef": "us_census_acs_dp04"
               },
               {
                 "year": 2022,
                 "value": 890000,
                 "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
+                "sourceRef": "us_census_acs_dp04"
               },
               {
                 "year": 2023,
                 "value": 930500,
                 "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
+                "sourceRef": "us_census_acs_dp04"
               }
             ]
           },
@@ -2718,43 +2643,39 @@
             "year": 2021,
             "value": 11496,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2022,
             "value": 11615,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2023,
             "value": 13382,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2023,
             "value": 11915,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2024,
             "value": 12047,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           }
         ],
         "effectiveTaxRate": [
           {
             "year": 2024,
-            "value": 0.0215,
-            "unit": "rate",
-            "source": {
-              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-              "year": 2024
-            }
+            "value": 2.15,
+            "unit": "PERCENT",
+            "sourceRef": "nj_gtr"
           }
         ]
       }
@@ -2805,43 +2726,39 @@
             "year": 2021,
             "value": 7181,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2022,
             "value": 7342,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2023,
             "value": 7283,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2023,
             "value": 7528,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           },
           {
             "year": 2024,
             "value": 7879,
             "unit": "USD",
-            "sourceRef": "nj_avg_residential_tax_report"
+            "sourceRef": "nj_modiv_avg_restax"
           }
         ],
         "effectiveTaxRate": [
           {
             "year": 2024,
-            "value": 0.0175,
-            "unit": "rate",
-            "source": {
-              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-              "year": 2024
-            }
+            "value": 1.75,
+            "unit": "PERCENT",
+            "sourceRef": "nj_gtr"
           }
         ]
       }

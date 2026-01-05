@@ -11,6 +11,7 @@ import type {
   TownData,
   MetricSeries,
   MetricDatapoint,
+  MetricSource,
 } from './types'
 
 /**
@@ -18,9 +19,10 @@ import type {
  * Wraps existing 2024 data into a metrics array while preserving all other fields
  */
 function normalizeCountyData(
-  legacy: LegacyCountyData,
+  legacy: LegacyCountyData | any,
   stateSource: { name: string; year: number; url?: string },
-  stateAsOfYear: number
+  stateAsOfYear: number,
+  sourcesMap?: Record<string, any>
 ): CountyData {
   const normalized: CountyData = {
     name: legacy.name,
@@ -28,7 +30,7 @@ function normalizeCountyData(
     asOfYear: stateAsOfYear, // Use state's asOfYear
     neighborCounties: legacy.neighborCounties,
     copy: legacy.copy,
-    towns: legacy.towns.map(town => {
+    towns: legacy.towns.map((town: any) => {
       // Check if town is already in modern format (has slug property)
       if ('slug' in town && town.slug) {
         // Already modern format - preserve all fields
@@ -51,39 +53,49 @@ function normalizeCountyData(
     }),
   }
 
-  // Create metrics object with 2024 data wrapped in arrays
+  // Convert metrics: resolve sourceRef to source objects using sources map
   const metrics: CountyData['metrics'] = {}
+  const countyMetrics = (legacy as any).metrics
+  const sources = sourcesMap || {}
 
-  if (legacy.avgResidentialTaxBill2024 !== undefined) {
-    const taxBillSeries: MetricSeries = [
-      {
-        year: 2024,
-        value: legacy.avgResidentialTaxBill2024,
-        unit: 'USD',
-        source: {
-          name: stateSource.name,
-          reference: stateSource.url,
-          year: stateSource.year,
-        },
-      },
-    ]
-    metrics.averageResidentialTaxBill = taxBillSeries
+  // Helper to resolve sourceRef to MetricSource
+  const resolveSource = (sourceRef: string, year: number): MetricSource => {
+    const sourceInfo = sources[sourceRef]
+    if (sourceInfo) {
+      // Get year-specific URL if available, otherwise use homepageUrl
+      const url = sourceInfo.yearUrls?.[year] || sourceInfo.homepageUrl || sourceInfo.url || ''
+      return {
+        name: sourceInfo.publisher || sourceInfo.name || '',
+        reference: url,
+        year: year,
+      }
+    }
+    // Fallback if sourceRef not found
+    return {
+      name: stateSource.name,
+      reference: stateSource.url || '',
+      year: year,
+    }
   }
 
-  if (legacy.avgEffectiveRate !== undefined) {
-    const rateSeries: MetricSeries = [
-      {
-        year: 2024,
-        value: legacy.avgEffectiveRate,
-        unit: 'rate',
-        source: {
-          name: stateSource.name,
-          reference: stateSource.url,
-          year: stateSource.year,
-        },
-      },
-    ]
-    metrics.effectiveTaxRate = rateSeries
+  // Normalize averageResidentialTaxBill
+  if (countyMetrics?.averageResidentialTaxBill) {
+    metrics.averageResidentialTaxBill = countyMetrics.averageResidentialTaxBill.map((d: any) => ({
+      year: d.year,
+      value: d.value,
+      unit: d.unit || 'USD',
+      source: d.source || resolveSource(d.sourceRef, d.year),
+    }))
+  }
+
+  // Normalize effectiveTaxRate
+  if (countyMetrics?.effectiveTaxRate) {
+    metrics.effectiveTaxRate = countyMetrics.effectiveTaxRate.map((d: any) => ({
+      year: d.year,
+      value: d.value,
+      unit: d.unit || 'PERCENT',
+      source: d.source || resolveSource(d.sourceRef, d.year),
+    }))
   }
 
   if (Object.keys(metrics).length > 0) {
@@ -97,35 +109,53 @@ function normalizeCountyData(
  * Normalize legacy state data to the new year-aware format
  * Preserves all existing fields and wraps single-year data into metrics arrays
  */
-export function normalizeStateData(legacy: LegacyStateData): StateData {
-  const stateAsOfYear = legacy.source.year // Use source year as latest
+export function normalizeStateData(legacy: LegacyStateData | any): StateData {
+  // Handle new structure where state is nested
+  const stateData = legacy.state || legacy
+  const stateAsOfYear = stateData.asOfYear || legacy.source?.year || new Date().getFullYear()
+  const stateSource = legacy.source || {
+    name: 'NJ Division of Taxation',
+    year: stateAsOfYear,
+    url: '',
+  }
 
   const normalized: StateData = {
-    name: legacy.name,
-    slug: legacy.slug,
-    abbreviation: legacy.abbreviation,
+    name: stateData.name || legacy.name,
+    slug: stateData.slug || legacy.slug,
+    abbreviation: stateData.abbreviation || legacy.abbreviation,
     asOfYear: stateAsOfYear,
-    source: legacy.source,
-    counties: legacy.counties.map(county =>
-      normalizeCountyData(county, legacy.source, stateAsOfYear)
+    source: stateSource,
+    sources: legacy.sources || {},
+    counties: (legacy.counties || []).map((county: any) =>
+      normalizeCountyData(county, stateSource, stateAsOfYear, legacy.sources)
     ),
   }
 
-  // Wrap state-level avgTaxRate into metrics if present
-  if (legacy.avgTaxRate !== undefined) {
+  // Normalize state-level metrics if present
+  const stateMetrics = (legacy as any).metrics
+  const sources = legacy.sources || {}
+
+  if (stateMetrics?.averageTaxRate) {
     normalized.metrics = {
-      averageTaxRate: [
-        {
-          year: legacy.source.year,
-          value: legacy.avgTaxRate,
-          unit: 'rate',
+      averageTaxRate: stateMetrics.averageTaxRate.map((d: any) => {
+        // Resolve sourceRef to source object
+        if (d.source) {
+          return d
+        }
+        const sourceInfo = sources[d.sourceRef]
+        const url =
+          sourceInfo?.yearUrls?.[d.year] || sourceInfo?.homepageUrl || sourceInfo?.url || ''
+        return {
+          year: d.year,
+          value: d.value,
+          unit: d.unit || 'PERCENT',
           source: {
-            name: legacy.source.name,
-            reference: legacy.source.url,
-            year: legacy.source.year,
+            name: sourceInfo?.publisher || sourceInfo?.name || stateSource.name,
+            reference: url,
+            year: d.year,
           },
-        },
-      ],
+        }
+      }),
     }
   }
 

@@ -15,8 +15,8 @@ import { getStateData, getCountyBySlug, formatUSD } from '@/lib/geo'
 import { slugifyLocation } from '@/utils/locationUtils'
 import { getCountyFaqData } from '@/data/countyFaqData'
 import { getCountyLatestTaxBill } from '@/lib/data/adapter'
-import HistoricalMetrics from '@/components/location/HistoricalMetrics'
 import CountyTownLinks from '@/components/CountyTownLinks'
+import CountyTaxTrendsChart from '@/components/CountyTaxTrendsChart'
 
 type Props = {
   params: Promise<{
@@ -177,6 +177,9 @@ export default async function CountyPropertyTaxPage({ params }: Props) {
             {/* Popular Towns Section */}
             <CountyTownLinks county={county} />
 
+            {/* Tax Trends Chart */}
+            <CountyTaxTrendsChart county={county} />
+
             {/* Internal Links Section */}
             <div className="mb-12">
               <h2 className="text-2xl font-semibold mb-4 text-text">Related Resources</h2>
@@ -210,16 +213,6 @@ export default async function CountyPropertyTaxPage({ params }: Props) {
                 </Link>
               </div>
             </div>
-
-            {/* Historical Metrics Section */}
-            {county.metrics?.averageResidentialTaxBill &&
-              county.metrics.averageResidentialTaxBill.length >= 2 && (
-                <HistoricalMetrics
-                  series={county.metrics.averageResidentialTaxBill}
-                  title={`${county.name} County Average Residential Tax Bill (Last 5 Years)`}
-                  formatValue={value => formatUSD(value)}
-                />
-              )}
 
             {/* FAQ Section */}
             <LocationFAQ

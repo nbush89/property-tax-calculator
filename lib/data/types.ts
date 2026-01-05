@@ -172,8 +172,6 @@ export interface StateData {
 export interface LegacyCountyData {
   name: string
   slug: string
-  avgEffectiveRate: number
-  avgResidentialTaxBill2024: number
   neighborCounties?: string[]
   towns: Array<
     | { name: string; avgRate: number } // Legacy format
@@ -182,6 +180,23 @@ export interface LegacyCountyData {
   copy: {
     paragraphs: string[]
     disclaimer: string
+  }
+  // Metrics may be present with sourceRef format (will be normalized to source objects)
+  metrics?: {
+    averageResidentialTaxBill?: Array<{
+      year: number
+      value: number
+      unit: string
+      sourceRef?: string
+      source?: any
+    }>
+    effectiveTaxRate?: Array<{
+      year: number
+      value: number
+      unit: string
+      sourceRef?: string
+      source?: any
+    }>
   }
 }
 
@@ -192,11 +207,20 @@ export interface LegacyStateData {
   name: string
   slug: string
   abbreviation: string
-  avgTaxRate: number
   source: {
     name: string
     year: number
     url: string
   }
   counties: LegacyCountyData[]
+  // Metrics may be present (will be normalized)
+  metrics?: {
+    averageTaxRate?: Array<{
+      year: number
+      value: number
+      unit: string
+      sourceRef?: string
+      source?: any
+    }>
+  }
 }
