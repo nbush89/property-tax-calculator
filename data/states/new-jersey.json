@@ -2,25 +2,77 @@
   "name": "New Jersey",
   "slug": "new-jersey",
   "abbreviation": "NJ",
-  "avgTaxRate": 0.0202,
+  "asOfYear": 2024,
   "source": {
     "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
     "year": 2024,
     "url": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf"
   },
+  "sources": {
+    "nj-tax-2024": {
+      "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+      "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+      "url": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+      "notes": "Tax Year 2024 county-level average residential tax bill data"
+    },
+    "us_census_acs_profile_dp04": {
+      "name": "U.S. Census Bureau",
+      "reference": "ACS 5-year Profile (DP04_0089E median home value)",
+      "url": "https://api.census.gov/data.html",
+      "notes": "DP04_0089E = Owner-occupied units: Median value (dollars)"
+    },
+    "nj_div_taxation_general_effective_tax_rates": {
+      "name": "NJ Division of Taxation",
+      "reference": "General & Effective Tax Rates by County and Municipality",
+      "url": "https://www.nj.gov/treasury/taxation/lpt/lpttaxrates.shtml",
+      "notes": "Effective Tax Rate is published by municipality; year-specific PDFs (e.g., 2024taxrates.pdf)."
+    }
+  },
+  "metrics": {
+    "averageTaxRate": [
+      {
+        "year": 2024,
+        "value": 0.0202,
+        "unit": "rate",
+        "source": {
+          "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+          "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+          "year": 2024
+        }
+      }
+    ]
+  },
   "counties": [
     {
       "name": "Atlantic",
       "slug": "atlantic",
-      "avgEffectiveRate": 0.0185,
-      "avgResidentialTaxBill2024": 6799,
-      "neighborCounties": ["Ocean", "Burlington", "Camden", "Cape May"],
+      "neighborCounties": [
+        "Ocean",
+        "Burlington",
+        "Camden",
+        "Cape May"
+      ],
       "towns": [
-        { "name": "Atlantic City", "avgRate": 0.0028 },
-        { "name": "Egg Harbor Township", "avgRate": 0.0025 },
-        { "name": "Galloway", "avgRate": 0.0024 },
-        { "name": "Hammonton", "avgRate": 0.0023 },
-        { "name": "Absecon", "avgRate": 0.0022 }
+        {
+          "name": "Atlantic City",
+          "avgRate": 0.0028
+        },
+        {
+          "name": "Egg Harbor Township",
+          "avgRate": 0.0025
+        },
+        {
+          "name": "Galloway",
+          "avgRate": 0.0024
+        },
+        {
+          "name": "Hammonton",
+          "avgRate": 0.0023
+        },
+        {
+          "name": "Absecon",
+          "avgRate": 0.0022
+        }
       ],
       "copy": {
         "paragraphs": [
@@ -30,20 +82,213 @@
           "Municipal selection can significantly refine your estimate, as neighboring towns often have different rates due to varying school district funding and local service levels."
         ],
         "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
+      },
+      "asOfYear": 2024,
+      "metrics": {
+        "averageResidentialTaxBill": [
+          {
+            "year": 2024,
+            "value": 6799,
+            "unit": "USD",
+            "source": {
+              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+              "year": 2024
+            }
+          }
+        ],
+        "effectiveTaxRate": [
+          {
+            "year": 2024,
+            "value": 0.0185,
+            "unit": "rate",
+            "source": {
+              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+              "year": 2024
+            }
+          }
+        ]
       }
     },
     {
       "name": "Bergen",
       "slug": "bergen",
-      "avgEffectiveRate": 0.0231,
-      "avgResidentialTaxBill2024": 13600,
-      "neighborCounties": ["Passaic", "Hudson", "Essex", "Morris"],
+      "neighborCounties": [
+        "Passaic",
+        "Hudson",
+        "Essex",
+        "Morris"
+      ],
       "towns": [
-        { "name": "Ridgewood", "avgRate": 0.0034 },
-        { "name": "Teaneck", "avgRate": 0.0032 },
-        { "name": "Fort Lee", "avgRate": 0.0036 },
-        { "name": "Hackensack", "avgRate": 0.0038 },
-        { "name": "Paramus", "avgRate": 0.003 }
+        {
+          "name": "Ridgewood",
+          "slug": "ridgewood",
+          "asOfYear": 2024,
+          "metrics": {
+            "averageResidentialTaxBill": [],
+            "effectiveTaxRate": [
+              {
+                "year": 2021,
+                "value": 2.324,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2022,
+                "value": 2.304,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2023,
+                "value": 2.121,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2024,
+                "value": 2.024,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              }
+            ],
+            "medianHomeValue": [
+              {
+                "year": 2019,
+                "value": 763300,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2020,
+                "value": 744200,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 789900,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 858900,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 882700,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ]
+          },
+          "copy": {
+            "unique": [
+              "TODO: Add 2–3 town-specific paragraphs to avoid thin content.",
+              "TODO: Include local context about property taxes, schools, and municipal services.",
+              "TODO: Mention how this town compares to county and state averages."
+            ]
+          },
+          "overrides": {
+            "seoTitle": "TODO: Add SEO-optimized title for Ridgewood",
+            "seoDescription": "TODO: Add SEO-optimized description for Ridgewood"
+          },
+          "avgRate": 0.0034
+        },
+        {
+          "name": "Teaneck",
+          "avgRate": 0.0032
+        },
+        {
+          "name": "Fort Lee",
+          "avgRate": 0.0036
+        },
+        {
+          "name": "Hackensack",
+          "avgRate": 0.0038
+        },
+        {
+          "name": "Paramus",
+          "slug": "paramus",
+          "asOfYear": 2024,
+          "metrics": {
+            "averageResidentialTaxBill": [],
+            "effectiveTaxRate": [
+              {
+                "year": 2021,
+                "value": 1.653,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2022,
+                "value": 1.551,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2023,
+                "value": 1.461,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2024,
+                "value": 1.481,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              }
+            ],
+            "medianHomeValue": [
+              {
+                "year": 2019,
+                "value": 600200,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2020,
+                "value": 614900,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 623900,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 684800,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 736000,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ]
+          },
+          "copy": {
+            "unique": [
+              "TODO: Add 2–3 town-specific paragraphs to avoid thin content.",
+              "TODO: Include local context about property taxes, schools, and municipal services.",
+              "TODO: Mention how this town compares to county and state averages."
+            ]
+          },
+          "overrides": {
+            "seoTitle": "TODO: Add SEO-optimized title for Paramus",
+            "seoDescription": "TODO: Add SEO-optimized description for Paramus"
+          },
+          "avgRate": 0.003
+        }
       ],
       "copy": {
         "paragraphs": [
@@ -53,20 +298,66 @@
           "This calculator is best used for planning and comparison: try different home values, and (if available in your dataset) select a town to see how the estimate changes."
         ],
         "disclaimer": "This tool provides estimates, not official tax bills. Always verify with your local tax assessor."
+      },
+      "asOfYear": 2024,
+      "metrics": {
+        "averageResidentialTaxBill": [
+          {
+            "year": 2024,
+            "value": 13600,
+            "unit": "USD",
+            "source": {
+              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+              "year": 2024
+            }
+          }
+        ],
+        "effectiveTaxRate": [
+          {
+            "year": 2024,
+            "value": 0.0231,
+            "unit": "rate",
+            "source": {
+              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+              "year": 2024
+            }
+          }
+        ]
       }
     },
     {
       "name": "Burlington",
       "slug": "burlington",
-      "avgEffectiveRate": 0.0195,
-      "avgResidentialTaxBill2024": 7786,
-      "neighborCounties": ["Mercer", "Monmouth", "Ocean", "Atlantic", "Camden"],
+      "neighborCounties": [
+        "Mercer",
+        "Monmouth",
+        "Ocean",
+        "Atlantic",
+        "Camden"
+      ],
       "towns": [
-        { "name": "Mount Laurel", "avgRate": 0.0024 },
-        { "name": "Evesham", "avgRate": 0.0023 },
-        { "name": "Medford", "avgRate": 0.0022 },
-        { "name": "Moorestown", "avgRate": 0.0021 },
-        { "name": "Burlington", "avgRate": 0.002 }
+        {
+          "name": "Mount Laurel",
+          "avgRate": 0.0024
+        },
+        {
+          "name": "Evesham",
+          "avgRate": 0.0023
+        },
+        {
+          "name": "Medford",
+          "avgRate": 0.0022
+        },
+        {
+          "name": "Moorestown",
+          "avgRate": 0.0021
+        },
+        {
+          "name": "Burlington",
+          "avgRate": 0.002
+        }
       ],
       "copy": {
         "paragraphs": [
@@ -76,20 +367,107 @@
           "When comparing homes in different Burlington towns, remember that even similar property values can yield different tax bills due to local rate variations."
         ],
         "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
+      },
+      "asOfYear": 2024,
+      "metrics": {
+        "averageResidentialTaxBill": [
+          {
+            "year": 2024,
+            "value": 7786,
+            "unit": "USD",
+            "source": {
+              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+              "year": 2024
+            }
+          }
+        ],
+        "effectiveTaxRate": [
+          {
+            "year": 2024,
+            "value": 0.0195,
+            "unit": "rate",
+            "source": {
+              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+              "year": 2024
+            }
+          }
+        ]
       }
     },
     {
       "name": "Camden",
       "slug": "camden",
-      "avgEffectiveRate": 0.0225,
-      "avgResidentialTaxBill2024": 7468,
-      "neighborCounties": ["Burlington", "Gloucester", "Atlantic"],
+      "neighborCounties": [
+        "Burlington",
+        "Gloucester",
+        "Atlantic"
+      ],
       "towns": [
-        { "name": "Camden", "avgRate": 0.0038 },
-        { "name": "Cherry Hill", "avgRate": 0.0028 },
-        { "name": "Voorhees", "avgRate": 0.0027 },
-        { "name": "Gloucester Township", "avgRate": 0.0026 },
-        { "name": "Pennsauken", "avgRate": 0.0025 }
+        {
+          "name": "Camden",
+          "avgRate": 0.0038
+        },
+        {
+          "name": "Cherry Hill",
+          "slug": "cherry-hill",
+          "asOfYear": 2024,
+          "metrics": {
+            "averageResidentialTaxBill": [],
+            "effectiveTaxRate": [
+              {
+                "year": 2021,
+                "value": 3.291,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2022,
+                "value": 3.144,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2023,
+                "value": 2.925,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2024,
+                "value": 2.663,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              }
+            ],
+            "medianHomeValue": []
+          },
+          "copy": {
+            "unique": [
+              "TODO: Add 2–3 town-specific paragraphs to avoid thin content.",
+              "TODO: Include local context about property taxes, schools, and municipal services.",
+              "TODO: Mention how this town compares to county and state averages."
+            ]
+          },
+          "overrides": {
+            "seoTitle": "TODO: Add SEO-optimized title for Cherry Hill",
+            "seoDescription": "TODO: Add SEO-optimized description for Cherry Hill"
+          },
+          "avgRate": 0.0028
+        },
+        {
+          "name": "Voorhees",
+          "avgRate": 0.0027
+        },
+        {
+          "name": "Gloucester Township",
+          "avgRate": 0.0026
+        },
+        {
+          "name": "Pennsauken",
+          "avgRate": 0.0025
+        }
       ],
       "copy": {
         "paragraphs": [
@@ -99,20 +477,63 @@
           "Understanding these estimates helps with financial planning, whether you're buying, refinancing, or simply reviewing your housing costs in Camden County."
         ],
         "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
+      },
+      "asOfYear": 2024,
+      "metrics": {
+        "averageResidentialTaxBill": [
+          {
+            "year": 2024,
+            "value": 7468,
+            "unit": "USD",
+            "source": {
+              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+              "year": 2024
+            }
+          }
+        ],
+        "effectiveTaxRate": [
+          {
+            "year": 2024,
+            "value": 0.0225,
+            "unit": "rate",
+            "source": {
+              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+              "year": 2024
+            }
+          }
+        ]
       }
     },
     {
       "name": "Cape May",
       "slug": "cape-may",
-      "avgEffectiveRate": 0.0155,
-      "avgResidentialTaxBill2024": 6273,
-      "neighborCounties": ["Atlantic", "Cumberland"],
+      "neighborCounties": [
+        "Atlantic",
+        "Cumberland"
+      ],
       "towns": [
-        { "name": "Wildwood", "avgRate": 0.002 },
-        { "name": "Ocean City", "avgRate": 0.0019 },
-        { "name": "Cape May", "avgRate": 0.0018 },
-        { "name": "Avalon", "avgRate": 0.0017 },
-        { "name": "Sea Isle City", "avgRate": 0.0016 }
+        {
+          "name": "Wildwood",
+          "avgRate": 0.002
+        },
+        {
+          "name": "Ocean City",
+          "avgRate": 0.0019
+        },
+        {
+          "name": "Cape May",
+          "avgRate": 0.0018
+        },
+        {
+          "name": "Avalon",
+          "avgRate": 0.0017
+        },
+        {
+          "name": "Sea Isle City",
+          "avgRate": 0.0016
+        }
       ],
       "copy": {
         "paragraphs": [
@@ -122,20 +543,65 @@
           "Enter your property value below and, if you know your municipality, select it to get a more precise estimate of your annual and monthly tax obligations."
         ],
         "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
+      },
+      "asOfYear": 2024,
+      "metrics": {
+        "averageResidentialTaxBill": [
+          {
+            "year": 2024,
+            "value": 6273,
+            "unit": "USD",
+            "source": {
+              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+              "year": 2024
+            }
+          }
+        ],
+        "effectiveTaxRate": [
+          {
+            "year": 2024,
+            "value": 0.0155,
+            "unit": "rate",
+            "source": {
+              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+              "year": 2024
+            }
+          }
+        ]
       }
     },
     {
       "name": "Cumberland",
       "slug": "cumberland",
-      "avgEffectiveRate": 0.0205,
-      "avgResidentialTaxBill2024": 4832,
-      "neighborCounties": ["Salem", "Gloucester", "Atlantic", "Cape May"],
+      "neighborCounties": [
+        "Salem",
+        "Gloucester",
+        "Atlantic",
+        "Cape May"
+      ],
       "towns": [
-        { "name": "Vineland", "avgRate": 0.0028 },
-        { "name": "Millville", "avgRate": 0.0027 },
-        { "name": "Bridgeton", "avgRate": 0.0026 },
-        { "name": "Upper Deerfield", "avgRate": 0.0025 },
-        { "name": "Maurice River", "avgRate": 0.0024 }
+        {
+          "name": "Vineland",
+          "avgRate": 0.0028
+        },
+        {
+          "name": "Millville",
+          "avgRate": 0.0027
+        },
+        {
+          "name": "Bridgeton",
+          "avgRate": 0.0026
+        },
+        {
+          "name": "Upper Deerfield",
+          "avgRate": 0.0025
+        },
+        {
+          "name": "Maurice River",
+          "avgRate": 0.0024
+        }
       ],
       "copy": {
         "paragraphs": [
@@ -145,13 +611,38 @@
           "Municipal selection matters here too—even within this lower-tax county, choosing a specific town can refine your estimate for more accurate budgeting."
         ],
         "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
+      },
+      "asOfYear": 2024,
+      "metrics": {
+        "averageResidentialTaxBill": [
+          {
+            "year": 2024,
+            "value": 4832,
+            "unit": "USD",
+            "source": {
+              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+              "year": 2024
+            }
+          }
+        ],
+        "effectiveTaxRate": [
+          {
+            "year": 2024,
+            "value": 0.0205,
+            "unit": "rate",
+            "source": {
+              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+              "year": 2024
+            }
+          }
+        ]
       }
     },
     {
       "name": "Essex",
       "slug": "essex",
-      "avgEffectiveRate": 0.0254,
-      "avgResidentialTaxBill2024": 13615,
       "neighborCounties": [
         "Bergen",
         "Passaic",
@@ -162,11 +653,69 @@
         "Middlesex"
       ],
       "towns": [
-        { "name": "Montclair", "avgRate": 0.0029 },
-        { "name": "Bloomfield", "avgRate": 0.0031 },
-        { "name": "Newark", "avgRate": 0.004 },
-        { "name": "West Orange", "avgRate": 0.0032 },
-        { "name": "Livingston", "avgRate": 0.0028 }
+        {
+          "name": "Montclair",
+          "slug": "montclair",
+          "asOfYear": 2024,
+          "metrics": {
+            "averageResidentialTaxBill": [],
+            "effectiveTaxRate": [
+              {
+                "year": 2021,
+                "value": 2.84,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2022,
+                "value": 2.71,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2023,
+                "value": 2.447,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2024,
+                "value": 2.268,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              }
+            ],
+            "medianHomeValue": []
+          },
+          "copy": {
+            "unique": [
+              "TODO: Add 2–3 town-specific paragraphs to avoid thin content.",
+              "TODO: Include local context about property taxes, schools, and municipal services.",
+              "TODO: Mention how this town compares to county and state averages."
+            ]
+          },
+          "overrides": {
+            "seoTitle": "TODO: Add SEO-optimized title for Montclair",
+            "seoDescription": "TODO: Add SEO-optimized description for Montclair"
+          },
+          "avgRate": 0.0029
+        },
+        {
+          "name": "Bloomfield",
+          "avgRate": 0.0031
+        },
+        {
+          "name": "Newark",
+          "avgRate": 0.004
+        },
+        {
+          "name": "West Orange",
+          "avgRate": 0.0032
+        },
+        {
+          "name": "Livingston",
+          "avgRate": 0.0028
+        }
       ],
       "copy": {
         "paragraphs": [
@@ -177,20 +726,65 @@
           "For best results, select a specific municipality when available—neighboring towns can produce very different estimates even with the same home value."
         ],
         "disclaimer": "Estimates only; confirm with local assessor."
+      },
+      "asOfYear": 2024,
+      "metrics": {
+        "averageResidentialTaxBill": [
+          {
+            "year": 2024,
+            "value": 13615,
+            "unit": "USD",
+            "source": {
+              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+              "year": 2024
+            }
+          }
+        ],
+        "effectiveTaxRate": [
+          {
+            "year": 2024,
+            "value": 0.0254,
+            "unit": "rate",
+            "source": {
+              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+              "year": 2024
+            }
+          }
+        ]
       }
     },
     {
       "name": "Gloucester",
       "slug": "gloucester",
-      "avgEffectiveRate": 0.0195,
-      "avgResidentialTaxBill2024": 7662,
-      "neighborCounties": ["Camden", "Burlington", "Salem", "Cumberland"],
+      "neighborCounties": [
+        "Camden",
+        "Burlington",
+        "Salem",
+        "Cumberland"
+      ],
       "towns": [
-        { "name": "Washington Township", "avgRate": 0.0025 },
-        { "name": "Deptford", "avgRate": 0.0024 },
-        { "name": "Glassboro", "avgRate": 0.0023 },
-        { "name": "Monroe", "avgRate": 0.0022 },
-        { "name": "Mantua", "avgRate": 0.0021 }
+        {
+          "name": "Washington Township",
+          "avgRate": 0.0025
+        },
+        {
+          "name": "Deptford",
+          "avgRate": 0.0024
+        },
+        {
+          "name": "Glassboro",
+          "avgRate": 0.0023
+        },
+        {
+          "name": "Monroe",
+          "avgRate": 0.0022
+        },
+        {
+          "name": "Mantua",
+          "avgRate": 0.0021
+        }
       ],
       "copy": {
         "paragraphs": [
@@ -200,20 +794,138 @@
           "Selecting a specific municipality when available will give you a more accurate picture, as local school funding and service levels vary throughout the county."
         ],
         "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
+      },
+      "asOfYear": 2024,
+      "metrics": {
+        "averageResidentialTaxBill": [
+          {
+            "year": 2024,
+            "value": 7662,
+            "unit": "USD",
+            "source": {
+              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+              "year": 2024
+            }
+          }
+        ],
+        "effectiveTaxRate": [
+          {
+            "year": 2024,
+            "value": 0.0195,
+            "unit": "rate",
+            "source": {
+              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+              "year": 2024
+            }
+          }
+        ]
       }
     },
     {
       "name": "Hudson",
       "slug": "hudson",
-      "avgEffectiveRate": 0.0205,
-      "avgResidentialTaxBill2024": 10065,
-      "neighborCounties": ["Bergen", "Essex", "Union"],
+      "neighborCounties": [
+        "Bergen",
+        "Essex",
+        "Union"
+      ],
       "towns": [
-        { "name": "Hoboken", "avgRate": 0.0035 },
-        { "name": "Jersey City", "avgRate": 0.0033 },
-        { "name": "Union City", "avgRate": 0.0034 },
-        { "name": "Bayonne", "avgRate": 0.0031 },
-        { "name": "Weehawken", "avgRate": 0.0032 }
+        {
+          "name": "Hoboken",
+          "slug": "hoboken",
+          "asOfYear": 2024,
+          "metrics": {
+            "averageResidentialTaxBill": [],
+            "effectiveTaxRate": [
+              {
+                "year": 2021,
+                "value": 1.071,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2022,
+                "value": 1.116,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2023,
+                "value": 1.063,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2024,
+                "value": 1.109,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              }
+            ],
+            "medianHomeValue": [
+              {
+                "year": 2019,
+                "value": 720700,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2020,
+                "value": 759800,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 777600,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 859300,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 872100,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ]
+          },
+          "copy": {
+            "unique": [
+              "TODO: Add 2–3 town-specific paragraphs to avoid thin content.",
+              "TODO: Include local context about property taxes, schools, and municipal services.",
+              "TODO: Mention how this town compares to county and state averages."
+            ]
+          },
+          "overrides": {
+            "seoTitle": "TODO: Add SEO-optimized title for Hoboken",
+            "seoDescription": "TODO: Add SEO-optimized description for Hoboken"
+          },
+          "avgRate": 0.0035
+        },
+        {
+          "name": "Jersey City",
+          "avgRate": 0.0033
+        },
+        {
+          "name": "Union City",
+          "avgRate": 0.0034
+        },
+        {
+          "name": "Bayonne",
+          "avgRate": 0.0031
+        },
+        {
+          "name": "Weehawken",
+          "avgRate": 0.0032
+        }
       ],
       "copy": {
         "paragraphs": [
@@ -223,20 +935,65 @@
           "Enter your property value and select your municipality to see how annual and monthly tax estimates vary across Hudson County's diverse communities."
         ],
         "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
+      },
+      "asOfYear": 2024,
+      "metrics": {
+        "averageResidentialTaxBill": [
+          {
+            "year": 2024,
+            "value": 10065,
+            "unit": "USD",
+            "source": {
+              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+              "year": 2024
+            }
+          }
+        ],
+        "effectiveTaxRate": [
+          {
+            "year": 2024,
+            "value": 0.0205,
+            "unit": "rate",
+            "source": {
+              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+              "year": 2024
+            }
+          }
+        ]
       }
     },
     {
       "name": "Hunterdon",
       "slug": "hunterdon",
-      "avgEffectiveRate": 0.0185,
-      "avgResidentialTaxBill2024": 11198,
-      "neighborCounties": ["Warren", "Morris", "Somerset", "Mercer"],
+      "neighborCounties": [
+        "Warren",
+        "Morris",
+        "Somerset",
+        "Mercer"
+      ],
       "towns": [
-        { "name": "Raritan Township", "avgRate": 0.0022 },
-        { "name": "Clinton Township", "avgRate": 0.0021 },
-        { "name": "Readington", "avgRate": 0.002 },
-        { "name": "Flemington", "avgRate": 0.0019 },
-        { "name": "Lebanon", "avgRate": 0.0018 }
+        {
+          "name": "Raritan Township",
+          "avgRate": 0.0022
+        },
+        {
+          "name": "Clinton Township",
+          "avgRate": 0.0021
+        },
+        {
+          "name": "Readington",
+          "avgRate": 0.002
+        },
+        {
+          "name": "Flemington",
+          "avgRate": 0.0019
+        },
+        {
+          "name": "Lebanon",
+          "avgRate": 0.0018
+        }
       ],
       "copy": {
         "paragraphs": [
@@ -246,20 +1003,140 @@
           "Municipal selection can make a noticeable difference in your estimate, as Hunterdon's towns vary in their tax rates based on local budget priorities."
         ],
         "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
+      },
+      "asOfYear": 2024,
+      "metrics": {
+        "averageResidentialTaxBill": [
+          {
+            "year": 2024,
+            "value": 11198,
+            "unit": "USD",
+            "source": {
+              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+              "year": 2024
+            }
+          }
+        ],
+        "effectiveTaxRate": [
+          {
+            "year": 2024,
+            "value": 0.0185,
+            "unit": "rate",
+            "source": {
+              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+              "year": 2024
+            }
+          }
+        ]
       }
     },
     {
       "name": "Mercer",
       "slug": "mercer",
-      "avgEffectiveRate": 0.0215,
-      "avgResidentialTaxBill2024": 9543,
-      "neighborCounties": ["Hunterdon", "Somerset", "Middlesex", "Monmouth", "Burlington"],
+      "neighborCounties": [
+        "Hunterdon",
+        "Somerset",
+        "Middlesex",
+        "Monmouth",
+        "Burlington"
+      ],
       "towns": [
-        { "name": "Trenton", "avgRate": 0.0036 },
-        { "name": "Princeton", "avgRate": 0.0028 },
-        { "name": "Hamilton", "avgRate": 0.0026 },
-        { "name": "Lawrence", "avgRate": 0.0025 },
-        { "name": "West Windsor", "avgRate": 0.0024 }
+        {
+          "name": "Trenton",
+          "avgRate": 0.0036
+        },
+        {
+          "name": "Princeton",
+          "slug": "princeton",
+          "asOfYear": 2024,
+          "metrics": {
+            "averageResidentialTaxBill": [],
+            "effectiveTaxRate": [
+              {
+                "year": 2021,
+                "value": 2.004,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2022,
+                "value": 1.964,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2023,
+                "value": 1.942,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2024,
+                "value": 1.875,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              }
+            ],
+            "medianHomeValue": [
+              {
+                "year": 2019,
+                "value": 866200,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2020,
+                "value": 872400,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 893600,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 971200,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 1040400,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ]
+          },
+          "copy": {
+            "unique": [
+              "TODO: Add 2–3 town-specific paragraphs to avoid thin content.",
+              "TODO: Include local context about property taxes, schools, and municipal services.",
+              "TODO: Mention how this town compares to county and state averages."
+            ]
+          },
+          "overrides": {
+            "seoTitle": "TODO: Add SEO-optimized title for Princeton",
+            "seoDescription": "TODO: Add SEO-optimized description for Princeton"
+          },
+          "avgRate": 0.0028
+        },
+        {
+          "name": "Hamilton",
+          "avgRate": 0.0026
+        },
+        {
+          "name": "Lawrence",
+          "avgRate": 0.0025
+        },
+        {
+          "name": "West Windsor",
+          "avgRate": 0.0024
+        }
       ],
       "copy": {
         "paragraphs": [
@@ -269,20 +1146,109 @@
           "Enter your property value below and select your municipality if known to get a clearer picture of your annual and monthly tax obligations in Mercer County."
         ],
         "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
+      },
+      "asOfYear": 2024,
+      "metrics": {
+        "averageResidentialTaxBill": [
+          {
+            "year": 2024,
+            "value": 9543,
+            "unit": "USD",
+            "source": {
+              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+              "year": 2024
+            }
+          }
+        ],
+        "effectiveTaxRate": [
+          {
+            "year": 2024,
+            "value": 0.0215,
+            "unit": "rate",
+            "source": {
+              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+              "year": 2024
+            }
+          }
+        ]
       }
     },
     {
       "name": "Middlesex",
       "slug": "middlesex",
-      "avgEffectiveRate": 0.0211,
-      "avgResidentialTaxBill2024": 9528,
-      "neighborCounties": ["Essex", "Union", "Somerset", "Mercer", "Monmouth"],
+      "neighborCounties": [
+        "Essex",
+        "Union",
+        "Somerset",
+        "Mercer",
+        "Monmouth"
+      ],
       "towns": [
-        { "name": "New Brunswick", "avgRate": 0.0032 },
-        { "name": "Edison", "avgRate": 0.0029 },
-        { "name": "Piscataway", "avgRate": 0.0028 },
-        { "name": "Woodbridge", "avgRate": 0.0027 },
-        { "name": "East Brunswick", "avgRate": 0.0026 }
+        {
+          "name": "New Brunswick",
+          "avgRate": 0.0032
+        },
+        {
+          "name": "Edison",
+          "slug": "edison",
+          "asOfYear": 2024,
+          "metrics": {
+            "averageResidentialTaxBill": [],
+            "effectiveTaxRate": [
+              {
+                "year": 2021,
+                "value": 2.28,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2022,
+                "value": 2.173,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2023,
+                "value": 2.169,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2024,
+                "value": 2.086,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              }
+            ],
+            "medianHomeValue": []
+          },
+          "copy": {
+            "unique": [
+              "TODO: Add 2–3 town-specific paragraphs to avoid thin content.",
+              "TODO: Include local context about property taxes, schools, and municipal services.",
+              "TODO: Mention how this town compares to county and state averages."
+            ]
+          },
+          "overrides": {
+            "seoTitle": "TODO: Add SEO-optimized title for Edison",
+            "seoDescription": "TODO: Add SEO-optimized description for Edison"
+          },
+          "avgRate": 0.0029
+        },
+        {
+          "name": "Piscataway",
+          "avgRate": 0.0028
+        },
+        {
+          "name": "Woodbridge",
+          "avgRate": 0.0027
+        },
+        {
+          "name": "East Brunswick",
+          "avgRate": 0.0026
+        }
       ],
       "copy": {
         "paragraphs": [
@@ -292,20 +1258,64 @@
           "Selecting a specific town refines your estimate, as neighboring Middlesex communities can have meaningfully different rates despite similar property values."
         ],
         "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
+      },
+      "asOfYear": 2024,
+      "metrics": {
+        "averageResidentialTaxBill": [
+          {
+            "year": 2024,
+            "value": 9528,
+            "unit": "USD",
+            "source": {
+              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+              "year": 2024
+            }
+          }
+        ],
+        "effectiveTaxRate": [
+          {
+            "year": 2024,
+            "value": 0.0211,
+            "unit": "rate",
+            "source": {
+              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+              "year": 2024
+            }
+          }
+        ]
       }
     },
     {
       "name": "Monmouth",
       "slug": "monmouth",
-      "avgEffectiveRate": 0.0219,
-      "avgResidentialTaxBill2024": 10930,
-      "neighborCounties": ["Middlesex", "Mercer", "Ocean"],
+      "neighborCounties": [
+        "Middlesex",
+        "Mercer",
+        "Ocean"
+      ],
       "towns": [
-        { "name": "Red Bank", "avgRate": 0.0025 },
-        { "name": "Long Branch", "avgRate": 0.0027 },
-        { "name": "Freehold", "avgRate": 0.0024 },
-        { "name": "Middletown", "avgRate": 0.0026 },
-        { "name": "Tinton Falls", "avgRate": 0.0023 }
+        {
+          "name": "Red Bank",
+          "avgRate": 0.0025
+        },
+        {
+          "name": "Long Branch",
+          "avgRate": 0.0027
+        },
+        {
+          "name": "Freehold",
+          "avgRate": 0.0024
+        },
+        {
+          "name": "Middletown",
+          "avgRate": 0.0026
+        },
+        {
+          "name": "Tinton Falls",
+          "avgRate": 0.0023
+        }
       ],
       "copy": {
         "paragraphs": [
@@ -315,13 +1325,38 @@
           "Municipal selection makes a real difference here—coastal towns often have different tax structures than inland communities, so selecting your town provides a more accurate estimate."
         ],
         "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
+      },
+      "asOfYear": 2024,
+      "metrics": {
+        "averageResidentialTaxBill": [
+          {
+            "year": 2024,
+            "value": 10930,
+            "unit": "USD",
+            "source": {
+              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+              "year": 2024
+            }
+          }
+        ],
+        "effectiveTaxRate": [
+          {
+            "year": 2024,
+            "value": 0.0219,
+            "unit": "rate",
+            "source": {
+              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+              "year": 2024
+            }
+          }
+        ]
       }
     },
     {
       "name": "Morris",
       "slug": "morris",
-      "avgEffectiveRate": 0.0195,
-      "avgResidentialTaxBill2024": 11757,
       "neighborCounties": [
         "Sussex",
         "Warren",
@@ -332,11 +1367,100 @@
         "Bergen"
       ],
       "towns": [
-        { "name": "Morristown", "avgRate": 0.0028 },
-        { "name": "Parsippany", "avgRate": 0.0026 },
-        { "name": "Madison", "avgRate": 0.0025 },
-        { "name": "Chatham", "avgRate": 0.0024 },
-        { "name": "Randolph", "avgRate": 0.0023 }
+        {
+          "name": "Morristown",
+          "slug": "morristown",
+          "asOfYear": 2024,
+          "metrics": {
+            "averageResidentialTaxBill": [],
+            "effectiveTaxRate": [
+              {
+                "year": 2021,
+                "value": 2.193,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2022,
+                "value": 2.241,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2023,
+                "value": 2.253,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2024,
+                "value": 1.735,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              }
+            ],
+            "medianHomeValue": [
+              {
+                "year": 2019,
+                "value": 472000,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2020,
+                "value": 479100,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 469600,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 535900,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 552800,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ]
+          },
+          "copy": {
+            "unique": [
+              "TODO: Add 2–3 town-specific paragraphs to avoid thin content.",
+              "TODO: Include local context about property taxes, schools, and municipal services.",
+              "TODO: Mention how this town compares to county and state averages."
+            ]
+          },
+          "overrides": {
+            "seoTitle": "TODO: Add SEO-optimized title for Morristown",
+            "seoDescription": "TODO: Add SEO-optimized description for Morristown"
+          },
+          "avgRate": 0.0028
+        },
+        {
+          "name": "Parsippany",
+          "avgRate": 0.0026
+        },
+        {
+          "name": "Madison",
+          "avgRate": 0.0025
+        },
+        {
+          "name": "Chatham",
+          "avgRate": 0.0024
+        },
+        {
+          "name": "Randolph",
+          "avgRate": 0.0023
+        }
       ],
       "copy": {
         "paragraphs": [
@@ -346,20 +1470,64 @@
           "Different Morris municipalities can show meaningful rate variations, so selecting your specific town when available will give you a more precise estimate of annual and monthly tax obligations."
         ],
         "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
+      },
+      "asOfYear": 2024,
+      "metrics": {
+        "averageResidentialTaxBill": [
+          {
+            "year": 2024,
+            "value": 11757,
+            "unit": "USD",
+            "source": {
+              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+              "year": 2024
+            }
+          }
+        ],
+        "effectiveTaxRate": [
+          {
+            "year": 2024,
+            "value": 0.0195,
+            "unit": "rate",
+            "source": {
+              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+              "year": 2024
+            }
+          }
+        ]
       }
     },
     {
       "name": "Ocean",
       "slug": "ocean",
-      "avgEffectiveRate": 0.0175,
-      "avgResidentialTaxBill2024": 7593,
-      "neighborCounties": ["Monmouth", "Burlington", "Atlantic"],
+      "neighborCounties": [
+        "Monmouth",
+        "Burlington",
+        "Atlantic"
+      ],
       "towns": [
-        { "name": "Toms River", "avgRate": 0.002 },
-        { "name": "Brick", "avgRate": 0.0019 },
-        { "name": "Lakewood", "avgRate": 0.0018 },
-        { "name": "Jackson", "avgRate": 0.0017 },
-        { "name": "Point Pleasant", "avgRate": 0.0016 }
+        {
+          "name": "Toms River",
+          "avgRate": 0.002
+        },
+        {
+          "name": "Brick",
+          "avgRate": 0.0019
+        },
+        {
+          "name": "Lakewood",
+          "avgRate": 0.0018
+        },
+        {
+          "name": "Jackson",
+          "avgRate": 0.0017
+        },
+        {
+          "name": "Point Pleasant",
+          "avgRate": 0.0016
+        }
       ],
       "copy": {
         "paragraphs": [
@@ -369,20 +1537,65 @@
           "Enter your property value and select your municipality if known to see how annual and monthly tax estimates vary across Ocean County's diverse communities."
         ],
         "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
+      },
+      "asOfYear": 2024,
+      "metrics": {
+        "averageResidentialTaxBill": [
+          {
+            "year": 2024,
+            "value": 7593,
+            "unit": "USD",
+            "source": {
+              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+              "year": 2024
+            }
+          }
+        ],
+        "effectiveTaxRate": [
+          {
+            "year": 2024,
+            "value": 0.0175,
+            "unit": "rate",
+            "source": {
+              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+              "year": 2024
+            }
+          }
+        ]
       }
     },
     {
       "name": "Passaic",
       "slug": "passaic",
-      "avgEffectiveRate": 0.0225,
-      "avgResidentialTaxBill2024": 11212,
-      "neighborCounties": ["Bergen", "Essex", "Morris", "Sussex"],
+      "neighborCounties": [
+        "Bergen",
+        "Essex",
+        "Morris",
+        "Sussex"
+      ],
       "towns": [
-        { "name": "Paterson", "avgRate": 0.0036 },
-        { "name": "Clifton", "avgRate": 0.0034 },
-        { "name": "Wayne", "avgRate": 0.0032 },
-        { "name": "Passaic", "avgRate": 0.0033 },
-        { "name": "Little Falls", "avgRate": 0.003 }
+        {
+          "name": "Paterson",
+          "avgRate": 0.0036
+        },
+        {
+          "name": "Clifton",
+          "avgRate": 0.0034
+        },
+        {
+          "name": "Wayne",
+          "avgRate": 0.0032
+        },
+        {
+          "name": "Passaic",
+          "avgRate": 0.0033
+        },
+        {
+          "name": "Little Falls",
+          "avgRate": 0.003
+        }
       ],
       "copy": {
         "paragraphs": [
@@ -392,20 +1605,63 @@
           "Municipal selection matters here—urban and suburban Passaic communities often have different tax structures, so selecting your specific town provides a more accurate estimate."
         ],
         "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
+      },
+      "asOfYear": 2024,
+      "metrics": {
+        "averageResidentialTaxBill": [
+          {
+            "year": 2024,
+            "value": 11212,
+            "unit": "USD",
+            "source": {
+              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+              "year": 2024
+            }
+          }
+        ],
+        "effectiveTaxRate": [
+          {
+            "year": 2024,
+            "value": 0.0225,
+            "unit": "rate",
+            "source": {
+              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+              "year": 2024
+            }
+          }
+        ]
       }
     },
     {
       "name": "Salem",
       "slug": "salem",
-      "avgEffectiveRate": 0.0175,
-      "avgResidentialTaxBill2024": 6706,
-      "neighborCounties": ["Gloucester", "Cumberland"],
+      "neighborCounties": [
+        "Gloucester",
+        "Cumberland"
+      ],
       "towns": [
-        { "name": "Pennsville", "avgRate": 0.002 },
-        { "name": "Carneys Point", "avgRate": 0.0019 },
-        { "name": "Salem", "avgRate": 0.0018 },
-        { "name": "Pilesgrove", "avgRate": 0.0017 },
-        { "name": "Elsinboro", "avgRate": 0.0016 }
+        {
+          "name": "Pennsville",
+          "avgRate": 0.002
+        },
+        {
+          "name": "Carneys Point",
+          "avgRate": 0.0019
+        },
+        {
+          "name": "Salem",
+          "avgRate": 0.0018
+        },
+        {
+          "name": "Pilesgrove",
+          "avgRate": 0.0017
+        },
+        {
+          "name": "Elsinboro",
+          "avgRate": 0.0016
+        }
       ],
       "copy": {
         "paragraphs": [
@@ -415,20 +1671,66 @@
           "While Salem County generally has lower rates, municipal selection can still refine your estimate, as individual towns vary in their tax structures."
         ],
         "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
+      },
+      "asOfYear": 2024,
+      "metrics": {
+        "averageResidentialTaxBill": [
+          {
+            "year": 2024,
+            "value": 6706,
+            "unit": "USD",
+            "source": {
+              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+              "year": 2024
+            }
+          }
+        ],
+        "effectiveTaxRate": [
+          {
+            "year": 2024,
+            "value": 0.0175,
+            "unit": "rate",
+            "source": {
+              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+              "year": 2024
+            }
+          }
+        ]
       }
     },
     {
       "name": "Somerset",
       "slug": "somerset",
-      "avgEffectiveRate": 0.0195,
-      "avgResidentialTaxBill2024": 11355,
-      "neighborCounties": ["Hunterdon", "Morris", "Essex", "Middlesex", "Mercer"],
+      "neighborCounties": [
+        "Hunterdon",
+        "Morris",
+        "Essex",
+        "Middlesex",
+        "Mercer"
+      ],
       "towns": [
-        { "name": "Bridgewater", "avgRate": 0.0025 },
-        { "name": "Franklin", "avgRate": 0.0024 },
-        { "name": "Hillsborough", "avgRate": 0.0023 },
-        { "name": "Montgomery", "avgRate": 0.0022 },
-        { "name": "Bernards", "avgRate": 0.0021 }
+        {
+          "name": "Bridgewater",
+          "avgRate": 0.0025
+        },
+        {
+          "name": "Franklin",
+          "avgRate": 0.0024
+        },
+        {
+          "name": "Hillsborough",
+          "avgRate": 0.0023
+        },
+        {
+          "name": "Montgomery",
+          "avgRate": 0.0022
+        },
+        {
+          "name": "Bernards",
+          "avgRate": 0.0021
+        }
       ],
       "copy": {
         "paragraphs": [
@@ -438,20 +1740,64 @@
           "Selecting a specific Somerset municipality refines your estimate, as neighboring towns can have meaningfully different rates despite similar property values."
         ],
         "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
+      },
+      "asOfYear": 2024,
+      "metrics": {
+        "averageResidentialTaxBill": [
+          {
+            "year": 2024,
+            "value": 11355,
+            "unit": "USD",
+            "source": {
+              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+              "year": 2024
+            }
+          }
+        ],
+        "effectiveTaxRate": [
+          {
+            "year": 2024,
+            "value": 0.0195,
+            "unit": "rate",
+            "source": {
+              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+              "year": 2024
+            }
+          }
+        ]
       }
     },
     {
       "name": "Sussex",
       "slug": "sussex",
-      "avgEffectiveRate": 0.0185,
-      "avgResidentialTaxBill2024": 8640,
-      "neighborCounties": ["Warren", "Morris", "Passaic"],
+      "neighborCounties": [
+        "Warren",
+        "Morris",
+        "Passaic"
+      ],
       "towns": [
-        { "name": "Vernon", "avgRate": 0.002 },
-        { "name": "Sparta", "avgRate": 0.0019 },
-        { "name": "Hopatcong", "avgRate": 0.0018 },
-        { "name": "Hamburg", "avgRate": 0.0017 },
-        { "name": "Frankford", "avgRate": 0.0016 }
+        {
+          "name": "Vernon",
+          "avgRate": 0.002
+        },
+        {
+          "name": "Sparta",
+          "avgRate": 0.0019
+        },
+        {
+          "name": "Hopatcong",
+          "avgRate": 0.0018
+        },
+        {
+          "name": "Hamburg",
+          "avgRate": 0.0017
+        },
+        {
+          "name": "Frankford",
+          "avgRate": 0.0016
+        }
       ],
       "copy": {
         "paragraphs": [
@@ -461,20 +1807,214 @@
           "Municipal selection can make a difference in your estimate, as Sussex County's towns vary in their tax rates based on local budget priorities and school funding needs."
         ],
         "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
+      },
+      "asOfYear": 2024,
+      "metrics": {
+        "averageResidentialTaxBill": [
+          {
+            "year": 2024,
+            "value": 8640,
+            "unit": "USD",
+            "source": {
+              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+              "year": 2024
+            }
+          }
+        ],
+        "effectiveTaxRate": [
+          {
+            "year": 2024,
+            "value": 0.0185,
+            "unit": "rate",
+            "source": {
+              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+              "year": 2024
+            }
+          }
+        ]
       }
     },
     {
       "name": "Union",
       "slug": "union",
-      "avgEffectiveRate": 0.0215,
-      "avgResidentialTaxBill2024": 12047,
-      "neighborCounties": ["Essex", "Hudson", "Middlesex", "Somerset", "Morris"],
+      "neighborCounties": [
+        "Essex",
+        "Hudson",
+        "Middlesex",
+        "Somerset",
+        "Morris"
+      ],
       "towns": [
-        { "name": "Elizabeth", "avgRate": 0.0034 },
-        { "name": "Plainfield", "avgRate": 0.0033 },
-        { "name": "Summit", "avgRate": 0.0028 },
-        { "name": "Westfield", "avgRate": 0.0027 },
-        { "name": "Cranford", "avgRate": 0.0026 }
+        {
+          "name": "Elizabeth",
+          "avgRate": 0.0034
+        },
+        {
+          "name": "Plainfield",
+          "avgRate": 0.0033
+        },
+        {
+          "name": "Summit",
+          "slug": "summit",
+          "asOfYear": 2024,
+          "metrics": {
+            "averageResidentialTaxBill": [],
+            "effectiveTaxRate": [
+              {
+                "year": 2021,
+                "value": 1.827,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2022,
+                "value": 1.795,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2023,
+                "value": 1.64,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2024,
+                "value": 1.554,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              }
+            ],
+            "medianHomeValue": [
+              {
+                "year": 2019,
+                "value": 890100,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2020,
+                "value": 831700,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 852300,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 907900,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 969900,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ]
+          },
+          "copy": {
+            "unique": [
+              "TODO: Add 2–3 town-specific paragraphs to avoid thin content.",
+              "TODO: Include local context about property taxes, schools, and municipal services.",
+              "TODO: Mention how this town compares to county and state averages."
+            ]
+          },
+          "overrides": {
+            "seoTitle": "TODO: Add SEO-optimized title for Summit",
+            "seoDescription": "TODO: Add SEO-optimized description for Summit"
+          },
+          "avgRate": 0.0028
+        },
+        {
+          "name": "Westfield",
+          "slug": "westfield",
+          "asOfYear": 2024,
+          "metrics": {
+            "averageResidentialTaxBill": [],
+            "effectiveTaxRate": [
+              {
+                "year": 2021,
+                "value": 2.197,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2022,
+                "value": 2.109,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2023,
+                "value": 2.02,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2024,
+                "value": 1.92,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              }
+            ],
+            "medianHomeValue": [
+              {
+                "year": 2019,
+                "value": 743400,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2020,
+                "value": 773200,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 810400,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 890000,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 930500,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ]
+          },
+          "copy": {
+            "unique": [
+              "TODO: Add 2–3 town-specific paragraphs to avoid thin content.",
+              "TODO: Include local context about property taxes, schools, and municipal services.",
+              "TODO: Mention how this town compares to county and state averages."
+            ]
+          },
+          "overrides": {
+            "seoTitle": "TODO: Add SEO-optimized title for Westfield",
+            "seoDescription": "TODO: Add SEO-optimized description for Westfield"
+          },
+          "avgRate": 0.0027
+        },
+        {
+          "name": "Cranford",
+          "avgRate": 0.0026
+        }
       ],
       "copy": {
         "paragraphs": [
@@ -484,20 +2024,64 @@
           "Selecting a specific Union County municipality refines your estimate, as rates can vary meaningfully between neighboring towns despite similar property values."
         ],
         "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
+      },
+      "asOfYear": 2024,
+      "metrics": {
+        "averageResidentialTaxBill": [
+          {
+            "year": 2024,
+            "value": 12047,
+            "unit": "USD",
+            "source": {
+              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+              "year": 2024
+            }
+          }
+        ],
+        "effectiveTaxRate": [
+          {
+            "year": 2024,
+            "value": 0.0215,
+            "unit": "rate",
+            "source": {
+              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+              "year": 2024
+            }
+          }
+        ]
       }
     },
     {
       "name": "Warren",
       "slug": "warren",
-      "avgEffectiveRate": 0.0175,
-      "avgResidentialTaxBill2024": 7879,
-      "neighborCounties": ["Sussex", "Morris", "Hunterdon"],
+      "neighborCounties": [
+        "Sussex",
+        "Morris",
+        "Hunterdon"
+      ],
       "towns": [
-        { "name": "Phillipsburg", "avgRate": 0.002 },
-        { "name": "Hackettstown", "avgRate": 0.0019 },
-        { "name": "Washington", "avgRate": 0.0018 },
-        { "name": "Belvidere", "avgRate": 0.0017 },
-        { "name": "Oxford", "avgRate": 0.0016 }
+        {
+          "name": "Phillipsburg",
+          "avgRate": 0.002
+        },
+        {
+          "name": "Hackettstown",
+          "avgRate": 0.0019
+        },
+        {
+          "name": "Washington",
+          "avgRate": 0.0018
+        },
+        {
+          "name": "Belvidere",
+          "avgRate": 0.0017
+        },
+        {
+          "name": "Oxford",
+          "avgRate": 0.0016
+        }
       ],
       "copy": {
         "paragraphs": [
@@ -507,6 +2091,33 @@
           "While Warren County maintains relatively lower rates overall, municipal selection can still refine your estimate, as individual towns vary in their tax structures and service levels."
         ],
         "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
+      },
+      "asOfYear": 2024,
+      "metrics": {
+        "averageResidentialTaxBill": [
+          {
+            "year": 2024,
+            "value": 7879,
+            "unit": "USD",
+            "source": {
+              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+              "year": 2024
+            }
+          }
+        ],
+        "effectiveTaxRate": [
+          {
+            "year": 2024,
+            "value": 0.0175,
+            "unit": "rate",
+            "source": {
+              "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
+              "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
+              "year": 2024
+            }
+          }
+        ]
       }
     }
   ]

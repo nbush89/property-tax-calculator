@@ -1,42 +1,24 @@
-import njStateData from '@/data/states/new-jersey.json'
+import njStateDataRaw from '@/data/states/new-jersey.json'
 import { slugifyLocation } from '@/utils/locationUtils'
+import { normalizeStateData } from '@/lib/data/adapter'
+import type { StateData, CountyData } from '@/lib/data/types'
 
-export type CountyData = {
-  name: string
-  slug: string
-  avgEffectiveRate: number
-  avgResidentialTaxBill2024: number
-  neighborCounties?: string[]
-  towns: Array<{ name: string; avgRate: number }>
-  copy: {
-    paragraphs: string[]
-    disclaimer: string
-  }
-}
-
-export type StateData = {
-  name: string
-  slug: string
-  abbreviation: string
-  avgTaxRate: number
-  source: {
-    name: string
-    year: number
-    url: string
-  }
-  counties: CountyData[]
-}
+// Normalize the raw JSON data to the new year-aware format
+const njStateData = normalizeStateData(njStateDataRaw as any)
 
 /**
  * Registry of state data files
- * Maps state slugs to their imported data
+ * Maps state slugs to their imported data (normalized)
  */
 const stateDataRegistry: Record<string, StateData> = {
-  'new-jersey': njStateData as StateData,
+  'new-jersey': njStateData,
   // Add more states here as they're added:
-  // 'california': caStateData as StateData,
-  // 'texas': txStateData as StateData,
+  // 'california': normalizeStateData(caStateDataRaw),
+  // 'texas': normalizeStateData(txStateDataRaw),
 }
+
+// Re-export types for convenience
+export type { StateData, CountyData } from '@/lib/data/types'
 
 /**
  * Get state data by slug
@@ -45,7 +27,11 @@ const stateDataRegistry: Record<string, StateData> = {
  */
 export function getStateData(stateSlug: string): StateData | null {
   const normalizedSlug = stateSlug.toLowerCase()
-  return stateDataRegistry[normalizedSlug] || null
+  const data = stateDataRegistry[normalizedSlug]
+  if (!data) return null
+
+  // Data is already normalized in the registry
+  return data
 }
 
 /**

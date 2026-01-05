@@ -1,12 +1,17 @@
 /**
  * Utility functions for accessing state data
  */
-import njStateData from '@/data/states/new-jersey.json'
+import njStateDataRaw from '@/data/states/new-jersey.json'
 import { slugifyLocation } from './locationUtils'
+import { normalizeStateData } from '@/lib/data/adapter'
+import type { StateData, CountyData, TownData } from '@/lib/data/types'
 
-export type County = typeof njStateData.counties[0]
-export type Town = County['towns'][0]
-export type StateData = typeof njStateData
+// Normalize the data to use the new metrics structure
+const njStateData = normalizeStateData(njStateDataRaw as any)
+
+export type County = CountyData
+export type Town = TownData
+export type { StateData }
 
 /**
  * Get state data for New Jersey
@@ -25,32 +30,40 @@ export function getNewJerseyCounties(): County[] {
 /**
  * Get a county by slug
  */
-export function getCountyBySlug(countySlug: string): County | null {
+export function getCountyBySlug(countySlug: string): CountyData | null {
   const normalizedSlug = countySlug.toLowerCase().replace(/-county$/, '')
-  return njStateData.counties.find(
-    county => county.slug === normalizedSlug || slugifyLocation(county.name) === normalizedSlug
-  ) || null
+  return (
+    njStateData.counties.find(
+      county => county.slug === normalizedSlug || slugifyLocation(county.name) === normalizedSlug
+    ) || null
+  )
 }
 
 /**
  * Get a county by name
  */
-export function getCountyByName(countyName: string): County | null {
-  return njStateData.counties.find(
-    county => county.name.toLowerCase() === countyName.toLowerCase()
-  ) || null
+export function getCountyByName(countyName: string): CountyData | null {
+  return (
+    njStateData.counties.find(county => county.name.toLowerCase() === countyName.toLowerCase()) ||
+    null
+  )
 }
 
 /**
  * Get a town by county and town slug
  */
-export function getTownBySlugs(countySlug: string, townSlug: string): { county: County; town: Town } | null {
+export function getTownBySlugs(
+  countySlug: string,
+  townSlug: string
+): { county: CountyData; town: TownData } | null {
   const county = getCountyBySlug(countySlug)
-  if (!county) return null
+  if (!county || !county.towns) return null
 
   const normalizedTownSlug = townSlug.toLowerCase().replace(/-property-tax$/, '')
   const town = county.towns.find(
-    t => slugifyLocation(t.name) === normalizedTownSlug || t.name.toLowerCase() === normalizedTownSlug.replace(/-/g, ' ')
+    t =>
+      slugifyLocation(t.name) === normalizedTownSlug ||
+      t.name.toLowerCase() === normalizedTownSlug.replace(/-/g, ' ')
   )
 
   return town ? { county, town } : null
@@ -59,13 +72,13 @@ export function getTownBySlugs(countySlug: string, townSlug: string): { county: 
 /**
  * Get neighbor counties for a given county
  */
-export function getNeighborCounties(countySlug: string): County[] {
+export function getNeighborCounties(countySlug: string): CountyData[] {
   const county = getCountyBySlug(countySlug)
-  if (!county) return []
+  if (!county || !county.neighborCounties) return []
 
   return county.neighborCounties
     .map(neighborName => getCountyByName(neighborName))
-    .filter((c): c is County => c !== null)
+    .filter((c): c is CountyData => c !== null)
 }
 
 /**
@@ -78,15 +91,29 @@ export function formatTaxRate(rate: number): string {
 /**
  * Compare rate to state average
  */
-export function compareToStateAverage(rate: number): { difference: number; isHigher: boolean; percentage: string } {
-  const stateAvg = njStateData.avgTaxRate
+export function compareToStateAverage(rate: number): {
+  difference: number
+  isHigher: boolean
+  percentage: string
+} {
+  // Get state average from metrics
+  const stateAvg =
+    njStateData.metrics?.averageTaxRate?.[njStateData.metrics.averageTaxRate.length - 1]?.value || 0
+
+  if (stateAvg === 0) {
+    return {
+      difference: 0,
+      isHigher: false,
+      percentage: '0%',
+    }
+  }
+
   const difference = rate - stateAvg
   const percentage = Math.abs((difference / stateAvg) * 100)
-  
+
   return {
     difference,
     isHigher: difference > 0,
-    percentage: `${percentage.toFixed(1)}%`
+    percentage: `${percentage.toFixed(1)}%`,
   }
 }
-

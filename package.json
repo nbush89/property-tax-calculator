@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "scrape-town-metrics": "tsx scripts/source-nj-tier1-metrics.ts"
   },
   "dependencies": {
     "chart.js": "^4.4.0",
@@ -21,14 +22,18 @@
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.10",
     "@types/node": "^20.0.0",
+    "@types/pdf-parse": "^1.1.5",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "autoprefixer": "^10.4.0",
     "eslint": "^8.0.0",
     "eslint-config-next": "^15.0.0",
+    "pdf-parse": "^1.1.4",
     "postcss": "^8.4.0",
     "prettier": "^3.7.4",
     "tailwindcss": "^3.4.0",
-    "typescript": "^5.0.0"
+    "tsx": "^4.21.0",
+    "typescript": "^5.0.0",
+    "zod": "^4.3.5"
   }
 }

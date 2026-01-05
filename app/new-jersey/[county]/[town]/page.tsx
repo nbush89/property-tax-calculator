@@ -15,6 +15,8 @@ import { getTownBySlugs, formatTaxRate, compareToStateAverage } from '@/utils/st
 import { slugifyLocation } from '@/utils/locationUtils'
 import { getTownFaqData } from '@/data/townFaqData'
 import { getNewJerseyData } from '@/utils/stateData'
+import { getCountyLatestRate } from '@/lib/data/adapter'
+import { getStateLatestTaxRate } from '@/lib/data/adapter'
 
 type Props = {
   params: Promise<{
@@ -30,13 +32,13 @@ type Props = {
  */
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { county: countySlug, town: townSlug } = await params
-  
+
   if (!countySlug || !townSlug || typeof townSlug !== 'string') {
     return {
       title: 'Location Not Found | NJ Property Tax Calculator',
     }
   }
-  
+
   const normalizedTownSlug = townSlug.replace(/-property-tax$/, '')
   const result = getTownBySlugs(countySlug, normalizedTownSlug)
 
@@ -48,8 +50,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const { county, town } = result
   const path = `/new-jersey/${countySlug}/${townSlug}`
-  const townRateText = formatTaxRate(town.avgRate)
-  const countyRateText = formatTaxRate(county.avgEffectiveRate)
+  const townRate = town.avgRate ?? 0
+  const townRateText = townRate > 0 ? formatTaxRate(townRate) : 'N/A'
+  const countyLatestRate = getCountyLatestRate(county)
+  const countyRateText = countyLatestRate ? formatTaxRate(countyLatestRate) : 'N/A'
 
   return buildMetadata({
     title: `${town.name}, ${county.name} County NJ Property Tax Calculator | ${townRateText} Rate`,
@@ -66,11 +70,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function TownPropertyTaxPage({ params }: Props) {
   const { county: countySlug, town: townSlug } = await params
-  
+
   if (!countySlug || !townSlug || typeof townSlug !== 'string') {
     notFound()
   }
-  
+
   const normalizedTownSlug = townSlug.replace(/-property-tax$/, '')
   const result = getTownBySlugs(countySlug, normalizedTownSlug)
 
@@ -80,14 +84,17 @@ export default async function TownPropertyTaxPage({ params }: Props) {
 
   const { county, town } = result
   const stateData = getNewJerseyData()
-  const townRateComparison = compareToStateAverage(town.avgRate)
+  const townRate = town.avgRate ?? 0
+  const townRateComparison = compareToStateAverage(townRate)
   const pageUrl = `${SITE_URL}/new-jersey/${countySlug}/${townSlug}`
   const countyPageUrl = `${SITE_URL}/new-jersey/${slugifyLocation(county.name)}-county-property-tax`
   const faqs = getTownFaqData(town.name, county.name)
 
-  const townRateText = formatTaxRate(town.avgRate)
-  const countyRateText = formatTaxRate(county.avgEffectiveRate)
-  const stateAvgText = formatTaxRate(stateData.avgTaxRate)
+  const townRateText = formatTaxRate(townRate)
+  const countyLatestRate = getCountyLatestRate(county)
+  const countyRateText = countyLatestRate ? formatTaxRate(countyLatestRate) : 'N/A'
+  const stateLatestRate = getStateLatestTaxRate(stateData)
+  const stateAvgText = stateLatestRate ? formatTaxRate(stateLatestRate) : 'N/A'
 
   return (
     <>
@@ -120,37 +127,53 @@ export default async function TownPropertyTaxPage({ params }: Props) {
                 {town.name}, {county.name} County NJ Property Tax Calculator
               </h1>
               <p className="text-lg text-gray-700 dark:text-gray-300">
-                Average Rate: <span className="font-semibold">{townRateText}</span> | County Average: {countyRateText}
+                Average Rate: <span className="font-semibold">{townRateText}</span> | County
+                Average: {countyRateText}
               </p>
             </div>
 
             {/* Content Section */}
             <div className="prose prose-lg max-w-none mb-12 text-gray-700 dark:text-gray-300">
               <p className="text-xl leading-relaxed">
-                Property owners in <strong>{town.name}</strong>, located in <strong>{county.name} County</strong>, face property tax rates that reflect both local municipal needs and county-wide services. With an average rate of <strong>{townRateText}</strong>, {town.name}'s property taxes are {townRateComparison.isHigher ? 'above' : 'below'} the New Jersey state average of {stateAvgText}.
+                Property owners in <strong>{town.name}</strong>, located in{' '}
+                <strong>{county.name} County</strong>, face property tax rates that reflect both
+                local municipal needs and county-wide services. With an average rate of{' '}
+                <strong>{townRateText}</strong>, {town.name}'s property taxes are{' '}
+                {townRateComparison.isHigher ? 'above' : 'below'} the New Jersey state average of{' '}
+                {stateAvgText}.
               </p>
 
               <p>
-                The property tax rate in {town.name} includes contributions to {county.name} County services, {town.name} municipal operations, local school district funding, and other taxing authorities. The rate of {townRateText} compares to {county.name} County's overall average of {countyRateText}, reflecting {town.name}'s specific budget requirements and service levels.
+                The property tax rate in {town.name} includes contributions to {county.name} County
+                services, {town.name} municipal operations, local school district funding, and other
+                taxing authorities. The rate of {townRateText} compares to {county.name} County's
+                overall average of {countyRateText}, reflecting {town.name}'s specific budget
+                requirements and service levels.
               </p>
 
               <p>
-                To calculate your specific property tax obligation in {town.name}, use the calculator below. Enter your property's assessed value, and the calculator will automatically use {town.name}'s current tax rates. You can also select applicable exemptions such as Senior Citizen Freeze, Veteran exemptions, or Disabled Person exemptions to see how they reduce your tax burden.
+                To calculate your specific property tax obligation in {town.name}, use the
+                calculator below. Enter your property's assessed value, and the calculator will
+                automatically use {town.name}'s current tax rates. You can also select applicable
+                exemptions such as Senior Citizen Freeze, Veteran exemptions, or Disabled Person
+                exemptions to see how they reduce your tax burden.
               </p>
 
               <p>
-                Understanding property taxes in {town.name} is crucial for homeowners and prospective buyers. The calculator provides both annual and monthly estimates, along with a detailed breakdown showing how your taxes support county services, municipal operations, and local schools.
+                Understanding property taxes in {town.name} is crucial for homeowners and
+                prospective buyers. The calculator provides both annual and monthly estimates, along
+                with a detailed breakdown showing how your taxes support county services, municipal
+                operations, and local schools.
               </p>
             </div>
 
             {/* Calculator Section */}
             <div className="grid lg:grid-cols-2 gap-8 mb-12">
               <Card className="p-6">
-                <h2 className="text-2xl font-semibold mb-4 text-text">Calculate Your Property Tax</h2>
-                <TaxForm 
-                  defaultCounty={county.name} 
-                  defaultMunicipality={town.name}
-                />
+                <h2 className="text-2xl font-semibold mb-4 text-text">
+                  Calculate Your Property Tax
+                </h2>
+                <TaxForm defaultCounty={county.name} defaultMunicipality={town.name} />
               </Card>
               <Card className="p-6">
                 <h2 className="text-2xl font-semibold mb-4 text-text">Tax Estimate</h2>
@@ -184,7 +207,7 @@ export default async function TownPropertyTaxPage({ params }: Props) {
             </div>
 
             {/* FAQ Section */}
-            <LocationFAQ 
+            <LocationFAQ
               faqs={faqs}
               title={`${town.name} Property Tax FAQ`}
               subtitle={`Common questions about property taxes in ${town.name}, ${county.name} County`}

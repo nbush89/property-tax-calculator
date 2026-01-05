@@ -1,0 +1,214 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "State Property Tax Data Schema",
+  "description": "Schema for state-level property tax data with year-aware metrics (up to 5 years of history)",
+  "type": "object",
+  "required": ["name", "slug", "abbreviation", "counties"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Full state name"
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$",
+      "description": "URL-friendly state identifier"
+    },
+    "abbreviation": {
+      "type": "string",
+      "pattern": "^[A-Z]{2}$",
+      "description": "Two-letter state abbreviation"
+    },
+    "asOfYear": {
+      "type": "integer",
+      "minimum": 2000,
+      "maximum": 2030,
+      "description": "Latest year for which data is available (used for display/SEO)"
+    },
+    "source": {
+      "type": "object",
+      "required": ["name", "year"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Source name (e.g., 'NJ Division of Taxation – MOD IV Average Residential Tax Report')"
+        },
+        "year": {
+          "type": "integer",
+          "minimum": 2000,
+          "maximum": 2030,
+          "description": "Year of the source report"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL to the source document"
+        }
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "description": "State-level metrics (optional, can fall back to county aggregation)",
+      "properties": {
+        "averageTaxRate": {
+          "type": "array",
+          "maxItems": 5,
+          "items": {
+            "$ref": "#/$defs/metricDatapoint"
+          }
+        }
+      }
+    },
+    "counties": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/county"
+      }
+    }
+  },
+  "$defs": {
+    "metricDatapoint": {
+      "type": "object",
+      "required": ["year", "value", "unit", "source"],
+      "properties": {
+        "year": {
+          "type": "integer",
+          "minimum": 2000,
+          "maximum": 2030,
+          "description": "Tax year for this datapoint"
+        },
+        "value": {
+          "type": "number",
+          "description": "Numeric value for this metric"
+        },
+        "unit": {
+          "type": "string",
+          "enum": ["USD", "percentage", "rate"],
+          "description": "Unit of measurement"
+        },
+        "source": {
+          "type": "object",
+          "required": ["name"],
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Source name"
+            },
+            "reference": {
+              "type": "string",
+              "description": "URL or citation string"
+            },
+            "year": {
+              "type": "integer",
+              "minimum": 2000,
+              "maximum": 2030,
+              "description": "Year of the source report"
+            }
+          }
+        }
+      }
+    },
+    "county": {
+      "type": "object",
+      "required": ["name", "slug"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "County name"
+        },
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+$",
+          "description": "URL-friendly county identifier"
+        },
+        "asOfYear": {
+          "type": "integer",
+          "minimum": 2000,
+          "maximum": 2030,
+          "description": "Latest year for which county data is available"
+        },
+        "neighborCounties": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Array of neighboring county names"
+        },
+        "metrics": {
+          "type": "object",
+          "properties": {
+            "averageResidentialTaxBill": {
+              "type": "array",
+              "maxItems": 5,
+              "items": {
+                "$ref": "#/$defs/metricDatapoint"
+              },
+              "description": "Historical average residential tax bill data (up to 5 years)"
+            },
+            "effectiveTaxRate": {
+              "type": "array",
+              "maxItems": 5,
+              "items": {
+                "$ref": "#/$defs/metricDatapoint"
+              },
+              "description": "Historical effective tax rate data (up to 5 years)"
+            }
+          }
+        },
+        "copy": {
+          "type": "object",
+          "required": ["paragraphs", "disclaimer"],
+          "properties": {
+            "paragraphs": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string"
+              },
+              "description": "County-specific content paragraphs"
+            },
+            "disclaimer": {
+              "type": "string",
+              "description": "Disclaimer text for estimates"
+            }
+          }
+        },
+        "towns": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/town"
+          },
+          "description": "Optional array of towns/municipalities within the county"
+        }
+      }
+    },
+    "town": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Town/municipality name"
+        },
+        "avgRate": {
+          "type": "number",
+          "description": "Average tax rate (legacy field, can be replaced by metrics)"
+        },
+        "metrics": {
+          "type": "object",
+          "properties": {
+            "averageTaxRate": {
+              "type": "array",
+              "maxItems": 5,
+              "items": {
+                "$ref": "#/$defs/metricDatapoint"
+              },
+              "description": "Historical average tax rate data (optional, falls back to county)"
+            }
+          }
+        }
+      }
+    }
+  }
+}

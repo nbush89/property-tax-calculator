@@ -210,7 +210,7 @@ export function getStateUrls(
     })
 
     // Town pages
-    for (const town of county.towns) {
+    for (const town of county.towns || []) {
       const townSlug = slugifyLocation(town.name)
       urls.push({
         loc: joinUrl(baseUrl, `/${stateSlug}/${countySlug}/${townSlug}-property-tax`),
