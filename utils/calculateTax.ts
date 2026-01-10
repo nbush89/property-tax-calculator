@@ -27,10 +27,7 @@ type TaxCalculationResult = {
     exemptions: number
     final: number
   }
-  trendData: {
-    years: string[]
-    values: number[]
-  }
+  county: string
 }
 
 export function calculatePropertyTax(input: CalculateTaxInput): TaxCalculationResult {
@@ -55,7 +52,7 @@ export function calculatePropertyTax(input: CalculateTaxInput): TaxCalculationRe
 
   // Calculate exemptions
   let totalExemptions = 0
-  exemptions.forEach((exemptionId) => {
+  exemptions.forEach(exemptionId => {
     const exemption = exemptionId as keyof typeof njExemptions
     if (njExemptions[exemption]) {
       totalExemptions += njExemptions[exemption]
@@ -72,19 +69,6 @@ export function calculatePropertyTax(input: CalculateTaxInput): TaxCalculationRe
 
   // Calculate total rate
   const totalRate = countyRate + (municipalRate ?? 0)
-
-  // Generate 5-year trend data (mock data with slight variations)
-  const currentYear = new Date().getFullYear()
-  const years: string[] = []
-  const values: number[] = []
-  
-  for (let i = 4; i >= 0; i--) {
-    const year = currentYear - i
-    years.push(year.toString())
-    // Mock trend: slight increase each year (2-3% growth)
-    const growthFactor = 1 + (4 - i) * 0.025
-    values.push(annualTax * growthFactor)
-  }
 
   return {
     homeValue,
@@ -103,9 +87,6 @@ export function calculatePropertyTax(input: CalculateTaxInput): TaxCalculationRe
       exemptions: totalExemptions,
       final: annualTax,
     },
-    trendData: {
-      years,
-      values,
-    },
+    county,
   }
 }

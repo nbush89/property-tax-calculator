@@ -1,9 +1,10 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import ChartWrapper from './ChartWrapper'
 import { formatCurrency, formatNumber } from '@/utils/formatting'
 import { Card, CardContent } from '@/components/ui/Card'
+import CalculatorTaxTrendsChart from '@/components/charts/CalculatorTaxTrendsChart'
+import { getCountyAvgTaxBillSeries } from '@/utils/getCountySeries'
 
 type TaxResult = {
   homeValue: number
@@ -22,22 +23,29 @@ type TaxResult = {
     exemptions: number
     final: number
   }
-  trendData: {
-    years: string[]
-    values: number[]
-  }
+  county: string
 }
 
 export default function TaxResults() {
   const [result, setResult] = useState<TaxResult | null>(null)
+  const [countySeries, setCountySeries] = useState<Array<{ year: number; value: number }>>([])
 
   useEffect(() => {
     const handleTaxCalculated = (event: CustomEvent) => {
-      setResult(event.detail)
+      const data = event.detail
+      setResult(data)
+
+      // Get county series if county is available
+      if (data.county) {
+        const series = getCountyAvgTaxBillSeries('new-jersey', data.county)
+        setCountySeries(series)
+      } else {
+        setCountySeries([])
+      }
     }
 
     window.addEventListener('taxCalculated', handleTaxCalculated as EventListener)
-    
+
     return () => {
       window.removeEventListener('taxCalculated', handleTaxCalculated as EventListener)
     }
@@ -55,9 +63,7 @@ export default function TaxResults() {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-semibold text-text mb-6">
-        Tax Calculation Results
-      </h2>
+      <h2 className="text-2xl font-semibold text-text mb-6">Tax Calculation Results</h2>
 
       <Card className="bg-primary-soft border-primary/20">
         <CardContent className="text-center py-6">
@@ -124,14 +130,14 @@ export default function TaxResults() {
             {result.exemptions > 0 && (
               <div className="flex justify-between text-success">
                 <span>Exemptions</span>
-                <span className="font-medium tabular-nums">-{formatCurrency(result.exemptions)}</span>
+                <span className="font-medium tabular-nums">
+                  -{formatCurrency(result.exemptions)}
+                </span>
               </div>
             )}
             <div className="flex justify-between border-t border-border pt-2 font-semibold">
               <span className="text-text">Final Annual Tax</span>
-              <span className="text-text tabular-nums">
-                {formatCurrency(result.finalTax)}
-              </span>
+              <span className="text-text tabular-nums">{formatCurrency(result.finalTax)}</span>
             </div>
           </div>
         </div>
@@ -144,9 +150,17 @@ export default function TaxResults() {
         </div>
       </div>
 
-      <div className="mt-6">
-        <ChartWrapper data={result} />
-      </div>
+      {/* Tax Trend Chart - only show if real data exists */}
+      {result.county && countySeries.length >= 3 ? (
+        <CalculatorTaxTrendsChart series={countySeries} countyName={result.county} />
+      ) : (
+        <div className="mt-6">
+          <h3 className="font-semibold text-text mb-3">Tax Trend</h3>
+          <p className="text-sm text-text-muted">
+            Historical county trends are available where year-labeled data exists.
+          </p>
+        </div>
+      )}
     </div>
   )
 }
