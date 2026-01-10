@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "scrape-town-metrics": "tsx scripts/source-nj-tier1-metrics.ts"
+    "scrape-town-metrics": "tsx scripts/source-nj-tier1-metrics.ts",
+    "validate:data": "tsx scripts/validate-state-data.ts"
   },
   "dependencies": {
     "chart.js": "^4.4.0",

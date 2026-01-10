@@ -3,52 +3,34 @@
  * Provides safe fallback logic: town metric -> county metric -> undefined
  */
 
-import type {
-  TownDataPoint,
-  TownData,
-  CountyData,
-  StateData,
-  SourceReference,
-  MetricSeries,
-  MetricDatapoint,
-} from './types'
+import type { DataPoint, TownData, CountyData, StateData, Source, MetricSeries } from './types'
 
 /**
- * Get the latest (most recent) datapoint from a town series
- * @param series - Array of town datapoints (should be sorted by year ascending)
- * @returns The latest datapoint, or undefined if series is empty
+ * Get the latest (most recent) datapoint from a series
  */
-export function getLatest(series?: TownDataPoint[]): TownDataPoint | undefined {
+export function getLatest(series?: DataPoint[]): DataPoint | undefined {
   if (!series || series.length === 0) {
     return undefined
   }
-
-  // Series should be sorted ascending, so last item is latest
   return series[series.length - 1]
 }
 
 /**
- * Get the last N years of data from a town series
- * @param series - Array of town datapoints
- * @param n - Number of years to return (default: 5)
- * @returns Array of the last N datapoints, or all if fewer than N
+ * Get the last N years of data from a series
  */
-export function getLastN(series?: TownDataPoint[], n: number = 5): TownDataPoint[] {
+export function getLastN(series?: DataPoint[], n: number = 5): DataPoint[] {
   if (!series || series.length === 0) {
     return []
   }
-
   return series.slice(-n)
 }
 
 /**
- * Compute year-over-year changes for a town series
- * @param series - Array of town datapoints (should have at least 2 points)
- * @returns Array of datapoints with delta and deltaPct added
+ * Compute year-over-year changes for a series
  */
 export function computeYoY(
-  series?: TownDataPoint[]
-): Array<TownDataPoint & { delta?: number; deltaPct?: number }> {
+  series?: DataPoint[]
+): Array<DataPoint & { delta?: number; deltaPct?: number }> {
   if (!series || series.length < 2) {
     return series || []
   }
@@ -72,31 +54,45 @@ export function computeYoY(
 
 /**
  * Resolve a source reference key to the full source object
- * @param stateData - State data containing sources map
- * @param sourceRef - Source reference key
- * @returns SourceReference object, or undefined if not found
  */
-export function resolveSource(
-  stateData: StateData,
-  sourceRef: string
-): SourceReference | undefined {
+export function resolveSource(stateData: StateData, sourceRef: string): Source | undefined {
   if (!stateData.sources) {
     return undefined
   }
-
   return stateData.sources[sourceRef]
 }
 
 /**
+ * Resolve a source URL for a specific year
+ * Returns year-specific URL if available, otherwise homepage URL
+ */
+export function resolveSourceUrl(
+  stateData: StateData,
+  sourceRef: string,
+  year: number
+): string | undefined {
+  const source = resolveSource(stateData, sourceRef)
+  if (!source) {
+    return undefined
+  }
+
+  // Try year-specific URL first
+  if (source.yearUrls && source.yearUrls[String(year)]) {
+    return source.yearUrls[String(year)]
+  }
+
+  // Fall back to homepage URL
+  return source.homepageUrl
+}
+
+/**
  * Get a metric series for a town, falling back to county if town doesn't have it
- * @param params - Object containing town, county, and metricKey
- * @returns TownDataPoint[] or MetricSeries (from county), or undefined
  */
 export function getMetricSeries(params: {
   town?: TownData
   county: CountyData
   metricKey: 'averageResidentialTaxBill' | 'effectiveTaxRate' | 'medianHomeValue'
-}): TownDataPoint[] | MetricSeries | undefined {
+}): DataPoint[] | MetricSeries | undefined {
   const { town, county, metricKey } = params
 
   // Try town metrics first
@@ -107,19 +103,13 @@ export function getMetricSeries(params: {
     }
   }
 
-  // Fall back to county metrics
+  // Fall back to county metrics (only for averageResidentialTaxBill and effectiveTaxRate)
   if (county.metrics) {
-    // Map metric keys: town keys may differ from county keys
-    let countyKey: keyof typeof county.metrics | undefined
-
-    if (metricKey === 'averageResidentialTaxBill') {
-      countyKey = 'averageResidentialTaxBill'
-    } else if (metricKey === 'effectiveTaxRate') {
-      countyKey = 'effectiveTaxRate'
+    if (metricKey === 'averageResidentialTaxBill' && county.metrics.averageResidentialTaxBill) {
+      return county.metrics.averageResidentialTaxBill
     }
-
-    if (countyKey && county.metrics[countyKey]) {
-      return county.metrics[countyKey]
+    if (metricKey === 'effectiveTaxRate' && county.metrics.effectiveTaxRate) {
+      return county.metrics.effectiveTaxRate
     }
   }
 
@@ -128,44 +118,34 @@ export function getMetricSeries(params: {
 
 /**
  * Get the latest datapoint for a metric, falling back from town to county
- * @param params - Object containing town, county, and metricKey
- * @returns Latest datapoint (TownDataPoint or MetricDatapoint), or undefined
  */
 export function getMetricLatest(params: {
   town?: TownData
   county: CountyData
   metricKey: 'averageResidentialTaxBill' | 'effectiveTaxRate' | 'medianHomeValue'
-}): TownDataPoint | MetricDatapoint | undefined {
+}): DataPoint | undefined {
   const series = getMetricSeries(params)
 
-  if (!series) {
+  if (!series || series.length === 0) {
     return undefined
   }
 
-  // Handle both TownDataPoint[] and MetricSeries
-  if (series.length === 0) {
-    return undefined
-  }
-
-  // Both types have year and value, so we can safely return the last item
-  return series[series.length - 1] as TownDataPoint | MetricDatapoint
+  return series[series.length - 1]
 }
 
 /**
  * Assert that a series is sorted by year ascending (dev-only validation)
- * @param series - Array of datapoints
- * @param seriesName - Name of the series for error messages
  */
 export function assertSortedByYear(
-  series?: TownDataPoint[] | MetricSeries,
+  series?: DataPoint[] | MetricSeries,
   seriesName: string = 'series'
 ): void {
   if (process.env.NODE_ENV !== 'development') {
-    return // No-op in production
+    return
   }
 
   if (!series || series.length <= 1) {
-    return // Empty or single-item series are trivially sorted
+    return
   }
 
   for (let i = 1; i < series.length; i++) {

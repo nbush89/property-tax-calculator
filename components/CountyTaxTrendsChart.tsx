@@ -15,7 +15,7 @@ import {
   Tooltip,
   CartesianGrid,
 } from 'recharts'
-import type { MetricSeries, MetricDatapoint } from '@/lib/data/types'
+import type { MetricSeries } from '@/lib/data/types'
 import { computeYoYStats } from '@/lib/data/metrics'
 
 interface CountyTaxTrendsChartProps {

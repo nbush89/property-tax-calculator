@@ -14,9 +14,11 @@ import LocationFAQ from '@/components/location/LocationFAQ'
 import { getStateData, getCountyBySlug, formatUSD } from '@/lib/geo'
 import { slugifyLocation } from '@/utils/locationUtils'
 import { getCountyFaqData } from '@/data/countyFaqData'
-import { getCountyLatestTaxBill } from '@/lib/data/adapter'
+import { getLatestValue } from '@/lib/data/metrics'
+import { resolveSource, resolveSourceUrl } from '@/lib/data/town-helpers'
 import CountyTownLinks from '@/components/CountyTownLinks'
 import CountyTaxTrendsChart from '@/components/CountyTaxTrendsChart'
+import RelatedLinks from '@/components/RelatedLinks'
 
 type Props = {
   params: Promise<{
@@ -47,7 +49,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const path = `/new-jersey/${countySlug}`
-  const latestTaxBill = getCountyLatestTaxBill(county)
+  const latestTaxBill = getLatestValue(county.metrics?.averageResidentialTaxBill)
   const avgTaxBill = latestTaxBill ? formatUSD(latestTaxBill) : 'N/A'
 
   return buildMetadata({
@@ -78,7 +80,7 @@ export default async function CountyPropertyTaxPage({ params }: Props) {
 
   const pageUrl = `${SITE_URL}/new-jersey/${countySlug}`
   const faqs = getCountyFaqData(county.name)
-  const latestTaxBill = getCountyLatestTaxBill(county)
+  const latestTaxBill = getLatestValue(county.metrics?.averageResidentialTaxBill)
   const avgTaxBill = latestTaxBill ? formatUSD(latestTaxBill) : 'N/A'
   const neighborCounties =
     county.neighborCounties
@@ -91,7 +93,7 @@ export default async function CountyPropertyTaxPage({ params }: Props) {
       <JsonLd
         data={breadcrumbJsonLd([
           { name: 'Home', url: `${SITE_URL}/` },
-          { name: 'New Jersey', url: `${SITE_URL}/new-jersey/property-tax-calculator` },
+          { name: 'New Jersey', url: `${SITE_URL}/new-jersey` },
           { name: `${county.name} County`, url: pageUrl },
         ])}
       />
@@ -106,22 +108,32 @@ export default async function CountyPropertyTaxPage({ params }: Props) {
       <JsonLd data={faqJsonLd(pageUrl, faqs)} />
 
       <Header />
-      <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
+      <main className="min-h-screen bg-gradient-to-br from-bg-gradient-from to-bg-gradient-to">
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-6xl mx-auto">
             {/* Header */}
             <div className="text-center mb-8">
-              <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+              <h1 className="text-4xl font-bold text-text mb-4">
                 {county.name} County, NJ Property Tax Calculator
               </h1>
-              <p className="text-lg text-gray-700 dark:text-gray-300">
+              <p className="text-lg text-text-muted">
                 2024 Average Residential Tax Bill:{' '}
-                <span className="font-semibold">{avgTaxBill}</span>
+                <span className="font-semibold text-text">{avgTaxBill}</span>
               </p>
+              {/* Related Links */}
+              <div className="mt-4 flex justify-center">
+                <RelatedLinks
+                  links={[
+                    { href: '/new-jersey', label: 'Back to New Jersey' },
+                    { href: '/new-jersey/property-tax-rates', label: 'View NJ tax rates' },
+                    { href: '/new-jersey/property-tax-calculator', label: 'NJ calculator' },
+                  ]}
+                />
+              </div>
             </div>
 
             {/* Content Section */}
-            <div className="prose prose-lg max-w-none mb-12 text-gray-700 dark:text-gray-300">
+            <div className="prose prose-lg max-w-none mb-12 text-text-muted">
               {county.copy?.paragraphs ? (
                 county.copy.paragraphs.map((paragraph, index) => (
                   <p key={index} className={index === 0 ? 'text-xl leading-relaxed' : ''}>
@@ -136,25 +148,45 @@ export default async function CountyPropertyTaxPage({ params }: Props) {
               )}
 
               {/* Source Link */}
-              <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Source:{' '}
-                  <a
-                    href={stateData.source.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary hover:text-primary-hover underline"
-                  >
-                    {stateData.source.name} ({stateData.source.year})
-                  </a>
-                </p>
-              </div>
+              {(() => {
+                const latestBill =
+                  county.metrics?.averageResidentialTaxBill?.[
+                    county.metrics.averageResidentialTaxBill.length - 1
+                  ]
+                if (!latestBill) return null
+                const source = resolveSource(stateData, latestBill.sourceRef)
+                const sourceUrl = resolveSourceUrl(stateData, latestBill.sourceRef, latestBill.year)
+                if (!source) return null
+                return (
+                  <div className="mt-6 pt-6 border-t border-border">
+                    <p className="text-sm text-text-muted">
+                      Source:{' '}
+                      <a
+                        href={sourceUrl || source.homepageUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-primary hover:text-primary-hover underline"
+                      >
+                        {source.publisher} - {source.title} ({latestBill.year})
+                      </a>
+                    </p>
+                  </div>
+                )
+              })()}
 
               {/* Disclaimer */}
               {county.copy?.disclaimer && (
-                <div className="mt-6 p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
-                  <p className="text-sm text-gray-700 dark:text-gray-300">
-                    {county.copy.disclaimer}
+                <div className="mt-6 p-4 bg-warning/10 border border-warning/30 rounded-lg">
+                  <p className="text-sm text-text">{county.copy.disclaimer}</p>
+                  <p className="text-xs text-text-muted mt-4">
+                    For details on data sources and how estimates are calculated, see our{' '}
+                    <Link
+                      href="/methodology"
+                      className="text-primary hover:text-primary-hover underline"
+                    >
+                      methodology
+                    </Link>
+                    .
                   </p>
                 </div>
               )}
@@ -179,6 +211,13 @@ export default async function CountyPropertyTaxPage({ params }: Props) {
 
             {/* Tax Trends Chart */}
             <CountyTaxTrendsChart county={county} />
+            <p className="text-xs text-text-muted mt-4">
+              Learn more about how estimates are calculated in our{' '}
+              <Link href="/methodology" className="text-primary hover:text-primary-hover underline">
+                methodology
+              </Link>
+              .
+            </p>
 
             {/* Internal Links Section */}
             <div className="mb-12">

@@ -6,14 +6,10 @@ export default function HowItWorks() {
     {
       number: '1',
       title: 'Enter home value',
-      description: 'Input your property\'s assessed or estimated value to get started.',
+      description:
+        'Enter your property\’s assessed or estimated value to create a planning estimate.',
       icon: (
-        <svg
-          className="h-8 w-8 text-primary"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
+        <svg className="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -26,14 +22,10 @@ export default function HowItWorks() {
     {
       number: '2',
       title: 'Choose county/town',
-      description: 'Select your county and optionally your municipality for precise rates.',
+      description:
+        'Select your county and optionally your municipality for location-specific context.',
       icon: (
-        <svg
-          className="h-8 w-8 text-primary"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
+        <svg className="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -52,14 +44,10 @@ export default function HowItWorks() {
     {
       number: '3',
       title: 'Get your estimate',
-      description: 'View annual and monthly totals, breakdowns, exemptions, and trends.',
+      description:
+        'View estimated annual and monthly totals, contextual breakdowns, exemptions, and trends.',
       icon: (
-        <svg
-          className="h-8 w-8 text-primary"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
+        <svg className="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -72,27 +60,18 @@ export default function HowItWorks() {
   ]
 
   return (
-    <Section
-      title="How It Works"
-      subtitle="Get your property tax estimate in three simple steps"
-    >
+    <Section title="How It Works" subtitle="Get your property tax estimate in three simple steps">
       <div className="mt-12 grid gap-8 md:grid-cols-3">
-        {steps.map((step) => (
+        {steps.map(step => (
           <Card key={step.number} className="p-8">
             <div className="mb-4 flex items-center gap-4">
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary-soft">
                 {step.icon}
               </div>
-              <span className="text-2xl font-semibold text-text-muted">
-                {step.number}
-              </span>
+              <span className="text-2xl font-semibold text-text-muted">{step.number}</span>
             </div>
-            <h3 className="mb-2 text-xl font-semibold text-text">
-              {step.title}
-            </h3>
-            <p className="muted">
-              {step.description}
-            </p>
+            <h3 className="mb-2 text-xl font-semibold text-text">{step.title}</h3>
+            <p className="muted">{step.description}</p>
           </Card>
         ))}
       </div>

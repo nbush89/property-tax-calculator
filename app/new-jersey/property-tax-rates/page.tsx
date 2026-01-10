@@ -16,9 +16,11 @@ import { slugifyLocation } from '@/utils/locationUtils'
  */
 export const metadata = buildMetadata({
   title: 'New Jersey Property Tax Rates by County | NJ Tax Rates',
-  description: 'View current property tax rates for all 21 counties in New Jersey. Find county and municipal tax rates for accurate property tax estimates.',
+  description:
+    'View current property tax rates for all 21 counties in New Jersey. Find county and municipal tax rates for accurate property tax estimates.',
   path: '/new-jersey/property-tax-rates',
-  keywords: 'New Jersey tax rates, NJ county tax rates, property tax rates by county, New Jersey municipal tax rates',
+  keywords:
+    'New Jersey tax rates, NJ county tax rates, property tax rates by county, New Jersey municipal tax rates',
 })
 
 export default function PropertyTaxRatesPage() {
@@ -37,31 +39,63 @@ export default function PropertyTaxRatesPage() {
         ])}
       />
       <Header />
-      <main className="min-h-screen bg-white dark:bg-slate-900">
+      <main className="min-h-screen bg-bg">
         <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+          {/* Breadcrumbs */}
+          <nav className="mb-6 text-sm text-text-muted" aria-label="Breadcrumb">
+            <ol className="flex items-center gap-2">
+              <li>
+                <Link href="/" className="hover:text-primary transition-colors underline">
+                  Home
+                </Link>
+              </li>
+              <li>·</li>
+              <li>
+                <Link href="/new-jersey" className="hover:text-primary transition-colors underline">
+                  New Jersey
+                </Link>
+              </li>
+              <li>·</li>
+              <li className="text-text">Property Tax Rates</li>
+            </ol>
+          </nav>
+
           <div className="mb-8">
-            <h1 className="text-4xl font-bold tracking-tight text-slate-900 dark:text-white">
+            <h1 className="text-4xl font-bold tracking-tight text-text">
               New Jersey Property Tax Rates
             </h1>
-            <p className="mt-4 text-lg text-slate-600 dark:text-slate-300">
+            <p className="mt-4 text-lg text-text-muted">
               Current property tax rates by county and municipality
             </p>
+            {/* Back Links */}
+            <div className="mt-4 flex flex-wrap items-center gap-4 text-sm">
+              <Link
+                href="/new-jersey"
+                className="text-text-muted hover:text-primary transition-colors underline"
+              >
+                Back to New Jersey overview
+              </Link>
+              <span className="text-text-muted">·</span>
+              <Link
+                href="/new-jersey#counties"
+                className="text-text-muted hover:text-primary transition-colors underline"
+              >
+                Browse counties
+              </Link>
+            </div>
           </div>
 
           <div className="space-y-8">
-            {counties.map((county) => {
+            {counties.map(county => {
               const countyRate = countyRates[county]
               const countyData = njMunicipalRates[county as keyof typeof njMunicipalRates]
 
               return (
-                <div
-                  key={county}
-                  className="rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-800"
-                >
-                  <div className="border-b border-slate-200 bg-slate-50 px-6 py-4 dark:border-slate-700 dark:bg-slate-700/50">
+                <div key={county} className="rounded-lg border border-border bg-surface shadow-sm">
+                  <div className="border-b border-border bg-bg px-6 py-4">
                     <div className="flex items-center justify-between">
                       <div>
-                        <h2 className="text-xl font-semibold text-slate-900 dark:text-white">
+                        <h2 className="text-xl font-semibold text-text">
                           <Link
                             href={`/new-jersey/${slugifyLocation(county)}-county-property-tax`}
                             className="hover:text-primary transition-colors"
@@ -69,7 +103,7 @@ export default function PropertyTaxRatesPage() {
                             {county} County
                           </Link>
                         </h2>
-                        <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
+                        <p className="mt-1 text-sm text-text-muted">
                           County Rate: {(countyRate * 100).toFixed(2)}%
                         </p>
                       </div>
@@ -84,7 +118,7 @@ export default function PropertyTaxRatesPage() {
 
                   {countyData && Object.keys(countyData).length > 0 && (
                     <div className="px-6 py-4">
-                      <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+                      <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-text-muted">
                         Municipal Rates
                       </h3>
                       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -97,12 +131,12 @@ export default function PropertyTaxRatesPage() {
                               <Link
                                 key={municipality}
                                 href={`/new-jersey/${countySlug}/${townSlug}-property-tax`}
-                                className="rounded border border-slate-200 bg-slate-50 p-3 dark:border-slate-700 dark:bg-slate-900 hover:border-primary hover:bg-primary/5 dark:hover:bg-primary/10 transition-colors block"
+                                className="rounded border border-border bg-bg p-3 hover:border-primary hover:bg-primary-soft/50 transition-colors block"
                               >
-                                <p className="font-medium text-slate-900 dark:text-white hover:text-primary">
+                                <p className="font-medium text-text hover:text-primary">
                                   {municipality}
                                 </p>
-                                <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
+                                <p className="mt-1 text-sm text-text-muted">
                                   {(rate * 100).toFixed(2)}%
                                 </p>
                               </Link>
@@ -116,9 +150,11 @@ export default function PropertyTaxRatesPage() {
             })}
           </div>
 
-          <div className="mt-12 rounded-lg border border-blue-200 bg-blue-50 p-6 dark:border-blue-800 dark:bg-blue-900/20">
-            <p className="text-sm text-blue-800 dark:text-blue-200">
-              <strong>Note:</strong> These rates are estimates based on available data. Actual rates may vary. Always verify with your local tax assessor for official rates.
+          <div className="mt-12 rounded-lg border border-info/30 bg-info/10 p-6">
+            <p className="text-sm text-text">
+              <strong className="font-semibold">Note:</strong> These rates are estimates based on
+              available data. Actual rates may vary. Always verify with your local tax assessor for
+              official rates.
             </p>
           </div>
         </div>
@@ -127,4 +163,3 @@ export default function PropertyTaxRatesPage() {
     </>
   )
 }
-

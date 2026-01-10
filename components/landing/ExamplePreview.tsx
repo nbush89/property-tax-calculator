@@ -1,78 +1,87 @@
 import Section from '@/components/ui/Section'
 import { Card, CardHeader, CardContent } from '@/components/ui/Card'
+import Link from 'next/link'
 
 export default function ExamplePreview() {
   return (
     <Section
-      title="See Your Results"
-      subtitle="Get detailed breakdowns and visualizations instantly"
+      title="Explore County & Town Pages"
+      subtitle="Dive deeper into local property tax context and trends"
     >
-      <div className="mt-12 flex justify-center">
-        <Card className="w-full max-w-2xl">
-          <CardHeader className="bg-primary-soft">
-            <h3 className="text-lg font-semibold text-text">
-              Tax Calculation Results
-            </h3>
-          </CardHeader>
+      <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {/* Feature Card 1 */}
+        <Card className="p-6">
+          <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary-soft">
+            <svg
+              className="h-6 w-6 text-primary"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"
+              />
+            </svg>
+          </div>
+          <h3 className="mb-2 text-lg font-semibold text-text">County & town pages</h3>
+          <p className="text-sm text-text-muted">
+            Browse detailed property tax information for all 21 New Jersey counties and explore
+            town-level data where available.
+          </p>
+        </Card>
 
-          <CardContent className="py-8">
-            <div className="mb-6 text-center">
-              <p className="text-sm muted mb-2">Annual Property Tax</p>
-              <p className="mt-2 text-4xl font-bold text-primary tabular-nums">
-                $13,250
-              </p>
-              <p className="mt-2 text-sm muted tabular-nums">
-                $1,104 per month
-              </p>
-            </div>
+        {/* Feature Card 2 */}
+        <Card className="p-6">
+          <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary-soft">
+            <svg
+              className="h-6 w-6 text-primary"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"
+              />
+            </svg>
+          </div>
+          <h3 className="mb-2 text-lg font-semibold text-text">Year-aware trends</h3>
+          <p className="text-sm text-text-muted">
+            View historical property tax trends with clear year labels, helping you understand how
+            taxes have changed over time.
+          </p>
+        </Card>
 
-            {/* Breakdown */}
-            <div className="mb-6 space-y-3 border-t border-border pt-6">
-              <div className="flex justify-between text-sm">
-                <span className="muted">County Rate</span>
-                <span className="font-medium text-text tabular-nums">2.31%</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="muted">Municipal Rate</span>
-                <span className="font-medium text-text tabular-nums">0.34%</span>
-              </div>
-              <div className="flex justify-between border-t border-border pt-3 text-sm">
-                <span className="font-semibold text-text">Effective Rate</span>
-                <span className="font-semibold text-text tabular-nums">2.65%</span>
-              </div>
-            </div>
-
-            {/* Mini Trend Chart */}
-            <div className="border-t border-border pt-6">
-              <p className="mb-4 text-sm font-semibold text-text">
-                5-Year Tax Trend
-              </p>
-              <div className="flex items-end justify-between gap-2">
-                {[
-                  { year: '2020', value: 60, label: '$12.5k' },
-                  { year: '2021', value: 65, label: '$12.8k' },
-                  { year: '2022', value: 70, label: '$13.0k' },
-                  { year: '2023', value: 75, label: '$13.1k' },
-                  { year: '2024', value: 80, label: '$13.3k' },
-                ].map((item) => (
-                  <div key={item.year} className="flex flex-1 flex-col items-center">
-                    <div className="mb-2 flex h-20 w-full items-end justify-center">
-                      <div
-                        className="w-full rounded-t bg-primary"
-                        style={{ height: `${item.value}%` }}
-                      />
-                    </div>
-                    <span className="text-xs muted">
-                      {item.year}
-                    </span>
-                    <span className="mt-1 text-xs font-medium text-text tabular-nums">
-                      {item.label}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </CardContent>
+        {/* Feature Card 3 */}
+        <Card className="p-6">
+          <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary-soft">
+            <svg
+              className="h-6 w-6 text-primary"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+              />
+            </svg>
+          </div>
+          <h3 className="mb-2 text-lg font-semibold text-text">Transparent methodology</h3>
+          <p className="text-sm text-text-muted">
+            Every estimate includes source attribution and year labels. See our{' '}
+            <Link href="/methodology" className="text-primary hover:text-primary-hover underline">
+              methodology
+            </Link>{' '}
+            for details on data sources and calculations.
+          </p>
         </Card>
       </div>
     </Section>

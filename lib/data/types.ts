@@ -1,61 +1,58 @@
 /**
  * TypeScript types for year-aware property tax data model
- * Supports up to 5 years of historical data with backward compatibility
+ * Matches the normalized JSON structure in /data/states/{state}.json
  */
 
 /**
  * Unit of measurement for a metric
  */
-export type MetricUnit = 'USD' | 'percentage' | 'rate'
+export type MetricUnit = 'USD' | 'PERCENT'
 
 /**
- * Unit of measurement for town metrics (simplified)
+ * State metadata (nested under "state" key)
  */
-export type TownMetricUnit = 'USD' | 'PERCENT'
-
-/**
- * Source information for a metric datapoint (used in county/state metrics)
- */
-export interface MetricSource {
+export interface StateMeta {
   name: string
-  reference?: string // URL or citation string
-  year?: number // Year of the source report
+  slug: string
+  abbreviation: string
+  asOfYear: number
+  primarySources?: Record<string, string> // Maps metric keys to sourceRef keys
 }
 
 /**
- * Source reference map (top-level in state data)
+ * Source information (in top-level "sources" map)
  */
-export interface SourceReference {
-  name: string
-  reference: string
-  url?: string
+export interface Source {
+  publisher: string
+  title: string
+  type: string // e.g., "pdf", "api"
+  homepageUrl: string
+  yearUrls?: Record<string, string> // Maps year (as string) to URL
   notes?: string
 }
 
 /**
- * A single datapoint in a time series metric (used in county/state metrics)
+ * A single datapoint in a time series metric
+ * Uses sourceRef to reference the sources map
  */
-export interface MetricDatapoint {
+export interface DataPoint {
   year: number // Tax year (2000-2030)
   value: number // Numeric value
-  unit: MetricUnit // Unit of measurement
-  source: MetricSource // Source information
-}
-
-/**
- * A single datapoint in a town metric time series (uses sourceRef instead of full source)
- */
-export interface TownDataPoint {
-  year: number // Tax year (2000-2030)
-  value: number // Numeric value
-  unit: TownMetricUnit // Unit of measurement ("USD" | "PERCENT")
+  unit: MetricUnit // "USD" | "PERCENT"
   sourceRef: string // Reference key to sources map
 }
 
 /**
  * Time series for a specific metric (up to 5 years)
  */
-export type MetricSeries = MetricDatapoint[]
+export type MetricSeries = DataPoint[]
+
+/**
+ * State-level metrics (optional)
+ */
+export interface StateMetrics {
+  averageTaxRate?: MetricSeries
+}
 
 /**
  * County-level metrics (historical data)
@@ -67,16 +64,15 @@ export interface CountyMetrics {
 
 /**
  * Town-level metrics (optional, falls back to county)
- * Uses TownDataPoint with sourceRef instead of full source objects
  */
 export interface TownMetrics {
-  averageResidentialTaxBill?: TownDataPoint[]
-  effectiveTaxRate?: TownDataPoint[]
-  medianHomeValue?: TownDataPoint[]
+  averageResidentialTaxBill?: MetricSeries
+  effectiveTaxRate?: MetricSeries
+  medianHomeValue?: MetricSeries
 }
 
 /**
- * County copy content (unchanged from original)
+ * County copy content
  */
 export interface CountyCopy {
   paragraphs: string[]
@@ -85,14 +81,11 @@ export interface CountyCopy {
 
 /**
  * Town copy content (structured for UI rendering)
- * Maps to specific page sections with variant-aware content
  */
 export interface TownCopy {
-  intro?: string[] // Section 1: 2 short paragraphs (70-100 words total) - town-specific intro context
-  snapshot?: string[] // Section 3: 1 paragraph (variant-aware: town data vs county fallback)
-  compare?: string[] // Section 6: Optional comparison paragraph with internal linking context
-  // Note: Section 2 (how it works), Section 4 (calculator), Section 5 (trends), Section 7 (disclaimer)
-  // are component-level static text, not stored in JSON
+  intro?: string[] // Section 1: 2 short paragraphs
+  snapshot?: string[] // Section 3: 1 paragraph (variant-aware)
+  compare?: string[] // Section 6: Optional comparison paragraph
 }
 
 /**
@@ -108,14 +101,14 @@ export interface TownOverrides {
  * Town rollout metadata for controlled internal linking
  */
 export interface TownRollout {
-  tier?: number // 1 = Tier-1, higher = lower priority
-  featured?: boolean // Featured towns get priority
-  isReady?: boolean // Explicit readiness flag
-  rank?: number // Stable ordering within county (lower = earlier)
+  tier?: number
+  featured?: boolean
+  isReady?: boolean
+  rank?: number
 }
 
 /**
- * Town data (with optional metrics, copy, and overrides)
+ * Town data
  */
 export interface TownData {
   name: string
@@ -125,16 +118,16 @@ export interface TownData {
   copy?: TownCopy
   overrides?: TownOverrides
   rollout?: TownRollout
-  avgRate?: number // Legacy field for backward compatibility
+  avgRate?: number // Legacy field for backward compatibility (used in rates page)
 }
 
 /**
- * County data (normalized with metrics)
+ * County data
  */
 export interface CountyData {
   name: string
   slug: string
-  asOfYear?: number // Latest year for which data is available
+  asOfYear?: number
   neighborCounties?: string[]
   metrics?: CountyMetrics
   copy?: CountyCopy
@@ -142,85 +135,11 @@ export interface CountyData {
 }
 
 /**
- * State-level metrics (optional)
- */
-export interface StateMetrics {
-  averageTaxRate?: MetricSeries
-}
-
-/**
- * State data (normalized with metrics)
+ * State data (normalized structure)
  */
 export interface StateData {
-  name: string
-  slug: string
-  abbreviation: string
-  asOfYear?: number // Latest year for which data is available
-  source: {
-    name: string
-    year: number
-    url?: string
-  }
-  sources?: Record<string, SourceReference> // Top-level source reference map
+  state: StateMeta
+  sources: Record<string, Source>
   metrics?: StateMetrics
   counties: CountyData[]
-}
-
-/**
- * Legacy county data shape (for migration/adapter)
- */
-export interface LegacyCountyData {
-  name: string
-  slug: string
-  neighborCounties?: string[]
-  towns: Array<
-    | { name: string; avgRate: number } // Legacy format
-    | TownData // Modern format with full structure
-  >
-  copy: {
-    paragraphs: string[]
-    disclaimer: string
-  }
-  // Metrics may be present with sourceRef format (will be normalized to source objects)
-  metrics?: {
-    averageResidentialTaxBill?: Array<{
-      year: number
-      value: number
-      unit: string
-      sourceRef?: string
-      source?: any
-    }>
-    effectiveTaxRate?: Array<{
-      year: number
-      value: number
-      unit: string
-      sourceRef?: string
-      source?: any
-    }>
-  }
-}
-
-/**
- * Legacy state data shape (for migration/adapter)
- */
-export interface LegacyStateData {
-  name: string
-  slug: string
-  abbreviation: string
-  source: {
-    name: string
-    year: number
-    url: string
-  }
-  counties: LegacyCountyData[]
-  // Metrics may be present (will be normalized)
-  metrics?: {
-    averageTaxRate?: Array<{
-      year: number
-      value: number
-      unit: string
-      sourceRef?: string
-      source?: any
-    }>
-  }
 }

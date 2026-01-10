@@ -55,7 +55,7 @@ export default function TownTaxSnapshot({ state, county, town }: TownTaxSnapshot
     medianHomeValueDatapoint?.year ||
     town.asOfYear ||
     county.asOfYear ||
-    state.asOfYear ||
+    state.state.asOfYear ||
     new Date().getFullYear()
 
   // Don't render if no data at all
@@ -72,7 +72,7 @@ export default function TownTaxSnapshot({ state, county, town }: TownTaxSnapshot
         {effectiveRateDatapoint && (
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pb-4 border-b border-border last:border-b-0 last:pb-0">
             <div className="flex-1">
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">
+              <p className="text-sm text-text-muted mb-1">
                 Effective property tax rate ({rateContext})
               </p>
               <p className="text-2xl font-semibold text-text">
@@ -86,7 +86,7 @@ export default function TownTaxSnapshot({ state, county, town }: TownTaxSnapshot
         {medianHomeValueDatapoint && (
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pb-4 border-b border-border last:border-b-0 last:pb-0">
             <div className="flex-1">
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Median home value</p>
+              <p className="text-sm text-text-muted mb-1">Median home value</p>
               <p className="text-2xl font-semibold text-text">
                 {formatUSD(medianHomeValueDatapoint.value)} ({medianHomeValueDatapoint.year})
               </p>
@@ -96,7 +96,7 @@ export default function TownTaxSnapshot({ state, county, town }: TownTaxSnapshot
 
         {/* Planning Note */}
         <div className="pt-2">
-          <p className="text-xs text-gray-500 dark:text-gray-400 italic">
+          <p className="text-xs text-text-muted italic">
             Planning context only — actual bills depend on assessments and exemptions. Data as of{' '}
             {asOfYear}.
           </p>

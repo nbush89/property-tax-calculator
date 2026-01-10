@@ -20,11 +20,11 @@ function validateStateData(filePath: string): { valid: boolean; errors: string[]
     const stateData = normalizeStateData(rawData as any) as StateData
 
     // Check asOfYear matches latest year in metrics
-    if (stateData.asOfYear) {
+    if (stateData.state.asOfYear) {
       const stateLatestYear = getLatestYear(stateData.metrics?.averageTaxRate)
-      if (stateLatestYear && stateLatestYear !== stateData.asOfYear) {
+      if (stateLatestYear && stateLatestYear !== stateData.state.asOfYear) {
         errors.push(
-          `State asOfYear (${stateData.asOfYear}) doesn't match latest metric year (${stateLatestYear})`
+          `State asOfYear (${stateData.state.asOfYear}) doesn't match latest metric year (${stateLatestYear})`
         )
       }
     }

@@ -120,21 +120,21 @@ export default async function TownPropertyTaxPage({ params }: Props) {
       <JsonLd data={faqJsonLd(pageUrl, faqs)} />
 
       <Header />
-      <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
+      <main className="min-h-screen bg-gradient-to-br from-bg-gradient-from to-bg-gradient-to">
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-6xl mx-auto">
             {/* Header */}
             <div className="text-center mb-8">
-              <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+              <h1 className="text-4xl font-bold text-text mb-4">
                 {town.name}, {county.name} County NJ Property Tax Calculator
               </h1>
-              <p className="text-sm text-gray-600 dark:text-gray-400 italic">
+              <p className="text-sm text-text-muted italic">
                 Planning estimate (not official tax data)
               </p>
             </div>
 
             {/* Section 1: Intro Context */}
-            <div className="prose prose-lg max-w-none mb-8 text-gray-700 dark:text-gray-300">
+            <div className="prose prose-lg max-w-none mb-8 text-text-muted">
               {town.copy?.intro ? (
                 town.copy.intro.map((paragraph, index) => (
                   <p key={index} className={index === 0 ? 'text-xl leading-relaxed mb-4' : 'mb-4'}>
@@ -145,11 +145,11 @@ export default async function TownPropertyTaxPage({ params }: Props) {
                 <>
                   <p className="text-xl leading-relaxed mb-4">
                     Property taxes in{' '}
-                    <strong className="font-semibold text-text dark:text-white">{town.name}</strong>
-                    , New Jersey are influenced by a combination of local municipal budgets, school
-                    district funding, and county-level tax rates. Homeowners in {town.name} often
-                    see tax bills that differ meaningfully from nearby towns due to differences in
-                    home values, assessments, and local spending priorities.
+                    <strong className="font-semibold text-text">{town.name}</strong>, New Jersey are
+                    influenced by a combination of local municipal budgets, school district funding,
+                    and county-level tax rates. Homeowners in {town.name} often see tax bills that
+                    differ meaningfully from nearby towns due to differences in home values,
+                    assessments, and local spending priorities.
                   </p>
                   <p className="mb-4">
                     This page provides a planning-level estimate of property taxes in {town.name},
@@ -163,9 +163,16 @@ export default async function TownPropertyTaxPage({ params }: Props) {
 
             {/* Local Tax Snapshot */}
             <TownTaxSnapshot state={stateData} county={county} town={town} />
+            <p className="text-xs text-text-muted mb-4">
+              Learn more about how estimates are calculated in our{' '}
+              <Link href="/methodology" className="text-primary hover:text-primary-hover underline">
+                methodology
+              </Link>
+              .
+            </p>
 
             {/* Section 2: How Property Taxes Work */}
-            <div className="prose prose-lg max-w-none mb-8 text-gray-700 dark:text-gray-300">
+            <div className="prose prose-lg max-w-none mb-8 text-text-muted">
               <h2 className="text-2xl font-semibold mb-4 text-text">
                 How Property Taxes Work in {town.name}
               </h2>
@@ -179,7 +186,7 @@ export default async function TownPropertyTaxPage({ params }: Props) {
             </div>
 
             {/* Section 3: Data Snapshot */}
-            <div className="prose prose-lg max-w-none mb-8 text-gray-700 dark:text-gray-300">
+            <div className="prose prose-lg max-w-none mb-8 text-text-muted">
               {town.copy?.snapshot ? (
                 <p>{town.copy.snapshot[0]}</p>
               ) : copyContext.hasTownRate || copyContext.hasTownHomeValue ? (
@@ -205,7 +212,7 @@ export default async function TownPropertyTaxPage({ params }: Props) {
               <h2 className="text-2xl font-semibold mb-4 text-text">
                 Estimate Your Property Taxes in {town.name}
               </h2>
-              <p className="text-gray-700 dark:text-gray-300 mb-6">
+              <p className="text-text-muted mb-6">
                 Use the calculator below to estimate property taxes in {town.name}. The calculator
                 is pre-configured using the most recent available data and allows you to adjust home
                 value assumptions for planning purposes.
@@ -223,7 +230,7 @@ export default async function TownPropertyTaxPage({ params }: Props) {
 
             {/* Section 5: Historical Context (only if ≥2 years exist) */}
             {copyContext.hasHistory && (
-              <div className="prose prose-lg max-w-none mb-8 text-gray-700 dark:text-gray-300">
+              <div className="prose prose-lg max-w-none mb-8 text-text-muted">
                 <h2 className="text-2xl font-semibold mb-4 text-text">
                   Property Tax Trends in {town.name}
                 </h2>
@@ -234,12 +241,22 @@ export default async function TownPropertyTaxPage({ params }: Props) {
                   year-to-year changes are typically incremental, long-term trends can meaningfully
                   affect total cost of ownership.
                 </p>
+                <p className="text-xs text-text-muted mt-4">
+                  For details on data sources and how estimates are calculated, see our{' '}
+                  <Link
+                    href="/methodology"
+                    className="text-primary hover:text-primary-hover underline"
+                  >
+                    methodology
+                  </Link>
+                  .
+                </p>
               </div>
             )}
 
             {/* Section 6: Comparison Context */}
             {town.copy?.compare && (
-              <div className="prose prose-lg max-w-none mb-8 text-gray-700 dark:text-gray-300">
+              <div className="prose prose-lg max-w-none mb-8 text-text-muted">
                 <h2 className="text-2xl font-semibold mb-4 text-text">
                   Comparing {town.name} to Nearby Areas
                 </h2>
@@ -262,18 +279,18 @@ export default async function TownPropertyTaxPage({ params }: Props) {
             )}
 
             {/* Section 7: Disclaimer + Sources */}
-            <div className="prose prose-lg max-w-none mb-12 text-gray-700 dark:text-gray-300 border-t border-gray-200 dark:border-gray-700 pt-8">
+            <div className="prose prose-lg max-w-none mb-12 text-text-muted border-t border-border pt-8">
               <h2 className="text-2xl font-semibold mb-4 text-text">Important Information</h2>
               <p className="mb-4">
-                <strong className="font-semibold text-text dark:text-white">Important note:</strong>{' '}
-                This page provides estimates for planning and comparison purposes only. Actual
-                property tax bills depend on official assessments, exemptions, and local tax
-                decisions. Data reflects the most recently available information as of {asOfYear}{' '}
-                and may lag current tax bills.
+                <strong className="font-semibold text-text">Important note:</strong> This page
+                provides estimates for planning and comparison purposes only. Actual property tax
+                bills depend on official assessments, exemptions, and local tax decisions. Data
+                reflects the most recently available information as of {asOfYear} and may lag
+                current tax bills.
               </p>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                <strong className="font-semibold text-gray-700 dark:text-gray-300">Sources:</strong>{' '}
-                New Jersey Division of Taxation, U.S. Census Bureau, and other public data sources.
+              <p className="text-sm text-text-muted">
+                <strong className="font-semibold text-text">Sources:</strong> New Jersey Division of
+                Taxation, U.S. Census Bureau, and other public data sources.
               </p>
             </div>
 

@@ -26,6 +26,8 @@ module.exports = {
         },
         bg: {
           DEFAULT: 'rgb(var(--bg) / <alpha-value>)',
+          'gradient-from': 'rgb(var(--bg-gradient-from) / <alpha-value>)',
+          'gradient-to': 'rgb(var(--bg-gradient-to) / <alpha-value>)',
         },
         surface: {
           DEFAULT: 'rgb(var(--surface) / <alpha-value>)',

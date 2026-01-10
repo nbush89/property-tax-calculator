@@ -61,7 +61,8 @@ export function buildTownCopyContext({
     (town.metrics?.averageResidentialTaxBill?.length ?? 0) >= 2
 
   // Determine asOfYear (town > county > state)
-  const asOfYear = town.asOfYear ?? county.asOfYear ?? state.asOfYear ?? new Date().getFullYear()
+  const asOfYear =
+    town.asOfYear ?? county.asOfYear ?? state.state.asOfYear ?? new Date().getFullYear()
 
   return {
     hasTownRate,
@@ -70,7 +71,7 @@ export function buildTownCopyContext({
     asOfYear,
     countyName: county.name,
     townName: town.name,
-    stateAbbrev: state.abbreviation,
+    stateAbbrev: state.state.abbreviation,
     latestRate: townRate?.value,
     latestRateYear: townRate?.year,
     latestHomeValue: townHomeValue?.value,

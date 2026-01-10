@@ -151,6 +151,18 @@ export function getStaticPageUrls(baseUrl: string): Array<{
       priority: 0.7,
     },
     {
+      loc: joinUrl(baseUrl, '/about'),
+      lastmod: now,
+      changefreq: 'yearly',
+      priority: 0.7,
+    },
+    {
+      loc: joinUrl(baseUrl, '/methodology'),
+      lastmod: now,
+      changefreq: 'yearly',
+      priority: 0.7,
+    },
+    {
       loc: joinUrl(baseUrl, '/privacy'),
       lastmod: now,
       changefreq: 'yearly',

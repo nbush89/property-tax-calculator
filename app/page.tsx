@@ -19,12 +19,15 @@ import { SITE_URL } from '@/lib/site'
  */
 export const metadata = buildMetadata({
   title: 'NJ Property Tax Calculator | Estimate Your New Jersey Property Taxes',
-  description: 'Calculate your New Jersey property taxes in seconds. Get accurate estimates with county and town breakdowns, exemptions support, and detailed analysis—all free and no sign-up required.',
+  description:
+    'Calculate your New Jersey property taxes in seconds. Get accurate estimates with county and town breakdowns, exemptions support, and detailed analysis—all free and no sign-up required.',
   path: '/',
-  keywords: 'New Jersey property tax, NJ property tax calculator, property tax estimator, New Jersey real estate taxes, NJ tax calculator',
+  keywords:
+    'New Jersey property tax, NJ property tax calculator, property tax estimator, New Jersey real estate taxes, NJ tax calculator',
   openGraph: {
     title: 'NJ Property Tax Calculator | Estimate Your New Jersey Property Taxes',
-    description: 'Calculate your New Jersey property taxes in seconds. Get accurate estimates with county and town breakdowns, exemptions support, and detailed analysis.',
+    description:
+      'Calculate your New Jersey property taxes in seconds. Get accurate estimates with county and town breakdowns, exemptions support, and detailed analysis.',
     type: 'website',
     images: [
       {
@@ -55,17 +58,13 @@ export default function Home() {
         })}
       />
       {/* BreadcrumbList schema - navigation hierarchy */}
-      <JsonLd
-        data={breadcrumbJsonLd([{ name: 'Home', url: pageUrl }])}
-      />
+      <JsonLd data={breadcrumbJsonLd([{ name: 'Home', url: pageUrl }])} />
       <Header />
       <main className="min-h-screen">
         <Hero />
         <HowItWorks />
         <Features />
-        <ExamplePreview />
         <FAQ />
-        <Feedback />
         <CTASection />
       </main>
       <Footer />

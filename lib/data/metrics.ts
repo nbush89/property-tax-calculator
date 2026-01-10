@@ -2,14 +2,14 @@
  * Helper functions for working with year-aware metric time series
  */
 
-import type { MetricSeries, MetricDatapoint } from './types'
+import type { MetricSeries, DataPoint } from './types'
 
 /**
  * Get the latest (most recent) datapoint from a series
  * @param series - Array of metric datapoints (should be sorted by year ascending)
  * @returns The latest datapoint, or null if series is empty
  */
-export function getLatest(series: MetricSeries | undefined): MetricDatapoint | null {
+export function getLatest(series: MetricSeries | undefined): DataPoint | null {
   if (!series || series.length === 0) {
     return null
   }

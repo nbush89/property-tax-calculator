@@ -17,9 +17,7 @@ export default function Logo({ showText = true, className = '' }: LogoProps) {
         priority
         className="h-16 w-16"
       />
-      {showText && (
-        <span className="text-lg font-semibold text-text">NJ Property Tax Calculator</span>
-      )}
+      {showText && <span className="text-lg font-semibold text-text">Property Tax Calculator</span>}
     </Link>
   )
 }

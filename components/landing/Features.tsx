@@ -1,18 +1,14 @@
 import Section from '@/components/ui/Section'
 import { Card } from '@/components/ui/Card'
+import Link from 'next/link'
 
 export default function Features() {
   const features = [
     {
       title: 'County + Town Breakdown',
-      description: 'See exactly how your taxes are calculated with detailed county and municipal rate breakdowns.',
+      description: 'See how your taxes are estimated using county and municipal context..',
       icon: (
-        <svg
-          className="h-6 w-6 text-primary"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
+        <svg className="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -24,14 +20,10 @@ export default function Features() {
     },
     {
       title: 'Monthly + Annual Totals',
-      description: 'Get both annual and monthly tax amounts to help with budgeting and financial planning.',
+      description:
+        'Get both annual and monthly tax amounts to help with budgeting and financial planning.',
       icon: (
-        <svg
-          className="h-6 w-6 text-primary"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
+        <svg className="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -43,14 +35,10 @@ export default function Features() {
     },
     {
       title: 'Exemptions Support',
-      description: 'Factor in senior freeze, veteran, and disabled person exemptions to see your actual tax burden.',
+      description:
+        'Factor in senior freeze, veteran, and disabled person exemptions to better understand your estimated tax burden.',
       icon: (
-        <svg
-          className="h-6 w-6 text-primary"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
+        <svg className="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -62,14 +50,10 @@ export default function Features() {
     },
     {
       title: '5-Year Trend Preview',
-      description: 'Visualize how your property taxes have changed over the past five years with interactive charts.',
+      description:
+        'Visualize how your property taxes have changed over the past five years with interactive charts.',
       icon: (
-        <svg
-          className="h-6 w-6 text-primary"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
+        <svg className="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -93,12 +77,8 @@ export default function Features() {
             <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary-soft">
               {feature.icon}
             </div>
-            <h3 className="mb-2 text-lg font-semibold text-text">
-              {feature.title}
-            </h3>
-            <p className="text-sm muted">
-              {feature.description}
-            </p>
+            <h3 className="mb-2 text-lg font-semibold text-text">{feature.title}</h3>
+            <p className="text-sm muted">{feature.description}</p>
           </Card>
         ))}
       </div>
