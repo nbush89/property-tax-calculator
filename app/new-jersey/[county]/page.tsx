@@ -16,9 +16,9 @@ import { slugifyLocation } from '@/utils/locationUtils'
 import { getCountyFaqData } from '@/data/countyFaqData'
 import { getLatestValue } from '@/lib/data/metrics'
 import { resolveSource, resolveSourceUrl } from '@/lib/data/town-helpers'
-import CountyTownLinks from '@/components/CountyTownLinks'
 import CountyTaxTrendsChart from '@/components/CountyTaxTrendsChart'
 import RelatedLinks from '@/components/RelatedLinks'
+import { selectFeaturedTowns, buildCountyTownsIndexHref } from '@/lib/links/towns'
 
 type Props = {
   params: Promise<{
@@ -111,6 +111,19 @@ export default async function CountyPropertyTaxPage({ params }: Props) {
       <main className="min-h-screen bg-gradient-to-br from-bg-gradient-from to-bg-gradient-to">
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-6xl mx-auto">
+            {/* Breadcrumb UI */}
+            <nav className="text-sm text-text-muted mb-6" aria-label="Breadcrumb">
+              <Link href="/" className="hover:text-primary">
+                Home
+              </Link>
+              <span className="mx-2">→</span>
+              <Link href="/new-jersey" className="hover:text-primary">
+                New Jersey
+              </Link>
+              <span className="mx-2">→</span>
+              <span className="text-text">{county.name} County</span>
+            </nav>
+
             {/* Header */}
             <div className="text-center mb-8">
               <h1 className="text-4xl font-bold text-text mb-4">
@@ -206,8 +219,40 @@ export default async function CountyPropertyTaxPage({ params }: Props) {
               </Card>
             </div>
 
-            {/* Popular Towns Section */}
-            <CountyTownLinks county={county} />
+            {/* Featured Towns (max 8) + CTA to all towns */}
+            {(() => {
+              const featuredTowns = selectFeaturedTowns(county, { max: 8 })
+              const townsIndexHref = buildCountyTownsIndexHref(countySlug)
+              if (featuredTowns.length === 0) return null
+              return (
+                <div className="mb-12">
+                  <h2 className="text-2xl font-semibold mb-4 text-text">
+                    Towns in {county.name} County
+                  </h2>
+                  <p className="text-text-muted mb-4">
+                    Browse property tax information for municipalities in {county.name} County.
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                    {featuredTowns.map(t => (
+                      <Link
+                        key={t.href}
+                        href={t.href}
+                        className="block p-4 bg-surface border border-border rounded-lg hover:bg-bg transition-colors text-text"
+                      >
+                        <span className="font-medium">{t.name}</span>
+                        <span className="block text-sm text-text-muted mt-1">View town →</span>
+                      </Link>
+                    ))}
+                  </div>
+                  <Link
+                    href={townsIndexHref}
+                    className="inline-flex items-center px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition-colors"
+                  >
+                    View all {county.towns?.length ?? 0} towns in {county.name} County →
+                  </Link>
+                </div>
+              )
+            })()}
 
             {/* Tax Trends Chart */}
             <CountyTaxTrendsChart county={county} />
@@ -224,10 +269,22 @@ export default async function CountyPropertyTaxPage({ params }: Props) {
               <h2 className="text-2xl font-semibold mb-4 text-text">Related Resources</h2>
               <div className="flex flex-wrap gap-4">
                 <Link
+                  href={buildCountyTownsIndexHref(countySlug)}
+                  className="px-4 py-2 bg-surface border border-border text-text rounded-lg hover:bg-bg transition-colors"
+                >
+                  All towns in {county.name} County
+                </Link>
+                <Link
+                  href="/new-jersey"
+                  className="px-4 py-2 bg-surface border border-border text-text rounded-lg hover:bg-bg transition-colors"
+                >
+                  New Jersey overview
+                </Link>
+                <Link
                   href="/new-jersey/property-tax-calculator"
                   className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition-colors"
                 >
-                  New Jersey Property Tax Calculator
+                  NJ Property Tax Calculator
                 </Link>
                 <Link
                   href="/new-jersey/property-tax-exemptions"

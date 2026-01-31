@@ -49,10 +49,10 @@ const PDF_URL_CANDIDATES = (year: number) => [
   `https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/${year}AvgTaxBill.pdf`, // just-in-case fallback
 ]
 
-// Must match your state's sources map key in new-jersey.json
-const SOURCE_REF = 'nj_avg_residential_tax_report'
+// Must match your state's sources map key in new-jersey.json (nj_modiv_avg_restax)
+const SOURCE_REF = 'nj_modiv_avg_restax'
 
-// Your Tier-1 towns + countySlug (matches your routing slugs)
+// Towns to extract from MOD IV report: Tier-1 + next 10 towns (countySlug/townSlug match routing)
 const TIER1: Array<{ countySlug: string; townSlug: string; townName: string }> = [
   { countySlug: 'essex', townSlug: 'montclair', townName: 'Montclair' },
   { countySlug: 'hudson', townSlug: 'hoboken', townName: 'Hoboken' },
@@ -64,6 +64,16 @@ const TIER1: Array<{ countySlug: string; townSlug: string; townName: string }> =
   { countySlug: 'morris', townSlug: 'morristown', townName: 'Morristown' },
   { countySlug: 'middlesex', townSlug: 'edison', townName: 'Edison' },
   { countySlug: 'camden', townSlug: 'cherry-hill', townName: 'Cherry Hill' },
+  // Next 10 towns (add to JSON with slug; merge script will fill metrics)
+  { countySlug: 'essex', townSlug: 'newark', townName: 'Newark' },
+  { countySlug: 'hudson', townSlug: 'jersey-city', townName: 'Jersey City' },
+  { countySlug: 'passaic', townSlug: 'paterson', townName: 'Paterson' },
+  { countySlug: 'union', townSlug: 'elizabeth', townName: 'Elizabeth' },
+  { countySlug: 'middlesex', townSlug: 'woodbridge', townName: 'Woodbridge' },
+  { countySlug: 'ocean', townSlug: 'toms-river', townName: 'Toms River' },
+  { countySlug: 'mercer', townSlug: 'hamilton', townName: 'Hamilton' },
+  { countySlug: 'mercer', townSlug: 'trenton', townName: 'Trenton' },
+  { countySlug: 'camden', townSlug: 'camden', townName: 'Camden' },
 ]
 
 // County slug normalization for NJ county names

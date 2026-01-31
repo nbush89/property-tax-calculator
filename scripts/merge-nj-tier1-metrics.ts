@@ -21,6 +21,15 @@ const TIER1_TOWN_TO_COUNTY: Record<string, string> = {
   Morristown: 'morris',
   Edison: 'middlesex',
   'Cherry Hill': 'camden',
+  Newark: 'essex',
+  'Jersey City': 'hudson',
+  Paterson: 'passaic',
+  Elizabeth: 'union',
+  Woodbridge: 'middlesex',
+  'Toms River': 'ocean',
+  Hamilton: 'mercer',
+  Trenton: 'mercer',
+  Camden: 'camden',
 }
 
 function readJson(p: string): any {
@@ -63,8 +72,17 @@ function main() {
     console.error(`Cannot find ${statePath}`)
     process.exit(1)
   }
-  if (!metricsPath || !fs.existsSync(metricsPath)) {
-    console.error(`Usage: npx tsx scripts/merge-nj-tier1-metrics.ts /path/to/nj-tier1-metrics.json`)
+  if (!metricsPath) {
+    console.error(`Usage: npx tsx scripts/merge-nj-tier1-metrics.ts <path-to-tier1-metrics.json>`)
+    console.error(`Example: First run: npm run scrape-town-metrics > tmp/nj-tier1-metrics.json`)
+    console.error(
+      `        Then run:   npx tsx scripts/merge-nj-tier1-metrics.ts tmp/nj-tier1-metrics.json`
+    )
+    process.exit(1)
+  }
+  if (!fs.existsSync(metricsPath)) {
+    console.error(`File not found: ${metricsPath}`)
+    console.error(`First run: npm run scrape-town-metrics > tmp/nj-tier1-metrics.json`)
     process.exit(1)
   }
 

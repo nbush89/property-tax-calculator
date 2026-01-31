@@ -7,8 +7,16 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "scrape-town-metrics": "tsx scripts/source-nj-tier1-metrics.ts",
-    "validate:data": "tsx scripts/validate-state-data.ts"
+    "scrape-town-metrics": "tsx scripts/source-nj-tier1-metrics.ts > /tmp/nj-tier1-metrics.json",
+    "merge-town-metrics": "tsx scripts/merge-nj-tier1-metrics.ts /tmp/nj-tier1-metrics.json",
+    "source-avg-tax-bill": "tsx scripts/source-nj-avg-tax-bill.ts > /tmp/nj-avg-tax-bill.json",
+    "merge-avg-tax-bill": "tsx scripts/merge-nj-avg-tax-bill.ts /tmp/nj-avg-tax-bill.json",
+    "apply-town-overviews": "tsx scripts/apply-town-overviews.ts",
+    "validate:data": "tsx scripts/validate-state-data.ts",
+    "validate:tier1-overviews": "tsx scripts/validate-tier1-overviews.ts",
+    "validate:tier1-overviews:report": "tsx scripts/validate-tier1-overviews.ts --report",
+    "validate:sitemap": "tsx scripts/validate-sitemap.ts",
+    "generate-favicons": "tsx scripts/generate-favicons.ts"
   },
   "dependencies": {
     "chart.js": "^4.4.0",
@@ -34,6 +42,8 @@
     "pdf-parse": "^1.1.4",
     "postcss": "^8.4.0",
     "prettier": "^3.7.4",
+    "png-to-ico": "^3.0.0",
+    "sharp": "^0.33.0",
     "tailwindcss": "^3.4.0",
     "tsx": "^4.21.0",
     "typescript": "^5.0.0",

@@ -1,7 +1,12 @@
 #!/usr/bin/env tsx
 /**
- * Validation script for state data JSON files
- * Checks structure, data integrity, and constraints
+ * Validation script for state data JSON files.
+ * Checks structure, data integrity, and constraints.
+ *
+ * Sources: Accepts two shapes—canonical (publisher, title, type, homepageUrl)
+ * or alternate from merge scripts (name, url). Town slug and asOfYear are
+ * optional; missing values produce warnings (add slugs for routing; asOfYear
+ * is set when metrics are merged).
  */
 
 import fs from 'node:fs'
@@ -113,28 +118,32 @@ function validateSeries(series: any[], pathPrefix: string, sources: Record<strin
 }
 
 /**
- * Validate a Source object
+ * Validate a Source object.
+ * Accepts two shapes: canonical (publisher, title, type, homepageUrl) or
+ * alternate from merge scripts (name, reference, url).
  */
 function validateSource(source: any, sourceKey: string): void {
   const pathPrefix = `sources["${sourceKey}"]`
+  const hasCanonical =
+    typeof source.publisher === 'string' &&
+    source.publisher &&
+    typeof source.title === 'string' &&
+    source.title &&
+    typeof source.type === 'string' &&
+    source.type &&
+    typeof source.homepageUrl === 'string' &&
+    source.homepageUrl
+  const hasAlternate =
+    typeof source.name === 'string' && source.name && typeof source.url === 'string' && source.url
 
-  if (typeof source.publisher !== 'string' || !source.publisher) {
-    addError(pathPrefix, 'publisher must be a non-empty string')
+  if (!hasCanonical && !hasAlternate) {
+    addError(
+      pathPrefix,
+      'source must have either (publisher, title, type, homepageUrl) or (name, url)'
+    )
   }
 
-  if (typeof source.title !== 'string' || !source.title) {
-    addError(pathPrefix, 'title must be a non-empty string')
-  }
-
-  if (typeof source.type !== 'string' || !source.type) {
-    addError(pathPrefix, 'type must be a non-empty string')
-  }
-
-  if (typeof source.homepageUrl !== 'string' || !source.homepageUrl) {
-    addError(pathPrefix, 'homepageUrl must be a non-empty string')
-  }
-
-  // Validate yearUrls if present
+  // Validate yearUrls if present (canonical shape)
   if (source.yearUrls !== undefined) {
     if (typeof source.yearUrls !== 'object' || Array.isArray(source.yearUrls)) {
       addError(pathPrefix, 'yearUrls must be an object')
@@ -242,10 +251,16 @@ function validateStateData(data: any): void {
           addError(`${townPath}.name`, 'must be a non-empty string')
         }
         if (typeof town.slug !== 'string' || !town.slug) {
-          addError(`${townPath}.slug`, 'must be a non-empty string')
+          addWarning(
+            `${townPath}.slug`,
+            'missing or empty; add slug for routing (e.g. "galloway") or run adapter to derive'
+          )
         }
         if (typeof town.asOfYear !== 'number') {
-          addError(`${townPath}.asOfYear`, 'must be a number')
+          addWarning(
+            `${townPath}.asOfYear`,
+            'missing; set when metrics are merged (merge scripts set it)'
+          )
         }
 
         // Validate town metrics

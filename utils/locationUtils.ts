@@ -1,18 +1,29 @@
 /**
- * Utility functions for location slug generation and data access
+ * Utility functions for location slug generation and data access.
+ * Single canonical slug function used everywhere for consistent URLs and SEO.
  */
 
 /**
- * Convert a location name to a URL-friendly slug
- * e.g., "Bergen County" -> "bergen-county"
+ * Convert a location name to a URL-friendly slug.
+ * Used for counties, towns, and municipalities. Lower-case, trim, spaces to hyphens, no punctuation.
+ * Display names like "Atlantic City" or "Washington Township" stay readable; slug is stable (e.g. atlantic-city, washington-township).
+ * e.g. "Bergen County" -> "bergen-county", "Atlantic City" -> "atlantic-city"
  */
 export function slugifyLocation(name: string): string {
   return name
     .toLowerCase()
+    .trim()
     .replace(/\s+/g, '-')
     .replace(/[^a-z0-9-]/g, '')
     .replace(/-+/g, '-')
     .replace(/^-|-$/g, '')
+}
+
+/**
+ * Alias for slugifyLocation for town/municipality names. Same rules; use for clarity at call sites.
+ */
+export function slugifyTown(name: string): string {
+  return slugifyLocation(name)
 }
 
 /**
@@ -41,4 +52,3 @@ export function removeCountySuffix(slug: string): string {
 export function addCountySuffix(slug: string): string {
   return slug.endsWith('-county') ? slug : `${slug}-county`
 }
-

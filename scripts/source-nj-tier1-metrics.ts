@@ -41,6 +41,16 @@ const TIER1_TOWNS = [
   'Morristown',
   'Edison',
   'Cherry Hill',
+  // Next 10 (same as source-nj-avg-tax-bill TIER1)
+  'Newark',
+  'Jersey City',
+  'Paterson',
+  'Elizabeth',
+  'Woodbridge',
+  'Toms River',
+  'Hamilton',
+  'Trenton',
+  'Camden',
 ] as const
 
 const PDF_DISTRICT_OVERRIDES: Record<string, string> = {
@@ -54,6 +64,15 @@ const PDF_DISTRICT_OVERRIDES: Record<string, string> = {
   Morristown: 'MORRISTOWN TOWN',
   Edison: 'EDISON TWP',
   'Cherry Hill': 'CHERRY HILL TWNSHP',
+  Newark: 'NEWARK CITY',
+  'Jersey City': 'JERSEY CITY',
+  Paterson: 'PATERSON CITY',
+  Elizabeth: 'ELIZABETH CITY',
+  Woodbridge: 'WOODBRIDGE TWP',
+  'Toms River': 'TOMS RIVER TWP',
+  Hamilton: 'HAMILTON TWP',
+  Trenton: 'TRENTON CITY',
+  Camden: 'CAMDEN CITY',
 }
 
 function fetchJson(url: string): Promise<any> {

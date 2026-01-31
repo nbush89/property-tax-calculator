@@ -3,8 +3,9 @@
  * Since JSON is already normalized, this primarily validates and ensures data integrity
  */
 
-import type { StateData, CountyData, DataPoint, MetricSeries } from './types'
+import type { StateData, CountyData, TownData } from './types'
 import { assertSorted, assertMaxLength } from './metrics'
+import { slugifyLocation } from '@/utils/locationUtils'
 
 /**
  * Validate and normalize state data
@@ -36,6 +37,13 @@ export function normalizeStateData(raw: any): StateData {
  * Validate and normalize county data
  * Ensures metrics series are sorted and within limits
  */
+function normalizeTownData(raw: any): TownData {
+  const name = raw.name
+  const slug = raw.slug ?? slugifyLocation(name)
+  const asOfYear = raw.asOfYear ?? new Date().getFullYear()
+  return { ...raw, name, slug, asOfYear } as TownData
+}
+
 function normalizeCountyData(raw: any): CountyData {
   const normalized: CountyData = {
     name: raw.name,
@@ -43,7 +51,7 @@ function normalizeCountyData(raw: any): CountyData {
     asOfYear: raw.asOfYear,
     neighborCounties: raw.neighborCounties,
     copy: raw.copy,
-    towns: raw.towns,
+    towns: Array.isArray(raw.towns) ? raw.towns.map((t: any) => normalizeTownData(t)) : undefined,
   }
 
   // Validate county metrics

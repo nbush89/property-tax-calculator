@@ -9,12 +9,15 @@ type LocationFAQProps = {
   faqs: FAQItem[]
   title?: string
   subtitle?: string
+  /** Optional id for the section heading (for aria-labelledby) */
+  titleId?: string
 }
 
-export default function LocationFAQ({ 
-  faqs, 
-  title = "Frequently Asked Questions",
-  subtitle 
+export default function LocationFAQ({
+  faqs,
+  title = 'Frequently Asked Questions',
+  subtitle,
+  titleId,
 }: LocationFAQProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
 
@@ -23,11 +26,7 @@ export default function LocationFAQ({
   }
 
   return (
-    <Section
-      title={title}
-      subtitle={subtitle}
-      className="bg-bg"
-    >
+    <Section title={title} subtitle={subtitle} titleId={titleId} className="bg-bg">
       <div className="mt-12 max-w-3xl mx-auto space-y-4">
         {faqs.map((item, index) => (
           <Card key={index} className="overflow-hidden">
@@ -35,9 +34,7 @@ export default function LocationFAQ({
               onClick={() => toggleQuestion(index)}
               className="flex w-full items-center justify-between px-6 py-4 text-left focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
             >
-              <span className="font-semibold text-text">
-                {item.question}
-              </span>
+              <span className="font-semibold text-text">{item.question}</span>
               <svg
                 className={`h-5 w-5 text-text-muted transition-transform ${
                   openIndex === index ? 'rotate-180' : ''
@@ -65,4 +62,3 @@ export default function LocationFAQ({
     </Section>
   )
 }
-

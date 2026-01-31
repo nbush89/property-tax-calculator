@@ -15,8 +15,12 @@ import { getTownBySlugs, getNewJerseyData } from '@/utils/stateData'
 import { slugifyLocation } from '@/utils/locationUtils'
 import { getTownFaqData } from '@/data/townFaqData'
 import { buildTownCopyContext } from '@/lib/data/copy'
-import TownTaxSnapshot from '@/components/TownTaxSnapshot'
+import TownAtAGlance from '@/components/town/TownAtAGlance'
+import CalculatorTaxTrendsChart from '@/components/charts/CalculatorTaxTrendsChart'
 import { getMetricLatest } from '@/lib/data/town-helpers'
+import { validateTownOverview } from '@/lib/town-overview/validate'
+import { getCountyAvgTaxBillSeries } from '@/utils/getCountySeries'
+import type { StateData, CountyData, TownData } from '@/lib/data/types'
 
 type Props = {
   params: Promise<{
@@ -50,8 +54,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const { county, town } = result
   const path = `/new-jersey/${countySlug}/${townSlug}`
-
-  // Get effective tax rate for metadata (town first, then county fallback)
   const stateData = getNewJerseyData()
   const { getMetricLatest } = await import('@/lib/data/town-helpers')
   const effectiveRate = getMetricLatest({
@@ -59,16 +61,35 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     county,
     metricKey: 'effectiveTaxRate',
   })
-  const rateText = effectiveRate ? `${effectiveRate.value.toFixed(2)}%` : ''
+  // Prefer town.overview (from ingestion); fallback to metrics for compatibility
+  const overview = town.overview && validateTownOverview(town.overview) ? town.overview : null
+  const asOfYear =
+    overview?.asOfYear ?? effectiveRate?.year ?? town.asOfYear ?? stateData.state.asOfYear
+  const rateText =
+    overview?.effectiveTaxRatePct != null
+      ? `${overview.effectiveTaxRatePct.toFixed(2)}%`
+      : effectiveRate
+        ? `${effectiveRate.value.toFixed(2)}%`
+        : ''
+  const avgBillText =
+    overview?.avgResidentialTaxBill != null
+      ? `Avg tax bill ${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(overview.avgResidentialTaxBill)}. `
+      : ''
+  const titleSuffix =
+    rateText || asOfYear
+      ? ` (${[asOfYear, rateText].filter(Boolean).join(' · ')} Rates & Estimates)`
+      : ''
+  const title = `${town.name}, ${county.name} County NJ Property Tax Calculator${titleSuffix}`
+  const description = `Calculate property taxes for ${town.name}, ${county.name} County, New Jersey. ${avgBillText}${rateText ? `Effective rate: ${rateText}. ` : ''}Planning estimates with our free calculator.`
 
   return buildMetadata({
-    title: `${town.name}, ${county.name} County NJ Property Tax Calculator${rateText ? ` | ${rateText}` : ''}`,
-    description: `Calculate property taxes for ${town.name}, ${county.name} County, New Jersey. ${rateText ? `Effective rate: ${rateText}. ` : ''}Get planning estimates with our free calculator.`,
+    title,
+    description,
     path,
     keywords: `${town.name} property tax, ${town.name} ${county.name} County tax calculator, New Jersey ${town.name} property tax rate`,
     openGraph: {
-      title: `${town.name}, ${county.name} County NJ Property Tax Calculator`,
-      description: `Calculate property taxes for ${town.name}, ${county.name} County, New Jersey.${rateText ? ` Effective rate: ${rateText}.` : ''}`,
+      title: title.trim(),
+      description,
       type: 'website',
     },
   })
@@ -90,13 +111,14 @@ export default async function TownPropertyTaxPage({ params }: Props) {
 
   const { county, town } = result
   const stateData = getNewJerseyData()
+  const countyRouteSegment = `${slugifyLocation(county.name)}-county-property-tax`
   const pageUrl = `${SITE_URL}/new-jersey/${countySlug}/${townSlug}`
-  const countyPageUrl = `${SITE_URL}/new-jersey/${slugifyLocation(county.name)}-county-property-tax`
+  const countyPageUrl = `${SITE_URL}/new-jersey/${countyRouteSegment}`
   const faqs = getTownFaqData(town.name, county.name)
-
-  // Build copy context for conditional rendering
   const copyContext = buildTownCopyContext({ state: stateData, county, town })
   const asOfYear = copyContext.asOfYear
+  const countySeries = getCountyAvgTaxBillSeries('new-jersey', county.name)
+  const showTrendsChart = countySeries.length >= 3
 
   return (
     <>
@@ -104,7 +126,7 @@ export default async function TownPropertyTaxPage({ params }: Props) {
       <JsonLd
         data={breadcrumbJsonLd([
           { name: 'Home', url: `${SITE_URL}/` },
-          { name: 'New Jersey', url: `${SITE_URL}/new-jersey/property-tax-calculator` },
+          { name: 'New Jersey', url: `${SITE_URL}/new-jersey` },
           { name: `${county.name} County`, url: countyPageUrl },
           { name: town.name, url: pageUrl },
         ])}
@@ -118,107 +140,89 @@ export default async function TownPropertyTaxPage({ params }: Props) {
       />
       {/* FAQPage schema */}
       <JsonLd data={faqJsonLd(pageUrl, faqs)} />
+      {/* WebPage with dateModified when overview has lastUpdated */}
+      {(town.overview?.provenance?.lastUpdated ??
+        (town.overview?.sources?.[0] as { retrieved?: string })?.retrieved) && (
+        <JsonLd
+          data={{
+            '@context': 'https://schema.org',
+            '@type': 'WebPage',
+            url: pageUrl,
+            name: `${town.name}, ${county.name} County NJ Property Tax Calculator`,
+            dateModified:
+              town.overview?.provenance?.lastUpdated ??
+              (town.overview?.sources?.[0] as { retrieved?: string } | undefined)?.retrieved,
+          }}
+        />
+      )}
 
       <Header />
       <main className="min-h-screen bg-gradient-to-br from-bg-gradient-from to-bg-gradient-to">
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-6xl mx-auto">
-            {/* Header */}
-            <div className="text-center mb-8">
-              <h1 className="text-4xl font-bold text-text mb-4">
-                {town.name}, {county.name} County NJ Property Tax Calculator
+            {/* Hero: H1 + subtitle */}
+            <div className="text-center mb-6">
+              <h1 className="text-4xl font-bold text-text mb-2">
+                {town.name}, {county.name} County {stateData.state.abbreviation} Property Tax
+                Calculator
               </h1>
               <p className="text-sm text-text-muted italic">
                 Planning estimate (not official tax data)
               </p>
             </div>
 
-            {/* Section 1: Intro Context */}
-            <div className="prose prose-lg max-w-none mb-8 text-text-muted">
-              {town.copy?.intro ? (
-                town.copy.intro.map((paragraph, index) => (
-                  <p key={index} className={index === 0 ? 'text-xl leading-relaxed mb-4' : 'mb-4'}>
-                    {paragraph}
-                  </p>
-                ))
-              ) : (
-                <>
-                  <p className="text-xl leading-relaxed mb-4">
-                    Property taxes in{' '}
-                    <strong className="font-semibold text-text">{town.name}</strong>, New Jersey are
-                    influenced by a combination of local municipal budgets, school district funding,
-                    and county-level tax rates. Homeowners in {town.name} often see tax bills that
-                    differ meaningfully from nearby towns due to differences in home values,
-                    assessments, and local spending priorities.
-                  </p>
-                  <p className="mb-4">
-                    This page provides a planning-level estimate of property taxes in {town.name},
-                    using the most recently available data and historical trends where available. It
-                    is designed to help homeowners and prospective buyers understand relative tax
-                    burden — not to replace official tax bills or municipal assessments.
-                  </p>
-                </>
-              )}
-            </div>
-
-            {/* Local Tax Snapshot */}
-            <TownTaxSnapshot state={stateData} county={county} town={town} />
-            <p className="text-xs text-text-muted mb-4">
-              Learn more about how estimates are calculated in our{' '}
-              <Link href="/methodology" className="text-primary hover:text-primary-hover underline">
-                methodology
+            {/* Breadcrumbs */}
+            <nav className="text-sm text-text-muted mb-4" aria-label="Breadcrumb">
+              <Link href="/" className="hover:text-primary">
+                Home
               </Link>
-              .
-            </p>
+              <span className="mx-2">→</span>
+              <Link href="/new-jersey" className="hover:text-primary">
+                New Jersey
+              </Link>
+              <span className="mx-2">→</span>
+              <Link href={countyPageUrl} className="hover:text-primary">
+                {county.name} County
+              </Link>
+              <span className="mx-2">→</span>
+              <span className="text-text">{town.name}</span>
+            </nav>
 
-            {/* Section 2: How Property Taxes Work */}
-            <div className="prose prose-lg max-w-none mb-8 text-text-muted">
-              <h2 className="text-2xl font-semibold mb-4 text-text">
-                How Property Taxes Work in {town.name}
+            {/* Max 2 quick links in hero area */}
+            <nav className="mb-8 flex flex-wrap gap-3 text-sm">
+              <Link
+                href={countyPageUrl}
+                className="text-primary hover:text-primary-hover underline"
+              >
+                ← Back to {county.name} County
+              </Link>
+              <span className="text-text-muted">·</span>
+              <Link
+                href="/new-jersey/property-tax-rates"
+                className="text-primary hover:text-primary-hover underline"
+              >
+                NJ property tax rates
+              </Link>
+            </nav>
+
+            {/* Town at a glance (single summary card) */}
+            <TownAtAGlance
+              townName={town.name}
+              countyName={county.name}
+              stateCode={stateData.state.abbreviation}
+              overview={town.overview}
+            />
+
+            {/* Estimate property taxes: calculator + short inline note */}
+            <section className="mb-12" aria-labelledby="estimate-heading">
+              <h2 id="estimate-heading" className="text-2xl font-semibold mb-4 text-text">
+                Estimate property taxes
               </h2>
-              <p>
-                In {town.name}, property taxes are calculated by applying local and county tax rates
-                to a property's assessed value. While assessments are determined locally, overall
-                tax burden is shaped by municipal budgets, school funding requirements, and
-                county-wide obligations. As a result, two homes with similar market values can face
-                different tax bills depending on location and assessment history.
+              <p className="text-text-muted mb-2">
+                Use the calculator below with your home value. Estimates are for planning
+                only—verify with your local assessor.
               </p>
-            </div>
-
-            {/* Section 3: Data Snapshot */}
-            <div className="prose prose-lg max-w-none mb-8 text-text-muted">
-              {town.copy?.snapshot ? (
-                <p>{town.copy.snapshot[0]}</p>
-              ) : copyContext.hasTownRate || copyContext.hasTownHomeValue ? (
-                <p>
-                  Based on recent data, {town.name} has an effective property tax rate that reflects
-                  both local and county funding needs. When paired with typical home values in the
-                  area, this results in property tax bills that are generally comparable to the
-                  surrounding region. Historical data shows that tax levels in {town.name} have
-                  remained relatively stable over the past several years.
-                </p>
-              ) : (
-                <p>
-                  {town.name} does not publish a standalone average residential tax bill. In these
-                  cases, county-level tax data provides useful context for estimating local tax
-                  burden. While individual bills vary by assessment, county trends help illustrate
-                  how property taxes in {town.name} compare to nearby municipalities.
-                </p>
-              )}
-            </div>
-
-            {/* Section 4: Calculator Embed */}
-            <div className="mb-12">
-              <h2 className="text-2xl font-semibold mb-4 text-text">
-                Estimate Your Property Taxes in {town.name}
-              </h2>
-              <p className="text-text-muted mb-6">
-                Use the calculator below to estimate property taxes in {town.name}. The calculator
-                is pre-configured using the most recent available data and allows you to adjust home
-                value assumptions for planning purposes.
-              </p>
-
-              <div className="grid lg:grid-cols-2 gap-8">
+              <div className="grid lg:grid-cols-2 gap-8 mt-4">
                 <Card className="p-6">
                   <TaxForm defaultCounty={county.name} defaultMunicipality={town.name} />
                 </Card>
@@ -226,80 +230,76 @@ export default async function TownPropertyTaxPage({ params }: Props) {
                   <TaxResults />
                 </Card>
               </div>
-            </div>
+            </section>
 
-            {/* Section 5: Historical Context (only if ≥2 years exist) */}
-            {copyContext.hasHistory && (
-              <div className="prose prose-lg max-w-none mb-8 text-text-muted">
-                <h2 className="text-2xl font-semibold mb-4 text-text">
-                  Property Tax Trends in {town.name}
+            {/* Trends chart: only when >= 3 years of county data */}
+            {showTrendsChart && (
+              <section className="mb-12" aria-labelledby="trends-heading">
+                <h2 id="trends-heading" className="text-2xl font-semibold mb-4 text-text">
+                  {countySeries.length >= 5
+                    ? '5-year trend'
+                    : `${countySeries.length}-year trend (${countySeries[0].year}–${countySeries[countySeries.length - 1].year})`}
                 </h2>
-                <p>
-                  Looking at historical data can help put current property taxes in context. Over
-                  the past several years, property tax levels in {town.name} have reflected broader
-                  trends in local government spending, school funding, and property values. While
-                  year-to-year changes are typically incremental, long-term trends can meaningfully
-                  affect total cost of ownership.
+                <p className="text-sm text-text-muted mb-4">
+                  County average residential tax bill. Planning context only.
                 </p>
-                <p className="text-xs text-text-muted mt-4">
-                  For details on data sources and how estimates are calculated, see our{' '}
-                  <Link
-                    href="/methodology"
-                    className="text-primary hover:text-primary-hover underline"
-                  >
-                    methodology
-                  </Link>
-                  .
-                </p>
-              </div>
+                <CalculatorTaxTrendsChart series={countySeries} countyName={county.name} />
+              </section>
             )}
 
-            {/* Section 6: Comparison Context */}
-            {town.copy?.compare && (
-              <div className="prose prose-lg max-w-none mb-8 text-text-muted">
-                <h2 className="text-2xl font-semibold mb-4 text-text">
-                  Comparing {town.name} to Nearby Areas
-                </h2>
-                <p>{town.copy.compare[0]}</p>
-                <div className="mt-4 flex flex-wrap gap-4">
-                  <Link
-                    href={countyPageUrl}
-                    className="px-4 py-2 bg-surface border border-border text-text rounded-lg hover:bg-bg transition-colors"
-                  >
-                    {county.name} County Property Taxes
-                  </Link>
-                  <Link
-                    href="/new-jersey/property-tax-calculator"
-                    className="px-4 py-2 bg-surface border border-border text-text rounded-lg hover:bg-bg transition-colors"
-                  >
-                    New Jersey Property Tax Calculator
-                  </Link>
-                </div>
-              </div>
-            )}
+            {/* FAQ (accordion) */}
+            <section className="mb-12" aria-labelledby="faq-heading">
+              <LocationFAQ
+                faqs={faqs}
+                title={`${town.name} Property Tax FAQ`}
+                subtitle={`Common questions about property taxes in ${town.name}, ${county.name} County`}
+                titleId="faq-heading"
+              />
+            </section>
 
-            {/* Section 7: Disclaimer + Sources */}
-            <div className="prose prose-lg max-w-none mb-12 text-text-muted border-t border-border pt-8">
-              <h2 className="text-2xl font-semibold mb-4 text-text">Important Information</h2>
-              <p className="mb-4">
-                <strong className="font-semibold text-text">Important note:</strong> This page
-                provides estimates for planning and comparison purposes only. Actual property tax
-                bills depend on official assessments, exemptions, and local tax decisions. Data
-                reflects the most recently available information as of {asOfYear} and may lag
-                current tax bills.
+            {/* Sources + single disclaimer block */}
+            <section
+              className="mb-12 border-t border-border pt-8"
+              aria-labelledby="sources-heading"
+            >
+              <h2 id="sources-heading" className="text-2xl font-semibold mb-4 text-text">
+                Sources
+              </h2>
+              <p className="text-text-muted mb-4">
+                This page provides estimates for planning and comparison only. Actual property tax
+                bills depend on official assessments, exemptions, and local decisions. Data as of{' '}
+                {asOfYear}—verify with your local assessor.
               </p>
               <p className="text-sm text-text-muted">
-                <strong className="font-semibold text-text">Sources:</strong> New Jersey Division of
-                Taxation, U.S. Census Bureau, and other public data sources.
+                New Jersey Division of Taxation, U.S. Census Bureau, and other public data.{' '}
+                <Link
+                  href="/methodology"
+                  className="text-primary hover:text-primary-hover underline"
+                >
+                  Methodology
+                </Link>
+                .
               </p>
-            </div>
+            </section>
 
-            {/* FAQ Section */}
-            <LocationFAQ
-              faqs={faqs}
-              title={`${town.name} Property Tax FAQ`}
-              subtitle={`Common questions about property taxes in ${town.name}, ${county.name} County`}
-            />
+            {/* Related links (small) */}
+            <div className="flex flex-wrap gap-4 text-sm">
+              <Link
+                href={countyPageUrl}
+                className="text-primary hover:text-primary-hover underline"
+              >
+                {county.name} County
+              </Link>
+              <Link href="/new-jersey" className="text-primary hover:text-primary-hover underline">
+                NJ overview
+              </Link>
+              <Link
+                href="/new-jersey/property-tax-calculator"
+                className="text-primary hover:text-primary-hover underline"
+              >
+                NJ calculator
+              </Link>
+            </div>
           </div>
         </div>
       </main>

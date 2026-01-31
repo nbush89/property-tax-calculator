@@ -23,8 +23,8 @@ export async function GET(request: NextRequest, context: { params: Promise<{ nam
     let urls: Array<{
       loc: string
       lastmod: string
-      changefreq: string
-      priority: number
+      changefreq?: string
+      priority?: number
     }> = []
 
     if (name === 'static') {

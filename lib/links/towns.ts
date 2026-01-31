@@ -3,15 +3,25 @@
  */
 
 import type { TownData, CountyData } from '@/lib/data/types'
+import { slugifyLocation } from '@/utils/locationUtils'
 
 /**
- * Build href for a town property tax page
- * @param countySlug - County slug (e.g., "bergen")
+ * Build href for a town property tax page. Town URLs use short county slug (e.g. bergen).
+ * @param countySlug - County slug (e.g., "bergen") or route segment "bergen-county-property-tax" (normalized to short slug)
  * @param townSlug - Town slug (e.g., "ridgewood")
  * @returns URL path (e.g., "/new-jersey/bergen/ridgewood-property-tax")
  */
 export function buildNjTownHref(countySlug: string, townSlug: string): string {
-  return `/new-jersey/${countySlug}/${townSlug}-property-tax`
+  const short = countySlug.replace(/-county-property-tax$/, '') || countySlug
+  return `/new-jersey/${short}/${townSlug}-property-tax`
+}
+
+/**
+ * Build href for county town index page (all towns in county). Uses same route segment as county page.
+ * @param countyRouteSegment - Route param from county page (e.g., "bergen-county-property-tax")
+ */
+export function buildCountyTownsIndexHref(countyRouteSegment: string): string {
+  return `/new-jersey/${countyRouteSegment}/towns`
 }
 
 /**
@@ -42,7 +52,48 @@ export interface TownLink {
 }
 
 /**
- * Select ready towns for county page linking
+ * Get stable slug for a town (for href building). Prefer town.slug, fallback to slugified name.
+ */
+export function getTownSlug(town: TownData): string {
+  if (town.slug) return town.slug
+  return slugifyLocation(town.name)
+}
+
+/**
+ * Select featured towns for county overview page (max 5–8). Used for "Top towns" grid.
+ * Includes towns with slug (have a page); prioritizes featured > tier > rank > name.
+ * Does NOT filter by isTownReady so new towns appear once they have a slug.
+ */
+export function selectFeaturedTowns(
+  county: CountyData,
+  options: { max?: number } = {}
+): Array<{ name: string; slug: string; href: string }> {
+  const { max = 8 } = options
+  if (!county.towns || county.towns.length === 0) return []
+
+  const withSlug = county.towns.filter(t => getTownSlug(t))
+  const sorted = [...withSlug].sort((a, b) => {
+    const aFeatured = a.rollout?.featured ?? false
+    const bFeatured = b.rollout?.featured ?? false
+    if (aFeatured !== bFeatured) return aFeatured ? -1 : 1
+    const aTier = a.rollout?.tier ?? 999
+    const bTier = b.rollout?.tier ?? 999
+    if (aTier !== bTier) return aTier - bTier
+    const aRank = a.rollout?.rank ?? 999
+    const bRank = b.rollout?.rank ?? 999
+    if (aRank !== bRank) return aRank - bRank
+    return a.name.localeCompare(b.name)
+  })
+
+  return sorted.slice(0, max).map(t => ({
+    name: t.name,
+    slug: getTownSlug(t),
+    href: buildNjTownHref(county.slug, getTownSlug(t)),
+  }))
+}
+
+/**
+ * Select ready towns for county page linking (for "Popular towns" section when feature-flagged)
  * @param county - County data object
  * @param options - Selection options
  * @returns Array of town links, sorted by priority
@@ -101,7 +152,7 @@ export function selectCountyTownLinks(
 
     return {
       name: town.name,
-      href: buildNjTownHref(county.slug, town.slug),
+      href: buildNjTownHref(county.slug, getTownSlug(town)),
       reason,
     }
   })

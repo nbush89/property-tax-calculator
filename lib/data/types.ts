@@ -3,6 +3,10 @@
  * Matches the normalized JSON structure in /data/states/{state}.json
  */
 
+import type { TownOverview } from '@/lib/town-overview/types'
+
+export type { TownOverview }
+
 /**
  * Unit of measurement for a metric
  */
@@ -118,6 +122,7 @@ export interface TownData {
   copy?: TownCopy
   overrides?: TownOverrides
   rollout?: TownRollout
+  overview?: TownOverview
   avgRate?: number // Legacy field for backward compatibility (used in rates page)
 }
 

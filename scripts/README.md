@@ -1,5 +1,7 @@
 # NJ Town Metrics Scraping Scripts
 
+**→ For run order and what each script does, see [RUNNING-SCRIPTS.md](./RUNNING-SCRIPTS.md).**
+
 ## Overview
 
 `source-nj-tier1-metrics.ts` scrapes effective tax rates and median home values for Tier-1 NJ towns from:
@@ -34,8 +36,11 @@ npx tsx scripts/source-nj-tier1-metrics.ts > /tmp/nj-tier1-metrics.json
 npx tsx scripts/merge-nj-tier1-metrics.ts /tmp/nj-tier1-metrics.json
 npx tsx scripts/source-nj-avg-tax-bill.ts > /tmp/nj-avg-tax-bill.json
 npx tsx scripts/merge-nj-avg-tax-bill.ts /tmp/nj-avg-tax-bill.json
+npx tsx scripts/apply-town-overviews.ts
 
 ```
+
+After merging metrics, run **`apply-town-overviews.ts`** so every town gets a standardized `overview` object (built from existing town/county/state metrics). It logs warnings for towns missing `overview.avgResidentialTaxBill` or `overview.effectiveTaxRatePct` but does not fail the build.
 
 ## Updating for New Years
 
@@ -91,8 +96,16 @@ If a town shows `[MISSING]` in the output:
 2. Update `PDF_DISTRICT_OVERRIDES` if the PDF district name doesn't match
 3. Verify the town name normalization is working correctly
 
+## Adding the next batch of towns
+
+1. **Add towns to JSON** (`/data/states/new-jersey.json`): Under the correct county `towns` array, add an object with at least `name`, `slug` (use `slugifyLocation` rules: lowercase, hyphens, no punctuation), and optionally `asOfYear`, `rollout: { tier, featured, isReady, rank }` so they appear in the county “Featured towns” list.
+2. **Add towns to the ingestion script** (`scripts/source-nj-avg-tax-bill.ts`): Append entries to the `TIER1` array with `countySlug`, `townSlug`, and `townName` (match NJ MOD IV report names; use `normalizeTownNameForMatch` for matching).
+3. **Run pipeline**: `npx tsx scripts/source-nj-avg-tax-bill.ts > /tmp/nj-avg-tax-bill.json` then `npx tsx scripts/merge-nj-avg-tax-bill.ts /tmp/nj-avg-tax-bill.json`. Check script stderr for unmatched town names and fix name mapping if needed.
+4. **Slugging**: Use a single slug function everywhere (`utils/locationUtils.ts`: `slugifyLocation` / `slugifyTown`). Town slugs must be stable (e.g. "Atlantic City" → `atlantic-city`).
+
 ## Notes
 
 - ACS data may have a 1-2 year lag (e.g., 2024 data may not be available until 2025)
 - PDF parsing is best-effort; if structure changes, the regex may need updates
 - The script downloads PDFs in memory (no temp files needed)
+- Source script uses `SOURCE_REF = 'nj_modiv_avg_restax'` to match the JSON `sources` key; merge script writes into `town.metrics.averageResidentialTaxBill` and only updates towns that already exist in JSON with a matching `slug`
