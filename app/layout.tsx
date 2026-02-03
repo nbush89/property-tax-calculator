@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import Script from 'next/script'
+import { Suspense } from 'react'
 import { SITE_URL } from '@/lib/site'
 import { ThemeProvider } from '@/components/theme/ThemeProvider'
 import './globals.css'
@@ -78,7 +79,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={inter.variable} suppressHydrationWarning>
       <body className="font-sans">
         <Analytics />
-        <PageViewTracker />
+        <Suspense fallback={null}>
+          <PageViewTracker />
+        </Suspense>
         <Script
           id="theme-init"
           strategy="beforeInteractive"
