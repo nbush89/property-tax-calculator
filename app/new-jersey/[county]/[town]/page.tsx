@@ -16,6 +16,7 @@ import { slugifyLocation } from '@/utils/locationUtils'
 import { getTownFaqData } from '@/data/townFaqData'
 import { buildTownCopyContext } from '@/lib/data/copy'
 import TownAtAGlance from '@/components/town/TownAtAGlance'
+import { TownPageTracker } from '@/components/town/TownPageTracker'
 import CalculatorTaxTrendsChart from '@/components/charts/CalculatorTaxTrendsChart'
 import { getMetricLatest } from '@/lib/data/town-helpers'
 import { validateTownOverview } from '@/lib/town-overview/validate'
@@ -156,6 +157,11 @@ export default async function TownPropertyTaxPage({ params }: Props) {
         />
       )}
 
+      <TownPageTracker
+        county={county.name}
+        town={town.name}
+        tier={town.rollout?.tier != null ? `tier${town.rollout.tier}` : undefined}
+      />
       <Header />
       <main className="min-h-screen bg-gradient-to-br from-bg-gradient-from to-bg-gradient-to">
         <div className="container mx-auto px-4 py-8">

@@ -4,6 +4,8 @@ import Script from 'next/script'
 import { SITE_URL } from '@/lib/site'
 import { ThemeProvider } from '@/components/theme/ThemeProvider'
 import './globals.css'
+import { Analytics } from '@/components/site/Analytics'
+import { PageViewTracker } from '@/components/site/PageViewTracker'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -75,6 +77,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={inter.variable} suppressHydrationWarning>
       <body className="font-sans">
+        <Analytics />
+        <PageViewTracker />
         <Script
           id="theme-init"
           strategy="beforeInteractive"

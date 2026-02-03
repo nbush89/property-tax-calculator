@@ -5,6 +5,7 @@ import { Card, CardContent } from '@/components/ui/Card'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 import Section from '@/components/ui/Section'
+import { trackEvent } from '@/lib/analytics'
 
 export default function Feedback() {
   const [formData, setFormData] = useState({
@@ -37,14 +38,17 @@ export default function Feedback() {
 
       setStatus('success')
       setFormData({ name: '', email: '', message: '' })
-      
+      trackEvent('feedback_submit', { state: 'NJ' })
+
       // Reset success message after 5 seconds
       setTimeout(() => {
         setStatus('idle')
       }, 5000)
     } catch (error) {
       setStatus('error')
-      setErrorMessage(error instanceof Error ? error.message : 'Failed to send feedback. Please try again.')
+      setErrorMessage(
+        error instanceof Error ? error.message : 'Failed to send feedback. Please try again.'
+      )
     }
   }
 
@@ -184,4 +188,3 @@ export default function Feedback() {
     </Section>
   )
 }
-

@@ -1,30 +1,36 @@
-# Property Tax Calculator
+# NJ Property Tax Calculator
 
-A comprehensive Next.js application for calculating property taxes across multiple states. Currently supports New Jersey with an expandable architecture ready for all 50 states.
+A comprehensive Next.js application for calculating property taxes. Currently supports **New Jersey** with an expandable architecture ready for additional states.
 
 ## 🚀 Features
 
 - 🏠 Calculate property taxes for any supported state
-- 📊 Visual breakdown of tax components with interactive charts
+- 📊 Visual breakdown of tax components with interactive charts (Chart.js & Recharts)
 - 📈 5-year tax trend visualization
 - 💰 Support for multiple property tax exemptions
 - 🎯 SEO-optimized routes for states, counties, and municipalities
-- 📱 Responsive design with dark mode support
+- 📱 Responsive design with **dark mode** support
 - ⚡ Fast and efficient with Next.js 15 App Router
 - 🔄 Expandable architecture for multi-state support
+- 📄 **Sitemaps** – auto-generated sitemap index and per-state sitemaps with `lastmod`
+- 🤖 **robots.txt** – configurable crawl rules and sitemap reference
+- 📧 **Feedback form** – optional email delivery via Resend (see [FEEDBACK_SETUP.md](./FEEDBACK_SETUP.md))
+- 🍎 **Favicon set** – favicon.ico, PNG sizes, and Apple touch icon (generated from `public/logo-icon.png`)
+- 📈 **Analytics (optional)** – GA4 page views + custom events, Microsoft Clarity; no-op when env vars are unset
 
 ## 🛠 Tech Stack
 
-- **Next.js 15** - React framework with App Router
-- **React 19** - UI library
-- **TypeScript** - Type safety
-- **Tailwind CSS** - Styling with Typography plugin
-- **Chart.js** - Data visualization
-- **Vercel** - Deployment ready
+- **Next.js 15** – React framework with App Router
+- **React 19** – UI library
+- **TypeScript** – Type safety
+- **Tailwind CSS** – Styling with Typography plugin
+- **Chart.js** & **Recharts** – Data visualization
+- **Resend** – Optional feedback email delivery
+- **Vercel** – Deployment ready
 
 ## 📋 Prerequisites
 
-- Node.js 18+ 
+- Node.js 18+
 - npm or yarn
 - Git (for cloning)
 
@@ -33,75 +39,144 @@ A comprehensive Next.js application for calculating property taxes across multip
 ### Installation
 
 1. Clone the repository:
-```bash
-git clone <repository-url>
-cd nj-property-tax-calculator
-```
+
+   ```bash
+   git clone <repository-url>
+   cd nj-property-tax-calculator
+   ```
 
 2. Install dependencies:
-```bash
-npm install
-```
+
+   ```bash
+   npm install
+   ```
 
 3. Run the development server:
-```bash
-npm run dev
-```
+
+   ```bash
+   npm run dev
+   ```
 
 4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### Analytics (optional)
+
+Copy [.env.example](.env.example) to `.env.local` and set:
+
+- **NEXT_PUBLIC_GA4_ID** – Google Analytics 4 measurement ID (format: `G-XXXXXXXXXX`)
+- **NEXT_PUBLIC_CLARITY_ID** – Microsoft Clarity project ID (format: `abc123xyz`)
+
+If either is missing, that integration is skipped (no errors). Custom events are sent to GA4 and can be viewed under **Reports → Engagement → Events**. Event names: `select_county`, `select_town`, `calculate_tax`, `view_town_page`, `feedback_submit`. Clarity sessions may take a couple of minutes to appear in the dashboard.
 
 ## 📁 Project Structure
 
 ```
 nj-property-tax-calculator/
 ├── app/
-│   ├── layout.tsx                    # Root layout with metadata
+│   ├── layout.tsx                    # Root layout with metadata & favicon
 │   ├── globals.css                   # Global styles
 │   ├── page.tsx                      # Homepage
+│   ├── robots.ts                     # robots.txt (crawl rules, sitemap ref)
+│   ├── sitemap.xml/route.ts          # Sitemap index
+│   ├── sitemaps/[name]/route.ts      # Per-sitemap (static, states, state towns)
 │   ├── api/
-│   │   └── calculate-tax/
-│   │       └── route.ts              # API endpoint for tax calculation
-│   └── [state]/                      # Dynamic state routes
-│       ├── property-tax-calculator/
-│       │   └── page.tsx              # State-level calculator
+│   │   ├── calculate-tax/route.ts    # API endpoint for tax calculation
+│   │   └── feedback/route.ts         # Feedback form submission (Resend)
+│   ├── about/                        # About page
+│   ├── faq/                          # FAQ page
+│   ├── methodology/                  # Methodology page
+│   ├── privacy/                      # Privacy policy
+│   ├── feedback/                     # Feedback form page
+│   ├── blog/[slug]/                  # Blog posts
+│   ├── [state]/                      # Dynamic state routes
+│   │   ├── property-tax-calculator/page.tsx
+│   │   └── [county]/
+│   │       ├── page.tsx              # County overview
+│   │       ├── property-tax-calculator/page.tsx
+│   │       └── [town]/page.tsx       # Town page
+│   └── new-jersey/                   # NJ-specific routes
+│       ├── page.tsx
+│       ├── property-tax-calculator/page.tsx
+│       ├── property-tax-rates/page.tsx
 │       └── [county]/
-│           ├── property-tax-calculator/
-│           │   └── page.tsx          # County-specific calculator
-│           └── [town]/
-│               └── page.tsx          # Municipality-specific calculator
+│           ├── page.tsx
+│           ├── towns/page.tsx
+│           ├── property-tax-calculator/page.tsx
+│           └── [town]/page.tsx
 ├── components/
-│   ├── TaxForm.tsx                   # Property tax form
-│   ├── TaxResults.tsx                # Results display component
-│   ├── CountyDropdown.tsx            # County selection dropdown
-│   ├── MunicipalityDropdown.tsx     # Municipality selection dropdown
-│   └── ChartWrapper.tsx              # Chart.js wrapper component
+│   ├── TaxForm.tsx, TaxResults.tsx   # Calculator UI
+│   ├── CountyDropdown.tsx, MunicipalityDropdown.tsx
+│   ├── charts/                       # CalculatorTaxTrendsChart, etc.
+│   ├── landing/                      # Hero, Features, FAQ, CTA, Feedback
+│   ├── location/                     # LocationDirectory, LocationFAQ
+│   ├── town/                         # TownAtAGlance, TownOverview
+│   ├── site/                         # Header, Footer, Logo
+│   ├── theme/                        # ThemeProvider, ThemeToggle
+│   ├── seo/                          # JsonLd
+│   └── ui/                           # Accordion, Badge, Button, Card, etc.
+├── lib/
+│   ├── data/                         # Adapter, types, metrics, town-helpers
+│   ├── geo.ts                        # getStateData, state registry
+│   ├── sitemaps.ts                   # Sitemap URL generation, lastmod
+│   ├── site.ts                       # SITE_URL
+│   ├── jsonld.ts, seo.ts
+│   └── town-overview/                # Build, format, validate overviews
 ├── data/
-│   ├── nj_county_rates.json          # New Jersey county tax rates
-│   ├── nj_municipal_rates.json       # New Jersey municipal tax rates
-│   └── nj_exemptions.json            # New Jersey exemptions
+│   ├── states/new-jersey.json        # Canonical NJ state data (counties, towns, metrics)
+│   ├── nj_county_rates.json          # NJ county tax rates (calculator)
+│   ├── nj_municipal_rates.json       # NJ municipal tax rates (calculator)
+│   ├── nj_exemptions.json            # NJ exemptions
+│   ├── faqData.ts, countyFaqData.ts, townFaqData.ts
+│   └── schema/state-data.schema.json # State data JSON schema
 ├── utils/
-│   ├── calculateTax.ts               # Tax calculation logic
-│   ├── getCountyRates.ts             # County rate utilities
-│   ├── getMunicipalRates.ts          # Municipal rate utilities
-│   ├── formatting.ts                 # Number/currency formatting
-│   ├── seo.ts                        # SEO utilities
-│   └── stateUtils.ts                 # State name formatting utilities
+│   ├── calculateTax.ts, getCountyRates.ts, getMunicipalRates.ts
+│   ├── formatting.ts, seo.ts, stateUtils.ts, stateData.ts
+│   └── locationUtils.ts
+├── scripts/                          # Data pipeline & validation (see below)
+├── docs/
+│   ├── ANNUAL_DATA_UPDATE.md         # Yearly data update checklist
+│   └── YEAR_AWARE_DATA_MODEL.md      # Data model notes
 └── public/
-    └── favicon.ico                   # Site favicon
+    ├── favicon.ico                   # Multi-size favicon
+    ├── favicon-16x16.png, favicon-32x32.png
+    ├── apple-touch-icon.png          # 180×180
+    └── logo-icon.png, logo-*.svg    # Source for favicons
 ```
 
 ## 🛣 Routes
 
-### Current Routes (New Jersey)
-- `/` - Homepage with overview
-- `/new-jersey/property-tax-calculator` - Main calculator
-- `/new-jersey/[county]/property-tax-calculator` - County-specific calculator
-- `/new-jersey/[county]/[town]` - Municipality-specific calculator
+### Static & info
 
-### Dynamic State Routes (Expandable)
-- `/[state]/property-tax-calculator` - State-level calculator
-- `/[state]/[county]/property-tax-calculator` - County-specific calculator
-- `/[state]/[county]/[town]` - Municipality-specific calculator
+- `/` – Homepage
+- `/about` – About
+- `/faq` – FAQ
+- `/methodology` – Methodology
+- `/privacy` – Privacy policy
+- `/feedback` – Feedback form
+- `/blog/[slug]` – Blog posts
+
+### New Jersey
+
+- `/new-jersey` – State overview
+- `/new-jersey/property-tax-calculator` – Main calculator
+- `/new-jersey/property-tax-rates` – Tax rates overview
+- `/new-jersey/[county]` – County overview
+- `/new-jersey/[county]/towns` – County towns list
+- `/new-jersey/[county]/property-tax-calculator` – County calculator
+- `/new-jersey/[county]/[town]` – Town page (at-a-glance, overview)
+
+### Dynamic state (expandable)
+
+- `/[state]/property-tax-calculator` – State-level calculator
+- `/[state]/[county]/property-tax-calculator` – County calculator
+- `/[state]/[county]/[town]` – Town page
+
+### SEO & crawlability
+
+- `/sitemap.xml` – Sitemap index (links to static and state sitemaps)
+- `/sitemaps/[name]` – Individual sitemaps (static pages, state overview, state towns)
+- `/robots.txt` – Allow `/`, disallow `/api/`, `/_next/`; references sitemap
+- Favicons at `/favicon.ico`, `/favicon-32x32.png`, `/favicon-16x16.png`, `/apple-touch-icon.png` (declared in `app/layout.tsx` metadata)
 
 ## 🔌 API Endpoints
 
@@ -110,6 +185,7 @@ nj-property-tax-calculator/
 Calculate property tax based on input parameters.
 
 **Request Body:**
+
 ```json
 {
   "homeValue": 500000,
@@ -120,216 +196,110 @@ Calculate property tax based on input parameters.
 }
 ```
 
-**Response:**
-```json
-{
-  "homeValue": 500000,
-  "countyRate": 2.31,
-  "municipalRate": 0.34,
-  "totalRate": 2.65,
-  "annualTax": 13250,
-  "monthlyTax": 1104.17,
-  "effectiveRate": 2.65,
-  "exemptions": 6250,
-  "finalTax": 7000,
-  "breakdown": {
-    "base": 11550,
-    "municipalAdjustment": 1700,
-    "subtotal": 13250,
-    "exemptions": 6250,
-    "final": 7000
-  },
-  "trendData": {
-    "years": ["2020", "2021", "2022", "2023", "2024"],
-    "values": [13250, 13581, 13926, 14274, 14631]
-  }
-}
-```
+**Response:** (structure as in original README – annual tax, breakdown, trend data, etc.)
+
+### POST `/api/feedback`
+
+Submit feedback form. Optional email delivery via Resend when `RESEND_API_KEY` and related env vars are set. See [FEEDBACK_SETUP.md](./FEEDBACK_SETUP.md).
 
 ## 📊 Data Files
 
-The application uses JSON files for tax rates and exemptions. These can be updated with current rates:
+- **Calculator rates:** `data/nj_county_rates.json`, `data/nj_municipal_rates.json`, `data/nj_exemptions.json` – used by the tax calculator.
+- **Canonical state data:** `data/states/new-jersey.json` – counties, towns, metrics, overviews, sources. Used for routing, town pages, and sitemaps. See [docs/ANNUAL_DATA_UPDATE.md](./docs/ANNUAL_DATA_UPDATE.md) and [docs/YEAR_AWARE_DATA_MODEL.md](./docs/YEAR_AWARE_DATA_MODEL.md).
 
-- `data/nj_county_rates.json` - New Jersey county tax rates
-- `data/nj_municipal_rates.json` - New Jersey municipal tax rates by county
-- `data/nj_exemptions.json` - Available exemptions and amounts
+## 📜 Scripts (data pipeline & tooling)
 
-### Adding New States
+Scripts live in `scripts/`. For **run order and details**, see [scripts/RUNNING-SCRIPTS.md](./scripts/RUNNING-SCRIPTS.md) and [scripts/README.md](./scripts/README.md).
 
-To add a new state:
+| Script                    | npm script                 | Purpose                                                               |
+| ------------------------- | -------------------------- | --------------------------------------------------------------------- |
+| Source Tier-1 metrics     | `scrape-town-metrics`      | Fetch effective tax rate + median home value (Census, NJ PDFs)        |
+| Merge Tier-1 metrics      | `merge-town-metrics`       | Merge into `data/states/new-jersey.json`                              |
+| Source avg tax bill       | `source-avg-tax-bill`      | Fetch county/town average residential tax bill                        |
+| Merge avg tax bill        | `merge-avg-tax-bill`       | Merge into state JSON                                                 |
+| Apply town overviews      | `apply-town-overviews`     | Build standardized `town.overview` from metrics                       |
+| Validate state data       | `validate:data`            | Validate state JSON structure and constraints                         |
+| Validate Tier-1 overviews | `validate:tier1-overviews` | Check Tier-1 towns have metrics/overview (use `--report` for summary) |
+| Validate sitemap          | `validate:sitemap`         | Check sitemap URLs (no duplicates, expected routes)                   |
+| Generate favicons         | `generate-favicons`        | Generate favicon set from `public/logo-icon.png`                      |
 
-1. Create data files following the New Jersey pattern:
-   - `data/[state]_county_rates.json`
-   - `data/[state]_municipal_rates.json`
-   - `data/[state]_exemptions.json`
+Run favicon generation after changing the logo:
 
-2. Update `utils/stateUtils.ts` to include the new state in `isValidState()`
-
-3. Update `utils/getCountyRates.ts` and `utils/getMunicipalRates.ts` to support the new state
-
-4. The routes will automatically work with the new state slug!
+```bash
+npm run generate-favicons
+```
 
 ## 🏗 Building for Production
 
 ```bash
-# Build the application
 npm run build
-
-# Start the production server
 npm start
 ```
 
-The build process will:
-- Optimize all assets
-- Generate static pages where possible
-- Create optimized production bundles
-- Generate sitemap and metadata
+The build will optimize assets, generate static pages where possible, and produce the sitemap index and metadata.
 
 ## 🚀 Deployment
 
-### Vercel (Recommended)
+### Vercel (recommended)
 
-This project is optimized for Vercel deployment:
+1. Push to GitHub and import the repo in [Vercel](https://vercel.com). Next.js is auto-detected.
+2. Set environment variables if needed (e.g. `NEXT_PUBLIC_SITE_URL`, Resend keys for feedback – see [FEEDBACK_SETUP.md](./FEEDBACK_SETUP.md)).
+3. Deploy; Vercel deploys on push and creates previews for PRs.
 
-1. **Push to GitHub:**
-   ```bash
-   git add .
-   git commit -m "Initial commit"
-   git push origin main
-   ```
-
-2. **Import to Vercel:**
-   - Go to [vercel.com](https://vercel.com)
-   - Click "New Project"
-   - Import your GitHub repository
-   - Vercel will auto-detect Next.js settings
-
-3. **Configure Environment Variables (if needed):**
-   - Add any required environment variables in Vercel dashboard
-   - Redeploy if needed
-
-4. **Deploy:**
-   - Vercel will automatically deploy on every push to main
-   - Preview deployments are created for pull requests
-
-### Other Platforms
-
-The application can also be deployed to:
-- **Netlify** - Similar to Vercel, supports Next.js
-- **AWS Amplify** - Full Next.js support
-- **Railway** - Simple deployment
-- **Docker** - Containerized deployment
-
-## 🎨 Tailwind Configuration
-
-The project includes Tailwind CSS with the Typography plugin for beautiful typography:
-
-```js
-// tailwind.config.js
-plugins: [
-  require('@tailwindcss/typography'),
-]
-```
-
-Use the `prose` class for markdown content:
-```jsx
-<div className="prose dark:prose-invert">
-  {/* Your content */}
-</div>
-```
+The app can also be deployed to Netlify, AWS Amplify, Railway, or Docker.
 
 ## 🔍 SEO Features
 
-- ✅ Dynamic metadata for each route
-- ✅ Structured data (JSON-LD) for WebApplication schema
-- ✅ Breadcrumb structured data
-- ✅ Open Graph tags
-- ✅ Semantic HTML structure
-- ✅ Descriptive page titles and descriptions
-- ✅ Canonical URLs (update with your domain)
+- Dynamic metadata per route
+- Structured data (JSON-LD) for WebApplication and breadcrumbs
+- Open Graph and Twitter tags
+- Semantic HTML
+- Canonical URLs (via `SITE_URL` / `NEXT_PUBLIC_SITE_URL`)
+- Sitemap index and per-state sitemaps with `lastmod`
+- `robots.txt` with sitemap reference; favicons declared in layout metadata and not blocked
 
-## 🗺 Future Expansion Roadmap
+## Adding a New State
 
-### Phase 1: Core States (Q1 2025)
-- [x] New Jersey (Complete)
-- [ ] New York
-- [ ] California
-- [ ] Texas
-- [ ] Florida
+1. **Add state data:** Create `data/states/[state-slug].json` following the New Jersey shape (see `data/schema/state-data.schema.json`). Optionally add `data/[state]_county_rates.json`, `[state]_municipal_rates.json`, `[state]_exemptions.json` for the calculator.
+2. **Register state:** In `lib/geo.ts`, import the JSON and add the state to `stateDataRegistry` (use `normalizeStateData` from `@/lib/data/adapter`).
+3. **Calculator:** Update `utils/getCountyRates.ts` and `utils/getMunicipalRates.ts` (or equivalent) to support the new state if using separate rate files.
+4. **Routes:** Dynamic routes `/[state]/...` and sitemaps will pick up the new state from `getStateData()`.
 
-### Phase 2: Major States (Q2 2025)
-- [ ] Pennsylvania
-- [ ] Illinois
-- [ ] Ohio
-- [ ] Georgia
-- [ ] North Carolina
-- [ ] Michigan
-
-### Phase 3: Remaining States (Q3-Q4 2025)
-- [ ] All remaining 39 states
-- [ ] State-specific exemptions and rules
-- [ ] Historical tax data
-- [ ] Comparison tools
-
-### Phase 4: Advanced Features (2026)
-- [ ] Multi-state comparison
-- [ ] Property value estimation
-- [ ] Tax savings calculator
-- [ ] Mobile app
-- [ ] API access for developers
-
-## 🧪 Testing
+## 🧪 Testing & validation
 
 ```bash
-# Run linting
 npm run lint
-
-# Type checking (if using TypeScript)
 npx tsc --noEmit
+npm run validate:data
+npm run validate:sitemap
+npm run validate:tier1-overviews
+npm run validate:tier1-overviews:report
 ```
+
+## 🗺 Future expansion
+
+- **More states** – Add state JSON and register in `lib/geo.ts` (see above).
+- **Multi-state comparison, property value estimation, tax savings tools, API access** – possible future enhancements.
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-### Adding a New State
-
-See the "Adding New States" section above for detailed instructions.
+1. Fork the repo and create a feature branch.
+2. Make changes and run lint/validation scripts.
+3. Open a Pull Request.
 
 ## 📝 License
 
-MIT License - feel free to use this project for your own purposes.
+MIT License – use this project for your own purposes.
 
 ## ⚠️ Disclaimer
 
-This calculator provides estimates based on available tax rate data. Actual property taxes may vary based on:
-- Local assessment practices
-- Recent rate changes
-- Property-specific factors
-- Exemption eligibility requirements
-
-Please consult with a tax professional or your local tax assessor for accurate tax information.
+This calculator provides **estimates** based on available tax rate data. Actual property taxes may vary. Consult a tax professional or your local assessor for accurate information.
 
 ## 📞 Support
 
-For issues, questions, or contributions:
-- Open an issue on GitHub
-- Submit a pull request
-- Contact the maintainers
-
-## 🙏 Acknowledgments
-
-- Next.js team for the amazing framework
-- Tailwind CSS for the utility-first CSS framework
-- Chart.js for beautiful data visualizations
-- All contributors and users
+- Open an issue or pull request on GitHub.
+- See [FEEDBACK_SETUP.md](./FEEDBACK_SETUP.md) for feedback form and email setup.
 
 ---
 
-**Built with ❤️ using Next.js 15 and React 19**
+**Built with Next.js 15 and React 19**

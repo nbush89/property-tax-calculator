@@ -9,6 +9,7 @@ import Select from '@/components/ui/Select'
 import Button from '@/components/ui/Button'
 import njExemptions from '@/data/nj_exemptions.json'
 import { slugifyLocation } from '@/utils/locationUtils'
+import { trackEvent } from '@/lib/analytics'
 
 type TaxFormProps = {
   defaultCounty?: string
@@ -33,14 +34,14 @@ export default function TaxForm({ defaultCounty, defaultMunicipality }: TaxFormP
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    
+
     if (!homeValue || !county) {
       alert('Please fill in all required fields')
       return
     }
 
     setIsCalculating(true)
-    
+
     try {
       const response = await fetch('/api/calculate-tax', {
         method: 'POST',
@@ -57,8 +58,16 @@ export default function TaxForm({ defaultCounty, defaultMunicipality }: TaxFormP
       })
 
       const data = await response.json()
-      
+
       if (response.ok) {
+        trackEvent('calculate_tax', {
+          state: 'NJ',
+          county,
+          town: town || undefined,
+          home_value: parseFloat(homeValue),
+          property_type: propertyType,
+          exemptions_count: selectedExemptions?.length ?? 0,
+        })
         // Dispatch custom event to update results component
         window.dispatchEvent(new CustomEvent('taxCalculated', { detail: data }))
       } else {
@@ -72,18 +81,16 @@ export default function TaxForm({ defaultCounty, defaultMunicipality }: TaxFormP
     }
   }
 
-  const exemptionOptions = Object.keys(njExemptions).map((key) => ({
+  const exemptionOptions = Object.keys(njExemptions).map(key => ({
     id: key,
-    name: key.replace(/_/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase()),
+    name: key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
     amount: njExemptions[key as keyof typeof njExemptions],
   }))
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <h2 className="text-2xl font-semibold text-text mb-6">
-        Property Information
-      </h2>
-      
+      <h2 className="text-2xl font-semibold text-text mb-6">Property Information</h2>
+
       <div>
         <label htmlFor="homeValue" className="block text-sm font-medium text-text mb-2">
           Home Value ($)
@@ -92,7 +99,7 @@ export default function TaxForm({ defaultCounty, defaultMunicipality }: TaxFormP
           type="number"
           id="homeValue"
           value={homeValue}
-          onChange={(e) => setHomeValue(e.target.value)}
+          onChange={e => setHomeValue(e.target.value)}
           placeholder="Enter home value"
           required
           min="0"
@@ -106,9 +113,10 @@ export default function TaxForm({ defaultCounty, defaultMunicipality }: TaxFormP
         </label>
         <CountyDropdown
           value={county}
-          onChange={(value) => {
+          onChange={value => {
             setCounty(value)
             setTown('') // Reset town when county changes
+            if (value) trackEvent('select_county', { state: 'NJ', county: value })
           }}
         />
       </div>
@@ -120,7 +128,10 @@ export default function TaxForm({ defaultCounty, defaultMunicipality }: TaxFormP
         <MunicipalityDropdown
           county={county}
           value={town}
-          onChange={setTown}
+          onChange={value => {
+            setTown(value)
+            if (value) trackEvent('select_town', { state: 'NJ', county, town: value })
+          }}
           disabled={!county}
         />
         {county && (
@@ -131,9 +142,7 @@ export default function TaxForm({ defaultCounty, defaultMunicipality }: TaxFormP
             >
               View {county} County property tax page →
             </Link>
-            {town && (
-              <span className="text-text-muted"> | </span>
-            )}
+            {town && <span className="text-text-muted"> | </span>}
             {town && (
               <Link
                 href={`/new-jersey/${slugifyLocation(county)}/${slugifyLocation(town)}-property-tax`}
@@ -153,9 +162,9 @@ export default function TaxForm({ defaultCounty, defaultMunicipality }: TaxFormP
         <Select
           id="propertyType"
           value={propertyType}
-          onChange={(e) => setPropertyType(e.target.value)}
+          onChange={e => setPropertyType(e.target.value)}
         >
-          {PROPERTY_TYPES.map((type) => (
+          {PROPERTY_TYPES.map(type => (
             <option key={type.value} value={type.value}>
               {type.label}
             </option>
@@ -164,16 +173,14 @@ export default function TaxForm({ defaultCounty, defaultMunicipality }: TaxFormP
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-text mb-3">
-          Exemptions (Optional)
-        </label>
+        <label className="block text-sm font-medium text-text mb-3">Exemptions (Optional)</label>
         <div className="space-y-2">
-          {exemptionOptions.map((exemption) => (
+          {exemptionOptions.map(exemption => (
             <label key={exemption.id} className="flex items-center space-x-2 cursor-pointer">
               <input
                 type="checkbox"
                 checked={selectedExemptions.includes(exemption.id)}
-                onChange={(e) => {
+                onChange={e => {
                   if (e.target.checked) {
                     setSelectedExemptions([...selectedExemptions, exemption.id])
                   } else {
