@@ -2,6 +2,7 @@
 import * as https from 'node:https'
 // @ts-ignore - pdf-parse types may not be perfect, but it works at runtime
 import pdfParse from 'pdf-parse'
+import { buildRecentYears } from './utils/buildRecentYears'
 
 type Unit = 'USD' | 'PERCENT'
 
@@ -234,9 +235,20 @@ function buildSeries(
   return series.slice(-5)
 }
 
+const CURRENT_YEAR = new Date().getFullYear()
+
+// Look back far enough to always keep 5 valid years even if the newest fails
+const GTR_YEARS = buildRecentYears({
+  endYear: CURRENT_YEAR - 1,
+  window: 6,
+})
+
+const ACS_YEARS = buildRecentYears({
+  endYear: CURRENT_YEAR - 2,
+  window: 6,
+})
+
 async function main() {
-  const ACS_YEARS = [2019, 2020, 2021, 2022, 2023] // last 5 ACS5 years available
-  const GTR_YEARS = [2020, 2021, 2022, 2023, 2024] // NJ tax rate PDFs often exist for 2024
   const ACS_SOURCE_REF = 'us_census_acs_profile_dp04'
   const NJ_GTR_SOURCE_REF = 'nj_div_taxation_general_effective_tax_rates'
 
@@ -266,7 +278,7 @@ async function main() {
       console.error(`[OK] NJ GTR ${y}: ${map.size} districts parsed`)
     } catch (e) {
       console.error(`[WARN] NJ GTR ${y} failed:`, e)
-      gtrMaps.set(y, new Map())
+      continue
     }
   }
 
@@ -320,6 +332,9 @@ async function main() {
 
     const medianSeries = buildSeries(medianByYear, 'USD', ACS_SOURCE_REF)
     const effSeries = buildSeries(effByYear, 'PERCENT', NJ_GTR_SOURCE_REF)
+
+    const latestEffYear = effSeries.at(-1)?.year
+    console.error(`[INFO] ${town} latest effective tax year: ${latestEffYear ?? 'none'}`)
 
     if (medianSeries.length === 0) {
       console.error(`[MISSING] medianHomeValue for ${town} (ACS key: ${acsKey})`)

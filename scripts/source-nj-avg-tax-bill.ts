@@ -4,6 +4,7 @@ import path from 'node:path'
 import https from 'node:https'
 import pdfParse from 'pdf-parse'
 import * as XLSX from 'xlsx'
+import { buildRecentYears } from './utils/buildRecentYears'
 
 /**
  * NJ AvgResTax reports contain:
@@ -35,8 +36,13 @@ type Output = {
 
 // ----- CONFIG -----
 
-// Choose 5 years prior (+ latest available). You can adjust these.
-const YEARS = [2020, 2021, 2022, 2023, 2024]
+const CURRENT_YEAR = new Date().getFullYear()
+
+// Look back far enough to always keep 5 valid years even if the newest fails
+const YEARS = buildRecentYears({
+  endYear: CURRENT_YEAR - 1,
+  window: 6,
+})
 
 // For 2022 NJ provides an official XLSX; prefer XLSX when available.
 const XLSX_URL_TEMPLATE =
@@ -75,16 +81,16 @@ const TIER1: Array<{ countySlug: string; townSlug: string; townName: string }> =
   { countySlug: 'mercer', townSlug: 'trenton', townName: 'Trenton' },
   { countySlug: 'camden', townSlug: 'camden', townName: 'Camden' },
   // Next 10 towns, don't release until 02/07
-  { countySlug: 'ocean', townSlug: 'lakewood', townName: 'Lakewood Township' },
-  { countySlug: 'monmouth', townSlug: 'middletown', townName: 'Middletown Township' },
-  { countySlug: 'middlesex', townSlug: 'old-bridge', townName: 'Old Bridge Township' },
-  { countySlug: 'middlesex', townSlug: 'east-brunswick', townName: 'East Brunswick' },
-  { countySlug: 'somerset', townSlug: 'franklin', townName: 'Franklin Township' },
-  { countySlug: 'somerset', townSlug: 'bridgewater', townName: 'Bridgewater Township' },
-  { countySlug: 'passaic', townSlug: 'wayne', townName: 'Wayne Township' },
-  { countySlug: 'essex', townSlug: 'east-orange', townName: 'East Orange' },
-  { countySlug: 'hudson', townSlug: 'bayonne', townName: 'Bayonne' },
-  { countySlug: 'middlesex', townSlug: 'piscataway', townName: 'Piscataway' },
+  // { countySlug: 'ocean', townSlug: 'lakewood', townName: 'Lakewood Township' },
+  // { countySlug: 'monmouth', townSlug: 'middletown', townName: 'Middletown Township' },
+  // { countySlug: 'middlesex', townSlug: 'old-bridge', townName: 'Old Bridge Township' },
+  // { countySlug: 'middlesex', townSlug: 'east-brunswick', townName: 'East Brunswick' },
+  // { countySlug: 'somerset', townSlug: 'franklin', townName: 'Franklin Township' },
+  // { countySlug: 'somerset', townSlug: 'bridgewater', townName: 'Bridgewater Township' },
+  // { countySlug: 'passaic', townSlug: 'wayne', townName: 'Wayne Township' },
+  // { countySlug: 'essex', townSlug: 'east-orange', townName: 'East Orange' },
+  // { countySlug: 'hudson', townSlug: 'bayonne', townName: 'Bayonne' },
+  // { countySlug: 'middlesex', townSlug: 'piscataway', townName: 'Piscataway' },
 ]
 
 // County slug normalization for NJ county names

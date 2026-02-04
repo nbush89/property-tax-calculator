@@ -88,7 +88,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 7.460091670617987,
@@ -161,7 +161,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 7.460091670617987,
@@ -234,7 +234,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 7.460091670617987,
@@ -307,7 +307,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 7.460091670617987,
@@ -380,7 +380,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 7.460091670617987,
@@ -552,15 +552,15 @@
                 "value": 2.024,
                 "unit": "PERCENT",
                 "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2025,
+                "value": 1.944,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
               }
             ],
             "medianHomeValue": [
-              {
-                "year": 2019,
-                "value": 763300,
-                "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
-              },
               {
                 "year": 2020,
                 "value": 744200,
@@ -582,6 +582,12 @@
               {
                 "year": 2023,
                 "value": 882700,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 891200,
                 "unit": "USD",
                 "sourceRef": "us_census_acs_profile_dp04"
               }
@@ -613,7 +619,7 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 20375,
-            "effectiveTaxRatePct": 2.024,
+            "effectiveTaxRatePct": 1.944,
             "countyAvgTaxBill": 13600,
             "countyEffectiveRatePct": 2.31,
             "stateEffectiveTaxRatePct": 2.02,
@@ -621,16 +627,16 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               },
               {
                 "name": "U.S. Census Bureau",
                 "url": "https://api.census.gov/data.html",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
-            "medianHomeValue": 882700,
-            "medianHomeValueYear": 2023,
+            "medianHomeValue": 891200,
+            "medianHomeValueYear": 2024,
             "trendPct": 8.323377140581442,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -701,7 +707,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 8.323377140581442,
@@ -774,7 +780,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 8.323377140581442,
@@ -847,7 +853,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 8.323377140581442,
@@ -955,15 +961,15 @@
                 "value": 1.481,
                 "unit": "PERCENT",
                 "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2025,
+                "value": 1.434,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
               }
             ],
             "medianHomeValue": [
-              {
-                "year": 2019,
-                "value": 600200,
-                "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
-              },
               {
                 "year": 2020,
                 "value": 614900,
@@ -985,6 +991,12 @@
               {
                 "year": 2023,
                 "value": 736000,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 813900,
                 "unit": "USD",
                 "sourceRef": "us_census_acs_profile_dp04"
               }
@@ -1016,7 +1028,7 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 12095,
-            "effectiveTaxRatePct": 1.481,
+            "effectiveTaxRatePct": 1.434,
             "countyAvgTaxBill": 13600,
             "countyEffectiveRatePct": 2.31,
             "stateEffectiveTaxRatePct": 2.02,
@@ -1024,16 +1036,16 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               },
               {
                 "name": "U.S. Census Bureau",
                 "url": "https://api.census.gov/data.html",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
-            "medianHomeValue": 736000,
-            "medianHomeValueYear": 2023,
+            "medianHomeValue": 813900,
+            "medianHomeValueYear": 2024,
             "trendPct": 8.323377140581442,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -1169,7 +1181,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 8.229079788712816,
@@ -1242,7 +1254,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 8.229079788712816,
@@ -1315,7 +1327,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 8.229079788712816,
@@ -1388,7 +1400,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 8.229079788712816,
@@ -1461,7 +1473,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 8.229079788712816,
@@ -1611,12 +1623,6 @@
             ],
             "medianHomeValue": [
               {
-                "year": 2019,
-                "value": 84000,
-                "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
-              },
-              {
                 "year": 2020,
                 "value": 82500,
                 "unit": "USD",
@@ -1637,6 +1643,12 @@
               {
                 "year": 2023,
                 "value": 100400,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 112000,
                 "unit": "USD",
                 "sourceRef": "us_census_acs_profile_dp04"
               }
@@ -1665,13 +1677,19 @@
                 "value": 2.566,
                 "unit": "PERCENT",
                 "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2025,
+                "value": 2.329,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
               }
             ]
           },
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 2072,
-            "effectiveTaxRatePct": 2.566,
+            "effectiveTaxRatePct": 2.329,
             "countyAvgTaxBill": 7468,
             "countyEffectiveRatePct": 2.25,
             "stateEffectiveTaxRatePct": 2.02,
@@ -1679,16 +1697,16 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               },
               {
                 "name": "U.S. Census Bureau",
                 "url": "https://api.census.gov/data.html",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
-            "medianHomeValue": 100400,
-            "medianHomeValueYear": 2023,
+            "medianHomeValue": 112000,
+            "medianHomeValueYear": 2024,
             "trendPct": 7.391429393155019,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -1794,6 +1812,12 @@
                 "value": 2.663,
                 "unit": "PERCENT",
                 "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2025,
+                "value": 2.598,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
               }
             ],
             "medianHomeValue": []
@@ -1824,7 +1848,7 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 9379,
-            "effectiveTaxRatePct": 2.663,
+            "effectiveTaxRatePct": 2.598,
             "countyAvgTaxBill": 7468,
             "countyEffectiveRatePct": 2.25,
             "stateEffectiveTaxRatePct": 2.02,
@@ -1832,7 +1856,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 7.391429393155019,
@@ -1905,7 +1929,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 7.391429393155019,
@@ -1978,7 +2002,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 7.391429393155019,
@@ -2051,7 +2075,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 7.391429393155019,
@@ -2186,7 +2210,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 14.054545454545456,
@@ -2259,7 +2283,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 14.054545454545456,
@@ -2332,7 +2356,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 14.054545454545456,
@@ -2405,7 +2429,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 14.054545454545456,
@@ -2478,7 +2502,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 14.054545454545456,
@@ -2615,7 +2639,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 5.594405594405594,
@@ -2688,7 +2712,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 5.594405594405594,
@@ -2761,7 +2785,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 5.594405594405594,
@@ -2834,7 +2858,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 5.594405594405594,
@@ -2907,7 +2931,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 5.594405594405594,
@@ -3082,6 +3106,12 @@
                 "value": 2.268,
                 "unit": "PERCENT",
                 "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2025,
+                "value": 2.16,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
               }
             ],
             "medianHomeValue": []
@@ -3112,7 +3142,7 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 21635,
-            "effectiveTaxRatePct": 2.268,
+            "effectiveTaxRatePct": 2.16,
             "countyAvgTaxBill": 13615,
             "countyEffectiveRatePct": 2.54,
             "stateEffectiveTaxRatePct": 2.02,
@@ -3120,7 +3150,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 7.3484191437357085,
@@ -3193,7 +3223,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 7.3484191437357085,
@@ -3286,12 +3316,6 @@
             ],
             "medianHomeValue": [
               {
-                "year": 2019,
-                "value": 245200,
-                "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
-              },
-              {
                 "year": 2020,
                 "value": 254900,
                 "unit": "USD",
@@ -3312,6 +3336,12 @@
               {
                 "year": 2023,
                 "value": 337800,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 373700,
                 "unit": "USD",
                 "sourceRef": "us_census_acs_profile_dp04"
               }
@@ -3340,13 +3370,19 @@
                 "value": 2.06,
                 "unit": "PERCENT",
                 "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2025,
+                "value": 1.845,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
               }
             ]
           },
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7238,
-            "effectiveTaxRatePct": 2.06,
+            "effectiveTaxRatePct": 1.845,
             "countyAvgTaxBill": 13615,
             "countyEffectiveRatePct": 2.54,
             "stateEffectiveTaxRatePct": 2.02,
@@ -3354,16 +3390,16 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               },
               {
                 "name": "U.S. Census Bureau",
                 "url": "https://api.census.gov/data.html",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
-            "medianHomeValue": 337800,
-            "medianHomeValueYear": 2023,
+            "medianHomeValue": 373700,
+            "medianHomeValueYear": 2024,
             "trendPct": 7.3484191437357085,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -3434,7 +3470,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 7.3484191437357085,
@@ -3507,7 +3543,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 7.3484191437357085,
@@ -3645,7 +3681,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 5.464556090846524,
@@ -3718,7 +3754,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 5.464556090846524,
@@ -3791,7 +3827,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 5.464556090846524,
@@ -3864,7 +3900,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 5.464556090846524,
@@ -3937,7 +3973,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 5.464556090846524,
@@ -4108,15 +4144,15 @@
                 "value": 1.109,
                 "unit": "PERCENT",
                 "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2025,
+                "value": 1.07,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
               }
             ],
             "medianHomeValue": [
-              {
-                "year": 2019,
-                "value": 720700,
-                "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
-              },
               {
                 "year": 2020,
                 "value": 759800,
@@ -4138,6 +4174,12 @@
               {
                 "year": 2023,
                 "value": 872100,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 895100,
                 "unit": "USD",
                 "sourceRef": "us_census_acs_profile_dp04"
               }
@@ -4169,7 +4211,7 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 9317,
-            "effectiveTaxRatePct": 1.109,
+            "effectiveTaxRatePct": 1.07,
             "countyAvgTaxBill": 10065,
             "countyEffectiveRatePct": 2.05,
             "stateEffectiveTaxRatePct": 2.02,
@@ -4177,16 +4219,16 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               },
               {
                 "name": "U.S. Census Bureau",
                 "url": "https://api.census.gov/data.html",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
-            "medianHomeValue": 872100,
-            "medianHomeValueYear": 2023,
+            "medianHomeValue": 895100,
+            "medianHomeValueYear": 2024,
             "trendPct": 19.098331558395458,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -4277,12 +4319,6 @@
             ],
             "medianHomeValue": [
               {
-                "year": 2019,
-                "value": 373700,
-                "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
-              },
-              {
                 "year": 2020,
                 "value": 406200,
                 "unit": "USD",
@@ -4303,6 +4339,12 @@
               {
                 "year": 2023,
                 "value": 534500,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 566900,
                 "unit": "USD",
                 "sourceRef": "us_census_acs_profile_dp04"
               }
@@ -4331,13 +4373,19 @@
                 "value": 1.919,
                 "unit": "PERCENT",
                 "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2025,
+                "value": 1.847,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
               }
             ]
           },
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 10624,
-            "effectiveTaxRatePct": 1.919,
+            "effectiveTaxRatePct": 1.847,
             "countyAvgTaxBill": 10065,
             "countyEffectiveRatePct": 2.05,
             "stateEffectiveTaxRatePct": 2.02,
@@ -4345,16 +4393,16 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               },
               {
                 "name": "U.S. Census Bureau",
                 "url": "https://api.census.gov/data.html",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
-            "medianHomeValue": 534500,
-            "medianHomeValueYear": 2023,
+            "medianHomeValue": 566900,
+            "medianHomeValueYear": 2024,
             "trendPct": 19.098331558395458,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -4425,7 +4473,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 19.098331558395458,
@@ -4498,7 +4546,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 19.098331558395458,
@@ -4571,7 +4619,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 19.098331558395458,
@@ -4708,7 +4756,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 10.08651199370822,
@@ -4781,7 +4829,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 10.08651199370822,
@@ -4854,7 +4902,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 10.08651199370822,
@@ -4927,7 +4975,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 10.08651199370822,
@@ -5000,7 +5048,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 10.08651199370822,
@@ -5158,12 +5206,6 @@
             ],
             "medianHomeValue": [
               {
-                "year": 2019,
-                "value": 95800,
-                "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
-              },
-              {
                 "year": 2020,
                 "value": 97000,
                 "unit": "USD",
@@ -5184,6 +5226,12 @@
               {
                 "year": 2023,
                 "value": 122500,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 160700,
                 "unit": "USD",
                 "sourceRef": "us_census_acs_profile_dp04"
               }
@@ -5212,13 +5260,19 @@
                 "value": 3.728,
                 "unit": "PERCENT",
                 "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2025,
+                "value": 3.468,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
               }
             ]
           },
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 3690,
-            "effectiveTaxRatePct": 3.728,
+            "effectiveTaxRatePct": 3.468,
             "countyAvgTaxBill": 9543,
             "countyEffectiveRatePct": 2.15,
             "stateEffectiveTaxRatePct": 2.02,
@@ -5226,16 +5280,16 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               },
               {
                 "name": "U.S. Census Bureau",
                 "url": "https://api.census.gov/data.html",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
-            "medianHomeValue": 122500,
-            "medianHomeValueYear": 2023,
+            "medianHomeValue": 160700,
+            "medianHomeValueYear": 2024,
             "trendPct": 9.175151584486901,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -5341,15 +5395,15 @@
                 "value": 1.875,
                 "unit": "PERCENT",
                 "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2025,
+                "value": 1.814,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
               }
             ],
             "medianHomeValue": [
-              {
-                "year": 2019,
-                "value": 866200,
-                "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
-              },
               {
                 "year": 2020,
                 "value": 872400,
@@ -5371,6 +5425,12 @@
               {
                 "year": 2023,
                 "value": 1040400,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 1050600,
                 "unit": "USD",
                 "sourceRef": "us_census_acs_profile_dp04"
               }
@@ -5402,7 +5462,7 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 22658,
-            "effectiveTaxRatePct": 1.875,
+            "effectiveTaxRatePct": 1.814,
             "countyAvgTaxBill": 9543,
             "countyEffectiveRatePct": 2.15,
             "stateEffectiveTaxRatePct": 2.02,
@@ -5410,16 +5470,16 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               },
               {
                 "name": "U.S. Census Bureau",
                 "url": "https://api.census.gov/data.html",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
-            "medianHomeValue": 1040400,
-            "medianHomeValueYear": 2023,
+            "medianHomeValue": 1050600,
+            "medianHomeValueYear": 2024,
             "trendPct": 9.175151584486901,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -5532,13 +5592,19 @@
                 "value": 2.647,
                 "unit": "PERCENT",
                 "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2025,
+                "value": 2.434,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
               }
             ]
           },
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 5681,
-            "effectiveTaxRatePct": 2.647,
+            "effectiveTaxRatePct": 2.434,
             "countyAvgTaxBill": 9543,
             "countyEffectiveRatePct": 2.15,
             "stateEffectiveTaxRatePct": 2.02,
@@ -5546,7 +5612,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 9.175151584486901,
@@ -5619,7 +5685,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 9.175151584486901,
@@ -5692,7 +5758,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 9.175151584486901,
@@ -5830,7 +5896,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 7.612378585949853,
@@ -5938,6 +6004,12 @@
                 "value": 2.086,
                 "unit": "PERCENT",
                 "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2025,
+                "value": 2.005,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
               }
             ],
             "medianHomeValue": []
@@ -5968,7 +6040,7 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 10513,
-            "effectiveTaxRatePct": 2.086,
+            "effectiveTaxRatePct": 2.005,
             "countyAvgTaxBill": 9528,
             "countyEffectiveRatePct": 2.11,
             "stateEffectiveTaxRatePct": 2.02,
@@ -5976,7 +6048,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 7.612378585949853,
@@ -6049,7 +6121,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 7.612378585949853,
@@ -6164,13 +6236,19 @@
                 "value": 2.471,
                 "unit": "PERCENT",
                 "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2025,
+                "value": 2.234,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
               }
             ]
           },
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 9242,
-            "effectiveTaxRatePct": 2.471,
+            "effectiveTaxRatePct": 2.234,
             "countyAvgTaxBill": 9528,
             "countyEffectiveRatePct": 2.11,
             "stateEffectiveTaxRatePct": 2.02,
@@ -6178,7 +6256,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 7.612378585949853,
@@ -6251,7 +6329,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 7.612378585949853,
@@ -6387,7 +6465,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 12.240706510577121,
@@ -6460,7 +6538,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 12.240706510577121,
@@ -6533,7 +6611,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 12.240706510577121,
@@ -6606,7 +6684,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 12.240706510577121,
@@ -6679,7 +6757,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 12.240706510577121,
@@ -6854,15 +6932,15 @@
                 "value": 1.735,
                 "unit": "PERCENT",
                 "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2025,
+                "value": 1.681,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
               }
             ],
             "medianHomeValue": [
-              {
-                "year": 2019,
-                "value": 472000,
-                "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
-              },
               {
                 "year": 2020,
                 "value": 479100,
@@ -6884,6 +6962,12 @@
               {
                 "year": 2023,
                 "value": 552800,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 567600,
                 "unit": "USD",
                 "sourceRef": "us_census_acs_profile_dp04"
               }
@@ -6915,7 +6999,7 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 10008,
-            "effectiveTaxRatePct": 1.735,
+            "effectiveTaxRatePct": 1.681,
             "countyAvgTaxBill": 11757,
             "countyEffectiveRatePct": 1.95,
             "stateEffectiveTaxRatePct": 2.02,
@@ -6923,16 +7007,16 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               },
               {
                 "name": "U.S. Census Bureau",
                 "url": "https://api.census.gov/data.html",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
-            "medianHomeValue": 552800,
-            "medianHomeValueYear": 2023,
+            "medianHomeValue": 567600,
+            "medianHomeValueYear": 2024,
             "trendPct": 7.271897810218977,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -7003,7 +7087,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 7.271897810218977,
@@ -7076,7 +7160,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 7.271897810218977,
@@ -7149,7 +7233,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 7.271897810218977,
@@ -7222,7 +7306,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 7.271897810218977,
@@ -7400,13 +7484,19 @@
                 "value": 1.503,
                 "unit": "PERCENT",
                 "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2025,
+                "value": 1.523,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
               }
             ]
           },
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7896,
-            "effectiveTaxRatePct": 1.503,
+            "effectiveTaxRatePct": 1.523,
             "countyAvgTaxBill": 7593,
             "countyEffectiveRatePct": 1.75,
             "stateEffectiveTaxRatePct": 2.02,
@@ -7414,7 +7504,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 13.2776368790094,
@@ -7487,7 +7577,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 13.2776368790094,
@@ -7560,7 +7650,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 13.2776368790094,
@@ -7633,7 +7723,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 13.2776368790094,
@@ -7706,7 +7796,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 13.2776368790094,
@@ -7863,12 +7953,6 @@
             ],
             "medianHomeValue": [
               {
-                "year": 2019,
-                "value": 244200,
-                "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
-              },
-              {
                 "year": 2020,
                 "value": 257700,
                 "unit": "USD",
@@ -7889,6 +7973,12 @@
               {
                 "year": 2023,
                 "value": 335400,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 360100,
                 "unit": "USD",
                 "sourceRef": "us_census_acs_profile_dp04"
               }
@@ -7917,13 +8007,19 @@
                 "value": 2.591,
                 "unit": "PERCENT",
                 "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2025,
+                "value": 2.421,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
               }
             ]
           },
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 9943,
-            "effectiveTaxRatePct": 2.591,
+            "effectiveTaxRatePct": 2.421,
             "countyAvgTaxBill": 11212,
             "countyEffectiveRatePct": 2.25,
             "stateEffectiveTaxRatePct": 2.02,
@@ -7931,16 +8027,16 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               },
               {
                 "name": "U.S. Census Bureau",
                 "url": "https://api.census.gov/data.html",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
-            "medianHomeValue": 335400,
-            "medianHomeValueYear": 2023,
+            "medianHomeValue": 360100,
+            "medianHomeValueYear": 2024,
             "trendPct": 8.067469879518072,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -8011,7 +8107,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 8.067469879518072,
@@ -8084,7 +8180,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 8.067469879518072,
@@ -8157,7 +8253,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 8.067469879518072,
@@ -8230,7 +8326,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 8.067469879518072,
@@ -8365,7 +8461,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 11.284434118818453,
@@ -8438,7 +8534,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 11.284434118818453,
@@ -8511,7 +8607,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 11.284434118818453,
@@ -8584,7 +8680,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 11.284434118818453,
@@ -8657,7 +8753,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 11.284434118818453,
@@ -8795,7 +8891,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 9.81624758220503,
@@ -8868,7 +8964,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 9.81624758220503,
@@ -8941,7 +9037,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 9.81624758220503,
@@ -9014,7 +9110,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 9.81624758220503,
@@ -9087,7 +9183,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 9.81624758220503,
@@ -9223,7 +9319,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 7.676969092721834,
@@ -9296,7 +9392,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 7.676969092721834,
@@ -9369,7 +9465,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 7.676969092721834,
@@ -9442,7 +9538,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 7.676969092721834,
@@ -9515,7 +9611,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 7.676969092721834,
@@ -9673,12 +9769,6 @@
             ],
             "medianHomeValue": [
               {
-                "year": 2019,
-                "value": 282700,
-                "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
-              },
-              {
                 "year": 2020,
                 "value": 291300,
                 "unit": "USD",
@@ -9699,6 +9789,12 @@
               {
                 "year": 2023,
                 "value": 393500,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 449300,
                 "unit": "USD",
                 "sourceRef": "us_census_acs_profile_dp04"
               }
@@ -9727,13 +9823,19 @@
                 "value": 2.072,
                 "unit": "PERCENT",
                 "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2025,
+                "value": 2.113,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
               }
             ]
           },
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 9215,
-            "effectiveTaxRatePct": 2.072,
+            "effectiveTaxRatePct": 2.113,
             "countyAvgTaxBill": 12047,
             "countyEffectiveRatePct": 2.15,
             "stateEffectiveTaxRatePct": 2.02,
@@ -9741,16 +9843,16 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               },
               {
                 "name": "U.S. Census Bureau",
                 "url": "https://api.census.gov/data.html",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
-            "medianHomeValue": 393500,
-            "medianHomeValueYear": 2023,
+            "medianHomeValue": 449300,
+            "medianHomeValueYear": 2024,
             "trendPct": 4.792971468336813,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -9821,7 +9923,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 4.792971468336813,
@@ -9929,15 +10031,15 @@
                 "value": 1.554,
                 "unit": "PERCENT",
                 "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2025,
+                "value": 1.475,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
               }
             ],
             "medianHomeValue": [
-              {
-                "year": 2019,
-                "value": 890100,
-                "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
-              },
               {
                 "year": 2020,
                 "value": 831700,
@@ -9959,6 +10061,12 @@
               {
                 "year": 2023,
                 "value": 969900,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 994500,
                 "unit": "USD",
                 "sourceRef": "us_census_acs_profile_dp04"
               }
@@ -9990,7 +10098,7 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 18977,
-            "effectiveTaxRatePct": 1.554,
+            "effectiveTaxRatePct": 1.475,
             "countyAvgTaxBill": 12047,
             "countyEffectiveRatePct": 2.15,
             "stateEffectiveTaxRatePct": 2.02,
@@ -9998,16 +10106,16 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               },
               {
                 "name": "U.S. Census Bureau",
                 "url": "https://api.census.gov/data.html",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
-            "medianHomeValue": 969900,
-            "medianHomeValueYear": 2023,
+            "medianHomeValue": 994500,
+            "medianHomeValueYear": 2024,
             "trendPct": 4.792971468336813,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -10113,15 +10221,15 @@
                 "value": 1.92,
                 "unit": "PERCENT",
                 "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+              },
+              {
+                "year": 2025,
+                "value": 1.81,
+                "unit": "PERCENT",
+                "sourceRef": "nj_div_taxation_general_effective_tax_rates"
               }
             ],
             "medianHomeValue": [
-              {
-                "year": 2019,
-                "value": 743400,
-                "unit": "USD",
-                "sourceRef": "us_census_acs_profile_dp04"
-              },
               {
                 "year": 2020,
                 "value": 773200,
@@ -10143,6 +10251,12 @@
               {
                 "year": 2023,
                 "value": 930500,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 953400,
                 "unit": "USD",
                 "sourceRef": "us_census_acs_profile_dp04"
               }
@@ -10174,7 +10288,7 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 18487,
-            "effectiveTaxRatePct": 1.92,
+            "effectiveTaxRatePct": 1.81,
             "countyAvgTaxBill": 12047,
             "countyEffectiveRatePct": 2.15,
             "stateEffectiveTaxRatePct": 2.02,
@@ -10182,16 +10296,16 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               },
               {
                 "name": "U.S. Census Bureau",
                 "url": "https://api.census.gov/data.html",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
-            "medianHomeValue": 930500,
-            "medianHomeValueYear": 2023,
+            "medianHomeValue": 953400,
+            "medianHomeValueYear": 2024,
             "trendPct": 4.792971468336813,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -10262,7 +10376,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 4.792971468336813,
@@ -10398,7 +10512,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 9.720094694332266,
@@ -10471,7 +10585,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 9.720094694332266,
@@ -10544,7 +10658,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 9.720094694332266,
@@ -10617,7 +10731,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 9.720094694332266,
@@ -10690,7 +10804,7 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-01-31"
+                "retrieved": "2026-02-04"
               }
             ],
             "trendPct": 9.720094694332266,
