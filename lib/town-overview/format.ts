@@ -107,26 +107,26 @@ export function buildTownOverviewSummary(args: BuildSummaryArgs): string {
     effectiveTaxRatePct === countyEffectiveRatePct
   const usingCountyFallback = billIsCountyFallback || rateIsCountyFallback
 
-  const year = overview.asOfYear
+  const homeValueYear = overview.medianHomeValueYear
   const parts: string[] = []
 
   if (usingCountyFallback && (avgResidentialTaxBill != null || effectiveTaxRatePct != null)) {
     const countyContext = `${countyName} County average`
     if (avgResidentialTaxBill != null && effectiveTaxRatePct != null) {
       parts.push(
-        `The ${countyContext} residential tax bill in ${year} was ${formatUSD(avgResidentialTaxBill)} and the effective rate was ${formatPct(effectiveTaxRatePct)}.`
+        `Based on the most recent finalized tax data, the ${countyContext} residential tax bill was ${formatUSD(avgResidentialTaxBill)} and the effective rate was ${formatPct(effectiveTaxRatePct)}.`
       )
     } else if (avgResidentialTaxBill != null) {
       parts.push(
-        `The ${countyContext} residential tax bill in ${year} was ${formatUSD(avgResidentialTaxBill)}.`
+        `Based on the most recent finalized tax data, the ${countyContext} residential tax bill was ${formatUSD(avgResidentialTaxBill)}.`
       )
     } else if (effectiveTaxRatePct != null) {
       parts.push(
-        `The ${countyContext} effective tax rate in ${year} was ${formatPct(effectiveTaxRatePct)}.`
+        `Based on the most recent finalized tax data, the ${countyContext} effective tax rate was ${formatPct(effectiveTaxRatePct)}.`
       )
     }
   } else {
-    // Interpretive summary: comparison and trend, no restating bullet numbers
+    // Interpretive summary: comparison and trend, year-agnostic framing
     const hasHigher = vsCounty === 'higher' || vsState === 'higher'
     const hasLower = vsCounty === 'lower' || vsState === 'lower'
     const hasSimilar =
@@ -138,20 +138,20 @@ export function buildTownOverviewSummary(args: BuildSummaryArgs): string {
       const dir = hasHigher ? 'higher' : 'lower'
       if (isMeaningfulComparison(vsCounty) && isMeaningfulComparison(vsState)) {
         parts.push(
-          `In ${year}, ${townName} homeowners paid relatively ${dir} property taxes compared to both ${countyName} County and state averages.`
+          `Based on the most recent finalized tax data, ${townName} homeowners paid relatively ${dir} property taxes compared to both ${countyName} County and state averages.`
         )
       } else if (isMeaningfulComparison(vsCounty)) {
         parts.push(
-          `In ${year}, ${townName} homeowners paid relatively ${dir} property taxes compared to the ${countyName} County average.`
+          `Based on the most recent finalized tax data, ${townName} homeowners paid relatively ${dir} property taxes compared to the ${countyName} County average.`
         )
       } else if (isMeaningfulComparison(vsState)) {
         parts.push(
-          `In ${year}, ${townName} homeowners paid relatively ${dir} property taxes compared to the state average.`
+          `Based on the most recent finalized tax data, ${townName} homeowners paid relatively ${dir} property taxes compared to the state average.`
         )
       }
     } else if (hasSimilar || vsCounty != null || vsState != null) {
       parts.push(
-        `In ${year}, ${townName} property taxes were in line with county and state averages.`
+        `Based on the most recent finalized tax data, ${townName} property taxes were in line with county and state averages.`
       )
     }
 
@@ -174,8 +174,14 @@ export function buildTownOverviewSummary(args: BuildSummaryArgs): string {
     }
   }
 
+  if (homeValueYear != null) {
+    parts.push(
+      `Home value estimates use the latest available Census data (${homeValueYear}).`
+    )
+  }
+
   if (parts.length === 0) {
-    return `Planning estimates for ${townName}, ${countyName} County are based on the most recent data (${year}). Verify with your local assessor.`
+    return `Planning estimates for ${townName}, ${countyName} County are based on the most recent data. Verify with your local assessor.`
   }
 
   return parts.join(' ')

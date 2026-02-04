@@ -59,24 +59,44 @@ export default function TownAtAGlance({
     o.effectiveTaxRatePct === o.countyEffectiveRatePct
   const showCountyFallbackNote = billIsCountyFallback || rateIsCountyFallback
 
-  const bullets: { label: string; value: string }[] = []
+  const billYear =
+    o.avgResidentialTaxBillYear ?? o.asOfYear
+  const rateYear =
+    o.effectiveTaxRateYear ?? o.asOfYear
+  const medianYear = o.medianHomeValueYear ?? o.asOfYear
+  const trendRange =
+    trendStart != null && trendEnd != null && trendStart !== trendEnd
+      ? ` (${trendStart}–${trendEnd})`
+      : trendEnd != null
+        ? ` (${trendEnd})`
+        : ''
+
+  const bullets: { label: string; value: string; yearLabel?: string }[] = []
   if (o.avgResidentialTaxBill != null) {
     const label = billIsCountyFallback
       ? 'Avg residential tax bill (county average)'
       : 'Avg residential tax bill'
-    bullets.push({ label, value: formatUSD(o.avgResidentialTaxBill) })
+    bullets.push({
+      label,
+      value: formatUSD(o.avgResidentialTaxBill),
+      yearLabel: ` (${billYear})`,
+    })
   }
   if (o.effectiveTaxRatePct != null) {
     const label = rateIsCountyFallback
       ? 'Effective tax rate (county average)'
       : 'Effective tax rate'
-    bullets.push({ label, value: formatPct(o.effectiveTaxRatePct) })
+    bullets.push({
+      label,
+      value: formatPct(o.effectiveTaxRatePct),
+      yearLabel: ` (${rateYear})`,
+    })
   }
   if (o.medianHomeValue != null) {
-    const year = o.medianHomeValueYear ?? o.asOfYear
     bullets.push({
-      label: `Median home value (${year})`,
+      label: 'Median home value',
       value: formatUSD(o.medianHomeValue),
+      yearLabel: ` (${medianYear})`,
     })
   } else if (o.typicalHomeValue != null) {
     bullets.push({ label: 'Typical home value', value: formatUSD(o.typicalHomeValue) })
@@ -100,8 +120,9 @@ export default function TownAtAGlance({
         ? '→ Flat'
         : `${arrow} ${Math.abs(trendPct).toFixed(1)}%`
     bullets.push({
-      label: `Recent trend (${trendStart}–${trendEnd})`,
+      label: 'Recent trend',
       value,
+      yearLabel: trendRange,
     })
   }
 
@@ -119,9 +140,13 @@ export default function TownAtAGlance({
         : []
   const methodologyUrl = o.provenance?.methodologyUrl ?? '/methodology'
 
+  const taxYearForFooter = o.effectiveTaxRateYear ?? o.asOfYear
+
   return (
     <Card className="mb-8 p-6">
-      <h2 className="text-xl font-semibold text-text mb-4">Town at a glance</h2>
+      <h2 className="text-xl font-semibold text-text mb-4">
+        Town at a glance — latest available data by source
+      </h2>
 
       {showCountyFallbackNote && (
         <p className="text-sm text-text-muted mb-3 italic">
@@ -135,6 +160,9 @@ export default function TownAtAGlance({
           {bullets.map((b, i) => (
             <li key={i}>
               <span className="text-text">{b.label}:</span> {b.value}
+              {b.yearLabel != null && (
+                <span className="text-text-muted">{b.yearLabel}</span>
+              )}
             </li>
           ))}
         </ul>
@@ -142,9 +170,12 @@ export default function TownAtAGlance({
 
       <p className="text-text-muted text-sm leading-relaxed mb-4">{summary}</p>
 
-      {(sources.length > 0 || asOfYear) && (
+      {(sources.length > 0 || taxYearForFooter != null) && (
         <p className="text-xs text-text-muted border-t border-border pt-4">
-          Data as of {asOfYear}
+          Data as of latest available year by source
+          {taxYearForFooter != null && (
+            <> — Tax rates updated through {taxYearForFooter} where available</>
+          )}
           {sources.length > 0 && (
             <>
               {' • '}

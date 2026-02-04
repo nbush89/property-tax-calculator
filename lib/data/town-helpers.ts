@@ -26,6 +26,40 @@ export function getLastN(series?: DataPoint[], n: number = 5): DataPoint[] {
 }
 
 /**
+ * Return the latest (max) year from a series, or null if empty/undefined.
+ */
+export function getLatestYear(series: DataPoint[] | undefined): number | null {
+  if (!series || series.length === 0) return null
+  const years = series.map(d => d.year).filter(y => Number.isFinite(y))
+  return years.length > 0 ? Math.max(...years) : null
+}
+
+/**
+ * Return start/end year range when series has at least 2 points; otherwise null.
+ */
+export function getYearRange(
+  series: DataPoint[] | undefined
+): { start: number; end: number } | null {
+  if (!series || series.length < 2) return null
+  const years = series.map(d => d.year).filter(y => Number.isFinite(y))
+  if (years.length < 2) return null
+  return { start: Math.min(...years), end: Math.max(...years) }
+}
+
+/**
+ * Format a year label for a series: "(YYYY)" for latest only, "(YYYY–YYYY)" for range, else "".
+ */
+export function formatYearLabelForSeries(series: DataPoint[] | undefined): string {
+  const latest = getLatestYear(series)
+  const range = getYearRange(series)
+  if (range != null && range.start !== range.end) {
+    return ` (${range.start}–${range.end})`
+  }
+  if (latest != null) return ` (${latest})`
+  return ''
+}
+
+/**
  * Compute year-over-year changes for a series
  */
 export function computeYoY(

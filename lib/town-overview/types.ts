@@ -50,6 +50,10 @@ export interface TownOverview {
   medianHomeValue?: number
   /** Year of median home value estimate */
   medianHomeValueYear?: number
+  /** Year of effective tax rate (when different from asOfYear) */
+  effectiveTaxRateYear?: number
+  /** Year of avg residential tax bill (when different from asOfYear) */
+  avgResidentialTaxBillYear?: number
   typicalHomeValue?: number
   vsCounty?: VsComparison
   vsState?: VsComparison

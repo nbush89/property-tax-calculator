@@ -112,6 +112,8 @@ export function buildTownOverviewFromMetrics(
     stateEffectiveTaxRatePct: stateValues.stateEffectiveTaxRatePct,
     sources,
   }
+  if (townBill?.year != null) overview.avgResidentialTaxBillYear = townBill.year
+  if (townRate?.year != null) overview.effectiveTaxRateYear = townRate.year
   if (medianHome?.value != null) {
     overview.medianHomeValue = medianHome.value
     overview.medianHomeValueYear = medianHome.year

@@ -1,8 +1,11 @@
 /**
  * Derive TownOverview fields (e.g. vsCounty/vsState) from numeric comparisons when not set.
+ * Enrich year fields from raw metrics when overview was stored without them (e.g. pre–year-field JSON).
  */
 
 import type { TownOverview, VsComparison } from './types'
+import type { TownData, CountyData } from '@/lib/data/types'
+import { getMetricLatest } from '@/lib/data/town-helpers'
 
 const SIMILAR_THRESHOLD_PCT = 5 // within 5% = "similar" / "about_the_same"
 
@@ -54,4 +57,30 @@ export function deriveTownOverviewComparisons(overview: TownOverview): TownOverv
   }
 
   return overview
+}
+
+/**
+ * Fill overview year fields from town/county metrics when missing.
+ * Use when the stored overview (e.g. from JSON) was built before effectiveTaxRateYear etc. existed,
+ * so the UI shows the correct year for each metric (e.g. 2025 for rate, 2024 for Census).
+ */
+export function enrichOverviewYearsFromMetrics(
+  town: TownData,
+  county: CountyData,
+  overview: TownOverview
+): TownOverview {
+  const result = { ...overview }
+  if (result.effectiveTaxRateYear == null) {
+    const latest = getMetricLatest({ town, county, metricKey: 'effectiveTaxRate' })
+    if (latest?.year != null) result.effectiveTaxRateYear = latest.year
+  }
+  if (result.avgResidentialTaxBillYear == null) {
+    const latest = getMetricLatest({ town, county, metricKey: 'averageResidentialTaxBill' })
+    if (latest?.year != null) result.avgResidentialTaxBillYear = latest.year
+  }
+  if (result.medianHomeValueYear == null) {
+    const latest = getMetricLatest({ town, county, metricKey: 'medianHomeValue' })
+    if (latest?.year != null) result.medianHomeValueYear = latest.year
+  }
+  return result
 }

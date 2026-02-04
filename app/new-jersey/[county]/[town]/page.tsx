@@ -18,10 +18,9 @@ import { buildTownCopyContext } from '@/lib/data/copy'
 import TownAtAGlance from '@/components/town/TownAtAGlance'
 import { TownPageTracker } from '@/components/town/TownPageTracker'
 import CalculatorTaxTrendsChart from '@/components/charts/CalculatorTaxTrendsChart'
-import { getMetricLatest } from '@/lib/data/town-helpers'
 import { validateTownOverview } from '@/lib/town-overview/validate'
+import { enrichOverviewYearsFromMetrics } from '@/lib/town-overview/derive'
 import { getCountyAvgTaxBillSeries } from '@/utils/getCountySeries'
-import type { StateData, CountyData, TownData } from '@/lib/data/types'
 
 type Props = {
   params: Promise<{
@@ -216,7 +215,11 @@ export default async function TownPropertyTaxPage({ params }: Props) {
               townName={town.name}
               countyName={county.name}
               stateCode={stateData.state.abbreviation}
-              overview={town.overview}
+              overview={
+                town.overview && validateTownOverview(town.overview)
+                  ? enrichOverviewYearsFromMetrics(town, county, town.overview)
+                  : (town.overview ?? undefined)
+              }
             />
 
             {/* Estimate property taxes: calculator + short inline note */}
