@@ -74,8 +74,9 @@ export default function TaxForm({ defaultCounty, defaultMunicipality }: TaxFormP
       if (response.ok) {
         trackEvent('calculate_tax', {
           state: 'NJ',
-          county: payload.county,
-          town: payload.town ?? undefined,
+          page_type: 'calculator',
+          county: slugifyLocation(payload.county),
+          town: payload.town ? slugifyLocation(payload.town) : undefined,
           home_value: payload.homeValue,
           property_type: payload.propertyType,
           exemptions_count: payload.exemptions.length,
@@ -142,7 +143,12 @@ export default function TaxForm({ defaultCounty, defaultMunicipality }: TaxFormP
             setTown('') // Reset town when county changes
             if (errors.county)
               setErrors(prev => ({ ...prev, county: undefined }) as Partial<Record<string, string>>)
-            if (value) trackEvent('select_county', { state: 'NJ', county: value })
+            if (value)
+              trackEvent('select_county', {
+                state: 'NJ',
+                page_type: 'calculator',
+                county: slugifyLocation(value),
+              })
           }}
         />
         {errors.county && (
@@ -161,7 +167,13 @@ export default function TaxForm({ defaultCounty, defaultMunicipality }: TaxFormP
           value={town}
           onChange={value => {
             setTown(value)
-            if (value) trackEvent('select_town', { state: 'NJ', county, town: value })
+            if (value)
+              trackEvent('select_town', {
+                state: 'NJ',
+                page_type: 'calculator',
+                county: slugifyLocation(county),
+                town: slugifyLocation(value),
+              })
           }}
           disabled={!county}
         />

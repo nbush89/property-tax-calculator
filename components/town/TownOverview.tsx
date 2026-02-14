@@ -108,7 +108,8 @@ export default function TownOverview({
 
       {(sourceName || asOfYear) && (
         <p className="text-xs text-text-muted border-t border-border pt-4">
-          Data as of {asOfYear}
+          Data as of latest available year by source
+          {asOfYear != null && <> — tax rates updated through {asOfYear} where available.</>}
           {sourceName && (
             <>
               {' • '}

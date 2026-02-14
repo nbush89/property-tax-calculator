@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Logo from './Logo'
 import { LinkButton } from '@/components/ui/Button'
 import ThemeToggle from '@/components/theme/ThemeToggle'
+import { trackEvent } from '@/lib/analytics'
 
 export default function Header() {
   return (
@@ -35,7 +36,14 @@ export default function Header() {
 
           <div className="flex items-center gap-4">
             <ThemeToggle />
-            <LinkButton href="/new-jersey/property-tax-calculator" variant="primary" size="sm">
+            <LinkButton
+              href="/new-jersey/property-tax-calculator"
+              variant="primary"
+              size="sm"
+              onClick={() =>
+                trackEvent('cta_calculate_click', { state: 'NJ', page_type: 'calculator' })
+              }
+            >
               Calculate now
             </LinkButton>
           </div>

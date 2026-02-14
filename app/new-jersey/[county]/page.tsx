@@ -14,7 +14,7 @@ import LocationFAQ from '@/components/location/LocationFAQ'
 import { getStateData, getCountyBySlug, formatUSD } from '@/lib/geo'
 import { slugifyLocation } from '@/utils/locationUtils'
 import { getCountyFaqData } from '@/data/countyFaqData'
-import { getLatestValue } from '@/lib/data/metrics'
+import { getLatestValue, getLatestYear } from '@/lib/data/metrics'
 import { resolveSource, resolveSourceUrl } from '@/lib/data/town-helpers'
 import CountyTaxTrendsChart from '@/components/CountyTaxTrendsChart'
 import RelatedLinks from '@/components/RelatedLinks'
@@ -50,16 +50,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const path = `/new-jersey/${countySlug}`
   const latestTaxBill = getLatestValue(county.metrics?.averageResidentialTaxBill)
+  const latestYear = getLatestYear(county.metrics?.averageResidentialTaxBill)
   const avgTaxBill = latestTaxBill ? formatUSD(latestTaxBill) : 'N/A'
+  const yearLabel = latestYear != null ? ` (${latestYear})` : ''
 
   return buildMetadata({
-    title: `${county.name} County NJ Property Tax Calculator | 2024 Avg Tax Bill`,
-    description: `Estimate property taxes in ${county.name} County, NJ. Includes 2024 average residential tax bill data (${avgTaxBill}) and a planning-focused calculator.`,
+    title: `${county.name} County NJ Property Tax Calculator | Avg Tax Bill${yearLabel}`,
+    description: `Estimate property taxes in ${county.name} County, NJ. Includes average residential tax bill data${yearLabel} (${avgTaxBill}) and a planning-focused calculator.`,
     path,
     keywords: `${county.name} County property tax, ${county.name} County NJ tax calculator, New Jersey ${county.name} County property tax rate`,
     openGraph: {
       title: `${county.name} County NJ Property Tax Calculator`,
-      description: `Estimate property taxes in ${county.name} County, NJ. 2024 average residential tax bill: ${avgTaxBill}.`,
+      description: `Estimate property taxes in ${county.name} County, NJ. Average residential tax bill${yearLabel}: ${avgTaxBill}.`,
       type: 'website',
     },
   })
@@ -81,6 +83,7 @@ export default async function CountyPropertyTaxPage({ params }: Props) {
   const pageUrl = `${SITE_URL}/new-jersey/${countySlug}`
   const faqs = getCountyFaqData(county.name)
   const latestTaxBill = getLatestValue(county.metrics?.averageResidentialTaxBill)
+  const latestYear = getLatestYear(county.metrics?.averageResidentialTaxBill)
   const avgTaxBill = latestTaxBill ? formatUSD(latestTaxBill) : 'N/A'
   const neighborCounties =
     county.neighborCounties
@@ -101,7 +104,7 @@ export default async function CountyPropertyTaxPage({ params }: Props) {
       <JsonLd
         data={webAppJsonLd({
           pageUrl,
-          description: `Calculate property taxes for ${county.name} County, New Jersey. 2024 average residential tax bill: ${avgTaxBill}.`,
+          description: `Calculate property taxes for ${county.name} County, New Jersey. Average residential tax bill${latestYear != null ? ` (${latestYear})` : ''}: ${avgTaxBill}.`,
         })}
       />
       {/* FAQPage schema */}
@@ -130,8 +133,11 @@ export default async function CountyPropertyTaxPage({ params }: Props) {
                 {county.name} County, NJ Property Tax Calculator
               </h1>
               <p className="text-lg text-text-muted">
-                2024 Average Residential Tax Bill:{' '}
-                <span className="font-semibold text-text">{avgTaxBill}</span>
+                Average Residential Tax Bill
+                {latestYear != null && (
+                  <span className="text-text-muted"> ({latestYear})</span>
+                )}
+                : <span className="font-semibold text-text">{avgTaxBill}</span>
               </p>
               {/* Related Links */}
               <div className="mt-4 flex justify-center">

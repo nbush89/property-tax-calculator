@@ -98,8 +98,9 @@ export default function TownTaxSnapshot({ state, county, town }: TownTaxSnapshot
         {/* Planning Note */}
         <div className="pt-2">
           <p className="text-xs text-text-muted italic">
-            Planning context only — actual bills depend on assessments and exemptions. Data as of{' '}
-            {asOfYear}.
+            Planning context only — actual bills depend on assessments and exemptions. Data as of
+            latest available year by source
+            {asOfYear != null ? ` — tax rates updated through ${asOfYear} where available` : ''}.
           </p>
         </div>
       </div>

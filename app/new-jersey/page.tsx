@@ -9,7 +9,9 @@ import { SITE_URL } from '@/lib/site'
 import { getStateData, formatUSD } from '@/lib/geo'
 import { getLatestValue, getLatestYear } from '@/lib/data/metrics'
 import { slugifyLocation } from '@/utils/locationUtils'
+import { selectStateFeaturedTowns } from '@/lib/links/towns'
 import { LinkButton } from '@/components/ui/Button'
+import { CtaCalculateLink } from '@/components/cta/CtaCalculateLink'
 import { Card } from '@/components/ui/Card'
 import Section from '@/components/ui/Section'
 
@@ -87,9 +89,14 @@ export default function NewJerseyPage() {
 
               {/* CTAs */}
               <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:justify-center">
-                <LinkButton href="/new-jersey/property-tax-calculator" variant="primary" size="lg">
+                <CtaCalculateLink
+                  href="/new-jersey/property-tax-calculator"
+                  variant="primary"
+                  size="lg"
+                  pageType="state"
+                >
                   Start NJ calculator
-                </LinkButton>
+                </CtaCalculateLink>
                 <LinkButton href="#counties" variant="secondary" size="lg">
                   Browse counties
                 </LinkButton>
@@ -177,6 +184,33 @@ export default function NewJerseyPage() {
           <p className="mt-8 text-center text-sm text-text-muted">
             Town pages are being added gradually as data becomes available.
           </p>
+
+          {/* Featured towns (5–10) */}
+          {(() => {
+            const featuredTowns = selectStateFeaturedTowns(stateData, { max: 10 })
+            if (featuredTowns.length === 0) return null
+            return (
+              <div className="mt-10">
+                <h3 className="text-xl font-semibold text-text mb-4">Featured towns</h3>
+                <p className="text-sm text-text-muted mb-4">
+                  Property tax estimates and data for selected New Jersey municipalities.
+                </p>
+                <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+                  {featuredTowns.map(({ name, href, countyName }) => (
+                    <li key={href}>
+                      <Link
+                        href={href}
+                        className="block text-primary hover:text-primary-hover underline font-medium"
+                      >
+                        {name}
+                      </Link>
+                      <span className="text-xs text-text-muted"> ({countyName} County)</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )
+          })()}
 
           {/* Rates Link */}
           <div className="mt-8 text-center">

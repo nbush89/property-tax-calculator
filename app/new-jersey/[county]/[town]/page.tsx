@@ -13,6 +13,8 @@ import { Card } from '@/components/ui/Card'
 import LocationFAQ from '@/components/location/LocationFAQ'
 import { getTownBySlugs, getNewJerseyData } from '@/utils/stateData'
 import { slugifyLocation, getTownDisplayName } from '@/utils/locationUtils'
+import { selectRelatedTowns } from '@/lib/links/towns'
+import RelatedTowns from '@/components/location/RelatedTowns'
 import { getTownFaqData } from '@/data/townFaqData'
 import { buildTownCopyContext } from '@/lib/data/copy'
 import TownAtAGlance from '@/components/town/TownAtAGlance'
@@ -21,6 +23,7 @@ import CalculatorTaxTrendsChart from '@/components/charts/CalculatorTaxTrendsCha
 import { validateTownOverview } from '@/lib/town-overview/validate'
 import { enrichOverviewYearsFromMetrics } from '@/lib/town-overview/derive'
 import { getCountyAvgTaxBillSeries } from '@/utils/getCountySeries'
+import { getMetricLatest } from '@/lib/data/town-helpers'
 
 type Props = {
   params: Promise<{
@@ -116,9 +119,24 @@ export default async function TownPropertyTaxPage({ params }: Props) {
   const countyRouteSegment = `${slugifyLocation(county.name)}-county-property-tax`
   const pageUrl = `${SITE_URL}/new-jersey/${countySlug}/${townSlug}`
   const countyPageUrl = `${SITE_URL}/new-jersey/${countyRouteSegment}`
+  const countyCalculatorHref = `/new-jersey/${countyRouteSegment}/property-tax-calculator`
+  const relatedTowns = selectRelatedTowns(county, normalizedTownSlug, { max: 3 })
   const faqs = getTownFaqData(town.name, county.name)
   const copyContext = buildTownCopyContext({ state: stateData, county, town })
-  const asOfYear = copyContext.asOfYear
+  const enrichedOverview =
+    town.overview && validateTownOverview(town.overview)
+      ? enrichOverviewYearsFromMetrics(town, county, town.overview)
+      : null
+  const effectiveRate = getMetricLatest({
+    town,
+    county,
+    metricKey: 'effectiveTaxRate',
+  })
+  const taxYearForSources =
+    enrichedOverview?.effectiveTaxRateYear ??
+    enrichedOverview?.asOfYear ??
+    effectiveRate?.year ??
+    copyContext.asOfYear
   const countySeries = getCountyAvgTaxBillSeries('new-jersey', county.name)
   const showTrendsChart = countySeries.length >= 3
 
@@ -159,8 +177,8 @@ export default async function TownPropertyTaxPage({ params }: Props) {
       )}
 
       <TownPageTracker
-        county={county.name}
-        town={townDisplayName}
+        countySlug={countySlug}
+        townSlug={normalizedTownSlug}
         tier={town.rollout?.tier != null ? `tier${town.rollout.tier}` : undefined}
       />
       <Header />
@@ -195,20 +213,24 @@ export default async function TownPropertyTaxPage({ params }: Props) {
               <span className="text-text">{townDisplayName}</span>
             </nav>
 
-            {/* Max 2 quick links in hero area */}
-            <nav className="mb-8 flex flex-wrap gap-3 text-sm">
+            {/* Explore: 2 links only, subdued */}
+            <nav
+              className="mb-6 flex flex-wrap items-center gap-2 text-xs text-text-muted"
+              aria-label="Explore calculators"
+            >
+              <span>Explore:</span>
               <Link
-                href={countyPageUrl}
-                className="text-primary hover:text-primary-hover underline"
+                href="/new-jersey/property-tax-calculator"
+                className="text-text-muted hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 rounded"
               >
-                ← Back to {county.name} County
+                NJ calculator
               </Link>
-              <span className="text-text-muted">·</span>
+              <span aria-hidden>·</span>
               <Link
-                href="/new-jersey/property-tax-rates"
-                className="text-primary hover:text-primary-hover underline"
+                href={countyCalculatorHref}
+                className="text-text-muted hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 rounded"
               >
-                NJ property tax rates
+                {county.name} County calculator
               </Link>
             </nav>
 
@@ -217,11 +239,7 @@ export default async function TownPropertyTaxPage({ params }: Props) {
               townName={townDisplayName}
               countyName={county.name}
               stateCode={stateData.state.abbreviation}
-              overview={
-                town.overview && validateTownOverview(town.overview)
-                  ? enrichOverviewYearsFromMetrics(town, county, town.overview)
-                  : (town.overview ?? undefined)
-              }
+              overview={enrichedOverview ?? (town.overview ?? undefined)}
             />
 
             {/* Estimate property taxes: calculator + short inline note */}
@@ -242,6 +260,14 @@ export default async function TownPropertyTaxPage({ params }: Props) {
                 </Card>
               </div>
             </section>
+
+            {/* Related towns: below calculator, same county */}
+            {relatedTowns.length > 0 && (
+              <RelatedTowns
+                towns={relatedTowns}
+                title={`Explore other towns in ${county.name} County`}
+              />
+            )}
 
             {/* Trends chart: only when >= 3 years of county data */}
             {showTrendsChart && (
@@ -278,8 +304,14 @@ export default async function TownPropertyTaxPage({ params }: Props) {
               </h2>
               <p className="text-text-muted mb-4">
                 This page provides estimates for planning and comparison only. Actual property tax
-                bills depend on official assessments, exemptions, and local decisions. Data as of{' '}
-                {asOfYear}—verify with your local assessor.
+                bills depend on official assessments, exemptions, and local decisions. Data as of
+                latest available year by source
+                {taxYearForSources != null ? (
+                  <> — tax rates updated through {taxYearForSources} where available.</>
+                ) : (
+                  '.'
+                )}{' '}
+                Verify with your local assessor.
               </p>
               <p className="text-sm text-text-muted">
                 New Jersey Division of Taxation, U.S. Census Bureau, and other public data.{' '}
@@ -295,12 +327,6 @@ export default async function TownPropertyTaxPage({ params }: Props) {
 
             {/* Related links (small) */}
             <div className="flex flex-wrap gap-4 text-sm">
-              <Link
-                href={countyPageUrl}
-                className="text-primary hover:text-primary-hover underline"
-              >
-                {county.name} County
-              </Link>
               <Link href="/new-jersey" className="text-primary hover:text-primary-hover underline">
                 NJ overview
               </Link>
@@ -309,6 +335,24 @@ export default async function TownPropertyTaxPage({ params }: Props) {
                 className="text-primary hover:text-primary-hover underline"
               >
                 NJ calculator
+              </Link>
+              <Link
+                href={countyPageUrl}
+                className="text-primary hover:text-primary-hover underline"
+              >
+                {county.name} County
+              </Link>
+              <Link
+                href={countyCalculatorHref}
+                className="text-primary hover:text-primary-hover underline"
+              >
+                {county.name} County calculator
+              </Link>
+              <Link
+                href="/new-jersey/property-tax-rates"
+                className="text-primary hover:text-primary-hover underline"
+              >
+                NJ property tax rates
               </Link>
             </div>
           </div>

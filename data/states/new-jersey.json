@@ -65,12 +65,7 @@
     {
       "name": "Atlantic",
       "slug": "atlantic",
-      "neighborCounties": [
-        "Ocean",
-        "Burlington",
-        "Camden",
-        "Cape May"
-      ],
+      "neighborCounties": ["Ocean", "Burlington", "Camden", "Cape May"],
       "towns": [
         {
           "name": "Atlantic City",
@@ -506,12 +501,7 @@
     {
       "name": "Bergen",
       "slug": "bergen",
-      "neighborCounties": [
-        "Passaic",
-        "Hudson",
-        "Essex",
-        "Morris"
-      ],
+      "neighborCounties": ["Passaic", "Hudson", "Essex", "Morris"],
       "towns": [
         {
           "name": "Ridgewood",
@@ -621,9 +611,9 @@
           },
           "rollout": {
             "tier": 1,
-            "featured": false,
+            "featured": true,
             "isReady": true,
-            "rank": 10
+            "rank": 4
           },
           "avgRate": 0.0034,
           "overview": {
@@ -1040,7 +1030,7 @@
             "tier": 1,
             "featured": false,
             "isReady": true,
-            "rank": 20
+            "rank": 9
           },
           "avgRate": 0.003,
           "overview": {
@@ -1179,13 +1169,7 @@
     {
       "name": "Burlington",
       "slug": "burlington",
-      "neighborCounties": [
-        "Mercer",
-        "Monmouth",
-        "Ocean",
-        "Atlantic",
-        "Camden"
-      ],
+      "neighborCounties": ["Mercer", "Monmouth", "Ocean", "Atlantic", "Camden"],
       "towns": [
         {
           "name": "Mount Laurel",
@@ -1619,11 +1603,7 @@
     {
       "name": "Camden",
       "slug": "camden",
-      "neighborCounties": [
-        "Burlington",
-        "Gloucester",
-        "Atlantic"
-      ],
+      "neighborCounties": ["Burlington", "Gloucester", "Atlantic"],
       "towns": [
         {
           "name": "Camden",
@@ -1631,10 +1611,10 @@
           "asOfYear": 2024,
           "avgRate": 0.0038,
           "rollout": {
-            "tier": 1,
-            "featured": true,
-            "isReady": false,
-            "rank": 5
+            "tier": 2,
+            "featured": false,
+            "isReady": true,
+            "rank": 109
           },
           "metrics": {
             "averageResidentialTaxBill": [
@@ -1872,9 +1852,9 @@
           },
           "rollout": {
             "tier": 1,
-            "featured": false,
+            "featured": true,
             "isReady": true,
-            "rank": 10
+            "rank": 8
           },
           "avgRate": 0.0028,
           "overview": {
@@ -2231,10 +2211,7 @@
     {
       "name": "Cape May",
       "slug": "cape-may",
-      "neighborCounties": [
-        "Atlantic",
-        "Cumberland"
-      ],
+      "neighborCounties": ["Atlantic", "Cumberland"],
       "towns": [
         {
           "name": "Wildwood",
@@ -2538,6 +2515,7 @@
         },
         {
           "name": "Sea Isle City",
+          "slug": "sea-isle-city",
           "avgRate": 0.0016,
           "overview": {
             "asOfYear": 2024,
@@ -2668,12 +2646,7 @@
     {
       "name": "Cumberland",
       "slug": "cumberland",
-      "neighborCounties": [
-        "Salem",
-        "Gloucester",
-        "Atlantic",
-        "Cape May"
-      ],
+      "neighborCounties": ["Salem", "Gloucester", "Atlantic", "Cape May"],
       "towns": [
         {
           "name": "Vineland",
@@ -3224,10 +3197,10 @@
             "seoDescription": "View the latest property tax rates, average tax bills, and home value trends in East Orange, New Jersey. Compare with Essex County and estimate your annual tax costs."
           },
           "rollout": {
-            "tier": 1,
+            "tier": 2,
             "featured": false,
-            "isReady": false,
-            "rank": 0
+            "isReady": true,
+            "rank": 116
           },
           "overview": {
             "asOfYear": 2024,
@@ -3387,7 +3360,7 @@
             "tier": 1,
             "featured": true,
             "isReady": true,
-            "rank": 10
+            "rank": 3
           },
           "avgRate": 0.0029,
           "overview": {
@@ -3543,10 +3516,10 @@
           "asOfYear": 2024,
           "avgRate": 0.004,
           "rollout": {
-            "tier": 1,
+            "tier": 2,
             "featured": true,
-            "isReady": false,
-            "rank": 5
+            "isReady": true,
+            "rank": 102
           },
           "metrics": {
             "averageResidentialTaxBill": [
@@ -3921,12 +3894,7 @@
     {
       "name": "Gloucester",
       "slug": "gloucester",
-      "neighborCounties": [
-        "Camden",
-        "Burlington",
-        "Salem",
-        "Cumberland"
-      ],
+      "neighborCounties": ["Camden", "Burlington", "Salem", "Cumberland"],
       "towns": [
         {
           "name": "Washington Township",
@@ -4360,11 +4328,7 @@
     {
       "name": "Hudson",
       "slug": "hudson",
-      "neighborCounties": [
-        "Bergen",
-        "Essex",
-        "Union"
-      ],
+      "neighborCounties": ["Bergen", "Essex", "Union"],
       "towns": [
         {
           "name": "Hoboken",
@@ -4476,7 +4440,7 @@
             "tier": 1,
             "featured": true,
             "isReady": true,
-            "rank": 10
+            "rank": 2
           },
           "avgRate": 0.0035,
           "overview": {
@@ -4564,10 +4528,10 @@
           "asOfYear": 2024,
           "avgRate": 0.0033,
           "rollout": {
-            "tier": 1,
+            "tier": 2,
             "featured": true,
-            "isReady": false,
-            "rank": 5
+            "isReady": true,
+            "rank": 101
           },
           "metrics": {
             "averageResidentialTaxBill": [
@@ -5099,12 +5063,7 @@
     {
       "name": "Hunterdon",
       "slug": "hunterdon",
-      "neighborCounties": [
-        "Warren",
-        "Morris",
-        "Somerset",
-        "Mercer"
-      ],
+      "neighborCounties": ["Warren", "Morris", "Somerset", "Mercer"],
       "towns": [
         {
           "name": "Raritan Township",
@@ -5538,13 +5497,7 @@
     {
       "name": "Mercer",
       "slug": "mercer",
-      "neighborCounties": [
-        "Hunterdon",
-        "Somerset",
-        "Middlesex",
-        "Monmouth",
-        "Burlington"
-      ],
+      "neighborCounties": ["Hunterdon", "Somerset", "Middlesex", "Monmouth", "Burlington"],
       "towns": [
         {
           "name": "Trenton",
@@ -5552,10 +5505,10 @@
           "asOfYear": 2024,
           "avgRate": 0.0036,
           "rollout": {
-            "tier": 1,
-            "featured": true,
-            "isReady": false,
-            "rank": 5
+            "tier": 2,
+            "featured": false,
+            "isReady": true,
+            "rank": 107
           },
           "metrics": {
             "averageResidentialTaxBill": [
@@ -5830,9 +5783,9 @@
           },
           "rollout": {
             "tier": 1,
-            "featured": false,
+            "featured": true,
             "isReady": true,
-            "rank": 10
+            "rank": 1
           },
           "avgRate": 0.0028,
           "overview": {
@@ -5920,10 +5873,10 @@
           "asOfYear": 2024,
           "avgRate": 0.0026,
           "rollout": {
-            "tier": 1,
-            "featured": true,
-            "isReady": false,
-            "rank": 5
+            "tier": 2,
+            "featured": false,
+            "isReady": true,
+            "rank": 108
           },
           "metrics": {
             "averageResidentialTaxBill": [
@@ -6258,13 +6211,7 @@
     {
       "name": "Middlesex",
       "slug": "middlesex",
-      "neighborCounties": [
-        "Essex",
-        "Union",
-        "Somerset",
-        "Mercer",
-        "Monmouth"
-      ],
+      "neighborCounties": ["Essex", "Union", "Somerset", "Mercer", "Monmouth"],
       "towns": [
         {
           "name": "Old Bridge",
@@ -6343,10 +6290,10 @@
             "seoDescription": "See the latest property tax rates, average tax bills, and home value trends in Old Bridge Township, New Jersey. Compare with Middlesex County and estimate your annual tax bill."
           },
           "rollout": {
-            "tier": 1,
+            "tier": 2,
             "featured": false,
-            "isReady": false,
-            "rank": 0
+            "isReady": true,
+            "rank": 112
           },
           "overview": {
             "asOfYear": 2024,
@@ -6786,10 +6733,10 @@
           "asOfYear": 2024,
           "avgRate": 0.0027,
           "rollout": {
-            "tier": 1,
-            "featured": true,
-            "isReady": false,
-            "rank": 5
+            "tier": 2,
+            "featured": false,
+            "isReady": true,
+            "rank": 104
           },
           "metrics": {
             "averageResidentialTaxBill": [
@@ -7099,11 +7046,7 @@
     {
       "name": "Monmouth",
       "slug": "monmouth",
-      "neighborCounties": [
-        "Middlesex",
-        "Mercer",
-        "Ocean"
-      ],
+      "neighborCounties": ["Middlesex", "Mercer", "Ocean"],
       "towns": [
         {
           "name": "Red Bank",
@@ -7334,6 +7277,12 @@
           "name": "Middletown",
           "displayName": "Middletown Township",
           "slug": "middletown",
+          "rollout": {
+            "tier": 2,
+            "featured": false,
+            "isReady": true,
+            "rank": 110
+          },
           "avgRate": 0.0026,
           "overview": {
             "asOfYear": 2024,
@@ -7712,9 +7661,9 @@
           },
           "rollout": {
             "tier": 1,
-            "featured": false,
+            "featured": true,
             "isReady": true,
-            "rank": 10
+            "rank": 7
           },
           "avgRate": 0.0028,
           "overview": {
@@ -8153,11 +8102,7 @@
     {
       "name": "Ocean",
       "slug": "ocean",
-      "neighborCounties": [
-        "Monmouth",
-        "Burlington",
-        "Atlantic"
-      ],
+      "neighborCounties": ["Monmouth", "Burlington", "Atlantic"],
       "towns": [
         {
           "name": "Toms River",
@@ -8165,10 +8110,10 @@
           "asOfYear": 2024,
           "avgRate": 0.002,
           "rollout": {
-            "tier": 1,
-            "featured": true,
-            "isReady": false,
-            "rank": 5
+            "tier": 2,
+            "featured": false,
+            "isReady": true,
+            "rank": 105
           },
           "metrics": {
             "averageResidentialTaxBill": [
@@ -8375,6 +8320,12 @@
           "name": "Lakewood",
           "displayName": "Lakewood Township",
           "slug": "lakewood",
+          "rollout": {
+            "tier": 2,
+            "featured": false,
+            "isReady": true,
+            "rank": 111
+          },
           "avgRate": 0.0018,
           "overview": {
             "asOfYear": 2024,
@@ -8710,12 +8661,7 @@
     {
       "name": "Passaic",
       "slug": "passaic",
-      "neighborCounties": [
-        "Bergen",
-        "Essex",
-        "Morris",
-        "Sussex"
-      ],
+      "neighborCounties": ["Bergen", "Essex", "Morris", "Sussex"],
       "towns": [
         {
           "name": "Paterson",
@@ -8723,10 +8669,10 @@
           "asOfYear": 2024,
           "avgRate": 0.0036,
           "rollout": {
-            "tier": 1,
-            "featured": true,
-            "isReady": false,
-            "rank": 5
+            "tier": 2,
+            "featured": false,
+            "isReady": true,
+            "rank": 106
           },
           "metrics": {
             "averageResidentialTaxBill": [
@@ -8972,6 +8918,12 @@
           "name": "Wayne",
           "displayName": "Wayne Township",
           "slug": "wayne",
+          "rollout": {
+            "tier": 2,
+            "featured": false,
+            "isReady": true,
+            "rank": 113
+          },
           "avgRate": 0.0032,
           "overview": {
             "asOfYear": 2024,
@@ -9307,10 +9259,7 @@
     {
       "name": "Salem",
       "slug": "salem",
-      "neighborCounties": [
-        "Gloucester",
-        "Cumberland"
-      ],
+      "neighborCounties": ["Gloucester", "Cumberland"],
       "towns": [
         {
           "name": "Pennsville",
@@ -9744,13 +9693,7 @@
     {
       "name": "Somerset",
       "slug": "somerset",
-      "neighborCounties": [
-        "Hunterdon",
-        "Morris",
-        "Essex",
-        "Middlesex",
-        "Mercer"
-      ],
+      "neighborCounties": ["Hunterdon", "Morris", "Essex", "Middlesex", "Mercer"],
       "towns": [
         {
           "name": "Bridgewater",
@@ -9882,12 +9825,24 @@
               }
             ]
           },
+          "rollout": {
+            "tier": 2,
+            "featured": false,
+            "isReady": true,
+            "rank": 114
+          },
           "asOfYear": 2024
         },
         {
           "name": "Franklin",
           "displayName": "Franklin Township",
           "slug": "franklin",
+          "rollout": {
+            "tier": 2,
+            "featured": false,
+            "isReady": true,
+            "rank": 115
+          },
           "avgRate": 0.0024,
           "overview": {
             "asOfYear": 2024,
@@ -10337,11 +10292,7 @@
     {
       "name": "Sussex",
       "slug": "sussex",
-      "neighborCounties": [
-        "Warren",
-        "Morris",
-        "Passaic"
-      ],
+      "neighborCounties": ["Warren", "Morris", "Passaic"],
       "towns": [
         {
           "name": "Vernon",
@@ -10775,13 +10726,7 @@
     {
       "name": "Union",
       "slug": "union",
-      "neighborCounties": [
-        "Essex",
-        "Hudson",
-        "Middlesex",
-        "Somerset",
-        "Morris"
-      ],
+      "neighborCounties": ["Essex", "Hudson", "Middlesex", "Somerset", "Morris"],
       "towns": [
         {
           "name": "Elizabeth",
@@ -10789,10 +10734,10 @@
           "asOfYear": 2024,
           "avgRate": 0.0034,
           "rollout": {
-            "tier": 1,
-            "featured": true,
-            "isReady": false,
-            "rank": 5
+            "tier": 2,
+            "featured": false,
+            "isReady": true,
+            "rank": 103
           },
           "metrics": {
             "averageResidentialTaxBill": [
@@ -11142,9 +11087,9 @@
           },
           "rollout": {
             "tier": 1,
-            "featured": false,
+            "featured": true,
             "isReady": true,
-            "rank": 10
+            "rank": 5
           },
           "avgRate": 0.0028,
           "overview": {
@@ -11334,9 +11279,9 @@
           },
           "rollout": {
             "tier": 1,
-            "featured": false,
+            "featured": true,
             "isReady": true,
-            "rank": 20
+            "rank": 6
           },
           "avgRate": 0.0027,
           "overview": {
@@ -11550,11 +11495,7 @@
     {
       "name": "Warren",
       "slug": "warren",
-      "neighborCounties": [
-        "Sussex",
-        "Morris",
-        "Hunterdon"
-      ],
+      "neighborCounties": ["Sussex", "Morris", "Hunterdon"],
       "towns": [
         {
           "name": "Phillipsburg",
