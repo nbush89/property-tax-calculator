@@ -99,19 +99,18 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     }
   }
 
-  // Prevent flash of wrong theme
-  if (!mounted) {
-    return <>{children}</>
-  }
+  // Always provide context so children can call useTheme() (Rules of Hooks).
+  // When !mounted, use defaults until useEffect runs.
+  const value = mounted
+    ? { theme, setTheme: handleSetTheme, resolvedTheme }
+    : {
+        theme: 'system' as Theme,
+        setTheme: () => {},
+        resolvedTheme: 'light' as const,
+      }
 
   return (
-    <ThemeContext.Provider
-      value={{
-        theme,
-        setTheme: handleSetTheme,
-        resolvedTheme,
-      }}
-    >
+    <ThemeContext.Provider value={value}>
       {children}
     </ThemeContext.Provider>
   )

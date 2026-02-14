@@ -52,3 +52,10 @@ export function removeCountySuffix(slug: string): string {
 export function addCountySuffix(slug: string): string {
   return slug.endsWith('-county') ? slug : `${slug}-county`
 }
+
+/**
+ * Display name for a town: use displayName when set (e.g. "Lakewood Township"), otherwise name.
+ */
+export function getTownDisplayName(town: { name: string; displayName?: string }): string {
+  return town.displayName ?? town.name
+}

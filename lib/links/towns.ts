@@ -3,7 +3,7 @@
  */
 
 import type { TownData, CountyData } from '@/lib/data/types'
-import { slugifyLocation } from '@/utils/locationUtils'
+import { slugifyLocation, getTownDisplayName } from '@/utils/locationUtils'
 
 /**
  * Build href for a town property tax page. Town URLs use short county slug (e.g. bergen).
@@ -86,7 +86,7 @@ export function selectFeaturedTowns(
   })
 
   return sorted.slice(0, max).map(t => ({
-    name: t.name,
+    name: getTownDisplayName(t),
     slug: getTownSlug(t),
     href: buildNjTownHref(county.slug, getTownSlug(t)),
   }))
@@ -151,7 +151,7 @@ export function selectCountyTownLinks(
         : 'ready'
 
     return {
-      name: town.name,
+      name: getTownDisplayName(town),
       href: buildNjTownHref(county.slug, getTownSlug(town)),
       reason,
     }

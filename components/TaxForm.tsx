@@ -10,6 +10,7 @@ import Button from '@/components/ui/Button'
 import njExemptions from '@/data/nj_exemptions.json'
 import { slugifyLocation } from '@/utils/locationUtils'
 import { trackEvent } from '@/lib/analytics'
+import { validateTaxForm } from '@/lib/tax-form-schema'
 
 type TaxFormProps = {
   defaultCounty?: string
@@ -31,15 +32,26 @@ export default function TaxForm({ defaultCounty, defaultMunicipality }: TaxFormP
   const [propertyType, setPropertyType] = useState('single_family')
   const [selectedExemptions, setSelectedExemptions] = useState<string[]>([])
   const [isCalculating, setIsCalculating] = useState(false)
+  const [errors, setErrors] = useState<Partial<Record<string, string>>>({})
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setErrors({})
 
-    if (!homeValue || !county) {
-      alert('Please fill in all required fields')
+    const validation = validateTaxForm({
+      homeValue,
+      county,
+      town,
+      propertyType,
+      selectedExemptions,
+    })
+
+    if (!validation.success) {
+      setErrors(validation.errors)
       return
     }
 
+    const payload = validation.data
     setIsCalculating(true)
 
     try {
@@ -49,29 +61,28 @@ export default function TaxForm({ defaultCounty, defaultMunicipality }: TaxFormP
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          homeValue: parseFloat(homeValue),
-          county,
-          town: town || undefined,
-          propertyType,
-          exemptions: selectedExemptions,
+          homeValue: payload.homeValue,
+          county: payload.county,
+          town: payload.town || undefined,
+          propertyType: payload.propertyType,
+          exemptions: payload.exemptions,
         }),
       })
 
-      const data = await response.json()
+      const result = await response.json()
 
       if (response.ok) {
         trackEvent('calculate_tax', {
           state: 'NJ',
-          county,
-          town: town || undefined,
-          home_value: parseFloat(homeValue),
-          property_type: propertyType,
-          exemptions_count: selectedExemptions?.length ?? 0,
+          county: payload.county,
+          town: payload.town ?? undefined,
+          home_value: payload.homeValue,
+          property_type: payload.propertyType,
+          exemptions_count: payload.exemptions.length,
         })
-        // Dispatch custom event to update results component
-        window.dispatchEvent(new CustomEvent('taxCalculated', { detail: data }))
+        window.dispatchEvent(new CustomEvent('taxCalculated', { detail: result }))
       } else {
-        alert(data.error || 'Failed to calculate property tax. Please try again.')
+        alert(result.error || 'Failed to calculate property tax. Please try again.')
       }
     } catch (error) {
       console.error('Error calculating tax:', error)
@@ -88,7 +99,7 @@ export default function TaxForm({ defaultCounty, defaultMunicipality }: TaxFormP
   }))
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-6" noValidate>
       <h2 className="text-2xl font-semibold text-text mb-6">Property Information</h2>
 
       <div>
@@ -99,12 +110,25 @@ export default function TaxForm({ defaultCounty, defaultMunicipality }: TaxFormP
           type="number"
           id="homeValue"
           value={homeValue}
-          onChange={e => setHomeValue(e.target.value)}
+          onChange={e => {
+            setHomeValue(e.target.value)
+            if (errors.homeValue)
+              setErrors(
+                prev => ({ ...prev, homeValue: undefined }) as Partial<Record<string, string>>
+              )
+          }}
           placeholder="Enter home value"
           required
           min="0"
           step="1000"
+          aria-invalid={!!errors.homeValue}
+          aria-describedby={errors.homeValue ? 'homeValue-error' : undefined}
         />
+        {errors.homeValue && (
+          <p id="homeValue-error" className="mt-1 text-sm text-red-600 dark:text-red-400">
+            {errors.homeValue}
+          </p>
+        )}
       </div>
 
       <div>
@@ -116,9 +140,16 @@ export default function TaxForm({ defaultCounty, defaultMunicipality }: TaxFormP
           onChange={value => {
             setCounty(value)
             setTown('') // Reset town when county changes
+            if (errors.county)
+              setErrors(prev => ({ ...prev, county: undefined }) as Partial<Record<string, string>>)
             if (value) trackEvent('select_county', { state: 'NJ', county: value })
           }}
         />
+        {errors.county && (
+          <p id="county-error" className="mt-1 text-sm text-red-600 dark:text-red-400">
+            {errors.county}
+          </p>
+        )}
       </div>
 
       <div>
@@ -197,12 +228,7 @@ export default function TaxForm({ defaultCounty, defaultMunicipality }: TaxFormP
         </div>
       </div>
 
-      <Button
-        type="submit"
-        disabled={isCalculating || !homeValue || !county}
-        className="w-full"
-        size="lg"
-      >
+      <Button type="submit" disabled={isCalculating} className="w-full" size="lg">
         {isCalculating ? 'Calculating...' : 'Calculate Property Tax'}
       </Button>
     </form>

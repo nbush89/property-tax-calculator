@@ -9,6 +9,7 @@ import { JsonLd } from '@/components/seo/JsonLd'
 import { SITE_URL } from '@/lib/site'
 import { getStateData, getCountyBySlug, formatUSD } from '@/lib/geo'
 import { buildNjTownHref, getTownSlug } from '@/lib/links/towns'
+import { getTownDisplayName } from '@/utils/locationUtils'
 import { getMetricLatest } from '@/lib/data/town-helpers'
 import CountyTownsFilter from '@/components/CountyTownsFilter'
 import CountyTownsLoadMore from '@/components/CountyTownsLoadMore'
@@ -123,12 +124,12 @@ export default async function CountyTownsIndexPage({ params }: Props) {
                     href={href}
                     data-town-card
                     data-town-index={index}
-                    data-town-name={town.name}
+                    data-town-name={getTownDisplayName(town)}
                     data-town-rate={rateVal != null ? String(rateVal) : ''}
                     data-town-tax-bill={avgBill?.value != null ? String(avgBill.value) : ''}
                     className="block p-4 bg-surface border border-border rounded-lg hover:bg-bg transition-colors"
                   >
-                    <span className="font-semibold text-text">{town.name}</span>
+                    <span className="font-semibold text-text">{getTownDisplayName(town)}</span>
                     <div className="mt-2 text-sm text-text-muted">
                       {effectiveRate && (
                         <span>

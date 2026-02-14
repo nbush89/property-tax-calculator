@@ -117,6 +117,8 @@ export interface TownRollout {
 export interface TownData {
   name: string
   slug: string
+  /** Optional display name (e.g. "Lakewood Township"); falls back to name in UI */
+  displayName?: string
   asOfYear: number
   metrics?: TownMetrics
   copy?: TownCopy

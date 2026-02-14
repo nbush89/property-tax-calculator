@@ -81,16 +81,16 @@ const TIER1: Array<{ countySlug: string; townSlug: string; townName: string }> =
   { countySlug: 'mercer', townSlug: 'trenton', townName: 'Trenton' },
   { countySlug: 'camden', townSlug: 'camden', townName: 'Camden' },
   // Next 10 towns, don't release until 02/07
-  // { countySlug: 'ocean', townSlug: 'lakewood', townName: 'Lakewood Township' },
-  // { countySlug: 'monmouth', townSlug: 'middletown', townName: 'Middletown Township' },
-  // { countySlug: 'middlesex', townSlug: 'old-bridge', townName: 'Old Bridge Township' },
-  // { countySlug: 'middlesex', townSlug: 'east-brunswick', townName: 'East Brunswick' },
-  // { countySlug: 'somerset', townSlug: 'franklin', townName: 'Franklin Township' },
-  // { countySlug: 'somerset', townSlug: 'bridgewater', townName: 'Bridgewater Township' },
-  // { countySlug: 'passaic', townSlug: 'wayne', townName: 'Wayne Township' },
-  // { countySlug: 'essex', townSlug: 'east-orange', townName: 'East Orange' },
-  // { countySlug: 'hudson', townSlug: 'bayonne', townName: 'Bayonne' },
-  // { countySlug: 'middlesex', townSlug: 'piscataway', townName: 'Piscataway' },
+  { countySlug: 'ocean', townSlug: 'lakewood', townName: 'Lakewood Township' },
+  { countySlug: 'monmouth', townSlug: 'middletown', townName: 'Middletown Township' },
+  { countySlug: 'middlesex', townSlug: 'old-bridge', townName: 'Old Bridge Township' },
+  { countySlug: 'middlesex', townSlug: 'east-brunswick', townName: 'East Brunswick' },
+  { countySlug: 'somerset', townSlug: 'franklin', townName: 'Franklin Township' },
+  { countySlug: 'somerset', townSlug: 'bridgewater', townName: 'Bridgewater Township' },
+  { countySlug: 'passaic', townSlug: 'wayne', townName: 'Wayne Township' },
+  { countySlug: 'essex', townSlug: 'east-orange', townName: 'East Orange' },
+  { countySlug: 'hudson', townSlug: 'bayonne', townName: 'Bayonne' },
+  { countySlug: 'middlesex', townSlug: 'piscataway', townName: 'Piscataway' },
 ]
 
 // County slug normalization for NJ county names

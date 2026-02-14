@@ -5,20 +5,18 @@ import { useEffect, useState } from 'react'
 
 export default function ThemeToggle() {
   const [mounted, setMounted] = useState(false)
+  const { theme, setTheme, resolvedTheme } = useTheme()
 
-  // Only access theme after component mounts (client-side only)
   useEffect(() => {
     setMounted(true)
   }, [])
 
-  // Return a placeholder during SSR or before mount
+  // Placeholder during SSR or before mount (avoids hydration mismatch)
   if (!mounted) {
     return (
       <div className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-surface" />
     )
   }
-
-  const { theme, setTheme, resolvedTheme } = useTheme()
 
   const toggleTheme = () => {
     // Cycle through: light -> dark -> system -> light

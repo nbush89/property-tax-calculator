@@ -52,6 +52,17 @@ const TIER1_TOWNS = [
   'Hamilton',
   'Trenton',
   'Camden',
+  // Next 10 (same as source-nj-avg-tax-bill TIER1)
+  'Lakewood Township',
+  'Middletown Township',
+  'Old Bridge Township',
+  'East Brunswick',
+  'Franklin Township',
+  'Bridgewater Township',
+  'Wayne Township',
+  'East Orange',
+  'Bayonne',
+  'Piscataway',
 ] as const
 
 const PDF_DISTRICT_OVERRIDES: Record<string, string> = {
@@ -74,6 +85,16 @@ const PDF_DISTRICT_OVERRIDES: Record<string, string> = {
   Hamilton: 'HAMILTON TWP',
   Trenton: 'TRENTON CITY',
   Camden: 'CAMDEN CITY',
+  'Lakewood Township': 'LAKEWOOD TWP',
+  'Middletown Township': 'MIDDLETOWN TWP',
+  'Old Bridge Township': 'OLD BRIDGE TWP',
+  'East Brunswick': 'EAST BRUNSWICK TWP',
+  'Franklin Township': 'FRANKLIN TWP',
+  'Bridgewater Township': 'BRIDGEWATER TWP',
+  'Wayne Township': 'WAYNE TWP',
+  'East Orange': 'EAST ORANGE CITY',
+  Bayonne: 'BAYONNE CITY',
+  Piscataway: 'PISCATAWAY TWP',
 }
 
 function fetchJson(url: string): Promise<any> {

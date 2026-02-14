@@ -12,7 +12,7 @@ import TaxResults from '@/components/TaxResults'
 import { Card } from '@/components/ui/Card'
 import LocationFAQ from '@/components/location/LocationFAQ'
 import { getTownBySlugs, getNewJerseyData } from '@/utils/stateData'
-import { slugifyLocation } from '@/utils/locationUtils'
+import { slugifyLocation, getTownDisplayName } from '@/utils/locationUtils'
 import { getTownFaqData } from '@/data/townFaqData'
 import { buildTownCopyContext } from '@/lib/data/copy'
 import TownAtAGlance from '@/components/town/TownAtAGlance'
@@ -79,14 +79,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     rateText || asOfYear
       ? ` (${[asOfYear, rateText].filter(Boolean).join(' · ')} Rates & Estimates)`
       : ''
-  const title = `${town.name}, ${county.name} County NJ Property Tax Calculator${titleSuffix}`
-  const description = `Calculate property taxes for ${town.name}, ${county.name} County, New Jersey. ${avgBillText}${rateText ? `Effective rate: ${rateText}. ` : ''}Planning estimates with our free calculator.`
+  const townDisplayName = getTownDisplayName(town)
+  const title = `${townDisplayName}, ${county.name} County NJ Property Tax Calculator${titleSuffix}`
+  const description = `Calculate property taxes for ${townDisplayName}, ${county.name} County, New Jersey. ${avgBillText}${rateText ? `Effective rate: ${rateText}. ` : ''}Planning estimates with our free calculator.`
 
   return buildMetadata({
     title,
     description,
     path,
-    keywords: `${town.name} property tax, ${town.name} ${county.name} County tax calculator, New Jersey ${town.name} property tax rate`,
+    keywords: `${townDisplayName} property tax, ${townDisplayName} ${county.name} County tax calculator, New Jersey ${townDisplayName} property tax rate`,
     openGraph: {
       title: title.trim(),
       description,
@@ -110,6 +111,7 @@ export default async function TownPropertyTaxPage({ params }: Props) {
   }
 
   const { county, town } = result
+  const townDisplayName = getTownDisplayName(town)
   const stateData = getNewJerseyData()
   const countyRouteSegment = `${slugifyLocation(county.name)}-county-property-tax`
   const pageUrl = `${SITE_URL}/new-jersey/${countySlug}/${townSlug}`
@@ -128,14 +130,14 @@ export default async function TownPropertyTaxPage({ params }: Props) {
           { name: 'Home', url: `${SITE_URL}/` },
           { name: 'New Jersey', url: `${SITE_URL}/new-jersey` },
           { name: `${county.name} County`, url: countyPageUrl },
-          { name: town.name, url: pageUrl },
+          { name: townDisplayName, url: pageUrl },
         ])}
       />
       {/* WebApplication schema */}
       <JsonLd
         data={webAppJsonLd({
           pageUrl,
-          description: `Calculate property taxes for ${town.name}, ${county.name} County, New Jersey.`,
+          description: `Calculate property taxes for ${townDisplayName}, ${county.name} County, New Jersey.`,
         })}
       />
       {/* FAQPage schema */}
@@ -148,7 +150,7 @@ export default async function TownPropertyTaxPage({ params }: Props) {
             '@context': 'https://schema.org',
             '@type': 'WebPage',
             url: pageUrl,
-            name: `${town.name}, ${county.name} County NJ Property Tax Calculator`,
+            name: `${townDisplayName}, ${county.name} County NJ Property Tax Calculator`,
             dateModified:
               town.overview?.provenance?.lastUpdated ??
               (town.overview?.sources?.[0] as { retrieved?: string } | undefined)?.retrieved,
@@ -158,7 +160,7 @@ export default async function TownPropertyTaxPage({ params }: Props) {
 
       <TownPageTracker
         county={county.name}
-        town={town.name}
+        town={townDisplayName}
         tier={town.rollout?.tier != null ? `tier${town.rollout.tier}` : undefined}
       />
       <Header />
@@ -168,8 +170,8 @@ export default async function TownPropertyTaxPage({ params }: Props) {
             {/* Hero: H1 + subtitle */}
             <div className="text-center mb-6">
               <h1 className="text-4xl font-bold text-text mb-2">
-                {town.name}, {county.name} County {stateData.state.abbreviation} Property Tax
-                Calculator
+                {townDisplayName}, {county.name} County {stateData.state.abbreviation} Property
+                Tax Calculator
               </h1>
               <p className="text-sm text-text-muted italic">
                 Planning estimate (not official tax data)
@@ -190,7 +192,7 @@ export default async function TownPropertyTaxPage({ params }: Props) {
                 {county.name} County
               </Link>
               <span className="mx-2">→</span>
-              <span className="text-text">{town.name}</span>
+              <span className="text-text">{townDisplayName}</span>
             </nav>
 
             {/* Max 2 quick links in hero area */}
@@ -212,7 +214,7 @@ export default async function TownPropertyTaxPage({ params }: Props) {
 
             {/* Town at a glance (single summary card) */}
             <TownAtAGlance
-              townName={town.name}
+              townName={townDisplayName}
               countyName={county.name}
               stateCode={stateData.state.abbreviation}
               overview={
@@ -260,8 +262,8 @@ export default async function TownPropertyTaxPage({ params }: Props) {
             <section className="mb-12" aria-labelledby="faq-heading">
               <LocationFAQ
                 faqs={faqs}
-                title={`${town.name} Property Tax FAQ`}
-                subtitle={`Common questions about property taxes in ${town.name}, ${county.name} County`}
+                title={`${townDisplayName} Property Tax FAQ`}
+                subtitle={`Common questions about property taxes in ${townDisplayName}, ${county.name} County`}
                 titleId="faq-heading"
               />
             </section>

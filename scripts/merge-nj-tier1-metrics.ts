@@ -10,27 +10,38 @@ type TownMetricsIn = {
   effectiveTaxRate?: DataPoint[]
 }
 
-const TIER1_TOWN_TO_COUNTY: Record<string, string> = {
-  Montclair: 'essex',
-  Hoboken: 'hudson',
-  Princeton: 'mercer',
-  Ridgewood: 'bergen',
-  Paramus: 'bergen',
-  Summit: 'union',
-  Westfield: 'union',
-  Morristown: 'morris',
-  Edison: 'middlesex',
-  'Cherry Hill': 'camden',
-  Newark: 'essex',
-  'Jersey City': 'hudson',
-  Paterson: 'passaic',
-  Elizabeth: 'union',
-  Woodbridge: 'middlesex',
-  'Toms River': 'ocean',
-  Hamilton: 'mercer',
-  Trenton: 'mercer',
-  Camden: 'camden',
-}
+// Match by countySlug + townSlug; townName used only to key into metrics JSON from source script
+const TIER1: Array<{ countySlug: string; townSlug: string; townName: string }> = [
+  { countySlug: 'essex', townSlug: 'montclair', townName: 'Montclair' },
+  { countySlug: 'hudson', townSlug: 'hoboken', townName: 'Hoboken' },
+  { countySlug: 'mercer', townSlug: 'princeton', townName: 'Princeton' },
+  { countySlug: 'bergen', townSlug: 'ridgewood', townName: 'Ridgewood' },
+  { countySlug: 'bergen', townSlug: 'paramus', townName: 'Paramus' },
+  { countySlug: 'union', townSlug: 'summit', townName: 'Summit' },
+  { countySlug: 'union', townSlug: 'westfield', townName: 'Westfield' },
+  { countySlug: 'morris', townSlug: 'morristown', townName: 'Morristown' },
+  { countySlug: 'middlesex', townSlug: 'edison', townName: 'Edison' },
+  { countySlug: 'camden', townSlug: 'cherry-hill', townName: 'Cherry Hill' },
+  { countySlug: 'essex', townSlug: 'newark', townName: 'Newark' },
+  { countySlug: 'hudson', townSlug: 'jersey-city', townName: 'Jersey City' },
+  { countySlug: 'passaic', townSlug: 'paterson', townName: 'Paterson' },
+  { countySlug: 'union', townSlug: 'elizabeth', townName: 'Elizabeth' },
+  { countySlug: 'middlesex', townSlug: 'woodbridge', townName: 'Woodbridge' },
+  { countySlug: 'ocean', townSlug: 'toms-river', townName: 'Toms River' },
+  { countySlug: 'mercer', townSlug: 'hamilton', townName: 'Hamilton' },
+  { countySlug: 'mercer', townSlug: 'trenton', townName: 'Trenton' },
+  { countySlug: 'camden', townSlug: 'camden', townName: 'Camden' },
+  { countySlug: 'ocean', townSlug: 'lakewood', townName: 'Lakewood Township' },
+  { countySlug: 'monmouth', townSlug: 'middletown', townName: 'Middletown Township' },
+  { countySlug: 'middlesex', townSlug: 'old-bridge', townName: 'Old Bridge Township' },
+  { countySlug: 'middlesex', townSlug: 'east-brunswick', townName: 'East Brunswick' },
+  { countySlug: 'somerset', townSlug: 'franklin', townName: 'Franklin Township' },
+  { countySlug: 'somerset', townSlug: 'bridgewater', townName: 'Bridgewater Township' },
+  { countySlug: 'passaic', townSlug: 'wayne', townName: 'Wayne Township' },
+  { countySlug: 'essex', townSlug: 'east-orange', townName: 'East Orange' },
+  { countySlug: 'hudson', townSlug: 'bayonne', townName: 'Bayonne' },
+  { countySlug: 'middlesex', townSlug: 'piscataway', townName: 'Piscataway' },
+]
 
 function readJson(p: string): any {
   return JSON.parse(fs.readFileSync(p, 'utf8'))
@@ -92,24 +103,23 @@ function main() {
   ensureSources(stateData)
 
   const counties: any[] = stateData.counties ?? []
-  const countyBySlug = new Map<string, any>(counties.map(c => [String(c.slug), c]))
 
   let updated = 0
   let missingTown = 0
 
-  for (const [townName, countySlug] of Object.entries(TIER1_TOWN_TO_COUNTY)) {
-    const county = countyBySlug.get(countySlug)
+  for (const { countySlug, townSlug, townName } of TIER1) {
+    const county = counties.find((c: any) => String(c.slug) === countySlug)
     if (!county) {
-      console.warn(`[WARN] County slug not found: ${countySlug} (for town ${townName})`)
+      console.warn(`[WARN] County not found: ${countySlug}`)
       continue
     }
-    county.towns ||= []
 
-    const town = county.towns.find(
-      (t: any) => String(t.name).toLowerCase() === townName.toLowerCase()
-    )
+    county.towns ||= []
+    const town = county.towns.find((t: any) => String(t.slug) === townSlug)
     if (!town) {
-      console.warn(`[WARN] Town not found under county '${countySlug}': ${townName}`)
+      console.warn(
+        `[WARN] Town slug '${townSlug}' not found in county '${countySlug}'. Available slugs: ${county.towns.map((t: any) => t.slug).join(', ')}`
+      )
       missingTown++
       continue
     }

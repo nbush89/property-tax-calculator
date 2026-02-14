@@ -6,6 +6,7 @@
 
 import type { StateData, CountyData, TownData } from '@/lib/data/types'
 import { getMetricLatest, resolveSource } from '@/lib/data/town-helpers'
+import { getTownDisplayName } from '@/utils/locationUtils'
 
 interface TownTaxSnapshotProps {
   state: StateData
@@ -65,7 +66,7 @@ export default function TownTaxSnapshot({ state, county, town }: TownTaxSnapshot
 
   return (
     <div className="mb-8 border border-border rounded-lg bg-surface p-6">
-      <h2 className="text-2xl font-semibold mb-4 text-text">{town.name} Property Tax Snapshot</h2>
+      <h2 className="text-2xl font-semibold mb-4 text-text">{getTownDisplayName(town)} Property Tax Snapshot</h2>
 
       <div className="space-y-4">
         {/* Effective Tax Rate */}

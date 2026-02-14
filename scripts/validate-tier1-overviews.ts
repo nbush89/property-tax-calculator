@@ -28,6 +28,16 @@ const TIER1: Array<{ countySlug: string; townSlug: string; townName: string }> =
   { countySlug: 'mercer', townSlug: 'hamilton', townName: 'Hamilton' },
   { countySlug: 'mercer', townSlug: 'trenton', townName: 'Trenton' },
   { countySlug: 'camden', townSlug: 'camden', townName: 'Camden' },
+  { countySlug: 'ocean', townSlug: 'lakewood', townName: 'Lakewood Township' },
+  { countySlug: 'monmouth', townSlug: 'middletown', townName: 'Middletown Township' },
+  { countySlug: 'middlesex', townSlug: 'old-bridge', townName: 'Old Bridge Township' },
+  { countySlug: 'middlesex', townSlug: 'east-brunswick', townName: 'East Brunswick' },
+  { countySlug: 'somerset', townSlug: 'franklin', townName: 'Franklin Township' },
+  { countySlug: 'somerset', townSlug: 'bridgewater', townName: 'Bridgewater Township' },
+  { countySlug: 'passaic', townSlug: 'wayne', townName: 'Wayne Township' },
+  { countySlug: 'essex', townSlug: 'east-orange', townName: 'East Orange' },
+  { countySlug: 'hudson', townSlug: 'bayonne', townName: 'Bayonne' },
+  { countySlug: 'middlesex', townSlug: 'piscataway', townName: 'Piscataway' },
 ]
 
 function main() {
@@ -53,11 +63,12 @@ function main() {
       issues.push(`${t.townName} (${t.countySlug}): county not found`)
       continue
     }
-    const town = (county.towns ?? []).find(
-      (x: any) => String(x.slug) === t.townSlug || String(x.name) === t.townName
-    )
+    const town = (county.towns ?? []).find((x: any) => String(x.slug) === t.townSlug)
     if (!town) {
-      issues.push(`${t.townName} (${t.countySlug}): town not found in JSON`)
+      const slugs = (county.towns ?? []).map((x: any) => x.slug).join(', ')
+      issues.push(
+        `Town slug '${t.townSlug}' not found in county '${t.countySlug}'. Available slugs: ${slugs || '(none)'}`
+      )
       continue
     }
 
@@ -110,9 +121,7 @@ function main() {
     console.log('Tier 1 towns – overview vs county:\n')
     for (const t of TIER1) {
       const county = countyBySlug.get(t.countySlug)
-      const town = county?.towns?.find(
-        (x: any) => String(x.slug) === t.townSlug || String(x.name) === t.townName
-      )
+      const town = county?.towns?.find((x: any) => String(x.slug) === t.townSlug)
       const ov = town?.overview
       const hasBill = (town?.metrics?.averageResidentialTaxBill?.length ?? 0) > 0
       const hasRate = (town?.metrics?.effectiveTaxRate?.length ?? 0) > 0
