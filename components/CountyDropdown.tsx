@@ -1,15 +1,16 @@
 'use client'
 
-import { getAllCountyNames } from '@/utils/getCountyRates'
 import Select from '@/components/ui/Select'
 
 type CountyDropdownProps = {
   value: string
   onChange: (value: string) => void
+  /** County names from state data (e.g. getCountyNames(getStateData('new-jersey'))). Pass from server. */
+  countyNames?: string[]
 }
 
-export default function CountyDropdown({ value, onChange }: CountyDropdownProps) {
-  const counties = getAllCountyNames()
+export default function CountyDropdown({ value, onChange, countyNames = [] }: CountyDropdownProps) {
+  const counties = countyNames.length > 0 ? countyNames : []
 
   return (
     <Select

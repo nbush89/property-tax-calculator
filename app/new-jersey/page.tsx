@@ -9,7 +9,12 @@ import { SITE_URL } from '@/lib/site'
 import { getStateData, formatUSD } from '@/lib/geo'
 import { getLatestValue, getLatestYear } from '@/lib/data/metrics'
 import { slugifyLocation } from '@/utils/locationUtils'
-import { selectStateFeaturedTowns } from '@/lib/links/towns'
+import {
+  selectStateFeaturedTowns,
+  buildCountyTownsIndexHref,
+  getTownSlug,
+} from '@/lib/links/towns'
+import { isTownPublished } from '@/lib/sitemaps'
 import { LinkButton } from '@/components/ui/Button'
 import { CtaCalculateLink } from '@/components/cta/CtaCalculateLink'
 import { Card } from '@/components/ui/Card'
@@ -94,6 +99,7 @@ export default function NewJerseyPage() {
                   variant="primary"
                   size="lg"
                   pageType="state"
+                  state="new-jersey"
                 >
                   Start NJ calculator
                 </CtaCalculateLink>
@@ -133,8 +139,13 @@ export default function NewJerseyPage() {
           <div className="mt-8 grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {stateData.counties.map(county => {
               const countySlug = slugifyLocation(county.name)
+              const countyRouteSegment = `${countySlug}-county-property-tax`
               const latestTaxBill = getLatestValue(county.metrics?.averageResidentialTaxBill)
               const latestYear = getLatestYear(county.metrics?.averageResidentialTaxBill)
+              const publishedTownCount = (county.towns || []).filter(
+                t => getTownSlug(t) && isTownPublished(t)
+              ).length
+              const townsHref = buildCountyTownsIndexHref(countyRouteSegment)
 
               return (
                 <Card
@@ -148,15 +159,15 @@ export default function NewJerseyPage() {
                         County average ({latestYear}): {formatUSD(latestTaxBill)}
                       </p>
                     )}
-                    {county.towns && county.towns.length > 0 && (
+                    {publishedTownCount > 0 && (
                       <p className="mt-2 text-xs text-text-muted">
-                        Town pages live: {county.towns.length}{' '}
+                        {publishedTownCount} town page{publishedTownCount !== 1 ? 's' : ''}
                       </p>
                     )}
                   </div>
-                  <div className="mt-4 flex justify-end">
+                  <div className="mt-4 flex flex-wrap items-center gap-3">
                     <Link
-                      href={`/new-jersey/${countySlug}-county-property-tax`}
+                      href={`/new-jersey/${countyRouteSegment}`}
                       className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:text-primary-hover transition-colors"
                     >
                       View county
@@ -174,6 +185,14 @@ export default function NewJerseyPage() {
                         />
                       </svg>
                     </Link>
+                    {publishedTownCount > 0 && (
+                      <Link
+                        href={townsHref}
+                        className="text-sm font-medium text-primary hover:text-primary-hover transition-colors"
+                      >
+                        View towns
+                      </Link>
+                    )}
                   </div>
                 </Card>
               )

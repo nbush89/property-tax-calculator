@@ -1,23 +1,19 @@
 import type { Metadata } from 'next'
-import TaxForm from '@/components/TaxForm'
-import TaxResults from '@/components/TaxResults'
+import Header from '@/components/site/Header'
+import Footer from '@/components/site/Footer'
+import UniversalTaxCalculator from '@/components/calculator/UniversalTaxCalculator'
 import { buildMetadata } from '@/lib/seo'
 import { breadcrumbJsonLd, webAppJsonLd } from '@/lib/jsonld'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { formatStateName, isValidState } from '@/utils/stateUtils'
 import { notFound } from 'next/navigation'
 import { SITE_URL } from '@/lib/site'
+import { getStatesForHero } from '@/lib/geo'
 
 type Props = {
-  params: Promise<{
-    state: string
-  }>
+  params: Promise<{ state: string }>
 }
 
-/**
- * Dynamic state-level property tax calculator page.
- * Includes: WebApplication and BreadcrumbList schemas.
- */
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { state: stateParam } = await params
   const state = decodeURIComponent(stateParam)
@@ -42,17 +38,16 @@ export default async function StatePropertyTaxCalculatorPage({ params }: Props) 
   const state = decodeURIComponent(stateParam)
   const stateName = formatStateName(state)
 
-  // Validate state is supported
   if (!isValidState(state)) {
     notFound()
   }
 
+  const states = getStatesForHero()
   const pageUrl = `${SITE_URL}/${encodeURIComponent(state)}/property-tax-calculator`
   const stateUrl = `${SITE_URL}/${encodeURIComponent(state)}`
 
   return (
     <>
-      {/* BreadcrumbList schema - navigation hierarchy */}
       <JsonLd
         data={breadcrumbJsonLd([
           { name: 'Home', url: `${SITE_URL}/` },
@@ -60,36 +55,30 @@ export default async function StatePropertyTaxCalculatorPage({ params }: Props) 
           { name: 'Property Tax Calculator', url: pageUrl },
         ])}
       />
-      {/* WebApplication schema - describes the calculator tool */}
       <JsonLd
         data={webAppJsonLd({
           pageUrl,
           description: `Calculate your ${stateName} property taxes by entering your property value, county, and municipality. Get accurate estimates with detailed breakdowns.`,
         })}
       />
-      <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
-        <div className="container mx-auto px-4 py-8">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-8">
-              <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-                {stateName} Property Tax Calculator
-              </h1>
-              <p className="text-lg text-gray-700 dark:text-gray-300">
-                Enter your property details to calculate your estimated property taxes
-              </p>
-            </div>
-            <div className="grid lg:grid-cols-2 gap-8">
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6">
-                <TaxForm />
-              </div>
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6">
-                <TaxResults />
-              </div>
-            </div>
+      <Header />
+      <main className="min-h-screen bg-bg">
+        <div className="container-page py-12">
+          <div className="mb-10 text-center">
+            <h1 className="section-title mb-4">{stateName} Property Tax Calculator</h1>
+            <p className="text-lg text-text-muted">
+              Enter your property details to calculate your estimated property taxes
+            </p>
           </div>
+          <UniversalTaxCalculator
+            states={states}
+            initialValues={{ stateSlug: state }}
+            showStateSelect={false}
+            pageType="calculator"
+          />
         </div>
       </main>
+      <Footer />
     </>
   )
 }
-

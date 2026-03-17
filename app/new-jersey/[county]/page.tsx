@@ -12,13 +12,19 @@ import TaxResults from '@/components/TaxResults'
 import { Card } from '@/components/ui/Card'
 import LocationFAQ from '@/components/location/LocationFAQ'
 import { getStateData, getCountyBySlug, formatUSD } from '@/lib/geo'
+import { getCountyNames, getMunicipalitiesByCountyMap } from '@/lib/rates-from-state'
 import { slugifyLocation } from '@/utils/locationUtils'
 import { getCountyFaqData } from '@/data/countyFaqData'
 import { getLatestValue, getLatestYear } from '@/lib/data/metrics'
 import { resolveSource, resolveSourceUrl } from '@/lib/data/town-helpers'
 import CountyTaxTrendsChart from '@/components/CountyTaxTrendsChart'
 import RelatedLinks from '@/components/RelatedLinks'
-import { selectFeaturedTowns, buildCountyTownsIndexHref } from '@/lib/links/towns'
+import {
+  selectFeaturedTowns,
+  buildCountyTownsIndexHref,
+  getTownSlug,
+} from '@/lib/links/towns'
+import { isTownPublished } from '@/lib/sitemaps'
 
 type Props = {
   params: Promise<{
@@ -217,7 +223,11 @@ export default async function CountyPropertyTaxPage({ params }: Props) {
                 <h2 className="text-2xl font-semibold mb-4 text-text">
                   Calculate Your Property Tax
                 </h2>
-                <TaxForm defaultCounty={county.name} />
+                <TaxForm
+                  defaultCounty={county.name}
+                  countyNames={getCountyNames(stateData)}
+                  municipalitiesByCounty={getMunicipalitiesByCountyMap(stateData)}
+                />
               </Card>
               <Card className="p-6">
                 <h2 className="text-2xl font-semibold mb-4 text-text">Tax Estimate</h2>
@@ -225,11 +235,14 @@ export default async function CountyPropertyTaxPage({ params }: Props) {
               </Card>
             </div>
 
-            {/* Featured Towns (max 8) + CTA to all towns */}
+            {/* Featured Towns (max 8) + CTA to county towns directory */}
             {(() => {
               const featuredTowns = selectFeaturedTowns(county, { max: 8 })
               const townsIndexHref = buildCountyTownsIndexHref(countySlug)
-              if (featuredTowns.length === 0) return null
+              const publishedCount = (county.towns || []).filter(
+                t => getTownSlug(t) && isTownPublished(t)
+              ).length
+              if (featuredTowns.length === 0 && publishedCount === 0) return null
               return (
                 <div className="mb-12">
                   <h2 className="text-2xl font-semibold mb-4 text-text">
@@ -238,24 +251,29 @@ export default async function CountyPropertyTaxPage({ params }: Props) {
                   <p className="text-text-muted mb-4">
                     Browse property tax information for municipalities in {county.name} County.
                   </p>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                    {featuredTowns.map(t => (
-                      <Link
-                        key={t.href}
-                        href={t.href}
-                        className="block p-4 bg-surface border border-border rounded-lg hover:bg-bg transition-colors text-text"
-                      >
-                        <span className="font-medium">{t.name}</span>
-                        <span className="block text-sm text-text-muted mt-1">View town →</span>
-                      </Link>
-                    ))}
-                  </div>
-                  <Link
-                    href={townsIndexHref}
-                    className="inline-flex items-center px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition-colors"
-                  >
-                    View all {county.towns?.length ?? 0} towns in {county.name} County →
-                  </Link>
+                  {featuredTowns.length > 0 && (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                      {featuredTowns.map(t => (
+                        <Link
+                          key={t.href}
+                          href={t.href}
+                          className="block p-4 bg-surface border border-border rounded-lg hover:bg-bg transition-colors text-text"
+                        >
+                          <span className="font-medium">{t.name}</span>
+                          <span className="block text-sm text-text-muted mt-1">View town →</span>
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                  {publishedCount > 0 && (
+                    <Link
+                      href={townsIndexHref}
+                      className="inline-flex items-center px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition-colors"
+                    >
+                      Browse all {publishedCount} town page{publishedCount !== 1 ? 's' : ''} in{' '}
+                      {county.name} County →
+                    </Link>
+                  )}
                 </div>
               )
             })()}

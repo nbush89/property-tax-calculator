@@ -15,7 +15,7 @@ type AnalyticsParams = Record<string, any> & {
   state?: string
   county?: string
   town?: string
-  page_type?: 'town' | 'county' | 'state' | 'calculator' | 'blog' | 'static'
+  page_type?: 'town' | 'county' | 'state' | 'calculator' | 'blog' | 'static' | 'hero' | 'header'
   tier?: 'tier1' | 'tier2' | 'tier3'
 }
 

@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { calculatePropertyTax } from '@/utils/calculateTax'
+import { getStateData } from '@/lib/geo'
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { homeValue, county, town, propertyType, exemptions = [] } = body
+    const { homeValue, county, town, propertyType, exemptions = [], stateSlug = 'new-jersey' } = body
 
     if (!homeValue || !county) {
       return NextResponse.json(
@@ -13,13 +14,17 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const result = calculatePropertyTax({
-      homeValue: Number(homeValue),
-      county,
-      town,
-      propertyType,
-      exemptions,
-    })
+    const stateData = getStateData(stateSlug)
+    const result = calculatePropertyTax(
+      {
+        homeValue: Number(homeValue),
+        county,
+        town,
+        propertyType,
+        exemptions,
+      },
+      stateData
+    )
 
     return NextResponse.json(result)
   } catch (error) {

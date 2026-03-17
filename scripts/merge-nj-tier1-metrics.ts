@@ -10,6 +10,19 @@ type TownMetricsIn = {
   effectiveTaxRate?: DataPoint[]
 }
 
+type CountyMetricsIn = {
+  metrics?: {
+    effectiveTaxRate?: DataPoint[]
+  }
+}
+
+/** New tier1 source output: { meta, counties: { [slug]: CountyMetricsIn }, towns: { [name]: TownMetricsIn } } */
+type Tier1Payload = {
+  meta?: { stateSlug?: string; generatedAt?: string }
+  counties?: Record<string, CountyMetricsIn>
+  towns?: Record<string, TownMetricsIn>
+}
+
 // Match by countySlug + townSlug; townName used only to key into metrics JSON from source script
 const TIER1: Array<{ countySlug: string; townSlug: string; townName: string }> = [
   { countySlug: 'essex', townSlug: 'montclair', townName: 'Montclair' },
@@ -60,15 +73,17 @@ function ensureSources(stateData: any) {
   stateData.sources ||= {}
   // Ensure keys exist (don’t overwrite if already present)
   stateData.sources.us_census_acs_profile_dp04 ||= {
-    name: 'U.S. Census Bureau',
-    reference: 'ACS 5-year Profile (DP04_0089E median home value)',
-    url: 'https://api.census.gov/data.html',
-    notes: 'DP04_0089E = Owner-occupied units: Median value (dollars)',
+    publisher: 'U.S. Census Bureau',
+    title: 'ACS 5-year Profile (DP04_0089E median home value)',
+    type: 'api',
+    homepageUrl: 'https://api.census.gov/data.html',
+    notes: 'DP04_0089E = Owner-occupied units: Median value (dollars).',
   }
   stateData.sources.nj_div_taxation_general_effective_tax_rates ||= {
-    name: 'NJ Division of Taxation',
-    reference: 'General & Effective Tax Rates by County and Municipality',
-    url: 'https://www.nj.gov/treasury/taxation/lpt/lpttaxrates.shtml',
+    publisher: 'NJ Division of Taxation',
+    title: 'General & Effective Tax Rates by County and Municipality',
+    type: 'pdf',
+    homepageUrl: 'https://www.nj.gov/treasury/taxation/lpt/lpttaxrates.shtml',
     notes:
       'Effective Tax Rate is published by municipality; year-specific PDFs (e.g., 2024taxrates.pdf).',
   }
@@ -98,14 +113,27 @@ function main() {
   }
 
   const stateData = readJson(statePath)
-  const townMetricsByName: Record<string, TownMetricsIn> = readJson(metricsPath)
+  const rawPayload = readJson(metricsPath) as Tier1Payload
+  const townMetricsByName: Record<string, TownMetricsIn> =
+    rawPayload.towns ?? (rawPayload as unknown as Record<string, TownMetricsIn>)
+  const countyMetricsBySlug = rawPayload.counties ?? {}
 
   ensureSources(stateData)
 
   const counties: any[] = stateData.counties ?? []
 
-  let updated = 0
+  let updatedTowns = 0
+  let updatedCounties = 0
   let missingTown = 0
+
+  for (const county of counties) {
+    const slug = String(county.slug)
+    const countyIn = countyMetricsBySlug[slug]
+    if (!countyIn?.metrics?.effectiveTaxRate?.length) continue
+    county.metrics = county.metrics ?? {}
+    county.metrics.effectiveTaxRate = countyIn.metrics.effectiveTaxRate
+    updatedCounties++
+  }
 
   for (const { countySlug, townSlug, townName } of TIER1) {
     const county = counties.find((c: any) => String(c.slug) === countySlug)
@@ -146,12 +174,12 @@ function main() {
     const asOf = Math.max(y1 ?? 0, y2 ?? 0)
     if (asOf > 0) town.asOfYear = asOf
 
-    updated++
+    updatedTowns++
   }
 
   writeJsonPretty(statePath, stateData)
 
-  console.log(`[DONE] Updated towns: ${updated}`)
+  console.log(`[DONE] Updated counties: ${updatedCounties}, towns: ${updatedTowns}`)
   if (missingTown) {
     console.log(
       `[NOTE] Missing towns in new-jersey.json: ${missingTown} (add them first, then rerun)`

@@ -1,13 +1,11 @@
-import type { Metadata } from 'next'
 import Header from '@/components/site/Header'
 import Footer from '@/components/site/Footer'
 import Hero from '@/components/landing/Hero'
 import HowItWorks from '@/components/landing/HowItWorks'
+import { getStatesForHero } from '@/lib/geo'
 import Features from '@/components/landing/Features'
-import ExamplePreview from '@/components/landing/ExamplePreview'
 import FAQ from '@/components/landing/FAQ'
 import CTASection from '@/components/landing/CTASection'
-import Feedback from '@/components/landing/Feedback'
 import { buildMetadata } from '@/lib/seo'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { breadcrumbJsonLd, organizationJsonLd, websiteJsonLd, webAppJsonLd } from '@/lib/jsonld'
@@ -42,6 +40,7 @@ export const metadata = buildMetadata({
 
 export default function Home() {
   const pageUrl = `${SITE_URL}/`
+  const statesForHero = getStatesForHero()
 
   return (
     <>
@@ -61,7 +60,7 @@ export default function Home() {
       <JsonLd data={breadcrumbJsonLd([{ name: 'Home', url: pageUrl }])} />
       <Header />
       <main className="min-h-screen">
-        <Hero />
+        <Hero statesForHero={statesForHero} />
         <HowItWorks />
         <Features />
         <FAQ />

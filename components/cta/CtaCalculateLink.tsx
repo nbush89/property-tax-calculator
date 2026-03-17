@@ -9,6 +9,7 @@ type CtaCalculateLinkProps = {
   variant?: 'primary' | 'secondary'
   size?: 'sm' | 'md' | 'lg'
   pageType: 'state' | 'county' | 'town' | 'calculator'
+  state?: string
   county?: string
   town?: string
   tier?: 'tier1' | 'tier2' | 'tier3'
@@ -25,6 +26,7 @@ export function CtaCalculateLink({
   variant = 'primary',
   size = 'lg',
   pageType,
+  state,
   county,
   town,
   tier,
@@ -37,8 +39,8 @@ export function CtaCalculateLink({
       className={baseClasses(variant, size, className)}
       onClick={() =>
         trackEvent('cta_calculate_click', {
-          state: 'NJ',
           page_type: pageType,
+          ...(state && { state }),
           ...(county && { county }),
           ...(town && { town }),
           ...(tier && { tier }),

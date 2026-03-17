@@ -34,6 +34,52 @@ export function getStateData(stateSlug: string): StateData | null {
   return data
 }
 
+export interface AvailableState {
+  slug: string
+  name: string
+}
+
+/**
+ * List states available in the registry (for nav, homepage, and neutral landings).
+ * Derives from state data; add states to the registry to have them appear here.
+ */
+export function getAvailableStates(): AvailableState[] {
+  return Object.values(stateDataRegistry).map(data => ({
+    slug: data.state.slug,
+    name: data.state.name,
+  }))
+}
+
+/** State/county/town tree for hero dropdowns (no heavy metrics). */
+export interface StateOptionForHero {
+  slug: string
+  name: string
+  counties: { slug: string; name: string; towns: { slug: string; name: string }[] }[]
+}
+
+/**
+ * Build state → county → town options for the homepage hero form.
+ * Reads from the state registry; add states to the registry to have them appear.
+ */
+export function getStatesForHero(): StateOptionForHero[] {
+  return getAvailableStates().map(s => {
+    const data = getStateData(s.slug)
+    if (!data) return { slug: s.slug, name: s.name, counties: [] }
+    return {
+      slug: data.state.slug,
+      name: data.state.name,
+      counties: (data.counties ?? []).map(c => ({
+        slug: c.slug || slugifyLocation(c.name),
+        name: c.name,
+        towns: (c.towns ?? []).map(t => ({
+          slug: t.slug || slugifyLocation(t.name),
+          name: t.displayName ?? t.name,
+        })),
+      })),
+    }
+  })
+}
+
 /**
  * Get New Jersey state data (backward compatibility)
  * @deprecated Use getStateData('new-jersey') instead

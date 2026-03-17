@@ -7,33 +7,11 @@
 import type { TownOverview, TownOverviewSource } from './types'
 import type { TownData, CountyData, StateData } from '@/lib/data/types'
 import { getMetricLatest } from '@/lib/data/town-helpers'
-import { getLatestValue } from '@/lib/data/metrics'
 
 const SOURCE_NAME = 'NJ Division of Taxation'
 const SOURCE_URL = 'https://www.nj.gov/treasury/taxation/lpt/statdata.shtml'
 const CENSUS_SOURCE_NAME = 'U.S. Census Bureau'
 const CENSUS_SOURCE_URL = 'https://api.census.gov/data.html'
-
-/**
- * Map state-level metrics to TownOverview fields.
- * State JSON uses averageTaxRate (effective rate); if state ever has
- * averageResidentialTaxBill we map that to stateAvgTaxBill.
- */
-/** State metrics may include averageResidentialTaxBill in JSON before it's in StateMetrics type */
-const stateMetricsWithBill = (s: StateData['metrics']) =>
-  s as { averageResidentialTaxBill?: Parameters<typeof getLatestValue>[0] } | undefined
-
-function getStateOverviewValues(state: StateData): {
-  stateEffectiveTaxRatePct?: number
-  stateAvgTaxBill?: number
-} {
-  const rate = getLatestValue(state.metrics?.averageTaxRate)
-  const bill = getLatestValue(stateMetricsWithBill(state.metrics)?.averageResidentialTaxBill)
-  return {
-    stateEffectiveTaxRatePct: rate ?? undefined,
-    stateAvgTaxBill: bill ?? undefined,
-  }
-}
 
 /**
  * Compute percent change between first and last value in a series.
@@ -63,9 +41,6 @@ export function buildTownOverviewFromMetrics(
   const townBill = getMetricLatest({ town, county, metricKey: 'averageResidentialTaxBill' })
   const townRate = getMetricLatest({ town, county, metricKey: 'effectiveTaxRate' })
   const medianHome = getMetricLatest({ town, county, metricKey: 'medianHomeValue' })
-  const countyBillLatest = getLatestValue(county.metrics?.averageResidentialTaxBill)
-  const countyRateLatest = getLatestValue(county.metrics?.effectiveTaxRate)
-  const stateValues = getStateOverviewValues(state)
 
   const seriesForTrend =
     (town.metrics?.averageResidentialTaxBill?.length ?? 0) >=
@@ -102,14 +77,12 @@ export function buildTownOverviewFromMetrics(
     })
   }
 
+  // County and state rates are not stored here; they are derived at render time from
+  // county.metrics and state.metrics so we only need them once per county/state.
   const overview: TownOverview = {
     asOfYear,
     avgResidentialTaxBill: townBill?.value ?? undefined,
     effectiveTaxRatePct: townRate?.value ?? undefined,
-    countyAvgTaxBill: countyBillLatest ?? undefined,
-    countyEffectiveRatePct: countyRateLatest ?? undefined,
-    stateAvgTaxBill: stateValues.stateAvgTaxBill,
-    stateEffectiveTaxRatePct: stateValues.stateEffectiveTaxRatePct,
     sources,
   }
   if (townBill?.year != null) overview.avgResidentialTaxBillYear = townBill.year

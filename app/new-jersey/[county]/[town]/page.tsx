@@ -12,8 +12,10 @@ import TaxResults from '@/components/TaxResults'
 import { Card } from '@/components/ui/Card'
 import LocationFAQ from '@/components/location/LocationFAQ'
 import { getTownBySlugs, getNewJerseyData } from '@/utils/stateData'
+import { getCountyNames, getMunicipalitiesByCountyMap } from '@/lib/rates-from-state'
 import { slugifyLocation, getTownDisplayName } from '@/utils/locationUtils'
-import { selectRelatedTowns } from '@/lib/links/towns'
+import { selectRelatedTowns, getCountyShortSlug } from '@/lib/links/towns'
+import { buildCalculatorHref } from '@/lib/links/hero'
 import RelatedTowns from '@/components/location/RelatedTowns'
 import { getTownFaqData } from '@/data/townFaqData'
 import { buildTownCopyContext } from '@/lib/data/copy'
@@ -125,7 +127,7 @@ export default async function TownPropertyTaxPage({ params }: Props) {
   const copyContext = buildTownCopyContext({ state: stateData, county, town })
   const enrichedOverview =
     town.overview && validateTownOverview(town.overview)
-      ? enrichOverviewYearsFromMetrics(town, county, town.overview)
+      ? enrichOverviewYearsFromMetrics(town, county, town.overview, stateData)
       : null
   const effectiveRate = getMetricLatest({
     town,
@@ -220,17 +222,21 @@ export default async function TownPropertyTaxPage({ params }: Props) {
             >
               <span>Explore:</span>
               <Link
-                href="/new-jersey/property-tax-calculator"
+                href={buildCalculatorHref({ stateSlug: 'new-jersey' })}
                 className="text-text-muted hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 rounded"
               >
                 NJ calculator
               </Link>
               <span aria-hidden>·</span>
               <Link
-                href={countyCalculatorHref}
+                href={buildCalculatorHref({
+                  stateSlug: 'new-jersey',
+                  countySlug: getCountyShortSlug(county),
+                  townSlug: town.slug || slugifyLocation(town.name),
+                })}
                 className="text-text-muted hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 rounded"
               >
-                {county.name} County calculator
+                Calculator with {townDisplayName} prefilled
               </Link>
             </nav>
 
@@ -253,7 +259,12 @@ export default async function TownPropertyTaxPage({ params }: Props) {
               </p>
               <div className="grid lg:grid-cols-2 gap-8 mt-4">
                 <Card className="p-6">
-                  <TaxForm defaultCounty={county.name} defaultMunicipality={town.name} />
+                  <TaxForm
+                    defaultCounty={county.name}
+                    defaultMunicipality={town.name}
+                    countyNames={getCountyNames(stateData)}
+                    municipalitiesByCounty={getMunicipalitiesByCountyMap(stateData)}
+                  />
                 </Card>
                 <Card className="p-6">
                   <TaxResults />

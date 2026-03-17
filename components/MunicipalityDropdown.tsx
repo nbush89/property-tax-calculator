@@ -1,7 +1,5 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { getMunicipalitiesByCounty } from '@/utils/getMunicipalRates'
 import Select from '@/components/ui/Select'
 
 type MunicipalityDropdownProps = {
@@ -9,19 +7,18 @@ type MunicipalityDropdownProps = {
   value: string
   onChange: (value: string) => void
   disabled?: boolean
+  /** Municipalities for the selected county, keyed by county name. From state data (e.g. getMunicipalitiesByCounty). Pass from server. */
+  municipalitiesByCounty?: Record<string, string[]>
 }
 
-export default function MunicipalityDropdown({ county, value, onChange, disabled }: MunicipalityDropdownProps) {
-  const [municipalities, setMunicipalities] = useState<string[]>([])
-
-  useEffect(() => {
-    if (county) {
-      const munis = getMunicipalitiesByCounty(county)
-      setMunicipalities(munis)
-    } else {
-      setMunicipalities([])
-    }
-  }, [county])
+export default function MunicipalityDropdown({
+  county,
+  value,
+  onChange,
+  disabled,
+  municipalitiesByCounty = {},
+}: MunicipalityDropdownProps) {
+  const municipalities = county ? (municipalitiesByCounty[county] ?? []) : []
 
   return (
     <Select

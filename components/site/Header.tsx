@@ -15,13 +15,13 @@ export default function Header() {
 
           <nav className="hidden items-center gap-6 md:flex">
             <Link
-              href="/new-jersey/property-tax-calculator"
+              href="/property-tax-calculator"
               className="text-sm font-medium text-text-muted transition-colors hover:text-text focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded"
             >
               Calculator
             </Link>
             <Link
-              href="/new-jersey/property-tax-rates"
+              href="/property-tax-rates"
               className="text-sm font-medium text-text-muted transition-colors hover:text-text focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded"
             >
               Rates
@@ -37,11 +37,11 @@ export default function Header() {
           <div className="flex items-center gap-4">
             <ThemeToggle />
             <LinkButton
-              href="/new-jersey/property-tax-calculator"
+              href="/property-tax-calculator"
               variant="primary"
               size="sm"
               onClick={() =>
-                trackEvent('cta_calculate_click', { state: 'NJ', page_type: 'calculator' })
+                trackEvent('cta_calculate_click', { page_type: 'header' })
               }
             >
               Calculate now

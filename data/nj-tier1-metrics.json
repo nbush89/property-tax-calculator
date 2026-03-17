@@ -1,0 +1,2411 @@
+{
+  "meta": {
+    "sourceRef": "nj_div_taxation_general_effective_tax_rates",
+    "stateSlug": "new-jersey",
+    "generatedAt": "2026-03-17T00:43:35.917Z"
+  },
+  "counties": {
+    "atlantic": {
+      "metrics": {
+        "effectiveTaxRate": [
+          {
+            "year": 2021,
+            "value": 3.0454,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2022,
+            "value": 2.8764,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2023,
+            "value": 2.6012,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2024,
+            "value": 2.355,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2025,
+            "value": 2.1470000000000002,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          }
+        ]
+      }
+    },
+    "bergen": {
+      "metrics": {
+        "effectiveTaxRate": [
+          {
+            "year": 2021,
+            "value": 2.3922,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2022,
+            "value": 2.3014,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2023,
+            "value": 2.2004,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2024,
+            "value": 2.0648,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2025,
+            "value": 1.9926,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          }
+        ]
+      }
+    },
+    "burlington": {
+      "metrics": {
+        "effectiveTaxRate": [
+          {
+            "year": 2021,
+            "value": 2.54375,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2022,
+            "value": 2.4539999999999997,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2023,
+            "value": 2.29575,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2024,
+            "value": 2.18675,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2025,
+            "value": 2.1145,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          }
+        ]
+      }
+    },
+    "camden": {
+      "metrics": {
+        "effectiveTaxRate": [
+          {
+            "year": 2021,
+            "value": 3.3848,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2022,
+            "value": 3.2434000000000003,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2023,
+            "value": 2.9828,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2024,
+            "value": 2.8108,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2025,
+            "value": 2.5582000000000003,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          }
+        ]
+      }
+    },
+    "cape-may": {
+      "metrics": {
+        "effectiveTaxRate": [
+          {
+            "year": 2021,
+            "value": 1.2681999999999998,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2022,
+            "value": 1.1949999999999998,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2023,
+            "value": 1.0492000000000001,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2024,
+            "value": 0.9708000000000002,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2025,
+            "value": 1.046,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          }
+        ]
+      }
+    },
+    "cumberland": {
+      "metrics": {
+        "effectiveTaxRate": [
+          {
+            "year": 2021,
+            "value": 3.368,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2022,
+            "value": 3.1595,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2023,
+            "value": 2.8875,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2025,
+            "value": 2.337,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          }
+        ]
+      }
+    },
+    "essex": {
+      "metrics": {
+        "effectiveTaxRate": [
+          {
+            "year": 2021,
+            "value": 3.1406666666666667,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2022,
+            "value": 3.043333333333333,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2023,
+            "value": 2.8166666666666664,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2024,
+            "value": 2.5368333333333335,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2025,
+            "value": 2.374,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          }
+        ]
+      }
+    },
+    "gloucester": {
+      "metrics": {
+        "effectiveTaxRate": [
+          {
+            "year": 2021,
+            "value": 2.9898000000000002,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2022,
+            "value": 2.8526000000000002,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2023,
+            "value": 2.575,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2024,
+            "value": 2.3771999999999998,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2025,
+            "value": 2.2369999999999997,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          }
+        ]
+      }
+    },
+    "hudson": {
+      "metrics": {
+        "effectiveTaxRate": [
+          {
+            "year": 2021,
+            "value": 1.9085999999999999,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2022,
+            "value": 1.9484000000000001,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2023,
+            "value": 1.8506,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2024,
+            "value": 1.8663999999999998,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2025,
+            "value": 1.7599999999999998,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          }
+        ]
+      }
+    },
+    "hunterdon": {
+      "metrics": {
+        "effectiveTaxRate": [
+          {
+            "year": 2021,
+            "value": 2.6710000000000003,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2022,
+            "value": 2.6128,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2023,
+            "value": 2.4912,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2024,
+            "value": 2.428,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2025,
+            "value": 2.3666,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          }
+        ]
+      }
+    },
+    "mercer": {
+      "metrics": {
+        "effectiveTaxRate": [
+          {
+            "year": 2021,
+            "value": 3.0770000000000004,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2022,
+            "value": 2.9294,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2023,
+            "value": 2.742,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2024,
+            "value": 2.6054000000000004,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2025,
+            "value": 2.4344,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          }
+        ]
+      }
+    },
+    "middlesex": {
+      "metrics": {
+        "effectiveTaxRate": [
+          {
+            "year": 2021,
+            "value": 2.4008333333333334,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2022,
+            "value": 2.309833333333333,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2023,
+            "value": 2.2051666666666665,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2024,
+            "value": 2.1246666666666667,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2025,
+            "value": 2.0269999999999997,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          }
+        ]
+      }
+    },
+    "monmouth": {
+      "metrics": {
+        "effectiveTaxRate": [
+          {
+            "year": 2021,
+            "value": 1.9892000000000003,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2022,
+            "value": 1.9116,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2023,
+            "value": 1.7469999999999999,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2024,
+            "value": 1.6538,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2025,
+            "value": 1.61,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          }
+        ]
+      }
+    },
+    "morris": {
+      "metrics": {
+        "effectiveTaxRate": [
+          {
+            "year": 2021,
+            "value": 2.02725,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2022,
+            "value": 2.04075,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2023,
+            "value": 1.9855,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2024,
+            "value": 1.7830000000000001,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2025,
+            "value": 1.74925,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          }
+        ]
+      }
+    },
+    "ocean": {
+      "metrics": {
+        "effectiveTaxRate": [
+          {
+            "year": 2021,
+            "value": 1.9544000000000001,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2022,
+            "value": 1.83,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2023,
+            "value": 1.6488,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2024,
+            "value": 1.5274,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2025,
+            "value": 1.4742000000000002,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          }
+        ]
+      }
+    },
+    "passaic": {
+      "metrics": {
+        "effectiveTaxRate": [
+          {
+            "year": 2021,
+            "value": 2.8496,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2022,
+            "value": 2.7771999999999997,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2023,
+            "value": 2.5534,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2024,
+            "value": 2.338,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2025,
+            "value": 2.23,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          }
+        ]
+      }
+    },
+    "salem": {
+      "metrics": {
+        "effectiveTaxRate": [
+          {
+            "year": 2021,
+            "value": 4.3195,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2022,
+            "value": 4.204,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2023,
+            "value": 3.9994999999999994,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2024,
+            "value": 3.72075,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2025,
+            "value": 3.385,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          }
+        ]
+      }
+    },
+    "somerset": {
+      "metrics": {
+        "effectiveTaxRate": [
+          {
+            "year": 2021,
+            "value": 2.3894,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2022,
+            "value": 2.3002000000000002,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2023,
+            "value": 2.1795999999999998,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2024,
+            "value": 2.0940000000000003,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2025,
+            "value": 2.0040000000000004,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          }
+        ]
+      }
+    },
+    "sussex": {
+      "metrics": {
+        "effectiveTaxRate": [
+          {
+            "year": 2021,
+            "value": 3.0768,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2022,
+            "value": 2.9299999999999997,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2023,
+            "value": 2.7310000000000003,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2024,
+            "value": 2.5387999999999997,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2025,
+            "value": 2.3692,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          }
+        ]
+      }
+    },
+    "union": {
+      "metrics": {
+        "effectiveTaxRate": [
+          {
+            "year": 2021,
+            "value": 2.5466,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2022,
+            "value": 2.4044,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2023,
+            "value": 2.1848,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2024,
+            "value": 2.0522,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2025,
+            "value": 1.9928000000000001,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          }
+        ]
+      }
+    },
+    "warren": {
+      "metrics": {
+        "effectiveTaxRate": [
+          {
+            "year": 2021,
+            "value": 3.5528,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2022,
+            "value": 3.3644,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2023,
+            "value": 3.1331999999999995,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2024,
+            "value": 3.0580000000000003,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2025,
+            "value": 2.8014,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          }
+        ]
+      }
+    }
+  },
+  "towns": {
+    "Montclair": {
+      "medianHomeValue": [],
+      "effectiveTaxRate": [
+        {
+          "year": 2021,
+          "value": 2.84,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2022,
+          "value": 2.71,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2023,
+          "value": 2.447,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2024,
+          "value": 2.268,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2025,
+          "value": 2.16,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        }
+      ],
+      "debug": {
+        "acsMatchKey": "MONTCLAIR",
+        "pdfDistrict": "MONTCLAIR TWP",
+        "pdfMatchKey": "MONTCLAIR TWP"
+      }
+    },
+    "Hoboken": {
+      "medianHomeValue": [
+        {
+          "year": 2020,
+          "value": 759800,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2021,
+          "value": 777600,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2022,
+          "value": 859300,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2023,
+          "value": 872100,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2024,
+          "value": 895100,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        }
+      ],
+      "effectiveTaxRate": [
+        {
+          "year": 2021,
+          "value": 1.071,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2022,
+          "value": 1.116,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2023,
+          "value": 1.063,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2024,
+          "value": 1.109,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2025,
+          "value": 1.07,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        }
+      ],
+      "debug": {
+        "acsMatchKey": "HOBOKEN",
+        "pdfDistrict": "HOBOKEN CITY",
+        "pdfMatchKey": "HOBOKEN CITY"
+      }
+    },
+    "Princeton": {
+      "medianHomeValue": [
+        {
+          "year": 2020,
+          "value": 872400,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2021,
+          "value": 893600,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2022,
+          "value": 971200,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2023,
+          "value": 1040400,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2024,
+          "value": 1050600,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        }
+      ],
+      "effectiveTaxRate": [
+        {
+          "year": 2021,
+          "value": 2.004,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2022,
+          "value": 1.964,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2023,
+          "value": 1.942,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2024,
+          "value": 1.875,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2025,
+          "value": 1.814,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        }
+      ],
+      "debug": {
+        "acsMatchKey": "PRINCETON",
+        "pdfDistrict": "PRINCETON",
+        "pdfMatchKey": "PRINCETON"
+      }
+    },
+    "Ridgewood": {
+      "medianHomeValue": [
+        {
+          "year": 2020,
+          "value": 744200,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2021,
+          "value": 789900,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2022,
+          "value": 858900,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2023,
+          "value": 882700,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2024,
+          "value": 891200,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        }
+      ],
+      "effectiveTaxRate": [
+        {
+          "year": 2021,
+          "value": 2.324,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2022,
+          "value": 2.304,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2023,
+          "value": 2.121,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2024,
+          "value": 2.024,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2025,
+          "value": 1.944,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        }
+      ],
+      "debug": {
+        "acsMatchKey": "RIDGEWOOD",
+        "pdfDistrict": "RIDGEWOOD VILLAGE",
+        "pdfMatchKey": "RIDGEWOOD VILLAGE"
+      }
+    },
+    "Paramus": {
+      "medianHomeValue": [
+        {
+          "year": 2020,
+          "value": 614900,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2021,
+          "value": 623900,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2022,
+          "value": 684800,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2023,
+          "value": 736000,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2024,
+          "value": 813900,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        }
+      ],
+      "effectiveTaxRate": [
+        {
+          "year": 2021,
+          "value": 1.653,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2022,
+          "value": 1.551,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2023,
+          "value": 1.461,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2024,
+          "value": 1.481,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2025,
+          "value": 1.434,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        }
+      ],
+      "debug": {
+        "acsMatchKey": "PARAMUS",
+        "pdfDistrict": "PARAMUS BORO",
+        "pdfMatchKey": "PARAMUS BORO"
+      }
+    },
+    "Summit": {
+      "medianHomeValue": [
+        {
+          "year": 2020,
+          "value": 831700,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2021,
+          "value": 852300,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2022,
+          "value": 907900,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2023,
+          "value": 969900,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2024,
+          "value": 994500,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        }
+      ],
+      "effectiveTaxRate": [
+        {
+          "year": 2021,
+          "value": 1.827,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2022,
+          "value": 1.795,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2023,
+          "value": 1.64,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2024,
+          "value": 1.554,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2025,
+          "value": 1.475,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        }
+      ],
+      "debug": {
+        "acsMatchKey": "SUMMIT",
+        "pdfDistrict": "SUMMIT CITY",
+        "pdfMatchKey": "SUMMIT CITY"
+      }
+    },
+    "Westfield": {
+      "medianHomeValue": [
+        {
+          "year": 2020,
+          "value": 773200,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2021,
+          "value": 810400,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2022,
+          "value": 890000,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2023,
+          "value": 930500,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2024,
+          "value": 953400,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        }
+      ],
+      "effectiveTaxRate": [
+        {
+          "year": 2021,
+          "value": 2.197,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2022,
+          "value": 2.109,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2023,
+          "value": 2.02,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2024,
+          "value": 1.92,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2025,
+          "value": 1.81,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        }
+      ],
+      "debug": {
+        "acsMatchKey": "WESTFIELD",
+        "pdfDistrict": "WESTFIELD TOWN",
+        "pdfMatchKey": "WESTFIELD TOWN"
+      }
+    },
+    "Morristown": {
+      "medianHomeValue": [
+        {
+          "year": 2020,
+          "value": 479100,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2021,
+          "value": 469600,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2022,
+          "value": 535900,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2023,
+          "value": 552800,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2024,
+          "value": 567600,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        }
+      ],
+      "effectiveTaxRate": [
+        {
+          "year": 2021,
+          "value": 2.193,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2022,
+          "value": 2.241,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2023,
+          "value": 2.253,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2024,
+          "value": 1.735,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2025,
+          "value": 1.681,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        }
+      ],
+      "debug": {
+        "acsMatchKey": "MORRISTOWN",
+        "pdfDistrict": "MORRISTOWN TOWN",
+        "pdfMatchKey": "MORRISTOWN TOWN"
+      }
+    },
+    "Edison": {
+      "medianHomeValue": [],
+      "effectiveTaxRate": [
+        {
+          "year": 2021,
+          "value": 2.28,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2022,
+          "value": 2.173,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2023,
+          "value": 2.169,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2024,
+          "value": 2.086,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2025,
+          "value": 2.005,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        }
+      ],
+      "debug": {
+        "acsMatchKey": "EDISON",
+        "pdfDistrict": "EDISON TWP",
+        "pdfMatchKey": "EDISON TWP"
+      }
+    },
+    "Cherry Hill": {
+      "medianHomeValue": [],
+      "effectiveTaxRate": [
+        {
+          "year": 2021,
+          "value": 3.291,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2022,
+          "value": 3.144,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2023,
+          "value": 2.925,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2024,
+          "value": 2.663,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2025,
+          "value": 2.598,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        }
+      ],
+      "debug": {
+        "acsMatchKey": "CHERRY HILL",
+        "pdfDistrict": "CHERRY HILL TWNSHP",
+        "pdfMatchKey": "CHERRY HILL TWNSHP"
+      }
+    },
+    "Newark": {
+      "medianHomeValue": [
+        {
+          "year": 2020,
+          "value": 254900,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2021,
+          "value": 271700,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2022,
+          "value": 312300,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2023,
+          "value": 337800,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2024,
+          "value": 373700,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        }
+      ],
+      "effectiveTaxRate": [
+        {
+          "year": 2021,
+          "value": 3.095,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2022,
+          "value": 3.07,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2023,
+          "value": 2.93,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2024,
+          "value": 2.06,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2025,
+          "value": 1.845,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        }
+      ],
+      "debug": {
+        "acsMatchKey": "NEWARK",
+        "pdfDistrict": "NEWARK CITY",
+        "pdfMatchKey": "NEWARK CITY"
+      }
+    },
+    "Jersey City": {
+      "medianHomeValue": [
+        {
+          "year": 2020,
+          "value": 406200,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2021,
+          "value": 437200,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2022,
+          "value": 500100,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2023,
+          "value": 534500,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2024,
+          "value": 566900,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        }
+      ],
+      "effectiveTaxRate": [
+        {
+          "year": 2021,
+          "value": 1.363,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2022,
+          "value": 1.83,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2023,
+          "value": 1.85,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2024,
+          "value": 1.919,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2025,
+          "value": 1.847,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        }
+      ],
+      "debug": {
+        "acsMatchKey": "JERSEY",
+        "pdfDistrict": "JERSEY CITY",
+        "pdfMatchKey": "JERSEY CITY"
+      }
+    },
+    "Paterson": {
+      "medianHomeValue": [
+        {
+          "year": 2020,
+          "value": 257700,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2021,
+          "value": 269200,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2022,
+          "value": 314100,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2023,
+          "value": 335400,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2024,
+          "value": 360100,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        }
+      ],
+      "effectiveTaxRate": [
+        {
+          "year": 2021,
+          "value": 3.354,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2022,
+          "value": 3.106,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2023,
+          "value": 2.888,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2024,
+          "value": 2.591,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2025,
+          "value": 2.421,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        }
+      ],
+      "debug": {
+        "acsMatchKey": "PATERSON",
+        "pdfDistrict": "PATERSON CITY",
+        "pdfMatchKey": "PATERSON CITY"
+      }
+    },
+    "Elizabeth": {
+      "medianHomeValue": [
+        {
+          "year": 2020,
+          "value": 291300,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2021,
+          "value": 314500,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2022,
+          "value": 358400,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2023,
+          "value": 393500,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2024,
+          "value": 449300,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        }
+      ],
+      "effectiveTaxRate": [
+        {
+          "year": 2021,
+          "value": 2.961,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2022,
+          "value": 2.704,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2023,
+          "value": 2.399,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2024,
+          "value": 2.072,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2025,
+          "value": 2.113,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        }
+      ],
+      "debug": {
+        "acsMatchKey": "ELIZABETH",
+        "pdfDistrict": "ELIZABETH CITY",
+        "pdfMatchKey": "ELIZABETH CITY"
+      }
+    },
+    "Woodbridge": {
+      "medianHomeValue": [],
+      "effectiveTaxRate": [
+        {
+          "year": 2021,
+          "value": 2.774,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2022,
+          "value": 2.727,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2023,
+          "value": 2.534,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2024,
+          "value": 2.471,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2025,
+          "value": 2.234,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        }
+      ],
+      "debug": {
+        "acsMatchKey": "WOODBRIDGE",
+        "pdfDistrict": "WOODBRIDGE TWP",
+        "pdfMatchKey": "WOODBRIDGE TWP"
+      }
+    },
+    "Toms River": {
+      "medianHomeValue": [],
+      "effectiveTaxRate": [
+        {
+          "year": 2021,
+          "value": 1.899,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2022,
+          "value": 1.714,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2023,
+          "value": 1.575,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2024,
+          "value": 1.503,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2025,
+          "value": 1.523,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        }
+      ],
+      "debug": {
+        "acsMatchKey": "TOMS RIVER",
+        "pdfDistrict": "TOMS RIVER TWP",
+        "pdfMatchKey": "TOMS RIVER TWP"
+      }
+    },
+    "Hamilton": {
+      "medianHomeValue": [],
+      "effectiveTaxRate": [
+        {
+          "year": 2021,
+          "value": 3.048,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2022,
+          "value": 2.952,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2023,
+          "value": 2.726,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2024,
+          "value": 2.647,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2025,
+          "value": 2.434,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        }
+      ],
+      "debug": {
+        "acsMatchKey": "HAMILTON",
+        "pdfDistrict": "HAMILTON TWP",
+        "pdfMatchKey": "HAMILTON TWP"
+      }
+    },
+    "Trenton": {
+      "medianHomeValue": [
+        {
+          "year": 2020,
+          "value": 97000,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2021,
+          "value": 96700,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2022,
+          "value": 111200,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2023,
+          "value": 122500,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2024,
+          "value": 160700,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        }
+      ],
+      "effectiveTaxRate": [
+        {
+          "year": 2021,
+          "value": 5.143,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2022,
+          "value": 4.613,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2023,
+          "value": 4.08,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2024,
+          "value": 3.728,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2025,
+          "value": 3.468,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        }
+      ],
+      "debug": {
+        "acsMatchKey": "TRENTON",
+        "pdfDistrict": "TRENTON CITY",
+        "pdfMatchKey": "TRENTON CITY"
+      }
+    },
+    "Camden": {
+      "medianHomeValue": [
+        {
+          "year": 2020,
+          "value": 82500,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2021,
+          "value": 85800,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2022,
+          "value": 95700,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2023,
+          "value": 100400,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2024,
+          "value": 112000,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        }
+      ],
+      "effectiveTaxRate": [
+        {
+          "year": 2021,
+          "value": 2.968,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2022,
+          "value": 2.849,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2023,
+          "value": 2.694,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2024,
+          "value": 2.566,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2025,
+          "value": 2.329,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        }
+      ],
+      "debug": {
+        "acsMatchKey": "CAMDEN",
+        "pdfDistrict": "CAMDEN CITY",
+        "pdfMatchKey": "CAMDEN CITY"
+      }
+    },
+    "Lakewood Township": {
+      "medianHomeValue": [],
+      "effectiveTaxRate": [
+        {
+          "year": 2021,
+          "value": 1.879,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2022,
+          "value": 1.791,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2023,
+          "value": 1.6,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2024,
+          "value": 1.434,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2025,
+          "value": 1.378,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        }
+      ],
+      "debug": {
+        "acsMatchKey": "LAKEWOOD",
+        "pdfDistrict": "LAKEWOOD TWP",
+        "pdfMatchKey": "LAKEWOOD TWP"
+      }
+    },
+    "Middletown Township": {
+      "medianHomeValue": [],
+      "effectiveTaxRate": [
+        {
+          "year": 2021,
+          "value": 2.096,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2022,
+          "value": 2.025,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2023,
+          "value": 1.883,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2024,
+          "value": 1.774,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2025,
+          "value": 1.735,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        }
+      ],
+      "debug": {
+        "acsMatchKey": "MIDDLETOWN",
+        "pdfDistrict": "MIDDLETOWN TWP",
+        "pdfMatchKey": "MIDDLETOWN TWP"
+      }
+    },
+    "Old Bridge Township": {
+      "medianHomeValue": [],
+      "effectiveTaxRate": [
+        {
+          "year": 2021,
+          "value": 2.092,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2022,
+          "value": 2.04,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2023,
+          "value": 1.87,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2024,
+          "value": 1.849,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2025,
+          "value": 1.836,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        }
+      ],
+      "debug": {
+        "acsMatchKey": "OLD BRIDGE",
+        "pdfDistrict": "OLD BRIDGE TWP",
+        "pdfMatchKey": "OLD BRIDGE TWP"
+      }
+    },
+    "East Brunswick": {
+      "medianHomeValue": [],
+      "effectiveTaxRate": [
+        {
+          "year": 2021,
+          "value": 2.759,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2022,
+          "value": 2.659,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2023,
+          "value": 2.545,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2024,
+          "value": 2.4,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2025,
+          "value": 2.287,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        }
+      ],
+      "debug": {
+        "acsMatchKey": "EAST BRUNSWICK",
+        "pdfDistrict": "EAST BRUNSWICK TWP",
+        "pdfMatchKey": "EAST BRUNSWICK TWP"
+      }
+    },
+    "Franklin Township": {
+      "medianHomeValue": [
+        {
+          "year": 2020,
+          "value": 188000,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2021,
+          "value": 190100,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2022,
+          "value": 221900,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2023,
+          "value": 253100,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2024,
+          "value": 272600,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        }
+      ],
+      "effectiveTaxRate": [
+        {
+          "year": 2021,
+          "value": 3.057,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2022,
+          "value": 2.891,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2023,
+          "value": 2.654,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2024,
+          "value": 2.532,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2025,
+          "value": 2.337,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        }
+      ],
+      "debug": {
+        "acsMatchKey": "FRANKLIN",
+        "pdfDistrict": "FRANKLIN TWP",
+        "pdfMatchKey": "FRANKLIN TWP"
+      }
+    },
+    "Bridgewater Township": {
+      "medianHomeValue": [],
+      "effectiveTaxRate": [
+        {
+          "year": 2021,
+          "value": 2.029,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2022,
+          "value": 1.972,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2023,
+          "value": 1.879,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2024,
+          "value": 1.916,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2025,
+          "value": 1.829,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        }
+      ],
+      "debug": {
+        "acsMatchKey": "BRIDGEWATER",
+        "pdfDistrict": "BRIDGEWATER TWP",
+        "pdfMatchKey": "BRIDGEWATER TWP"
+      }
+    },
+    "Wayne Township": {
+      "medianHomeValue": [],
+      "effectiveTaxRate": [
+        {
+          "year": 2021,
+          "value": 2.705,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2022,
+          "value": 2.714,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2023,
+          "value": 2.559,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2024,
+          "value": 2.248,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2025,
+          "value": 2.253,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        }
+      ],
+      "debug": {
+        "acsMatchKey": "WAYNE",
+        "pdfDistrict": "WAYNE TWP",
+        "pdfMatchKey": "WAYNE TWP"
+      }
+    },
+    "East Orange": {
+      "medianHomeValue": [
+        {
+          "year": 2020,
+          "value": 226000,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2021,
+          "value": 244100,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2022,
+          "value": 282900,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2023,
+          "value": 315500,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2024,
+          "value": 365900,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        }
+      ],
+      "effectiveTaxRate": [
+        {
+          "year": 2021,
+          "value": 3.834,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2022,
+          "value": 3.449,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2023,
+          "value": 3.032,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2024,
+          "value": 2.888,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2025,
+          "value": 2.886,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        }
+      ],
+      "debug": {
+        "acsMatchKey": "EAST ORANGE",
+        "pdfDistrict": "EAST ORANGE CITY",
+        "pdfMatchKey": "EAST ORANGE CITY"
+      }
+    },
+    "Bayonne": {
+      "medianHomeValue": [
+        {
+          "year": 2020,
+          "value": 346000,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2021,
+          "value": 359800,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2022,
+          "value": 413100,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2023,
+          "value": 446100,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2024,
+          "value": 460100,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        }
+      ],
+      "effectiveTaxRate": [
+        {
+          "year": 2021,
+          "value": 2.465,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2022,
+          "value": 2.369,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2023,
+          "value": 2.202,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2024,
+          "value": 2.116,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        }
+      ],
+      "debug": {
+        "acsMatchKey": "BAYONNE",
+        "pdfDistrict": "BAYONNE CITY",
+        "pdfMatchKey": "BAYONNE CITY"
+      }
+    },
+    "Piscataway": {
+      "medianHomeValue": [],
+      "effectiveTaxRate": [
+        {
+          "year": 2021,
+          "value": 2.175,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2022,
+          "value": 2.021,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2023,
+          "value": 1.906,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2024,
+          "value": 1.801,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        },
+        {
+          "year": 2025,
+          "value": 1.708,
+          "unit": "PERCENT",
+          "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+        }
+      ],
+      "debug": {
+        "acsMatchKey": "PISCATAWAY",
+        "pdfDistrict": "PISCATAWAY TWP",
+        "pdfMatchKey": "PISCATAWAY TWP"
+      }
+    }
+  }
+}

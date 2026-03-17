@@ -3,12 +3,7 @@
     "name": "New Jersey",
     "slug": "new-jersey",
     "abbreviation": "NJ",
-    "asOfYear": 2024,
-    "primarySources": {
-      "averageResidentialTaxBill": "nj_modiv_avg_restax",
-      "effectiveTaxRate": "nj_gtr",
-      "medianHomeValue": "us_census_acs_dp04"
-    }
+    "asOfYear": 2024
   },
   "sources": {
     "nj_modiv_avg_restax": {
@@ -39,15 +34,17 @@
       "notes": "DP04_0089E = Owner-occupied units: Median value (dollars)."
     },
     "us_census_acs_profile_dp04": {
-      "name": "U.S. Census Bureau",
-      "reference": "ACS 5-year Profile (DP04_0089E median home value)",
-      "url": "https://api.census.gov/data.html",
-      "notes": "DP04_0089E = Owner-occupied units: Median value (dollars)"
+      "publisher": "U.S. Census Bureau",
+      "title": "ACS 5-year Profile (DP04_0089E median home value)",
+      "type": "api",
+      "homepageUrl": "https://api.census.gov/data.html",
+      "notes": "DP04_0089E = Owner-occupied units: Median value (dollars)."
     },
     "nj_div_taxation_general_effective_tax_rates": {
-      "name": "NJ Division of Taxation",
-      "reference": "General & Effective Tax Rates by County and Municipality",
-      "url": "https://www.nj.gov/treasury/taxation/lpt/lpttaxrates.shtml",
+      "publisher": "NJ Division of Taxation",
+      "title": "General & Effective Tax Rates by County and Municipality",
+      "type": "pdf",
+      "homepageUrl": "https://www.nj.gov/treasury/taxation/lpt/lpttaxrates.shtml",
       "notes": "Effective Tax Rate is published by municipality; year-specific PDFs (e.g., 2024taxrates.pdf)."
     }
   },
@@ -65,7 +62,12 @@
     {
       "name": "Atlantic",
       "slug": "atlantic",
-      "neighborCounties": ["Ocean", "Burlington", "Camden", "Cape May"],
+      "neighborCounties": [
+        "Ocean",
+        "Burlington",
+        "Camden",
+        "Cape May"
+      ],
       "towns": [
         {
           "name": "Atlantic City",
@@ -76,9 +78,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 6799,
             "effectiveTaxRatePct": 1.85,
-            "countyAvgTaxBill": 6799,
-            "countyEffectiveRatePct": 1.85,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -151,9 +150,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 6799,
             "effectiveTaxRatePct": 1.85,
-            "countyAvgTaxBill": 6799,
-            "countyEffectiveRatePct": 1.85,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -226,9 +222,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 6799,
             "effectiveTaxRatePct": 1.85,
-            "countyAvgTaxBill": 6799,
-            "countyEffectiveRatePct": 1.85,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -301,9 +294,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 6799,
             "effectiveTaxRatePct": 1.85,
-            "countyAvgTaxBill": 6799,
-            "countyEffectiveRatePct": 1.85,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -376,9 +366,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 6799,
             "effectiveTaxRatePct": 1.85,
-            "countyAvgTaxBill": 6799,
-            "countyEffectiveRatePct": 1.85,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -490,10 +477,34 @@
         ],
         "effectiveTaxRate": [
           {
-            "year": 2024,
-            "value": 1.85,
+            "year": 2021,
+            "value": 3.0454,
             "unit": "PERCENT",
-            "sourceRef": "nj_gtr"
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2022,
+            "value": 2.8764,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2023,
+            "value": 2.6012,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2024,
+            "value": 2.355,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2025,
+            "value": 2.1470000000000002,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
           }
         ]
       }
@@ -501,12 +512,17 @@
     {
       "name": "Bergen",
       "slug": "bergen",
-      "neighborCounties": ["Passaic", "Hudson", "Essex", "Morris"],
+      "neighborCounties": [
+        "Passaic",
+        "Hudson",
+        "Essex",
+        "Morris"
+      ],
       "towns": [
         {
           "name": "Ridgewood",
           "slug": "ridgewood",
-          "asOfYear": 2024,
+          "asOfYear": 2025,
           "metrics": {
             "averageResidentialTaxBill": [
               {
@@ -600,14 +616,7 @@
             ],
             "snapshot": [
               "Based on recent data, Ridgewood has an effective property tax rate that reflects both local and county funding needs. When paired with typical home values in the area, this results in property tax bills that are generally higher than the surrounding region. Historical data shows that tax levels in Ridgewood have remained relatively stable over the past several years."
-            ],
-            "compare": [
-              "Property taxes in Ridgewood are often compared with nearby towns in Bergen County. Differences in tax burden are driven by local budgets, housing stock, and assessment practices. Exploring nearby municipalities can help homeowners and buyers better understand how local taxes fit within the broader regional picture."
             ]
-          },
-          "overrides": {
-            "seoTitle": "TODO: Add SEO-optimized title for Ridgewood",
-            "seoDescription": "TODO: Add SEO-optimized description for Ridgewood"
           },
           "rollout": {
             "tier": 1,
@@ -620,9 +629,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 20375,
             "effectiveTaxRatePct": 1.944,
-            "countyAvgTaxBill": 13600,
-            "countyEffectiveRatePct": 2.31,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -702,9 +708,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 13600,
             "effectiveTaxRatePct": 2.31,
-            "countyAvgTaxBill": 13600,
-            "countyEffectiveRatePct": 2.31,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -777,9 +780,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 13600,
             "effectiveTaxRatePct": 2.31,
-            "countyAvgTaxBill": 13600,
-            "countyEffectiveRatePct": 2.31,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -852,9 +852,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 13600,
             "effectiveTaxRatePct": 2.31,
-            "countyAvgTaxBill": 13600,
-            "countyEffectiveRatePct": 2.31,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -923,7 +920,7 @@
         {
           "name": "Paramus",
           "slug": "paramus",
-          "asOfYear": 2024,
+          "asOfYear": 2025,
           "metrics": {
             "averageResidentialTaxBill": [
               {
@@ -1017,14 +1014,7 @@
             ],
             "snapshot": [
               "Based on recent data, Paramus has an effective property tax rate that reflects both local and county funding needs. When paired with typical home values in the area, this results in property tax bills that are generally lower than the surrounding region. Historical data shows that tax levels in Paramus have remained relatively stable over the past several years."
-            ],
-            "compare": [
-              "Property taxes in Paramus are often compared with nearby towns in Bergen County. Differences in tax burden are driven by local budgets, housing stock, and assessment practices. Exploring nearby municipalities can help homeowners and buyers better understand how local taxes fit within the broader regional picture."
             ]
-          },
-          "overrides": {
-            "seoTitle": "TODO: Add SEO-optimized title for Paramus",
-            "seoDescription": "TODO: Add SEO-optimized description for Paramus"
           },
           "rollout": {
             "tier": 1,
@@ -1037,9 +1027,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 12095,
             "effectiveTaxRatePct": 1.434,
-            "countyAvgTaxBill": 13600,
-            "countyEffectiveRatePct": 2.31,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -1158,10 +1145,34 @@
         ],
         "effectiveTaxRate": [
           {
-            "year": 2024,
-            "value": 2.31,
+            "year": 2021,
+            "value": 2.3922,
             "unit": "PERCENT",
-            "sourceRef": "nj_gtr"
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2022,
+            "value": 2.3014,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2023,
+            "value": 2.2004,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2024,
+            "value": 2.0648,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2025,
+            "value": 1.9926,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
           }
         ]
       }
@@ -1169,7 +1180,13 @@
     {
       "name": "Burlington",
       "slug": "burlington",
-      "neighborCounties": ["Mercer", "Monmouth", "Ocean", "Atlantic", "Camden"],
+      "neighborCounties": [
+        "Mercer",
+        "Monmouth",
+        "Ocean",
+        "Atlantic",
+        "Camden"
+      ],
       "towns": [
         {
           "name": "Mount Laurel",
@@ -1178,9 +1195,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7786,
             "effectiveTaxRatePct": 1.95,
-            "countyAvgTaxBill": 7786,
-            "countyEffectiveRatePct": 1.95,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -1253,9 +1267,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7786,
             "effectiveTaxRatePct": 1.95,
-            "countyAvgTaxBill": 7786,
-            "countyEffectiveRatePct": 1.95,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -1328,9 +1339,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7786,
             "effectiveTaxRatePct": 1.95,
-            "countyAvgTaxBill": 7786,
-            "countyEffectiveRatePct": 1.95,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -1403,9 +1411,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7786,
             "effectiveTaxRatePct": 1.95,
-            "countyAvgTaxBill": 7786,
-            "countyEffectiveRatePct": 1.95,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -1478,9 +1483,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7786,
             "effectiveTaxRatePct": 1.95,
-            "countyAvgTaxBill": 7786,
-            "countyEffectiveRatePct": 1.95,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -1592,10 +1594,34 @@
         ],
         "effectiveTaxRate": [
           {
-            "year": 2024,
-            "value": 1.95,
+            "year": 2021,
+            "value": 2.54375,
             "unit": "PERCENT",
-            "sourceRef": "nj_gtr"
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2022,
+            "value": 2.4539999999999997,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2023,
+            "value": 2.29575,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2024,
+            "value": 2.18675,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2025,
+            "value": 2.1145,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
           }
         ]
       }
@@ -1603,12 +1629,16 @@
     {
       "name": "Camden",
       "slug": "camden",
-      "neighborCounties": ["Burlington", "Gloucester", "Atlantic"],
+      "neighborCounties": [
+        "Burlington",
+        "Gloucester",
+        "Atlantic"
+      ],
       "towns": [
         {
           "name": "Camden",
           "slug": "camden",
-          "asOfYear": 2024,
+          "asOfYear": 2025,
           "avgRate": 0.0038,
           "rollout": {
             "tier": 2,
@@ -1700,9 +1730,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 2072,
             "effectiveTaxRatePct": 2.329,
-            "countyAvgTaxBill": 7468,
-            "countyEffectiveRatePct": 2.25,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -1778,7 +1805,7 @@
         {
           "name": "Cherry Hill",
           "slug": "cherry-hill",
-          "asOfYear": 2024,
+          "asOfYear": 2025,
           "metrics": {
             "averageResidentialTaxBill": [
               {
@@ -1841,14 +1868,7 @@
             ],
             "snapshot": [
               "Based on recent data, Cherry Hill has an effective property tax rate that reflects both local and county funding needs. When paired with typical home values in the area, this results in property tax bills that are generally higher than the surrounding region. Historical data shows that tax levels in Cherry Hill have remained relatively stable over the past several years."
-            ],
-            "compare": [
-              "Property taxes in Cherry Hill are often compared with nearby towns in Camden County. Differences in tax burden are driven by local budgets, housing stock, and assessment practices. Exploring nearby municipalities can help homeowners and buyers better understand how local taxes fit within the broader regional picture."
             ]
-          },
-          "overrides": {
-            "seoTitle": "TODO: Add SEO-optimized title for Cherry Hill",
-            "seoDescription": "TODO: Add SEO-optimized description for Cherry Hill"
           },
           "rollout": {
             "tier": 1,
@@ -1861,9 +1881,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 9379,
             "effectiveTaxRatePct": 2.598,
-            "countyAvgTaxBill": 7468,
-            "countyEffectiveRatePct": 2.25,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -1936,9 +1953,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7468,
             "effectiveTaxRatePct": 2.25,
-            "countyAvgTaxBill": 7468,
-            "countyEffectiveRatePct": 2.25,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -2011,9 +2025,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7468,
             "effectiveTaxRatePct": 2.25,
-            "countyAvgTaxBill": 7468,
-            "countyEffectiveRatePct": 2.25,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -2086,9 +2097,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7468,
             "effectiveTaxRatePct": 2.25,
-            "countyAvgTaxBill": 7468,
-            "countyEffectiveRatePct": 2.25,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -2200,10 +2208,34 @@
         ],
         "effectiveTaxRate": [
           {
-            "year": 2024,
-            "value": 2.25,
+            "year": 2021,
+            "value": 3.3848,
             "unit": "PERCENT",
-            "sourceRef": "nj_gtr"
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2022,
+            "value": 3.2434000000000003,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2023,
+            "value": 2.9828,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2024,
+            "value": 2.8108,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2025,
+            "value": 2.5582000000000003,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
           }
         ]
       }
@@ -2211,7 +2243,10 @@
     {
       "name": "Cape May",
       "slug": "cape-may",
-      "neighborCounties": ["Atlantic", "Cumberland"],
+      "neighborCounties": [
+        "Atlantic",
+        "Cumberland"
+      ],
       "towns": [
         {
           "name": "Wildwood",
@@ -2220,9 +2255,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 6273,
             "effectiveTaxRatePct": 1.55,
-            "countyAvgTaxBill": 6273,
-            "countyEffectiveRatePct": 1.55,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -2295,9 +2327,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 6273,
             "effectiveTaxRatePct": 1.55,
-            "countyAvgTaxBill": 6273,
-            "countyEffectiveRatePct": 1.55,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -2370,9 +2399,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 6273,
             "effectiveTaxRatePct": 1.55,
-            "countyAvgTaxBill": 6273,
-            "countyEffectiveRatePct": 1.55,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -2445,9 +2471,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 6273,
             "effectiveTaxRatePct": 1.55,
-            "countyAvgTaxBill": 6273,
-            "countyEffectiveRatePct": 1.55,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -2521,9 +2544,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 6273,
             "effectiveTaxRatePct": 1.55,
-            "countyAvgTaxBill": 6273,
-            "countyEffectiveRatePct": 1.55,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -2635,10 +2655,34 @@
         ],
         "effectiveTaxRate": [
           {
-            "year": 2024,
-            "value": 1.55,
+            "year": 2021,
+            "value": 1.2681999999999998,
             "unit": "PERCENT",
-            "sourceRef": "nj_gtr"
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2022,
+            "value": 1.1949999999999998,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2023,
+            "value": 1.0492000000000001,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2024,
+            "value": 0.9708000000000002,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2025,
+            "value": 1.046,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
           }
         ]
       }
@@ -2646,7 +2690,12 @@
     {
       "name": "Cumberland",
       "slug": "cumberland",
-      "neighborCounties": ["Salem", "Gloucester", "Atlantic", "Cape May"],
+      "neighborCounties": [
+        "Salem",
+        "Gloucester",
+        "Atlantic",
+        "Cape May"
+      ],
       "towns": [
         {
           "name": "Vineland",
@@ -2655,9 +2704,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 4832,
             "effectiveTaxRatePct": 2.05,
-            "countyAvgTaxBill": 4832,
-            "countyEffectiveRatePct": 2.05,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -2730,9 +2776,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 4832,
             "effectiveTaxRatePct": 2.05,
-            "countyAvgTaxBill": 4832,
-            "countyEffectiveRatePct": 2.05,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -2805,9 +2848,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 4832,
             "effectiveTaxRatePct": 2.05,
-            "countyAvgTaxBill": 4832,
-            "countyEffectiveRatePct": 2.05,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -2880,9 +2920,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 4832,
             "effectiveTaxRatePct": 2.05,
-            "countyAvgTaxBill": 4832,
-            "countyEffectiveRatePct": 2.05,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -2955,9 +2992,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 4832,
             "effectiveTaxRatePct": 2.05,
-            "countyAvgTaxBill": 4832,
-            "countyEffectiveRatePct": 2.05,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -3069,10 +3103,28 @@
         ],
         "effectiveTaxRate": [
           {
-            "year": 2024,
-            "value": 2.05,
+            "year": 2021,
+            "value": 3.368,
             "unit": "PERCENT",
-            "sourceRef": "nj_gtr"
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2022,
+            "value": 3.1595,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2023,
+            "value": 2.8875,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2025,
+            "value": 2.337,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
           }
         ]
       }
@@ -3093,7 +3145,7 @@
         {
           "name": "East Orange",
           "slug": "east-orange",
-          "asOfYear": 2024,
+          "asOfYear": 2025,
           "metrics": {
             "averageResidentialTaxBill": [
               {
@@ -3187,14 +3239,7 @@
             ],
             "snapshot": [
               "Based on recent data, East Orange’s effective property tax rate reflects local funding needs alongside broader county-level obligations. When paired with typical home values in the area, annual tax bills may differ meaningfully from neighboring municipalities in Essex County."
-            ],
-            "compare": [
-              "Property taxes in East Orange are often compared with nearby communities such as Newark, Irvington, and other Essex County municipalities. Differences in tax burden are driven by local budgets, housing stock, and assessment practices. Exploring nearby towns can provide additional context when evaluating property costs."
             ]
-          },
-          "overrides": {
-            "seoTitle": "Property Taxes in East Orange, NJ (Latest Rates & Trends)",
-            "seoDescription": "View the latest property tax rates, average tax bills, and home value trends in East Orange, New Jersey. Compare with Essex County and estimate your annual tax costs."
           },
           "rollout": {
             "tier": 2,
@@ -3206,9 +3251,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 10299,
             "effectiveTaxRatePct": 2.886,
-            "countyAvgTaxBill": 13615,
-            "countyEffectiveRatePct": 2.54,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -3284,7 +3326,7 @@
         {
           "name": "Montclair",
           "slug": "montclair",
-          "asOfYear": 2024,
+          "asOfYear": 2025,
           "metrics": {
             "averageResidentialTaxBill": [
               {
@@ -3347,14 +3389,7 @@
             ],
             "snapshot": [
               "Based on recent data, Montclair has an effective property tax rate that reflects both local and county funding needs. When paired with typical home values in the area, this results in property tax bills that are generally comparable to the surrounding region. Historical data shows that tax levels in Montclair have remained relatively stable over the past several years."
-            ],
-            "compare": [
-              "Property taxes in Montclair are often compared with nearby towns in Essex County. Differences in tax burden are driven by local budgets, housing stock, and assessment practices. Exploring nearby municipalities can help homeowners and buyers better understand how local taxes fit within the broader regional picture."
             ]
-          },
-          "overrides": {
-            "seoTitle": "TODO: Add SEO-optimized title for Montclair",
-            "seoDescription": "TODO: Add SEO-optimized description for Montclair"
           },
           "rollout": {
             "tier": 1,
@@ -3367,9 +3402,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 21635,
             "effectiveTaxRatePct": 2.16,
-            "countyAvgTaxBill": 13615,
-            "countyEffectiveRatePct": 2.54,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -3442,9 +3474,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 13615,
             "effectiveTaxRatePct": 2.54,
-            "countyAvgTaxBill": 13615,
-            "countyEffectiveRatePct": 2.54,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -3513,7 +3542,7 @@
         {
           "name": "Newark",
           "slug": "newark",
-          "asOfYear": 2024,
+          "asOfYear": 2025,
           "avgRate": 0.004,
           "rollout": {
             "tier": 2,
@@ -3611,9 +3640,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7238,
             "effectiveTaxRatePct": 1.845,
-            "countyAvgTaxBill": 13615,
-            "countyEffectiveRatePct": 2.54,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -3693,9 +3719,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 13615,
             "effectiveTaxRatePct": 2.54,
-            "countyAvgTaxBill": 13615,
-            "countyEffectiveRatePct": 2.54,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -3768,9 +3791,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 13615,
             "effectiveTaxRatePct": 2.54,
-            "countyAvgTaxBill": 13615,
-            "countyEffectiveRatePct": 2.54,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -3883,10 +3903,34 @@
         ],
         "effectiveTaxRate": [
           {
-            "year": 2024,
-            "value": 2.54,
+            "year": 2021,
+            "value": 3.1406666666666667,
             "unit": "PERCENT",
-            "sourceRef": "nj_gtr"
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2022,
+            "value": 3.043333333333333,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2023,
+            "value": 2.8166666666666664,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2024,
+            "value": 2.5368333333333335,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2025,
+            "value": 2.374,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
           }
         ]
       }
@@ -3894,7 +3938,12 @@
     {
       "name": "Gloucester",
       "slug": "gloucester",
-      "neighborCounties": ["Camden", "Burlington", "Salem", "Cumberland"],
+      "neighborCounties": [
+        "Camden",
+        "Burlington",
+        "Salem",
+        "Cumberland"
+      ],
       "towns": [
         {
           "name": "Washington Township",
@@ -3903,9 +3952,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7662,
             "effectiveTaxRatePct": 1.95,
-            "countyAvgTaxBill": 7662,
-            "countyEffectiveRatePct": 1.95,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -3978,9 +4024,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7662,
             "effectiveTaxRatePct": 1.95,
-            "countyAvgTaxBill": 7662,
-            "countyEffectiveRatePct": 1.95,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -4053,9 +4096,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7662,
             "effectiveTaxRatePct": 1.95,
-            "countyAvgTaxBill": 7662,
-            "countyEffectiveRatePct": 1.95,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -4128,9 +4168,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7662,
             "effectiveTaxRatePct": 1.95,
-            "countyAvgTaxBill": 7662,
-            "countyEffectiveRatePct": 1.95,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -4203,9 +4240,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7662,
             "effectiveTaxRatePct": 1.95,
-            "countyAvgTaxBill": 7662,
-            "countyEffectiveRatePct": 1.95,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -4317,10 +4351,34 @@
         ],
         "effectiveTaxRate": [
           {
-            "year": 2024,
-            "value": 1.95,
+            "year": 2021,
+            "value": 2.9898000000000002,
             "unit": "PERCENT",
-            "sourceRef": "nj_gtr"
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2022,
+            "value": 2.8526000000000002,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2023,
+            "value": 2.575,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2024,
+            "value": 2.3771999999999998,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2025,
+            "value": 2.2369999999999997,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
           }
         ]
       }
@@ -4328,12 +4386,16 @@
     {
       "name": "Hudson",
       "slug": "hudson",
-      "neighborCounties": ["Bergen", "Essex", "Union"],
+      "neighborCounties": [
+        "Bergen",
+        "Essex",
+        "Union"
+      ],
       "towns": [
         {
           "name": "Hoboken",
           "slug": "hoboken",
-          "asOfYear": 2024,
+          "asOfYear": 2025,
           "metrics": {
             "averageResidentialTaxBill": [
               {
@@ -4427,14 +4489,7 @@
             ],
             "snapshot": [
               "Based on recent data, Hoboken has an effective property tax rate that reflects both local and county funding needs. When paired with typical home values in the area, this results in property tax bills that are generally lower than the surrounding region. Historical data shows that tax levels in Hoboken have remained relatively stable over the past several years."
-            ],
-            "compare": [
-              "Property taxes in Hoboken are often compared with nearby towns in Hudson County. Differences in tax burden are driven by local budgets, housing stock, and assessment practices. Exploring nearby municipalities can help homeowners and buyers better understand how local taxes fit within the broader regional picture."
             ]
-          },
-          "overrides": {
-            "seoTitle": "TODO: Add SEO-optimized title for Hoboken",
-            "seoDescription": "TODO: Add SEO-optimized description for Hoboken"
           },
           "rollout": {
             "tier": 1,
@@ -4447,9 +4502,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 9317,
             "effectiveTaxRatePct": 1.07,
-            "countyAvgTaxBill": 10065,
-            "countyEffectiveRatePct": 2.05,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -4525,7 +4577,7 @@
         {
           "name": "Jersey City",
           "slug": "jersey-city",
-          "asOfYear": 2024,
+          "asOfYear": 2025,
           "avgRate": 0.0033,
           "rollout": {
             "tier": 2,
@@ -4623,9 +4675,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 10624,
             "effectiveTaxRatePct": 1.847,
-            "countyAvgTaxBill": 10065,
-            "countyEffectiveRatePct": 2.05,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -4705,9 +4754,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 10065,
             "effectiveTaxRatePct": 2.05,
-            "countyAvgTaxBill": 10065,
-            "countyEffectiveRatePct": 2.05,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -4781,9 +4827,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 11247,
             "effectiveTaxRatePct": 2.116,
-            "countyAvgTaxBill": 10065,
-            "countyEffectiveRatePct": 2.05,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -4938,9 +4981,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 10065,
             "effectiveTaxRatePct": 2.05,
-            "countyAvgTaxBill": 10065,
-            "countyEffectiveRatePct": 2.05,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -5052,10 +5092,34 @@
         ],
         "effectiveTaxRate": [
           {
-            "year": 2024,
-            "value": 2.05,
+            "year": 2021,
+            "value": 1.9085999999999999,
             "unit": "PERCENT",
-            "sourceRef": "nj_gtr"
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2022,
+            "value": 1.9484000000000001,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2023,
+            "value": 1.8506,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2024,
+            "value": 1.8663999999999998,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2025,
+            "value": 1.7599999999999998,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
           }
         ]
       }
@@ -5063,7 +5127,12 @@
     {
       "name": "Hunterdon",
       "slug": "hunterdon",
-      "neighborCounties": ["Warren", "Morris", "Somerset", "Mercer"],
+      "neighborCounties": [
+        "Warren",
+        "Morris",
+        "Somerset",
+        "Mercer"
+      ],
       "towns": [
         {
           "name": "Raritan Township",
@@ -5072,9 +5141,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 11198,
             "effectiveTaxRatePct": 1.85,
-            "countyAvgTaxBill": 11198,
-            "countyEffectiveRatePct": 1.85,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -5147,9 +5213,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 11198,
             "effectiveTaxRatePct": 1.85,
-            "countyAvgTaxBill": 11198,
-            "countyEffectiveRatePct": 1.85,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -5222,9 +5285,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 11198,
             "effectiveTaxRatePct": 1.85,
-            "countyAvgTaxBill": 11198,
-            "countyEffectiveRatePct": 1.85,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -5297,9 +5357,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 11198,
             "effectiveTaxRatePct": 1.85,
-            "countyAvgTaxBill": 11198,
-            "countyEffectiveRatePct": 1.85,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -5372,9 +5429,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 11198,
             "effectiveTaxRatePct": 1.85,
-            "countyAvgTaxBill": 11198,
-            "countyEffectiveRatePct": 1.85,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -5486,10 +5540,34 @@
         ],
         "effectiveTaxRate": [
           {
-            "year": 2024,
-            "value": 1.85,
+            "year": 2021,
+            "value": 2.6710000000000003,
             "unit": "PERCENT",
-            "sourceRef": "nj_gtr"
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2022,
+            "value": 2.6128,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2023,
+            "value": 2.4912,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2024,
+            "value": 2.428,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2025,
+            "value": 2.3666,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
           }
         ]
       }
@@ -5497,12 +5575,18 @@
     {
       "name": "Mercer",
       "slug": "mercer",
-      "neighborCounties": ["Hunterdon", "Somerset", "Middlesex", "Monmouth", "Burlington"],
+      "neighborCounties": [
+        "Hunterdon",
+        "Somerset",
+        "Middlesex",
+        "Monmouth",
+        "Burlington"
+      ],
       "towns": [
         {
           "name": "Trenton",
           "slug": "trenton",
-          "asOfYear": 2024,
+          "asOfYear": 2025,
           "avgRate": 0.0036,
           "rollout": {
             "tier": 2,
@@ -5600,9 +5684,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 3690,
             "effectiveTaxRatePct": 3.468,
-            "countyAvgTaxBill": 9543,
-            "countyEffectiveRatePct": 2.15,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -5678,7 +5759,7 @@
         {
           "name": "Princeton",
           "slug": "princeton",
-          "asOfYear": 2024,
+          "asOfYear": 2025,
           "metrics": {
             "averageResidentialTaxBill": [
               {
@@ -5772,14 +5853,7 @@
             ],
             "snapshot": [
               "Based on recent data, Princeton has an effective property tax rate that reflects both local and county funding needs. When paired with typical home values in the area, this results in property tax bills that are generally higher than the surrounding region. Historical data shows that tax levels in Princeton have remained relatively stable over the past several years."
-            ],
-            "compare": [
-              "Property taxes in Princeton are often compared with nearby towns in Mercer County. Differences in tax burden are driven by local budgets, housing stock, and assessment practices. Exploring nearby municipalities can help homeowners and buyers better understand how local taxes fit within the broader regional picture."
             ]
-          },
-          "overrides": {
-            "seoTitle": "TODO: Add SEO-optimized title for Princeton",
-            "seoDescription": "TODO: Add SEO-optimized description for Princeton"
           },
           "rollout": {
             "tier": 1,
@@ -5792,9 +5866,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 22658,
             "effectiveTaxRatePct": 1.814,
-            "countyAvgTaxBill": 9543,
-            "countyEffectiveRatePct": 2.15,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -5870,7 +5941,7 @@
         {
           "name": "Hamilton",
           "slug": "hamilton",
-          "asOfYear": 2024,
+          "asOfYear": 2025,
           "avgRate": 0.0026,
           "rollout": {
             "tier": 2,
@@ -5936,9 +6007,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 5681,
             "effectiveTaxRatePct": 2.434,
-            "countyAvgTaxBill": 9543,
-            "countyEffectiveRatePct": 2.15,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -6011,9 +6079,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 9543,
             "effectiveTaxRatePct": 2.15,
-            "countyAvgTaxBill": 9543,
-            "countyEffectiveRatePct": 2.15,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -6086,9 +6151,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 9543,
             "effectiveTaxRatePct": 2.15,
-            "countyAvgTaxBill": 9543,
-            "countyEffectiveRatePct": 2.15,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -6200,10 +6262,34 @@
         ],
         "effectiveTaxRate": [
           {
-            "year": 2024,
-            "value": 2.15,
+            "year": 2021,
+            "value": 3.0770000000000004,
             "unit": "PERCENT",
-            "sourceRef": "nj_gtr"
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2022,
+            "value": 2.9294,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2023,
+            "value": 2.742,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2024,
+            "value": 2.6054000000000004,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2025,
+            "value": 2.4344,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
           }
         ]
       }
@@ -6211,13 +6297,19 @@
     {
       "name": "Middlesex",
       "slug": "middlesex",
-      "neighborCounties": ["Essex", "Union", "Somerset", "Mercer", "Monmouth"],
+      "neighborCounties": [
+        "Essex",
+        "Union",
+        "Somerset",
+        "Mercer",
+        "Monmouth"
+      ],
       "towns": [
         {
           "name": "Old Bridge",
           "slug": "old-bridge",
           "displayName": "Old Bridge Township",
-          "asOfYear": 2024,
+          "asOfYear": 2025,
           "metrics": {
             "averageResidentialTaxBill": [
               {
@@ -6280,14 +6372,7 @@
             ],
             "snapshot": [
               "Based on recent data, Old Bridge Township’s effective property tax rate reflects both local and county funding needs. When combined with typical home values in the area, property tax bills may vary compared to neighboring municipalities in Middlesex County. Historical data shows that tax levels have followed broader regional trends over the past several years."
-            ],
-            "compare": [
-              "Property taxes in Old Bridge Township are often compared with nearby communities in Middlesex County. Differences in tax burden are driven by local budgets, school funding requirements, housing stock, and assessment methodologies. Reviewing nearby towns can provide additional context for understanding local tax levels."
             ]
-          },
-          "overrides": {
-            "seoTitle": "Property Taxes in Old Bridge Township, NJ (Latest Rates & Trends)",
-            "seoDescription": "See the latest property tax rates, average tax bills, and home value trends in Old Bridge Township, New Jersey. Compare with Middlesex County and estimate your annual tax bill."
           },
           "rollout": {
             "tier": 2,
@@ -6299,9 +6384,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 8657,
             "effectiveTaxRatePct": 1.836,
-            "countyAvgTaxBill": 9528,
-            "countyEffectiveRatePct": 2.11,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -6374,9 +6456,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 9528,
             "effectiveTaxRatePct": 2.11,
-            "countyAvgTaxBill": 9528,
-            "countyEffectiveRatePct": 2.11,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -6445,7 +6524,7 @@
         {
           "name": "Edison",
           "slug": "edison",
-          "asOfYear": 2024,
+          "asOfYear": 2025,
           "metrics": {
             "averageResidentialTaxBill": [
               {
@@ -6508,14 +6587,7 @@
             ],
             "snapshot": [
               "Based on recent data, Edison has an effective property tax rate that reflects both local and county funding needs. When paired with typical home values in the area, this results in property tax bills that are generally comparable to the surrounding region. Historical data shows that tax levels in Edison have remained relatively stable over the past several years."
-            ],
-            "compare": [
-              "Property taxes in Edison are often compared with nearby towns in Middlesex County. Differences in tax burden are driven by local budgets, housing stock, and assessment practices. Exploring nearby municipalities can help homeowners and buyers better understand how local taxes fit within the broader regional picture."
             ]
-          },
-          "overrides": {
-            "seoTitle": "TODO: Add SEO-optimized title for Edison",
-            "seoDescription": "TODO: Add SEO-optimized description for Edison"
           },
           "rollout": {
             "tier": 1,
@@ -6528,9 +6600,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 10513,
             "effectiveTaxRatePct": 2.005,
-            "countyAvgTaxBill": 9528,
-            "countyEffectiveRatePct": 2.11,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -6604,9 +6673,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 8520,
             "effectiveTaxRatePct": 1.708,
-            "countyAvgTaxBill": 9528,
-            "countyEffectiveRatePct": 2.11,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -6725,12 +6791,12 @@
               }
             ]
           },
-          "asOfYear": 2024
+          "asOfYear": 2025
         },
         {
           "name": "Woodbridge",
           "slug": "woodbridge",
-          "asOfYear": 2024,
+          "asOfYear": 2025,
           "avgRate": 0.0027,
           "rollout": {
             "tier": 2,
@@ -6796,9 +6862,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 9242,
             "effectiveTaxRatePct": 2.234,
-            "countyAvgTaxBill": 9528,
-            "countyEffectiveRatePct": 2.11,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -6872,9 +6935,6 @@
             "asOfYear": 2023,
             "avgResidentialTaxBill": 10940,
             "effectiveTaxRatePct": 2.287,
-            "countyAvgTaxBill": 9528,
-            "countyEffectiveRatePct": 2.11,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -6987,7 +7047,7 @@
               }
             ]
           },
-          "asOfYear": 2023
+          "asOfYear": 2025
         }
       ],
       "copy": {
@@ -7035,10 +7095,34 @@
         ],
         "effectiveTaxRate": [
           {
-            "year": 2024,
-            "value": 2.11,
+            "year": 2021,
+            "value": 2.4008333333333334,
             "unit": "PERCENT",
-            "sourceRef": "nj_gtr"
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2022,
+            "value": 2.309833333333333,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2023,
+            "value": 2.2051666666666665,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2024,
+            "value": 2.1246666666666667,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2025,
+            "value": 2.0269999999999997,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
           }
         ]
       }
@@ -7046,7 +7130,11 @@
     {
       "name": "Monmouth",
       "slug": "monmouth",
-      "neighborCounties": ["Middlesex", "Mercer", "Ocean"],
+      "neighborCounties": [
+        "Middlesex",
+        "Mercer",
+        "Ocean"
+      ],
       "towns": [
         {
           "name": "Red Bank",
@@ -7055,9 +7143,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 10930,
             "effectiveTaxRatePct": 2.19,
-            "countyAvgTaxBill": 10930,
-            "countyEffectiveRatePct": 2.19,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -7130,9 +7215,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 10930,
             "effectiveTaxRatePct": 2.19,
-            "countyAvgTaxBill": 10930,
-            "countyEffectiveRatePct": 2.19,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -7205,9 +7287,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 10930,
             "effectiveTaxRatePct": 2.19,
-            "countyAvgTaxBill": 10930,
-            "countyEffectiveRatePct": 2.19,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -7288,9 +7367,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 10674,
             "effectiveTaxRatePct": 1.735,
-            "countyAvgTaxBill": 10930,
-            "countyEffectiveRatePct": 2.19,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -7409,7 +7485,7 @@
               }
             ]
           },
-          "asOfYear": 2024
+          "asOfYear": 2025
         },
         {
           "name": "Tinton Falls",
@@ -7418,9 +7494,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 10930,
             "effectiveTaxRatePct": 2.19,
-            "countyAvgTaxBill": 10930,
-            "countyEffectiveRatePct": 2.19,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -7532,10 +7605,34 @@
         ],
         "effectiveTaxRate": [
           {
-            "year": 2024,
-            "value": 2.19,
+            "year": 2021,
+            "value": 1.9892000000000003,
             "unit": "PERCENT",
-            "sourceRef": "nj_gtr"
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2022,
+            "value": 1.9116,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2023,
+            "value": 1.7469999999999999,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2024,
+            "value": 1.6538,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2025,
+            "value": 1.61,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
           }
         ]
       }
@@ -7556,7 +7653,7 @@
         {
           "name": "Morristown",
           "slug": "morristown",
-          "asOfYear": 2024,
+          "asOfYear": 2025,
           "metrics": {
             "averageResidentialTaxBill": [
               {
@@ -7650,14 +7747,7 @@
             ],
             "snapshot": [
               "Based on recent data, Morristown has an effective property tax rate that reflects both local and county funding needs. When paired with typical home values in the area, this results in property tax bills that are generally comparable to the surrounding region. Historical data shows that tax levels in Morristown have remained relatively stable over the past several years."
-            ],
-            "compare": [
-              "Property taxes in Morristown are often compared with nearby towns in Morris County. Differences in tax burden are driven by local budgets, housing stock, and assessment practices. Exploring nearby municipalities can help homeowners and buyers better understand how local taxes fit within the broader regional picture."
             ]
-          },
-          "overrides": {
-            "seoTitle": "TODO: Add SEO-optimized title for Morristown",
-            "seoDescription": "TODO: Add SEO-optimized description for Morristown"
           },
           "rollout": {
             "tier": 1,
@@ -7670,9 +7760,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 10008,
             "effectiveTaxRatePct": 1.681,
-            "countyAvgTaxBill": 11757,
-            "countyEffectiveRatePct": 1.95,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -7752,9 +7839,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 11757,
             "effectiveTaxRatePct": 1.95,
-            "countyAvgTaxBill": 11757,
-            "countyEffectiveRatePct": 1.95,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -7827,9 +7911,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 11757,
             "effectiveTaxRatePct": 1.95,
-            "countyAvgTaxBill": 11757,
-            "countyEffectiveRatePct": 1.95,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -7902,9 +7983,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 11757,
             "effectiveTaxRatePct": 1.95,
-            "countyAvgTaxBill": 11757,
-            "countyEffectiveRatePct": 1.95,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -7977,9 +8055,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 11757,
             "effectiveTaxRatePct": 1.95,
-            "countyAvgTaxBill": 11757,
-            "countyEffectiveRatePct": 1.95,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -8091,10 +8166,34 @@
         ],
         "effectiveTaxRate": [
           {
-            "year": 2024,
-            "value": 1.95,
+            "year": 2021,
+            "value": 2.02725,
             "unit": "PERCENT",
-            "sourceRef": "nj_gtr"
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2022,
+            "value": 2.04075,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2023,
+            "value": 1.9855,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2024,
+            "value": 1.7830000000000001,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2025,
+            "value": 1.74925,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
           }
         ]
       }
@@ -8102,12 +8201,16 @@
     {
       "name": "Ocean",
       "slug": "ocean",
-      "neighborCounties": ["Monmouth", "Burlington", "Atlantic"],
+      "neighborCounties": [
+        "Monmouth",
+        "Burlington",
+        "Atlantic"
+      ],
       "towns": [
         {
           "name": "Toms River",
           "slug": "toms-river",
-          "asOfYear": 2024,
+          "asOfYear": 2025,
           "avgRate": 0.002,
           "rollout": {
             "tier": 2,
@@ -8173,9 +8276,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7896,
             "effectiveTaxRatePct": 1.523,
-            "countyAvgTaxBill": 7593,
-            "countyEffectiveRatePct": 1.75,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -8248,9 +8348,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7593,
             "effectiveTaxRatePct": 1.75,
-            "countyAvgTaxBill": 7593,
-            "countyEffectiveRatePct": 1.75,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -8331,9 +8428,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 8450,
             "effectiveTaxRatePct": 1.378,
-            "countyAvgTaxBill": 7593,
-            "countyEffectiveRatePct": 1.75,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -8452,7 +8546,7 @@
               }
             ]
           },
-          "asOfYear": 2024
+          "asOfYear": 2025
         },
         {
           "name": "Jackson",
@@ -8461,9 +8555,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7593,
             "effectiveTaxRatePct": 1.75,
-            "countyAvgTaxBill": 7593,
-            "countyEffectiveRatePct": 1.75,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -8536,9 +8627,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7593,
             "effectiveTaxRatePct": 1.75,
-            "countyAvgTaxBill": 7593,
-            "countyEffectiveRatePct": 1.75,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -8650,10 +8738,34 @@
         ],
         "effectiveTaxRate": [
           {
-            "year": 2024,
-            "value": 1.75,
+            "year": 2021,
+            "value": 1.9544000000000001,
             "unit": "PERCENT",
-            "sourceRef": "nj_gtr"
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2022,
+            "value": 1.83,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2023,
+            "value": 1.6488,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2024,
+            "value": 1.5274,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2025,
+            "value": 1.4742000000000002,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
           }
         ]
       }
@@ -8661,12 +8773,17 @@
     {
       "name": "Passaic",
       "slug": "passaic",
-      "neighborCounties": ["Bergen", "Essex", "Morris", "Sussex"],
+      "neighborCounties": [
+        "Bergen",
+        "Essex",
+        "Morris",
+        "Sussex"
+      ],
       "towns": [
         {
           "name": "Paterson",
           "slug": "paterson",
-          "asOfYear": 2024,
+          "asOfYear": 2025,
           "avgRate": 0.0036,
           "rollout": {
             "tier": 2,
@@ -8764,9 +8881,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 9943,
             "effectiveTaxRatePct": 2.421,
-            "countyAvgTaxBill": 11212,
-            "countyEffectiveRatePct": 2.25,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -8846,9 +8960,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 11212,
             "effectiveTaxRatePct": 2.25,
-            "countyAvgTaxBill": 11212,
-            "countyEffectiveRatePct": 2.25,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -8929,9 +9040,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 13702,
             "effectiveTaxRatePct": 2.253,
-            "countyAvgTaxBill": 11212,
-            "countyEffectiveRatePct": 2.25,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -9050,7 +9158,7 @@
               }
             ]
           },
-          "asOfYear": 2024
+          "asOfYear": 2025
         },
         {
           "name": "Passaic",
@@ -9059,9 +9167,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 11212,
             "effectiveTaxRatePct": 2.25,
-            "countyAvgTaxBill": 11212,
-            "countyEffectiveRatePct": 2.25,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -9134,9 +9239,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 11212,
             "effectiveTaxRatePct": 2.25,
-            "countyAvgTaxBill": 11212,
-            "countyEffectiveRatePct": 2.25,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -9248,10 +9350,34 @@
         ],
         "effectiveTaxRate": [
           {
-            "year": 2024,
-            "value": 2.25,
+            "year": 2021,
+            "value": 2.8496,
             "unit": "PERCENT",
-            "sourceRef": "nj_gtr"
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2022,
+            "value": 2.7771999999999997,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2023,
+            "value": 2.5534,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2024,
+            "value": 2.338,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2025,
+            "value": 2.23,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
           }
         ]
       }
@@ -9259,7 +9385,10 @@
     {
       "name": "Salem",
       "slug": "salem",
-      "neighborCounties": ["Gloucester", "Cumberland"],
+      "neighborCounties": [
+        "Gloucester",
+        "Cumberland"
+      ],
       "towns": [
         {
           "name": "Pennsville",
@@ -9268,9 +9397,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 6706,
             "effectiveTaxRatePct": 1.75,
-            "countyAvgTaxBill": 6706,
-            "countyEffectiveRatePct": 1.75,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -9343,9 +9469,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 6706,
             "effectiveTaxRatePct": 1.75,
-            "countyAvgTaxBill": 6706,
-            "countyEffectiveRatePct": 1.75,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -9418,9 +9541,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 6706,
             "effectiveTaxRatePct": 1.75,
-            "countyAvgTaxBill": 6706,
-            "countyEffectiveRatePct": 1.75,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -9493,9 +9613,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 6706,
             "effectiveTaxRatePct": 1.75,
-            "countyAvgTaxBill": 6706,
-            "countyEffectiveRatePct": 1.75,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -9568,9 +9685,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 6706,
             "effectiveTaxRatePct": 1.75,
-            "countyAvgTaxBill": 6706,
-            "countyEffectiveRatePct": 1.75,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -9682,10 +9796,34 @@
         ],
         "effectiveTaxRate": [
           {
-            "year": 2024,
-            "value": 1.75,
+            "year": 2021,
+            "value": 4.3195,
             "unit": "PERCENT",
-            "sourceRef": "nj_gtr"
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2022,
+            "value": 4.204,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2023,
+            "value": 3.9994999999999994,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2024,
+            "value": 3.72075,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2025,
+            "value": 3.385,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
           }
         ]
       }
@@ -9693,7 +9831,13 @@
     {
       "name": "Somerset",
       "slug": "somerset",
-      "neighborCounties": ["Hunterdon", "Morris", "Essex", "Middlesex", "Mercer"],
+      "neighborCounties": [
+        "Hunterdon",
+        "Morris",
+        "Essex",
+        "Middlesex",
+        "Mercer"
+      ],
       "towns": [
         {
           "name": "Bridgewater",
@@ -9704,9 +9848,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 10857,
             "effectiveTaxRatePct": 1.829,
-            "countyAvgTaxBill": 11355,
-            "countyEffectiveRatePct": 1.95,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -9831,7 +9972,7 @@
             "isReady": true,
             "rank": 114
           },
-          "asOfYear": 2024
+          "asOfYear": 2025
         },
         {
           "name": "Franklin",
@@ -9848,9 +9989,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 6921,
             "effectiveTaxRatePct": 2.337,
-            "countyAvgTaxBill": 11355,
-            "countyEffectiveRatePct": 1.95,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -10008,7 +10146,7 @@
               }
             ]
           },
-          "asOfYear": 2024
+          "asOfYear": 2025
         },
         {
           "name": "Hillsborough",
@@ -10017,9 +10155,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 11355,
             "effectiveTaxRatePct": 1.95,
-            "countyAvgTaxBill": 11355,
-            "countyEffectiveRatePct": 1.95,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -10092,9 +10227,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 11355,
             "effectiveTaxRatePct": 1.95,
-            "countyAvgTaxBill": 11355,
-            "countyEffectiveRatePct": 1.95,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -10167,9 +10299,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 11355,
             "effectiveTaxRatePct": 1.95,
-            "countyAvgTaxBill": 11355,
-            "countyEffectiveRatePct": 1.95,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -10281,10 +10410,34 @@
         ],
         "effectiveTaxRate": [
           {
-            "year": 2024,
-            "value": 1.95,
+            "year": 2021,
+            "value": 2.3894,
             "unit": "PERCENT",
-            "sourceRef": "nj_gtr"
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2022,
+            "value": 2.3002000000000002,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2023,
+            "value": 2.1795999999999998,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2024,
+            "value": 2.0940000000000003,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2025,
+            "value": 2.0040000000000004,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
           }
         ]
       }
@@ -10292,7 +10445,11 @@
     {
       "name": "Sussex",
       "slug": "sussex",
-      "neighborCounties": ["Warren", "Morris", "Passaic"],
+      "neighborCounties": [
+        "Warren",
+        "Morris",
+        "Passaic"
+      ],
       "towns": [
         {
           "name": "Vernon",
@@ -10301,9 +10458,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 8640,
             "effectiveTaxRatePct": 1.85,
-            "countyAvgTaxBill": 8640,
-            "countyEffectiveRatePct": 1.85,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -10376,9 +10530,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 8640,
             "effectiveTaxRatePct": 1.85,
-            "countyAvgTaxBill": 8640,
-            "countyEffectiveRatePct": 1.85,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -10451,9 +10602,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 8640,
             "effectiveTaxRatePct": 1.85,
-            "countyAvgTaxBill": 8640,
-            "countyEffectiveRatePct": 1.85,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -10526,9 +10674,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 8640,
             "effectiveTaxRatePct": 1.85,
-            "countyAvgTaxBill": 8640,
-            "countyEffectiveRatePct": 1.85,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -10601,9 +10746,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 8640,
             "effectiveTaxRatePct": 1.85,
-            "countyAvgTaxBill": 8640,
-            "countyEffectiveRatePct": 1.85,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -10715,10 +10857,34 @@
         ],
         "effectiveTaxRate": [
           {
-            "year": 2024,
-            "value": 1.85,
+            "year": 2021,
+            "value": 3.0768,
             "unit": "PERCENT",
-            "sourceRef": "nj_gtr"
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2022,
+            "value": 2.9299999999999997,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2023,
+            "value": 2.7310000000000003,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2024,
+            "value": 2.5387999999999997,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2025,
+            "value": 2.3692,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
           }
         ]
       }
@@ -10726,12 +10892,18 @@
     {
       "name": "Union",
       "slug": "union",
-      "neighborCounties": ["Essex", "Hudson", "Middlesex", "Somerset", "Morris"],
+      "neighborCounties": [
+        "Essex",
+        "Hudson",
+        "Middlesex",
+        "Somerset",
+        "Morris"
+      ],
       "towns": [
         {
           "name": "Elizabeth",
           "slug": "elizabeth",
-          "asOfYear": 2024,
+          "asOfYear": 2025,
           "avgRate": 0.0034,
           "rollout": {
             "tier": 2,
@@ -10829,9 +11001,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 9215,
             "effectiveTaxRatePct": 2.113,
-            "countyAvgTaxBill": 12047,
-            "countyEffectiveRatePct": 2.15,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -10911,9 +11080,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 12047,
             "effectiveTaxRatePct": 2.15,
-            "countyAvgTaxBill": 12047,
-            "countyEffectiveRatePct": 2.15,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -10982,7 +11148,7 @@
         {
           "name": "Summit",
           "slug": "summit",
-          "asOfYear": 2024,
+          "asOfYear": 2025,
           "metrics": {
             "averageResidentialTaxBill": [
               {
@@ -11076,14 +11242,7 @@
             ],
             "snapshot": [
               "Based on recent data, Summit has an effective property tax rate that reflects both local and county funding needs. When paired with typical home values in the area, this results in property tax bills that are generally higher than the surrounding region. Historical data shows that tax levels in Summit have remained relatively stable over the past several years."
-            ],
-            "compare": [
-              "Property taxes in Summit are often compared with nearby towns in Union County. Differences in tax burden are driven by local budgets, housing stock, and assessment practices. Exploring nearby municipalities can help homeowners and buyers better understand how local taxes fit within the broader regional picture."
             ]
-          },
-          "overrides": {
-            "seoTitle": "TODO: Add SEO-optimized title for Summit",
-            "seoDescription": "TODO: Add SEO-optimized description for Summit"
           },
           "rollout": {
             "tier": 1,
@@ -11096,9 +11255,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 18977,
             "effectiveTaxRatePct": 1.475,
-            "countyAvgTaxBill": 12047,
-            "countyEffectiveRatePct": 2.15,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -11174,7 +11330,7 @@
         {
           "name": "Westfield",
           "slug": "westfield",
-          "asOfYear": 2024,
+          "asOfYear": 2025,
           "metrics": {
             "averageResidentialTaxBill": [
               {
@@ -11268,14 +11424,7 @@
             ],
             "snapshot": [
               "Based on recent data, Westfield has an effective property tax rate that reflects both local and county funding needs. When paired with typical home values in the area, this results in property tax bills that are generally higher than the surrounding region. Historical data shows that tax levels in Westfield have remained relatively stable over the past several years."
-            ],
-            "compare": [
-              "Property taxes in Westfield are often compared with nearby towns in Union County. Differences in tax burden are driven by local budgets, housing stock, and assessment practices. Exploring nearby municipalities can help homeowners and buyers better understand how local taxes fit within the broader regional picture."
             ]
-          },
-          "overrides": {
-            "seoTitle": "TODO: Add SEO-optimized title for Westfield",
-            "seoDescription": "TODO: Add SEO-optimized description for Westfield"
           },
           "rollout": {
             "tier": 1,
@@ -11288,9 +11437,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 18487,
             "effectiveTaxRatePct": 1.81,
-            "countyAvgTaxBill": 12047,
-            "countyEffectiveRatePct": 2.15,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -11370,9 +11516,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 12047,
             "effectiveTaxRatePct": 2.15,
-            "countyAvgTaxBill": 12047,
-            "countyEffectiveRatePct": 2.15,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -11484,10 +11627,34 @@
         ],
         "effectiveTaxRate": [
           {
-            "year": 2024,
-            "value": 2.15,
+            "year": 2021,
+            "value": 2.5466,
             "unit": "PERCENT",
-            "sourceRef": "nj_gtr"
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2022,
+            "value": 2.4044,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2023,
+            "value": 2.1848,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2024,
+            "value": 2.0522,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2025,
+            "value": 1.9928000000000001,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
           }
         ]
       }
@@ -11495,7 +11662,11 @@
     {
       "name": "Warren",
       "slug": "warren",
-      "neighborCounties": ["Sussex", "Morris", "Hunterdon"],
+      "neighborCounties": [
+        "Sussex",
+        "Morris",
+        "Hunterdon"
+      ],
       "towns": [
         {
           "name": "Phillipsburg",
@@ -11505,9 +11676,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7879,
             "effectiveTaxRatePct": 1.75,
-            "countyAvgTaxBill": 7879,
-            "countyEffectiveRatePct": 1.75,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -11580,9 +11748,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7879,
             "effectiveTaxRatePct": 1.75,
-            "countyAvgTaxBill": 7879,
-            "countyEffectiveRatePct": 1.75,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -11655,9 +11820,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7879,
             "effectiveTaxRatePct": 1.75,
-            "countyAvgTaxBill": 7879,
-            "countyEffectiveRatePct": 1.75,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -11730,9 +11892,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7879,
             "effectiveTaxRatePct": 1.75,
-            "countyAvgTaxBill": 7879,
-            "countyEffectiveRatePct": 1.75,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -11805,9 +11964,6 @@
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7879,
             "effectiveTaxRatePct": 1.75,
-            "countyAvgTaxBill": 7879,
-            "countyEffectiveRatePct": 1.75,
-            "stateEffectiveTaxRatePct": 2.02,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
@@ -11919,10 +12075,34 @@
         ],
         "effectiveTaxRate": [
           {
-            "year": 2024,
-            "value": 1.75,
+            "year": 2021,
+            "value": 3.5528,
             "unit": "PERCENT",
-            "sourceRef": "nj_gtr"
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2022,
+            "value": 3.3644,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2023,
+            "value": 3.1331999999999995,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2024,
+            "value": 3.0580000000000003,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
+          },
+          {
+            "year": 2025,
+            "value": 2.8014,
+            "unit": "PERCENT",
+            "sourceRef": "nj_div_taxation_general_effective_tax_rates"
           }
         ]
       }

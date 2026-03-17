@@ -1,100 +1,92 @@
 import type { Metadata } from 'next'
-import TaxForm from '@/components/TaxForm'
-import TaxResults from '@/components/TaxResults'
+import Header from '@/components/site/Header'
+import Footer from '@/components/site/Footer'
+import UniversalTaxCalculator from '@/components/calculator/UniversalTaxCalculator'
 import { buildMetadata } from '@/lib/seo'
 import { breadcrumbJsonLd, webAppJsonLd } from '@/lib/jsonld'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { formatStateName, isValidState } from '@/utils/stateUtils'
 import { notFound } from 'next/navigation'
 import { SITE_URL } from '@/lib/site'
+import { getStatesForHero } from '@/lib/geo'
 
 type Props = {
-  params: Promise<{
-    state: string
-    county: string
-  }>
+  params: Promise<{ state: string; county: string }>
 }
 
-/**
- * Dynamic county-level property tax calculator page.
- * Includes: WebApplication and BreadcrumbList schemas.
- */
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { state: stateParam, county: countyParam } = await params
   const state = decodeURIComponent(stateParam)
-  const county = decodeURIComponent(countyParam)
+  const countySegment = decodeURIComponent(countyParam)
   const stateName = formatStateName(state)
-  const path = `/${encodeURIComponent(state)}/${encodeURIComponent(county)}/property-tax-calculator`
+  const countySlug = countySegment.replace(/-county-property-tax$/, '')
+  const countyDisplay = countySlug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
+  const path = `/${encodeURIComponent(state)}/${encodeURIComponent(countySegment)}/property-tax-calculator`
 
   return buildMetadata({
-    title: `${county} County Property Tax Calculator | ${stateName}`,
-    description: `Calculate property taxes for ${county} County, ${stateName}. Get accurate estimates based on current tax rates.`,
+    title: `${countyDisplay} County Property Tax Calculator | ${stateName}`,
+    description: `Calculate property taxes for ${countyDisplay} County, ${stateName}. Get accurate estimates based on current tax rates.`,
     path,
-    keywords: `${county} County property tax, ${county} County ${stateName} tax calculator, ${stateName} property tax ${county}`,
+    keywords: `${countyDisplay} County property tax, ${countyDisplay} County ${stateName} tax calculator, ${stateName} property tax ${countyDisplay}`,
     openGraph: {
-      title: `${county} County Property Tax Calculator`,
-      description: `Calculate property taxes for ${county} County, ${stateName}.`,
+      title: `${countyDisplay} County Property Tax Calculator`,
+      description: `Calculate property taxes for ${countyDisplay} County, ${stateName}.`,
       type: 'website',
     },
   })
 }
 
-export default async function CountyPropertyTaxCalculatorPage({ params }: Props) {
+export default async function StateCountyPropertyTaxCalculatorPage({ params }: Props) {
   const { state: stateParam, county: countyParam } = await params
   const state = decodeURIComponent(stateParam)
-  const county = decodeURIComponent(countyParam)
+  const countySegment = decodeURIComponent(countyParam)
+  const countySlug = countySegment.replace(/-county-property-tax$/, '')
   const stateName = formatStateName(state)
+  const countyDisplay = countySlug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
 
-  // Validate state is supported
   if (!isValidState(state)) {
     notFound()
   }
 
-  const pageUrl = `${SITE_URL}/${encodeURIComponent(state)}/${encodeURIComponent(county)}/property-tax-calculator`
+  const states = getStatesForHero()
+  const pageUrl = `${SITE_URL}/${encodeURIComponent(state)}/${encodeURIComponent(countySegment)}/property-tax-calculator`
   const stateUrl = `${SITE_URL}/${encodeURIComponent(state)}`
-  const countyUrl = `${SITE_URL}/${encodeURIComponent(state)}/${encodeURIComponent(county)}`
+  const countyUrl = `${SITE_URL}/${encodeURIComponent(state)}/${encodeURIComponent(countySegment)}`
 
   return (
     <>
-      {/* BreadcrumbList schema - navigation hierarchy */}
       <JsonLd
         data={breadcrumbJsonLd([
           { name: 'Home', url: `${SITE_URL}/` },
           { name: stateName, url: stateUrl },
-          { name: county, url: countyUrl },
+          { name: countyDisplay, url: countyUrl },
           { name: 'Property Tax Calculator', url: pageUrl },
         ])}
       />
-      {/* WebApplication schema - describes the calculator tool */}
       <JsonLd
         data={webAppJsonLd({
           pageUrl,
-          description: `Calculate property taxes for ${county} County, ${stateName}. Get accurate estimates based on current tax rates.`,
+          description: `Calculate property taxes for ${countyDisplay} County, ${stateName}. Get accurate estimates based on current tax rates.`,
         })}
       />
-      <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
-        <div className="container mx-auto px-4 py-8">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-8">
-              <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-                {county} County Property Tax Calculator
-              </h1>
-              <p className="text-lg text-gray-700 dark:text-gray-300">
-                Calculate property taxes for {county} County, {stateName}
-              </p>
-            </div>
-            <div className="grid lg:grid-cols-2 gap-8">
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6">
-                <TaxForm defaultCounty={county} />
-              </div>
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6">
-                <TaxResults />
-              </div>
-            </div>
+      <Header />
+      <main className="min-h-screen bg-bg">
+        <div className="container-page py-12">
+          <div className="mb-10 text-center">
+            <h1 className="section-title mb-4">{countyDisplay} County Property Tax Calculator</h1>
+            <p className="text-lg text-text-muted">
+              Calculate property taxes for {countyDisplay} County, {stateName}
+            </p>
           </div>
+          <UniversalTaxCalculator
+            states={states}
+            initialValues={{ stateSlug: state, countySlug }}
+            showStateSelect={false}
+            pageType="calculator"
+          />
         </div>
       </main>
+      <Footer />
     </>
   )
 }
-

@@ -26,7 +26,12 @@ type TaxResult = {
   county: string
 }
 
-export default function TaxResults() {
+type TaxResultsProps = {
+  /** State slug for loading county trend series (default: new-jersey) */
+  stateSlug?: string
+}
+
+export default function TaxResults({ stateSlug = 'new-jersey' }: TaxResultsProps) {
   const [result, setResult] = useState<TaxResult | null>(null)
   const [countySeries, setCountySeries] = useState<Array<{ year: number; value: number }>>([])
 
@@ -37,7 +42,7 @@ export default function TaxResults() {
 
       // Get county series if county is available
       if (data.county) {
-        const series = getCountyAvgTaxBillSeries('new-jersey', data.county)
+        const series = getCountyAvgTaxBillSeries(stateSlug, data.county)
         setCountySeries(series)
       } else {
         setCountySeries([])
@@ -49,7 +54,7 @@ export default function TaxResults() {
     return () => {
       window.removeEventListener('taxCalculated', handleTaxCalculated as EventListener)
     }
-  }, [])
+  }, [stateSlug])
 
   if (!result) {
     return (

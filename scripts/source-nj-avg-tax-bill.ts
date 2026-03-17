@@ -80,7 +80,7 @@ const TIER1: Array<{ countySlug: string; townSlug: string; townName: string }> =
   { countySlug: 'mercer', townSlug: 'hamilton', townName: 'Hamilton' },
   { countySlug: 'mercer', townSlug: 'trenton', townName: 'Trenton' },
   { countySlug: 'camden', townSlug: 'camden', townName: 'Camden' },
-  // Next 10 towns, don't release until 02/07
+  // Next 10 towns, don't release until 02/07 - done
   { countySlug: 'ocean', townSlug: 'lakewood', townName: 'Lakewood Township' },
   { countySlug: 'monmouth', townSlug: 'middletown', townName: 'Middletown Township' },
   { countySlug: 'middlesex', townSlug: 'old-bridge', townName: 'Old Bridge Township' },

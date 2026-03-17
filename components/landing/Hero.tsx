@@ -1,8 +1,13 @@
-import Image from 'next/image'
 import { LinkButton } from '@/components/ui/Button'
 import Badge from '@/components/ui/Badge'
+import HeroEstimateForm from '@/components/landing/HeroEstimateForm'
+import type { StateOptionForHero } from '@/lib/geo'
 
-export default function Hero() {
+type HeroProps = {
+  statesForHero: StateOptionForHero[]
+}
+
+export default function Hero({ statesForHero }: HeroProps) {
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-bg-gradient-from to-bg-gradient-to py-20 sm:py-24 lg:py-32">
       <div className="container-page">
@@ -27,15 +32,15 @@ export default function Hero() {
 
             {/* CTAs */}
             <div className="mb-4 flex flex-col gap-4 sm:flex-row sm:justify-center lg:justify-start">
-              <LinkButton href="/new-jersey/property-tax-calculator" variant="primary" size="lg">
+              <LinkButton href="/property-tax-calculator" variant="primary" size="lg">
                 Start calculator
               </LinkButton>
-              <LinkButton href="/new-jersey" variant="secondary" size="lg">
-                Browse counties
+              <LinkButton href="/property-tax-rates" variant="secondary" size="lg">
+                Browse rates by state
               </LinkButton>
             </div>
             <p className="mb-8 text-xs text-text-muted">
-              Currently available for New Jersey. More states coming soon.
+              Currently available for New Jersey, with more states coming soon.
             </p>
             {/* Trust Badges */}
             <div className="flex flex-wrap items-center justify-center gap-4 lg:justify-start">
@@ -75,62 +80,9 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Right Column: Preview Card */}
+          {/* Right Column: Estimate form */}
           <div className="flex justify-center lg:justify-end">
-            <div className="w-full max-w-md">
-              <div className="rounded-lg border border-border bg-surface p-6 shadow-lg">
-                <h3 className="mb-4 text-lg font-semibold text-text">Estimate Preview</h3>
-
-                {/* Form Fields */}
-                <div className="space-y-4 mb-6">
-                  {/* County Selector */}
-                  <div>
-                    <label className="mb-2 block text-sm font-medium text-text-muted">County</label>
-                    <div className="rounded-lg border border-border bg-bg px-4 py-2.5 text-sm text-text-muted">
-                      Select county...
-                    </div>
-                  </div>
-
-                  {/* Town Selector */}
-                  <div>
-                    <label className="mb-2 block text-sm font-medium text-text-muted">Town</label>
-                    <div className="rounded-lg border border-border bg-bg px-4 py-2.5 text-sm text-text-muted">
-                      Select town...
-                    </div>
-                  </div>
-
-                  {/* Home Value Input */}
-                  <div>
-                    <label className="mb-2 block text-sm font-medium text-text-muted">
-                      Home value
-                    </label>
-                    <div className="rounded-lg border border-border bg-bg px-4 py-2.5 text-sm text-text-muted">
-                      Enter home value...
-                    </div>
-                  </div>
-                </div>
-
-                {/* Trend Chart Placeholder */}
-                <div className="border-t border-border pt-4">
-                  <p className="mb-3 text-xs font-medium text-text-muted">
-                    Trends available where data exists
-                  </p>
-                  <div className="flex items-end justify-between gap-2">
-                    {['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'].map((label, index) => (
-                      <div key={label} className="flex flex-1 flex-col items-center">
-                        <div className="mb-2 flex h-16 w-full items-end justify-center">
-                          <div
-                            className="w-full rounded-t bg-primary/30"
-                            style={{ height: `${60 + index * 5}%` }}
-                          />
-                        </div>
-                        <span className="text-xs text-text-muted">{label}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
+            <HeroEstimateForm states={statesForHero} />
           </div>
         </div>
       </div>

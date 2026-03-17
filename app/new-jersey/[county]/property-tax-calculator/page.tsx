@@ -1,34 +1,42 @@
 import type { Metadata } from 'next'
-import TaxForm from '@/components/TaxForm'
-import TaxResults from '@/components/TaxResults'
+import Header from '@/components/site/Header'
+import Footer from '@/components/site/Footer'
+import UniversalTaxCalculator from '@/components/calculator/UniversalTaxCalculator'
 import { buildMetadata } from '@/lib/seo'
 import { breadcrumbJsonLd, webAppJsonLd } from '@/lib/jsonld'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { SITE_URL } from '@/lib/site'
+import { getStatesForHero, getStateData, getCountyBySlug } from '@/lib/geo'
 
 type Props = {
-  params: Promise<{
-    county: string
-  }>
+  params: Promise<{ county: string }>
+}
+
+function getCountyDisplayName(countySegment: string): string {
+  const normalized = countySegment.replace(/-county-property-tax$/, '')
+  const stateData = getStateData('new-jersey')
+  const county = stateData ? getCountyBySlug(stateData, normalized) : null
+  return county?.name ?? normalized.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
 }
 
 /**
  * New Jersey county-level property tax calculator page.
- * Includes: WebApplication and BreadcrumbList schemas.
+ * Reuses the shared calculator with state and county preselected.
  */
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { county: countyParam } = await params
-  const county = decodeURIComponent(countyParam)
-  const path = `/new-jersey/${encodeURIComponent(county)}/property-tax-calculator`
+  const countySegment = decodeURIComponent(countyParam)
+  const path = `/new-jersey/${encodeURIComponent(countySegment)}/property-tax-calculator`
+  const displayName = getCountyDisplayName(countySegment)
 
   return buildMetadata({
-    title: `${county} County Property Tax Calculator | New Jersey`,
-    description: `Calculate property taxes for ${county} County, New Jersey. Get accurate estimates based on current tax rates.`,
+    title: `${displayName} County Property Tax Calculator | New Jersey`,
+    description: `Calculate property taxes for ${displayName} County, New Jersey. Get accurate estimates based on current tax rates.`,
     path,
-    keywords: `${county} County property tax, ${county} County NJ tax calculator, New Jersey property tax ${county}`,
+    keywords: `${displayName} County property tax, ${displayName} County NJ tax calculator, New Jersey property tax ${displayName}`,
     openGraph: {
-      title: `${county} County Property Tax Calculator`,
-      description: `Calculate property taxes for ${county} County, New Jersey.`,
+      title: `${displayName} County Property Tax Calculator`,
+      description: `Calculate property taxes for ${displayName} County, New Jersey.`,
       type: 'website',
     },
   })
@@ -36,52 +44,49 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function CountyPropertyTaxCalculatorPage({ params }: Props) {
   const { county: countyParam } = await params
-  const county = decodeURIComponent(countyParam)
+  const countySegment = decodeURIComponent(countyParam)
+  const countySlug = countySegment.replace(/-county-property-tax$/, '')
+  const displayName = getCountyDisplayName(countySegment)
 
-  const pageUrl = `${SITE_URL}/new-jersey/${encodeURIComponent(county)}/property-tax-calculator`
+  const states = getStatesForHero()
+  const pageUrl = `${SITE_URL}/new-jersey/${encodeURIComponent(countySegment)}/property-tax-calculator`
   const njUrl = `${SITE_URL}/new-jersey`
-  const countyUrl = `${SITE_URL}/new-jersey/${encodeURIComponent(county)}`
+  const countyUrl = `${SITE_URL}/new-jersey/${encodeURIComponent(countySegment)}`
 
   return (
     <>
-      {/* BreadcrumbList schema - navigation hierarchy */}
       <JsonLd
         data={breadcrumbJsonLd([
           { name: 'Home', url: `${SITE_URL}/` },
           { name: 'New Jersey', url: njUrl },
-          { name: county, url: countyUrl },
+          { name: displayName, url: countyUrl },
           { name: 'Property Tax Calculator', url: pageUrl },
         ])}
       />
-      {/* WebApplication schema - describes the calculator tool */}
       <JsonLd
         data={webAppJsonLd({
           pageUrl,
-          description: `Calculate property taxes for ${county} County, New Jersey. Get accurate estimates based on current tax rates.`,
+          description: `Calculate property taxes for ${displayName} County, New Jersey. Get accurate estimates based on current tax rates.`,
         })}
       />
-      <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
-        <div className="container mx-auto px-4 py-8">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-8">
-              <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-                {county} County Property Tax Calculator
-              </h1>
-              <p className="text-lg text-gray-700 dark:text-gray-300">
-                Calculate property taxes for {county} County, New Jersey
-              </p>
-            </div>
-            <div className="grid lg:grid-cols-2 gap-8">
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6">
-                <TaxForm defaultCounty={county} />
-              </div>
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6">
-                <TaxResults />
-              </div>
-            </div>
+      <Header />
+      <main className="min-h-screen bg-bg">
+        <div className="container-page py-12">
+          <div className="mb-10 text-center">
+            <h1 className="section-title mb-4">{displayName} County Property Tax Calculator</h1>
+            <p className="text-lg text-text-muted">
+              Calculate property taxes for {displayName} County, New Jersey
+            </p>
           </div>
+          <UniversalTaxCalculator
+            states={states}
+            initialValues={{ stateSlug: 'new-jersey', countySlug }}
+            showStateSelect={false}
+            pageType="calculator"
+          />
         </div>
       </main>
+      <Footer />
     </>
   )
 }

@@ -7,6 +7,8 @@ import { JsonLd } from '@/components/seo/JsonLd'
 import { formatStateName, isValidState } from '@/utils/stateUtils'
 import { notFound } from 'next/navigation'
 import { SITE_URL } from '@/lib/site'
+import { getStateData } from '@/lib/geo'
+import { getCountyNames, getMunicipalitiesByCountyMap } from '@/lib/rates-from-state'
 
 type Props = {
   params: Promise<{
@@ -53,6 +55,10 @@ export default async function TownPropertyTaxCalculatorPage({ params }: Props) {
     notFound()
   }
 
+  const stateData = getStateData(state)
+  const countyNames = stateData ? getCountyNames(stateData) : []
+  const municipalitiesByCounty = stateData ? getMunicipalitiesByCountyMap(stateData) : {}
+
   const pageUrl = `${SITE_URL}/${encodeURIComponent(state)}/${encodeURIComponent(county)}/${encodeURIComponent(town)}`
   const stateUrl = `${SITE_URL}/${encodeURIComponent(state)}`
   const countyUrl = `${SITE_URL}/${encodeURIComponent(state)}/${encodeURIComponent(county)}`
@@ -88,7 +94,12 @@ export default async function TownPropertyTaxCalculatorPage({ params }: Props) {
             </div>
             <div className="grid lg:grid-cols-2 gap-8">
               <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6">
-                <TaxForm defaultCounty={county} defaultMunicipality={town} />
+                <TaxForm
+                defaultCounty={county}
+                defaultMunicipality={town}
+                countyNames={countyNames}
+                municipalitiesByCounty={municipalitiesByCounty}
+              />
               </div>
               <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6">
                 <TaxResults />

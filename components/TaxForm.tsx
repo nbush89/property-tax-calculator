@@ -15,6 +15,10 @@ import { validateTaxForm } from '@/lib/tax-form-schema'
 type TaxFormProps = {
   defaultCounty?: string
   defaultMunicipality?: string
+  /** County names from state data; pass from server so dropdown uses state JSON as source of truth. */
+  countyNames?: string[]
+  /** Municipalities by county name; pass from server. */
+  municipalitiesByCounty?: Record<string, string[]>
 }
 
 const PROPERTY_TYPES = [
@@ -25,7 +29,12 @@ const PROPERTY_TYPES = [
   { value: 'commercial', label: 'Commercial' },
 ]
 
-export default function TaxForm({ defaultCounty, defaultMunicipality }: TaxFormProps) {
+export default function TaxForm({
+  defaultCounty,
+  defaultMunicipality,
+  countyNames = [],
+  municipalitiesByCounty = {},
+}: TaxFormProps) {
   const [homeValue, setHomeValue] = useState('')
   const [county, setCounty] = useState(defaultCounty || '')
   const [town, setTown] = useState(defaultMunicipality || '')
@@ -66,6 +75,7 @@ export default function TaxForm({ defaultCounty, defaultMunicipality }: TaxFormP
           town: payload.town || undefined,
           propertyType: payload.propertyType,
           exemptions: payload.exemptions,
+          stateSlug: 'new-jersey',
         }),
       })
 
@@ -150,6 +160,7 @@ export default function TaxForm({ defaultCounty, defaultMunicipality }: TaxFormP
                 county: slugifyLocation(value),
               })
           }}
+          countyNames={countyNames}
         />
         {errors.county && (
           <p id="county-error" className="mt-1 text-sm text-red-600 dark:text-red-400">
@@ -176,6 +187,7 @@ export default function TaxForm({ defaultCounty, defaultMunicipality }: TaxFormP
               })
           }}
           disabled={!county}
+          municipalitiesByCounty={municipalitiesByCounty}
         />
         {county && (
           <div className="mt-2 text-sm">

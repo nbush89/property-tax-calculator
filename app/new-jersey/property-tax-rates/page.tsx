@@ -1,15 +1,16 @@
-import type { Metadata } from 'next'
 import Link from 'next/link'
 import Header from '@/components/site/Header'
 import Footer from '@/components/site/Footer'
 import { buildMetadata } from '@/lib/seo'
 import { breadcrumbJsonLd, faqJsonLd } from '@/lib/jsonld'
 import { JsonLd } from '@/components/seo/JsonLd'
-import { getAllCountyRates } from '@/utils/getCountyRates'
-import njMunicipalRates from '@/data/nj_municipal_rates.json'
 import { SITE_URL } from '@/lib/site'
 import { slugifyLocation } from '@/utils/locationUtils'
 import { getStateData } from '@/lib/geo'
+import {
+  getAllCountyRatesFromState,
+  getMunicipalRatesByCountyFromState,
+} from '@/lib/rates-from-state'
 
 /**
  * New Jersey property tax rates page.
@@ -25,12 +26,11 @@ export const metadata = buildMetadata({
 })
 
 export default function PropertyTaxRatesPage() {
-  const countyRates = getAllCountyRates()
+  const stateData = getStateData('new-jersey')
+  const countyRates = getAllCountyRatesFromState(stateData)
+  const municipalRatesByCounty = getMunicipalRatesByCountyFromState(stateData)
   const counties = Object.keys(countyRates).sort()
   const pageUrl = `${SITE_URL}/new-jersey/property-tax-rates`
-
-  // Get the year from state data
-  const stateData = getStateData('new-jersey')
   const asOfYear = stateData?.state.asOfYear ?? new Date().getFullYear()
 
   // FAQ data for this page
@@ -143,7 +143,7 @@ export default function PropertyTaxRatesPage() {
           <div className="space-y-8">
             {counties.map(county => {
               const countyRate = countyRates[county]
-              const countyData = njMunicipalRates[county as keyof typeof njMunicipalRates]
+              const countyData = municipalRatesByCounty[county]
 
               return (
                 <div key={county} className="rounded-lg border border-border bg-surface shadow-sm">

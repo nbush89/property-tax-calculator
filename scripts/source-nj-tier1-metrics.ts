@@ -1,5 +1,7 @@
 /* eslint-disable no-console */
 import * as https from 'node:https'
+import * as fs from 'node:fs'
+import * as path from 'node:path'
 // @ts-ignore - pdf-parse types may not be perfect, but it works at runtime
 import pdfParse from 'pdf-parse'
 import { buildRecentYears } from './utils/buildRecentYears'
@@ -16,11 +18,28 @@ type DataPoint = {
 type TownMetricsOut = {
   medianHomeValue: DataPoint[]
   effectiveTaxRate: DataPoint[]
-  debug: {
+  debug?: {
     acsMatchKey: string
     pdfDistrict: string
     pdfMatchKey: string
   }
+}
+
+type CountyMetricsOut = {
+  metrics: {
+    effectiveTaxRate: DataPoint[]
+  }
+}
+
+/** Output shape aligned with data/states/new-jersey.json: counties keyed by slug, towns by display name for merge. */
+type SourceOutput = {
+  meta: {
+    sourceRef: string
+    stateSlug: string
+    generatedAt: string
+  }
+  counties: Record<string, CountyMetricsOut>
+  towns: Record<string, TownMetricsOut>
 }
 
 const STATE_FIPS_NJ = '34'
@@ -155,6 +174,32 @@ function normalizeDistrictName(raw: string): string {
     .replace(/[^A-Z0-9 ]+/g, ' ')
     .replace(/\s+/g, ' ')
     .trim()
+}
+
+/** Return possible keys to look up a town in the GTR PDF map (district names). */
+function getGtrLookupKeys(townName: string): string[] {
+  const upper = townName.toUpperCase().trim()
+  const normalized = normalizeDistrictName(townName)
+  const keys = [normalized]
+  const withTwp = normalized.replace(/\bTOWNSHIP\b/g, 'TWP').replace(/\bTOWNSHIPS\b/g, 'TWP')
+  if (withTwp !== normalized) keys.push(withTwp)
+  const withTwpshp = normalized.replace(/\bTOWNSHIP\b/g, 'TWNSHP')
+  if (withTwpshp !== normalized) keys.push(withTwpshp)
+  const noSuffix = normalized
+    .replace(/\b(TWP|TWNSHP|CITY|TOWN|BORO|BOROUGH|VILLAGE|TOWNSHIP)\b/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+  if (noSuffix && !keys.includes(noSuffix)) keys.push(noSuffix)
+  return keys
+}
+
+function loadStateJson(): { counties: Array<{ slug: string; name: string; towns?: Array<{ name: string; slug: string }> }> } {
+  const repoRoot = process.cwd()
+  const p = path.join(repoRoot, 'data', 'states', 'new-jersey.json')
+  if (!fs.existsSync(p)) {
+    throw new Error(`State JSON not found: ${p}. Run from repo root.`)
+  }
+  return JSON.parse(fs.readFileSync(p, 'utf8'))
 }
 
 async function fetchAcsMedianHomeValueMap(year: number): Promise<Map<string, number>> {
@@ -303,8 +348,49 @@ async function main() {
     }
   }
 
-  // 3) Build town outputs
-  const out: Record<string, TownMetricsOut> = {}
+  // 3) Load state JSON to get counties and towns for county-level aggregation and structure
+  const stateJson = loadStateJson()
+  const countiesList = stateJson.counties ?? []
+
+  // 4) Build county-level effectiveTaxRate (average of municipalities in county from GTR)
+  const countyOut: Record<string, CountyMetricsOut> = {}
+  for (const county of countiesList) {
+    const countySlug = county.slug
+    const townsInCounty = county.towns ?? []
+    const effByYear: Record<number, number[]> = {}
+    for (const y of GTR_YEARS) {
+      const gtrMap = gtrMaps.get(y)
+      if (!gtrMap) continue
+      const rates: number[] = []
+      for (const town of townsInCounty) {
+        const townName = town.name
+        for (const key of getGtrLookupKeys(townName)) {
+          const rate = gtrMap.get(key)
+          if (rate != null && Number.isFinite(rate)) {
+            rates.push(rate)
+            break
+          }
+        }
+      }
+      if (rates.length > 0) {
+        const avg = rates.reduce((a, b) => a + b, 0) / rates.length
+        effByYear[y] = [avg]
+      }
+    }
+    const yearToValue: Record<number, number | undefined> = {}
+    for (const [y, arr] of Object.entries(effByYear)) {
+      const year = Number(y)
+      if (arr.length > 0) yearToValue[year] = arr[0]
+    }
+    const series = buildSeries(yearToValue, 'PERCENT', NJ_GTR_SOURCE_REF)
+    if (series.length > 0) {
+      countyOut[countySlug] = { metrics: { effectiveTaxRate: series } }
+    }
+  }
+  console.error(`[OK] County-level effectiveTaxRate: ${Object.keys(countyOut).length} counties`)
+
+  // 5) Build town outputs for TIER1 (and structure matches new-jersey.json fields)
+  const townsOut: Record<string, TownMetricsOut> = {}
 
   for (const town of TIER1_TOWNS) {
     const acsKey = normalizePlaceName(`${town}, New Jersey`) // token match
@@ -366,14 +452,25 @@ async function main() {
       )
     }
 
-    out[town] = {
+    townsOut[town] = {
       medianHomeValue: medianSeries,
       effectiveTaxRate: effSeries,
       debug: { acsMatchKey: acsKey, pdfDistrict, pdfMatchKey: pdfKey },
     }
   }
 
-  process.stdout.write(JSON.stringify(out, null, 2))
+  const payload: SourceOutput = {
+    meta: {
+      sourceRef: NJ_GTR_SOURCE_REF,
+      stateSlug: 'new-jersey',
+      generatedAt: new Date().toISOString(),
+    },
+    counties: countyOut,
+    towns: townsOut,
+  }
+  const outPath = process.argv[2] ?? path.join(process.cwd(), 'data', 'nj-tier1-metrics.json')
+  fs.writeFileSync(outPath, JSON.stringify(payload, null, 2), 'utf8')
+  console.error('[OK] Wrote', outPath, `(${Object.keys(countyOut).length} counties, ${Object.keys(townsOut).length} towns)`)
 }
 
 main().catch(e => {

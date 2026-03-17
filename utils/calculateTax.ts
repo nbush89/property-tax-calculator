@@ -1,5 +1,5 @@
-import { getCountyRates } from './getCountyRates'
-import { getMunicipalRates } from './getMunicipalRates'
+import type { StateData } from '@/lib/data/types'
+import { getCountyRate, getMunicipalRate } from '@/lib/rates-from-state'
 import njExemptions from '@/data/nj_exemptions.json'
 
 type CalculateTaxInput = {
@@ -30,12 +30,18 @@ type TaxCalculationResult = {
   county: string
 }
 
-export function calculatePropertyTax(input: CalculateTaxInput): TaxCalculationResult {
+/**
+ * Calculate property tax using rates from state data (e.g. data/states/new-jersey.json).
+ * stateData must be provided (e.g. getStateData('new-jersey')) — static rate files are no longer used.
+ */
+export function calculatePropertyTax(
+  input: CalculateTaxInput,
+  stateData: StateData | null
+): TaxCalculationResult {
   const { homeValue, county, town, exemptions = [] } = input
 
-  // Get tax rates
-  const countyRate = getCountyRates(county)
-  const municipalRate = town ? getMunicipalRates(county, town) : 0
+  const countyRate = getCountyRate(stateData, county)
+  const municipalRate = town ? getMunicipalRate(stateData, county, town) : null
 
   if (countyRate === null) {
     throw new Error(`Tax rates not found for ${county} County`)
