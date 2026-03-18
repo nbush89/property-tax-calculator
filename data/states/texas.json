@@ -1,0 +1,452 @@
+{
+  "state": {
+    "name": "Texas",
+    "slug": "texas",
+    "abbreviation": "TX",
+    "asOfYear": 2024
+  },
+  "sources": {
+    "us_census_acs_profile_dp04": {
+      "publisher": "U.S. Census Bureau",
+      "title": "ACS 5-year Profile (DP04_0089E median home value)",
+      "type": "api",
+      "homepageUrl": "https://api.census.gov/data.html",
+      "notes": "DP04_0089E = Owner-occupied units: Median value (dollars)."
+    },
+    "tx_comptroller_property_tax": {
+      "publisher": "Texas Comptroller of Public Accounts",
+      "title": "Property Tax Information",
+      "type": "web",
+      "homepageUrl": "https://comptroller.texas.gov/taxes/property-tax/",
+      "notes": "County and local property tax rates and data."
+    }
+  },
+  "metrics": {},
+  "counties": [
+    {
+      "name": "Harris",
+      "slug": "harris",
+      "neighborCounties": [
+        "Fort Bend",
+        "Montgomery",
+        "Galveston",
+        "Brazoria"
+      ],
+      "towns": [
+        {
+          "name": "Houston",
+          "slug": "houston",
+          "asOfYear": 2024,
+          "rollout": {
+            "tier": 1,
+            "featured": true,
+            "isReady": false,
+            "rank": 1
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 186800,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 200700,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 235000,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 253400,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 277800,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Pasadena",
+          "slug": "pasadena",
+          "asOfYear": 2024,
+          "rollout": {
+            "tier": 1,
+            "featured": false,
+            "isReady": false,
+            "rank": 2
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 132300,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 142900,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 171600,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 193600,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 209600,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ]
+          }
+        }
+      ],
+      "metrics": {}
+    },
+    {
+      "name": "Dallas",
+      "slug": "dallas",
+      "neighborCounties": [
+        "Tarrant",
+        "Collin",
+        "Denton",
+        "Rockwall"
+      ],
+      "towns": [
+        {
+          "name": "Dallas",
+          "slug": "dallas",
+          "asOfYear": 2024,
+          "rollout": {
+            "tier": 1,
+            "featured": true,
+            "isReady": false,
+            "rank": 1
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 208700,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 230000,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 270700,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 295300,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 320700,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Plano",
+          "slug": "plano",
+          "asOfYear": 2024,
+          "rollout": {
+            "tier": 1,
+            "featured": false,
+            "isReady": false,
+            "rank": 2
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 341800,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 358100,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 412500,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 440600,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 465900,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ]
+          }
+        }
+      ],
+      "metrics": {}
+    },
+    {
+      "name": "Tarrant",
+      "slug": "tarrant",
+      "neighborCounties": [
+        "Dallas",
+        "Denton",
+        "Johnson",
+        "Parker"
+      ],
+      "towns": [
+        {
+          "name": "Fort Worth",
+          "slug": "fort-worth",
+          "asOfYear": 2024,
+          "rollout": {
+            "tier": 1,
+            "featured": true,
+            "isReady": false,
+            "rank": 1
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 190400,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 212300,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 250300,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 277300,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 303000,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Arlington",
+          "slug": "arlington",
+          "asOfYear": 2024,
+          "rollout": {
+            "tier": 1,
+            "featured": false,
+            "isReady": false,
+            "rank": 2
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 188100,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 210800,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 251300,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 276400,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 304700,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ]
+          }
+        }
+      ],
+      "metrics": {}
+    },
+    {
+      "name": "Travis",
+      "slug": "travis",
+      "neighborCounties": [
+        "Williamson",
+        "Hays",
+        "Bastrop",
+        "Caldwell"
+      ],
+      "towns": [
+        {
+          "name": "Austin",
+          "slug": "austin",
+          "asOfYear": 2024,
+          "rollout": {
+            "tier": 1,
+            "featured": true,
+            "isReady": false,
+            "rank": 1
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 358600,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 381400,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 461500,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 512700,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 555300,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ]
+          }
+        }
+      ],
+      "metrics": {}
+    },
+    {
+      "name": "Bexar",
+      "slug": "bexar",
+      "neighborCounties": [
+        "Comal",
+        "Guadalupe",
+        "Medina",
+        "Atascosa"
+      ],
+      "towns": [
+        {
+          "name": "San Antonio",
+          "slug": "san-antonio",
+          "asOfYear": 2024,
+          "rollout": {
+            "tier": 1,
+            "featured": true,
+            "isReady": false,
+            "rank": 1
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 156700,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 167700,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 198000,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 219700,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 235700,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ]
+          }
+        }
+      ],
+      "metrics": {}
+    }
+  ]
+}

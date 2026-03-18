@@ -1,10 +1,12 @@
 import njStateDataRaw from '@/data/states/new-jersey.json'
+import texasStateDataRaw from '@/data/states/texas.json'
 import { slugifyLocation } from '@/utils/locationUtils'
 import { normalizeStateData } from '@/lib/data/adapter'
 import type { StateData, CountyData } from '@/lib/data/types'
 
 // Normalize the raw JSON data to the new year-aware format
 const njStateData = normalizeStateData(njStateDataRaw as any)
+const texasStateData = normalizeStateData(texasStateDataRaw as any)
 
 /**
  * Registry of state data files
@@ -12,9 +14,7 @@ const njStateData = normalizeStateData(njStateDataRaw as any)
  */
 const stateDataRegistry: Record<string, StateData> = {
   'new-jersey': njStateData,
-  // Add more states here as they're added:
-  // 'california': normalizeStateData(caStateDataRaw),
-  // 'texas': normalizeStateData(txStateDataRaw),
+  texas: texasStateData,
 }
 
 // Re-export types for convenience

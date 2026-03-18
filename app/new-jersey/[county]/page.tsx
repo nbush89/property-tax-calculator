@@ -238,7 +238,7 @@ export default async function CountyPropertyTaxPage({ params }: Props) {
             {/* Featured Towns (max 8) + CTA to county towns directory */}
             {(() => {
               const featuredTowns = selectFeaturedTowns(county, { max: 8 })
-              const townsIndexHref = buildCountyTownsIndexHref(countySlug)
+              const townsIndexHref = buildCountyTownsIndexHref('new-jersey', countySlug)
               const publishedCount = (county.towns || []).filter(
                 t => getTownSlug(t) && isTownPublished(t)
               ).length
@@ -293,7 +293,7 @@ export default async function CountyPropertyTaxPage({ params }: Props) {
               <h2 className="text-2xl font-semibold mb-4 text-text">Related Resources</h2>
               <div className="flex flex-wrap gap-4">
                 <Link
-                  href={buildCountyTownsIndexHref(countySlug)}
+                  href={buildCountyTownsIndexHref('new-jersey', countySlug)}
                   className="px-4 py-2 bg-surface border border-border text-text rounded-lg hover:bg-bg transition-colors"
                 >
                   All towns in {county.name} County

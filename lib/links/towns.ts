@@ -6,22 +6,33 @@ import type { TownData, CountyData, StateData } from '@/lib/data/types'
 import { slugifyLocation, getTownDisplayName } from '@/utils/locationUtils'
 
 /**
- * Build href for a town property tax page. Town URLs use short county slug (e.g. bergen).
+ * Build href for a town property tax page (state-agnostic).
+ * @param stateSlug - State slug (e.g., "new-jersey", "texas")
+ * @param countySlug - County slug (e.g., "bergen") or route segment "bergen-county-property-tax" (normalized to short slug)
+ * @param townSlug - Town slug (e.g., "ridgewood")
+ */
+export function buildTownHref(stateSlug: string, countySlug: string, townSlug: string): string {
+  const short = countySlug.replace(/-county-property-tax$/, '') || countySlug
+  return `/${stateSlug}/${short}/${townSlug}-property-tax`
+}
+
+/**
+ * Build href for a town property tax page (NJ-only; use buildTownHref for multi-state).
  * @param countySlug - County slug (e.g., "bergen") or route segment "bergen-county-property-tax" (normalized to short slug)
  * @param townSlug - Town slug (e.g., "ridgewood")
  * @returns URL path (e.g., "/new-jersey/bergen/ridgewood-property-tax")
  */
 export function buildNjTownHref(countySlug: string, townSlug: string): string {
-  const short = countySlug.replace(/-county-property-tax$/, '') || countySlug
-  return `/new-jersey/${short}/${townSlug}-property-tax`
+  return buildTownHref('new-jersey', countySlug, townSlug)
 }
 
 /**
- * Build href for county town index page (all towns in county). Uses same route segment as county page.
+ * Build href for county town index page (state-agnostic).
+ * @param stateSlug - State slug (e.g., "new-jersey", "texas")
  * @param countyRouteSegment - Route param from county page (e.g., "bergen-county-property-tax")
  */
-export function buildCountyTownsIndexHref(countyRouteSegment: string): string {
-  return `/new-jersey/${countyRouteSegment}/towns`
+export function buildCountyTownsIndexHref(stateSlug: string, countyRouteSegment: string): string {
+  return `/${stateSlug}/${countyRouteSegment}/towns`
 }
 
 /**
@@ -63,12 +74,13 @@ export function getTownSlug(town: TownData): string {
  * Select featured towns for county overview page (max 5–8). Used for "Top towns" grid.
  * Includes towns with slug (have a page); prioritizes featured > tier > rank > name.
  * Does NOT filter by isTownReady so new towns appear once they have a slug.
+ * @param stateSlug - State slug for href (default 'new-jersey')
  */
 export function selectFeaturedTowns(
   county: CountyData,
-  options: { max?: number } = {}
+  options: { max?: number; stateSlug?: string } = {}
 ): Array<{ name: string; slug: string; href: string }> {
-  const { max = 8 } = options
+  const { max = 8, stateSlug = 'new-jersey' } = options
   if (!county.towns || county.towns.length === 0) return []
 
   const withSlug = county.towns.filter(t => getTownSlug(t))
@@ -88,7 +100,7 @@ export function selectFeaturedTowns(
   return sorted.slice(0, max).map(t => ({
     name: getTownDisplayName(t),
     slug: getTownSlug(t),
-    href: buildNjTownHref(county.slug, getTownSlug(t)),
+    href: buildTownHref(stateSlug, county.slug, getTownSlug(t)),
   }))
 }
 
@@ -115,12 +127,13 @@ export function selectRelatedTowns(
   const shortSlug = getCountyShortSlug(county)
   const currentSlug = currentTownSlug.replace(/-property-tax$/, '')
 
+  const stateSlug = 'new-jersey'
   const withHref = county.towns
     .filter(t => getTownSlug(t) && getTownSlug(t) !== currentSlug)
     .map(t => ({
       town: t,
       name: getTownDisplayName(t),
-      href: buildNjTownHref(shortSlug, getTownSlug(t)),
+      href: buildTownHref(stateSlug, shortSlug, getTownSlug(t)),
     }))
 
   const sorted = [...withHref].sort((a, b) => {
@@ -200,7 +213,7 @@ export function selectCountyTownLinks(
 
     return {
       name: getTownDisplayName(town),
-      href: buildNjTownHref(county.slug, getTownSlug(town)),
+      href: buildTownHref('new-jersey', county.slug, getTownSlug(town)),
       reason,
     }
   })
@@ -209,12 +222,14 @@ export function selectCountyTownLinks(
 /**
  * Select 5–10 featured towns across the state for the state page.
  * Uses rollout.featured and tier/rank; one county can contribute multiple towns.
+ * href uses state slug from stateData so it works for any registered state.
  */
 export function selectStateFeaturedTowns(
   stateData: StateData,
   options: { max?: number } = {}
 ): Array<{ name: string; href: string; countyName: string }> {
   const { max = 10 } = options
+  const stateSlug = stateData.state?.slug ?? 'new-jersey'
   const acc: Array<{ town: TownData; county: CountyData }> = []
   for (const county of stateData.counties ?? []) {
     if (!county.towns) continue
@@ -237,7 +252,7 @@ export function selectStateFeaturedTowns(
   })
   return sorted.slice(0, max).map(({ town, county }) => ({
     name: getTownDisplayName(town),
-    href: buildNjTownHref(getCountyShortSlug(county), getTownSlug(town)),
+    href: buildTownHref(stateSlug, getCountyShortSlug(county), getTownSlug(town)),
     countyName: county.name,
   }))
 }
