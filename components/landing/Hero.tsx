@@ -33,7 +33,7 @@ export default function Hero({ statesForHero }: HeroProps) {
             {/* CTAs */}
             <div className="mb-4 flex flex-col gap-4 sm:flex-row sm:justify-center lg:justify-start">
               <LinkButton href="/property-tax-calculator" variant="primary" size="lg">
-                Start calculator
+                Continue to calculator →
               </LinkButton>
               <LinkButton href="/property-tax-rates" variant="secondary" size="lg">
                 Browse rates by state
