@@ -11,6 +11,9 @@ import { getStateData } from '@/lib/geo'
 import {
   getAllCountyRatesFromState,
   getMunicipalRatesByCountyFromState,
+  getCountyEffectiveTaxRateYear,
+  getTownEffectiveTaxRateYear,
+  getMaxEffectiveTaxRateYearInState,
 } from '@/lib/rates-from-state'
 import { formatStateName, isValidState } from '@/utils/stateUtils'
 import { notFound } from 'next/navigation'
@@ -51,7 +54,10 @@ export default async function StatePropertyTaxRatesPage({ params }: Props) {
   const counties = Object.keys(countyRates).sort()
   const hasRates = counties.length > 0
   const pageUrl = `${SITE_URL}/${encodeURIComponent(state)}/property-tax-rates`
-  const asOfYear = stateData.state.asOfYear ?? new Date().getFullYear()
+  const fallbackYear = stateData.state.asOfYear ?? new Date().getFullYear()
+  /** Align UI with actual series: county cards use latest datapoint year, not only state.asOfYear */
+  const latestRateYearInState =
+    getMaxEffectiveTaxRateYearInState(stateData) ?? fallbackYear
 
   const faqs = [
     {
@@ -107,7 +113,8 @@ export default async function StatePropertyTaxRatesPage({ params }: Props) {
               {stateName} Property Tax Rates
             </h1>
             <p className="mt-4 text-lg text-text-muted">
-              Property tax rates by county and municipality (as of {asOfYear})
+              Property tax rates by county and municipality. Years match the latest point in each
+              rate series (up to {latestRateYearInState} in this state&apos;s data).
             </p>
             <div className="mt-6 max-w-prose">
               <p className="text-text-muted leading-relaxed">
@@ -158,6 +165,8 @@ export default async function StatePropertyTaxRatesPage({ params }: Props) {
                 {counties.map(county => {
                   const countyRate = countyRates[county]
                   const countyData = municipalRatesByCounty[county]
+                  const countyRateYear =
+                    getCountyEffectiveTaxRateYear(stateData, county) ?? fallbackYear
                   return (
                     <div key={county} className="rounded-lg border border-border bg-surface shadow-sm">
                       <div className="border-b border-border bg-bg px-6 py-4">
@@ -173,7 +182,8 @@ export default async function StatePropertyTaxRatesPage({ params }: Props) {
                             </h2>
                             {countyRate != null && (
                               <p className="mt-1 text-sm text-text-muted">
-                                County Rate: {(countyRate * 100).toFixed(2)}% (as of {asOfYear})
+                                County Rate: {(countyRate * 100).toFixed(2)}% (tax year{' '}
+                                {countyRateYear})
                               </p>
                             )}
                           </div>
@@ -196,6 +206,12 @@ export default async function StatePropertyTaxRatesPage({ params }: Props) {
                               .map(([municipality, rate]) => {
                                 const countySlug = slugifyLocation(county)
                                 const townSlug = slugifyLocation(municipality)
+                                const townYear =
+                                  getTownEffectiveTaxRateYear(
+                                    stateData,
+                                    county,
+                                    municipality
+                                  ) ?? countyRateYear
                                 return (
                                   <Link
                                     key={municipality}
@@ -206,7 +222,7 @@ export default async function StatePropertyTaxRatesPage({ params }: Props) {
                                       {municipality}
                                     </p>
                                     <p className="mt-1 text-sm text-text-muted">
-                                      {(rate * 100).toFixed(2)}%
+                                      {(rate * 100).toFixed(2)}% ({townYear})
                                     </p>
                                   </Link>
                                 )
@@ -240,6 +256,16 @@ export default async function StatePropertyTaxRatesPage({ params }: Props) {
               ))}
             </dl>
           </div>
+
+          {state === 'new-jersey' && (
+            <div className="mt-12 pt-8 border-t border-border">
+              <h2 className="text-lg font-semibold text-text mb-2">Sources</h2>
+              <p className="text-sm text-text-muted">
+                Sources: New Jersey Division of Taxation (municipal/county tax rate publications),
+                U.S. Census Bureau (where noted).
+              </p>
+            </div>
+          )}
         </div>
       </main>
       <Footer />

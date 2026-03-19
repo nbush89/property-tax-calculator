@@ -19,6 +19,13 @@
       "type": "web",
       "homepageUrl": "https://comptroller.texas.gov/taxes/property-tax/",
       "notes": "County and local property tax rates and data."
+    },
+    "tx_comptroller_tax_rates_levies": {
+      "publisher": "Texas Comptroller of Public Accounts",
+      "title": "Tax Rates and Levies (county & city workbooks)",
+      "type": "xlsx",
+      "homepageUrl": "https://comptroller.texas.gov/taxes/property-tax/",
+      "notes": "Published total tax rate ($ / $100 taxable value) for the county or city taxing unit per year. Same numeric value as percent of taxable value for that unit only—not combined overlapping jurisdictions."
     }
   },
   "metrics": {},
@@ -36,7 +43,7 @@
         {
           "name": "Houston",
           "slug": "houston",
-          "asOfYear": 2024,
+          "asOfYear": 2025,
           "rollout": {
             "tier": 1,
             "featured": true,
@@ -75,13 +82,45 @@
                 "unit": "USD",
                 "sourceRef": "us_census_acs_profile_dp04"
               }
+            ],
+            "effectiveTaxRate": [
+              {
+                "year": 2021,
+                "value": 0.55083,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2022,
+                "value": 0.53364,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2023,
+                "value": 0.51919,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2024,
+                "value": 0.51919,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2025,
+                "value": 0.51919,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              }
             ]
           }
         },
         {
           "name": "Pasadena",
           "slug": "pasadena",
-          "asOfYear": 2024,
+          "asOfYear": 2025,
           "rollout": {
             "tier": 1,
             "featured": false,
@@ -120,11 +159,86 @@
                 "unit": "USD",
                 "sourceRef": "us_census_acs_profile_dp04"
               }
+            ],
+            "effectiveTaxRate": [
+              {
+                "year": 2021,
+                "value": 0.515909,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2022,
+                "value": 0.497583,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2023,
+                "value": 0.455514,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2024,
+                "value": 0.474834,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2025,
+                "value": 0.465586,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              }
             ]
           }
         }
       ],
-      "metrics": {}
+      "metrics": {
+        "effectiveTaxRate": [
+          {
+            "year": 2021,
+            "value": 0.37693,
+            "unit": "PERCENT",
+            "sourceRef": "tx_comptroller_tax_rates_levies"
+          },
+          {
+            "year": 2022,
+            "value": 0.34373,
+            "unit": "PERCENT",
+            "sourceRef": "tx_comptroller_tax_rates_levies"
+          },
+          {
+            "year": 2023,
+            "value": 0.35007,
+            "unit": "PERCENT",
+            "sourceRef": "tx_comptroller_tax_rates_levies"
+          },
+          {
+            "year": 2024,
+            "value": 0.38529,
+            "unit": "PERCENT",
+            "sourceRef": "tx_comptroller_tax_rates_levies"
+          },
+          {
+            "year": 2025,
+            "value": 0.38096,
+            "unit": "PERCENT",
+            "sourceRef": "tx_comptroller_tax_rates_levies"
+          }
+        ]
+      },
+      "copy": {
+        "paragraphs": [
+          "Harris County sits at the heart of the Houston metro and includes a mix of large cities, suburbs, and specialized districts—each with its own property tax picture.",
+          "Published rates from the Texas Comptroller and local appraisal districts help compare typical combined burdens across places like Houston and Pasadena, but your bill still depends on how jurisdictions overlap where the property sits.",
+          "Use this calculator to explore how estimated taxes change across municipalities or school districts when you hold home value constant.",
+          "Enter your property value below and choose a city when you know it to get a clearer planning estimate of annual and monthly property taxes."
+        ],
+        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills depend on appraisal, exemptions, and overlapping taxing units (county, city, school, and special districts). Verify amounts with your county appraisal district and local taxing entities."
+      },
+      "asOfYear": 2025
     },
     {
       "name": "Dallas",
@@ -139,7 +253,7 @@
         {
           "name": "Dallas",
           "slug": "dallas",
-          "asOfYear": 2024,
+          "asOfYear": 2025,
           "rollout": {
             "tier": 1,
             "featured": true,
@@ -178,13 +292,45 @@
                 "unit": "USD",
                 "sourceRef": "us_census_acs_profile_dp04"
               }
+            ],
+            "effectiveTaxRate": [
+              {
+                "year": 2021,
+                "value": 0.7733,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2022,
+                "value": 0.7458,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2023,
+                "value": 0.7357,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2024,
+                "value": 0.7047,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2025,
+                "value": 0.6988,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              }
             ]
           }
         },
         {
           "name": "Plano",
           "slug": "plano",
-          "asOfYear": 2024,
+          "asOfYear": 2025,
           "rollout": {
             "tier": 1,
             "featured": false,
@@ -223,11 +369,86 @@
                 "unit": "USD",
                 "sourceRef": "us_census_acs_profile_dp04"
               }
+            ],
+            "effectiveTaxRate": [
+              {
+                "year": 2021,
+                "value": 0.4465,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2022,
+                "value": 0.4176,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2023,
+                "value": 0.4176,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2024,
+                "value": 0.4176,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2025,
+                "value": 0.4376,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              }
             ]
           }
         }
       ],
-      "metrics": {}
+      "metrics": {
+        "effectiveTaxRate": [
+          {
+            "year": 2021,
+            "value": 0.227946,
+            "unit": "PERCENT",
+            "sourceRef": "tx_comptroller_tax_rates_levies"
+          },
+          {
+            "year": 2022,
+            "value": 0.217946,
+            "unit": "PERCENT",
+            "sourceRef": "tx_comptroller_tax_rates_levies"
+          },
+          {
+            "year": 2023,
+            "value": 0.215718,
+            "unit": "PERCENT",
+            "sourceRef": "tx_comptroller_tax_rates_levies"
+          },
+          {
+            "year": 2024,
+            "value": 0.2155,
+            "unit": "PERCENT",
+            "sourceRef": "tx_comptroller_tax_rates_levies"
+          },
+          {
+            "year": 2025,
+            "value": 0.2155,
+            "unit": "PERCENT",
+            "sourceRef": "tx_comptroller_tax_rates_levies"
+          }
+        ]
+      },
+      "copy": {
+        "paragraphs": [
+          "Dallas County anchors the eastern side of the Dallas–Fort Worth region, with dense urban districts alongside fast-growing suburbs—each subject to different combinations of city, school, and county rates.",
+          "Effective-rate style figures from Texas Comptroller workbooks are useful for head-to-head comparisons of Dallas versus Plano or other cities in the county, before you layer in homestead and exemption details.",
+          "This tool is especially helpful when you are weighing a move within North Texas and want a quick comparison of typical tax load at the same home value.",
+          "Enter your property value below and select a city when you can to narrow the estimate toward the place you have in mind."
+        ],
+        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills depend on appraisal, exemptions, and overlapping taxing units (county, city, school, and special districts). Verify amounts with your county appraisal district and local taxing entities."
+      },
+      "asOfYear": 2025
     },
     {
       "name": "Tarrant",
@@ -242,7 +463,7 @@
         {
           "name": "Fort Worth",
           "slug": "fort-worth",
-          "asOfYear": 2024,
+          "asOfYear": 2025,
           "rollout": {
             "tier": 1,
             "featured": true,
@@ -281,13 +502,45 @@
                 "unit": "USD",
                 "sourceRef": "us_census_acs_profile_dp04"
               }
+            ],
+            "effectiveTaxRate": [
+              {
+                "year": 2021,
+                "value": 0.7325,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2022,
+                "value": 0.7125,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2023,
+                "value": 0.6725,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2024,
+                "value": 0.6725,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2025,
+                "value": 0.67,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              }
             ]
           }
         },
         {
           "name": "Arlington",
           "slug": "arlington",
-          "asOfYear": 2024,
+          "asOfYear": 2025,
           "rollout": {
             "tier": 1,
             "featured": false,
@@ -326,11 +579,86 @@
                 "unit": "USD",
                 "sourceRef": "us_census_acs_profile_dp04"
               }
+            ],
+            "effectiveTaxRate": [
+              {
+                "year": 2021,
+                "value": 0.6198,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2022,
+                "value": 0.5998,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2023,
+                "value": 0.5898,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2024,
+                "value": 0.5998,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2025,
+                "value": 0.6298,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              }
             ]
           }
         }
       ],
-      "metrics": {}
+      "metrics": {
+        "effectiveTaxRate": [
+          {
+            "year": 2021,
+            "value": 0.229,
+            "unit": "PERCENT",
+            "sourceRef": "tx_comptroller_tax_rates_levies"
+          },
+          {
+            "year": 2022,
+            "value": 0.224,
+            "unit": "PERCENT",
+            "sourceRef": "tx_comptroller_tax_rates_levies"
+          },
+          {
+            "year": 2023,
+            "value": 0.1945,
+            "unit": "PERCENT",
+            "sourceRef": "tx_comptroller_tax_rates_levies"
+          },
+          {
+            "year": 2024,
+            "value": 0.1875,
+            "unit": "PERCENT",
+            "sourceRef": "tx_comptroller_tax_rates_levies"
+          },
+          {
+            "year": 2025,
+            "value": 0.1862,
+            "unit": "PERCENT",
+            "sourceRef": "tx_comptroller_tax_rates_levies"
+          }
+        ]
+      },
+      "copy": {
+        "paragraphs": [
+          "Tarrant County is home to Fort Worth, Arlington, and many smaller communities across western DFW, where school districts and city boundaries can swing the total rate noticeably block by block.",
+          "Comptroller-published total rates for each taxing unit are a practical starting point for comparing Fort Worth with Arlington or other cities before you account for exemptions and protest outcomes.",
+          "Use the estimator to compare typical tax outcomes when you are deciding between neighborhoods or cities within the county.",
+          "Enter your property value and pick a city when available to translate those rates into monthly and annual planning figures."
+        ],
+        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills depend on appraisal, exemptions, and overlapping taxing units (county, city, school, and special districts). Verify amounts with your county appraisal district and local taxing entities."
+      },
+      "asOfYear": 2025
     },
     {
       "name": "Travis",
@@ -345,7 +673,7 @@
         {
           "name": "Austin",
           "slug": "austin",
-          "asOfYear": 2024,
+          "asOfYear": 2025,
           "rollout": {
             "tier": 1,
             "featured": true,
@@ -384,11 +712,86 @@
                 "unit": "USD",
                 "sourceRef": "us_census_acs_profile_dp04"
               }
+            ],
+            "effectiveTaxRate": [
+              {
+                "year": 2021,
+                "value": 0.541,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2022,
+                "value": 0.4627,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2023,
+                "value": 0.4458,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2024,
+                "value": 0.4776,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2025,
+                "value": 0.574017,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              }
             ]
           }
         }
       ],
-      "metrics": {}
+      "metrics": {
+        "effectiveTaxRate": [
+          {
+            "year": 2021,
+            "value": 0.357365,
+            "unit": "PERCENT",
+            "sourceRef": "tx_comptroller_tax_rates_levies"
+          },
+          {
+            "year": 2022,
+            "value": 0.318239,
+            "unit": "PERCENT",
+            "sourceRef": "tx_comptroller_tax_rates_levies"
+          },
+          {
+            "year": 2023,
+            "value": 0.304655,
+            "unit": "PERCENT",
+            "sourceRef": "tx_comptroller_tax_rates_levies"
+          },
+          {
+            "year": 2024,
+            "value": 0.344445,
+            "unit": "PERCENT",
+            "sourceRef": "tx_comptroller_tax_rates_levies"
+          },
+          {
+            "year": 2025,
+            "value": 0.375845,
+            "unit": "PERCENT",
+            "sourceRef": "tx_comptroller_tax_rates_levies"
+          }
+        ]
+      },
+      "copy": {
+        "paragraphs": [
+          "Travis County centers on Austin and Central Texas growth corridors, where rapid development and strong demand can make year-over-year appraisals and rate debates especially relevant to owners.",
+          "Figures based on Comptroller tax-rate publications help benchmark Austin against smaller places in the county while you factor in homestead caps and exemption eligibility.",
+          "The calculator is useful for stress-testing affordability in different parts of the county under the same assumed home value.",
+          "Enter a value below and select Austin (or another listed city) when you have one to tighten the estimate around your situation."
+        ],
+        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills depend on appraisal, exemptions, and overlapping taxing units (county, city, school, and special districts). Verify amounts with your county appraisal district and local taxing entities."
+      },
+      "asOfYear": 2025
     },
     {
       "name": "Bexar",
@@ -403,7 +806,7 @@
         {
           "name": "San Antonio",
           "slug": "san-antonio",
-          "asOfYear": 2024,
+          "asOfYear": 2025,
           "rollout": {
             "tier": 1,
             "featured": true,
@@ -442,11 +845,86 @@
                 "unit": "USD",
                 "sourceRef": "us_census_acs_profile_dp04"
               }
+            ],
+            "effectiveTaxRate": [
+              {
+                "year": 2021,
+                "value": 0.55827,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2022,
+                "value": 0.54161,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2023,
+                "value": 0.54159,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2024,
+                "value": 0.54159,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2025,
+                "value": 0.54159,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              }
             ]
           }
         }
       ],
-      "metrics": {}
+      "metrics": {
+        "effectiveTaxRate": [
+          {
+            "year": 2021,
+            "value": 0.299999,
+            "unit": "PERCENT",
+            "sourceRef": "tx_comptroller_tax_rates_levies"
+          },
+          {
+            "year": 2022,
+            "value": 0.299999,
+            "unit": "PERCENT",
+            "sourceRef": "tx_comptroller_tax_rates_levies"
+          },
+          {
+            "year": 2023,
+            "value": 0.299999,
+            "unit": "PERCENT",
+            "sourceRef": "tx_comptroller_tax_rates_levies"
+          },
+          {
+            "year": 2024,
+            "value": 0.299999,
+            "unit": "PERCENT",
+            "sourceRef": "tx_comptroller_tax_rates_levies"
+          },
+          {
+            "year": 2025,
+            "value": 0.299999,
+            "unit": "PERCENT",
+            "sourceRef": "tx_comptroller_tax_rates_levies"
+          }
+        ]
+      },
+      "copy": {
+        "paragraphs": [
+          "Bexar County includes San Antonio and surrounding communities in South Texas, where city, school, and special district rates combine differently depending on address.",
+          "Using Comptroller-sourced tax rates as a baseline makes it easier to reason about typical burdens before you dive into appraisal notices and exemption paperwork.",
+          "Try the calculator to compare how an assumed home value translates into monthly taxes for San Antonio versus other in-county options as you expand coverage.",
+          "Enter your property value below and choose San Antonio when it applies to see planning estimates tailored to that city."
+        ],
+        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills depend on appraisal, exemptions, and overlapping taxing units (county, city, school, and special districts). Verify amounts with your county appraisal district and local taxing entities."
+      },
+      "asOfYear": 2025
     }
   ]
 }

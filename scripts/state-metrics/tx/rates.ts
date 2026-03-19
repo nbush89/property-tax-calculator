@@ -1,10 +1,20 @@
 /**
- * Texas official property tax rates — scaffold for Comptroller/CAD integration.
- * Stub returns empty maps; does not throw.
+ * Texas Comptroller annual county + city Rates and Levies XLSX → effectiveTaxRate series.
  */
 import type { CountyMetricsPayload, TownMetricsPayload } from '../../lib/state-metrics-types'
 import { buildSeries } from '../../lib/build-series'
-import { TX_RATES_SOURCE_REF } from './config'
+import {
+  TX_COUNTY_RATES_URL,
+  TX_CITY_RATES_URL,
+  TX_RATES_SOURCE_REF,
+  TEXAS_CITY_WORKBOOK_COUNTY,
+} from './config'
+import {
+  downloadBuffer,
+  parseCountyRatesWorkbook,
+  parseCityRatesWorkbook,
+} from './comptroller-xlsx'
+import { normalizeTexasCountyKey, normalizeTexasCityKey } from './normalize'
 
 export type TexasCountyList = Array<{
   slug: string
@@ -12,48 +22,166 @@ export type TexasCountyList = Array<{
   towns?: Array<{ name: string; slug: string }>
 }>
 
-export async function fetchTexasRateMapsForYears(
-  _years: number[],
-  log: (m: string) => void
-): Promise<Map<number, Map<string, number>>> {
-  log('[INFO] Texas official rate sourcing scaffold active; no rate data merged yet')
-  return new Map<number, Map<string, number>>()
+export type TexasRatesRunSummary = {
+  yearsAttempted: number[]
+  yearsSucceeded: number[]
+  countiesMatchedPerYear: Record<number, number>
+  townsMatchedPerYear: Record<number, number>
+  workbookCountyRows: number
+  workbookCityRows: number
+  geoCounties: number
+  geoTowns: number
+  townsNeverMatched: string[]
+  countiesNeverMatched: string[]
+}
+
+function pairKey(workbookCountyName: string, unitName: string): string {
+  return `${normalizeTexasCountyKey(workbookCountyName)}||${normalizeTexasCityKey(unitName)}`
 }
 
 /**
- * Merge town effective rates from rate maps. Keys in rateMaps should match townsOut keys:
- * `${countySlug}/${townSlug}` → effective rate % per year.
+ * Fetch Comptroller workbooks per year and merge county + city rates into payload objects.
  */
-export function mergeTownEffectiveFromTexasRates(
+export async function applyTexasComptrollerRates(
+  countiesList: TexasCountyList,
+  countyOut: Record<string, CountyMetricsPayload>,
   townsOut: Record<string, TownMetricsPayload>,
   years: number[],
-  rateMaps: Map<number, Map<string, number>>,
   log: (m: string) => void
-): void {
-  if (rateMaps.size === 0 || years.length === 0) return
-  for (const townKey of Object.keys(townsOut)) {
-    const effByYear: Record<number, number | undefined> = {}
-    for (const y of years) {
-      const m = rateMaps.get(y)
-      if (m) effByYear[y] = m.get(townKey)
-    }
-    const series = buildSeries(effByYear, 'PERCENT', TX_RATES_SOURCE_REF)
-    if (series.length) {
-      townsOut[townKey] ??= {}
-      townsOut[townKey].effectiveTaxRate = series
-      log(`[OK] Texas rates merged for town key ${townKey}`)
+): Promise<TexasRatesRunSummary> {
+  const summary: TexasRatesRunSummary = {
+    yearsAttempted: [...years],
+    yearsSucceeded: [],
+    countiesMatchedPerYear: {},
+    townsMatchedPerYear: {},
+    workbookCountyRows: 0,
+    workbookCityRows: 0,
+    geoCounties: countiesList.length,
+    geoTowns: 0,
+    townsNeverMatched: [],
+    countiesNeverMatched: [],
+  }
+
+  const countyYearValues: Record<string, Record<number, number>> = {}
+  const townYearValues: Record<string, Record<number, number>> = {}
+
+  const slugToCountyName = new Map<string, string>()
+  for (const c of countiesList) {
+    const name = (c.name ?? c.slug).trim()
+    slugToCountyName.set(c.slug, name)
+    countyYearValues[c.slug] = {}
+  }
+
+  const townKeys: string[] = []
+  for (const c of countiesList) {
+    for (const t of c.towns ?? []) {
+      summary.geoTowns++
+      const tk = `${c.slug}/${t.slug}`
+      townKeys.push(tk)
+      townYearValues[tk] = {}
     }
   }
-}
 
-/**
- * County-level effective rate series from Texas rate maps (e.g. county average or county total rate).
- * Stub: empty. Future: key by county slug in rateMaps entries.
- */
-export function buildCountyEffectiveFromTexasRates(
-  _countiesList: TexasCountyList,
-  _years: number[],
-  _rateMaps: Map<number, Map<string, number>>
-): Record<string, CountyMetricsPayload> {
-  return {}
+  for (const year of years) {
+    let countyRows: ReturnType<typeof parseCountyRatesWorkbook> = []
+    let cityRows: ReturnType<typeof parseCityRatesWorkbook> = []
+    try {
+      const cbuf = await downloadBuffer(TX_COUNTY_RATES_URL(year))
+      countyRows = parseCountyRatesWorkbook(cbuf)
+      summary.workbookCountyRows = Math.max(summary.workbookCountyRows, countyRows.length)
+    } catch (e) {
+      if (String(e).includes('NOT_FOUND')) {
+        log(`[WARN] Texas county rates ${year}: file not found`)
+      } else {
+        log(`[WARN] Texas county rates ${year}: ${String(e)}`)
+      }
+      continue
+    }
+    try {
+      const cityBuf = await downloadBuffer(TX_CITY_RATES_URL(year))
+      cityRows = parseCityRatesWorkbook(cityBuf)
+      summary.workbookCityRows = Math.max(summary.workbookCityRows, cityRows.length)
+    } catch (e) {
+      log(`[WARN] Texas city rates ${year}: ${String(e)}`)
+      continue
+    }
+
+    summary.yearsSucceeded.push(year)
+
+    const wbCountyByKey = new Map<string, number>()
+    for (const r of countyRows) {
+      wbCountyByKey.set(normalizeTexasCountyKey(r.countyName), r.totalRate)
+    }
+
+    let countiesHit = 0
+    for (const c of countiesList) {
+      const name = slugToCountyName.get(c.slug) ?? c.slug
+      const rate = wbCountyByKey.get(normalizeTexasCountyKey(name))
+      if (rate != null) {
+        countyYearValues[c.slug]![year] = rate
+        countiesHit++
+      }
+    }
+    summary.countiesMatchedPerYear[year] = countiesHit
+
+    const rateByPair = new Map<string, number>()
+    for (const r of cityRows) {
+      const k = pairKey(r.countyName, r.unitName)
+      if (!rateByPair.has(k)) rateByPair.set(k, r.totalRate)
+    }
+
+    let townsHit = 0
+    for (const c of countiesList) {
+      for (const t of c.towns ?? []) {
+        const townKey = `${c.slug}/${t.slug}`
+        const wbCounty =
+          TEXAS_CITY_WORKBOOK_COUNTY[townKey] ?? slugToCountyName.get(c.slug) ?? c.slug
+        const k = pairKey(wbCounty, t.name)
+        const rate = rateByPair.get(k)
+        if (rate != null) {
+          townYearValues[townKey]![year] = rate
+          townsHit++
+        }
+      }
+    }
+    summary.townsMatchedPerYear[year] = townsHit
+    log(
+      `[OK] Texas Comptroller ${year}: counties ${countiesHit}/${countiesList.length}, towns ${townsHit}/${townKeys.length}`
+    )
+  }
+
+  for (const c of countiesList) {
+    const slug = c.slug
+    const series = buildSeries(countyYearValues[slug] ?? {}, 'PERCENT', TX_RATES_SOURCE_REF)
+    if (series.length) {
+      const existing = countyOut[slug] ?? { metrics: {} }
+      countyOut[slug] = {
+        metrics: { ...existing.metrics, effectiveTaxRate: series },
+      }
+    } else {
+      summary.countiesNeverMatched.push(slug)
+    }
+  }
+
+  for (const tk of townKeys) {
+    const series = buildSeries(townYearValues[tk] ?? {}, 'PERCENT', TX_RATES_SOURCE_REF)
+    if (series.length) {
+      const prev = townsOut[tk] ?? {}
+      townsOut[tk] = { ...prev, effectiveTaxRate: series }
+    } else {
+      summary.townsNeverMatched.push(tk)
+    }
+  }
+
+  const nTownMatched = townKeys.length - summary.townsNeverMatched.length
+  log(
+    `[SUMMARY] Texas Comptroller: years=[${summary.yearsSucceeded.join(',')}] | counties w/ rates: ${
+      summary.geoCounties - summary.countiesNeverMatched.length
+    }/${summary.geoCounties}, towns w/ rates: ${nTownMatched}/${townKeys.length}`
+  )
+  if (summary.townsNeverMatched.length) {
+    log(`[SUMMARY] Unmatched towns: ${summary.townsNeverMatched.join('; ')}`)
+  }
+
+  return summary
 }

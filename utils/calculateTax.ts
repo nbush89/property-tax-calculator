@@ -40,6 +40,10 @@ export function calculatePropertyTax(
 ): TaxCalculationResult {
   const { homeValue, county, town, exemptions = [] } = input
 
+  if (stateData?.state?.slug === 'texas') {
+    return calculatePropertyTaxTexas(input, stateData)
+  }
+
   const countyRate = getCountyRate(stateData, county)
   const municipalRate = town ? getMunicipalRate(stateData, county, town) : null
 
@@ -91,6 +95,68 @@ export function calculatePropertyTax(
       municipalAdjustment,
       subtotal,
       exemptions: totalExemptions,
+      final: annualTax,
+    },
+    county,
+  }
+}
+
+/**
+ * Texas: Comptroller city/county unit rates must not be summed (unlike NJ county + municipal).
+ * With a municipality selected, use city taxing unit rate only; otherwise county unit rate.
+ */
+function calculatePropertyTaxTexas(
+  input: CalculateTaxInput,
+  stateData: StateData
+): TaxCalculationResult {
+  const { homeValue, county, town } = input
+  const townDec =
+    town?.trim() ? getMunicipalRate(stateData, county, town.trim()) : null
+  const countyDec = getCountyRate(stateData, county)
+
+  let annualTax: number
+  let countyRatePct: number
+  let municipalRatePct: number
+  let base: number
+  let municipalAdjustment: number
+
+  if (townDec != null) {
+    municipalAdjustment = homeValue * townDec
+    base = 0
+    annualTax = municipalAdjustment
+    countyRatePct = 0
+    municipalRatePct = townDec * 100
+  } else if (countyDec != null) {
+    base = homeValue * countyDec
+    municipalAdjustment = 0
+    annualTax = base
+    countyRatePct = countyDec * 100
+    municipalRatePct = 0
+  } else {
+    throw new Error(
+      `Tax rates not found for ${county}${town?.trim() ? ` / ${town}` : ''}. Run Texas metrics sourcing and merge.`
+    )
+  }
+
+  const monthlyTax = annualTax / 12
+  const effectiveRate = homeValue > 0 ? (annualTax / homeValue) * 100 : 0
+  const totalRatePct = countyRatePct + municipalRatePct
+
+  return {
+    homeValue,
+    countyRate: countyRatePct,
+    municipalRate: municipalRatePct,
+    totalRate: totalRatePct,
+    annualTax,
+    monthlyTax,
+    effectiveRate,
+    exemptions: 0,
+    finalTax: annualTax,
+    breakdown: {
+      base,
+      municipalAdjustment,
+      subtotal: annualTax,
+      exemptions: 0,
       final: annualTax,
     },
     county,

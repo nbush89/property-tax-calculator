@@ -6,9 +6,14 @@ import { buildMetadata } from '@/lib/seo'
 import { breadcrumbJsonLd, faqJsonLd } from '@/lib/jsonld'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { SITE_URL } from '@/lib/site'
-import { getStateData, formatUSD } from '@/lib/geo'
-import { getLatestValue, getLatestYear } from '@/lib/data/metrics'
+import { getStateData } from '@/lib/geo'
 import { slugifyLocation } from '@/utils/locationUtils'
+import {
+  getCountyCardHighlight,
+  formatResolvedMetricValue,
+  formatResolvedMetricYear,
+} from '@/lib/metrics/resolveDisplayMetrics'
+import { MetricCaveatTrigger } from '@/components/metrics/MetricCaveatTrigger'
 import {
   selectStateFeaturedTowns,
   buildCountyTownsIndexHref,
@@ -55,6 +60,9 @@ export default async function StatePage({ params }: Props) {
   const stateName = stateData.state.name
   const pageUrl = `${SITE_URL}/${encodeURIComponent(state)}`
 
+  const njSourceAnswer =
+    'We use publicly available data from the NJ Division of Taxation (MOD IV Average Residential Tax Report, General & Effective Tax Rates) and the U.S. Census Bureau (ACS 5-year estimates for median home values). All sources are clearly labeled on each page.'
+
   const faqs = [
     {
       question: 'Are these official tax bills?',
@@ -68,13 +76,22 @@ export default async function StatePage({ params }: Props) {
     },
     {
       question: 'What data sources are used?',
-      answer: `We use publicly available data from state and federal sources. All sources are clearly labeled on each page.`,
+      answer: state === 'new-jersey' ? njSourceAnswer : `We use publicly available data from state and federal sources. All sources are clearly labeled on each page.`,
     },
     {
       question: 'What year is the data?',
       answer:
         'Data is explicitly labeled by year on each page. Different datasets update on different schedules. We always show the most recent available data and clearly label the year.',
     },
+    ...(state === 'new-jersey'
+      ? [
+          {
+            question: 'Does this include exemptions?',
+            answer:
+              'The calculator supports some exemption scenarios (senior freeze, veteran, disabled person), but individual eligibility and amounts vary. Always verify exemption details with your local tax assessor, as exemptions can significantly reduce your actual tax bill.',
+          },
+        ]
+      : []),
   ]
 
   return (
@@ -142,8 +159,7 @@ export default async function StatePage({ params }: Props) {
             {stateData.counties.map(county => {
               const countySlug = slugifyLocation(county.name)
               const countyRouteSegment = `${countySlug}-county-property-tax`
-              const latestTaxBill = getLatestValue(county.metrics?.averageResidentialTaxBill)
-              const latestYear = getLatestYear(county.metrics?.averageResidentialTaxBill)
+              const cardMetric = getCountyCardHighlight(state, county.metrics)
               const publishedTownCount = (county.towns || []).filter(
                 t => getTownSlug(t) && isTownPublished(t)
               ).length
@@ -156,9 +172,21 @@ export default async function StatePage({ params }: Props) {
                 >
                   <div className="flex-1">
                     <h3 className="mb-2 text-lg font-semibold text-text">{county.name} County</h3>
-                    {latestTaxBill != null && latestYear != null && (
-                      <p className="text-sm text-text-muted">
-                        County average ({latestYear}): {formatUSD(latestTaxBill)}
+                    {cardMetric?.show && (
+                      <p className="text-sm text-text-muted flex flex-wrap items-center gap-1">
+                        <span>
+                          {cardMetric.catalog.shortLabel ?? cardMetric.catalog.label}
+                          {formatResolvedMetricYear(cardMetric) != null && (
+                            <> ({formatResolvedMetricYear(cardMetric)})</>
+                          )}
+                          : {formatResolvedMetricValue(cardMetric)}
+                        </span>
+                        <MetricCaveatTrigger
+                          semantics={cardMetric.semantics}
+                          comparability={cardMetric.comparability}
+                          note={cardMetric.note}
+                          catalogCaveat={cardMetric.catalog.defaultCaveat}
+                        />
                       </p>
                     )}
                     {publishedTownCount > 0 && (

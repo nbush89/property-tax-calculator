@@ -1,47 +1,52 @@
 /**
- * Per-state capability flags so the calculator and UI can adapt when a state
- * does not support the same rate breakdown as NJ (e.g. county + municipal).
+ * Per-state capability flags for the calculator and routing.
+ * Declared alongside metric display capabilities in `lib/metrics/stateMetricCapabilities`.
  */
+
+import {
+  getStateMetricsConfig,
+  stateSupportsAverageTaxBill,
+} from '@/lib/metrics/stateMetricCapabilities'
 
 export interface StateCapabilities {
   /** Calculator can show county + municipal rate breakdown (e.g. NJ). */
   hasCountyAndMunicipalRates: boolean
-  /** State/county/town pages show average residential tax bill. */
+  /** Texas-style: Comptroller city/county unit rate; do not add county + city (double count). */
+  hasComptrollerUnitRates: boolean
+  /** State/county/town pages may show average residential tax bill (metric capability). */
   hasAverageTaxBill: boolean
   /** Town-level detail pages are available (published when metrics exist). */
   hasTownPages: boolean
 }
 
-const capabilitiesByState: Record<string, StateCapabilities> = {
-  'new-jersey': {
-    hasCountyAndMunicipalRates: true,
-    hasAverageTaxBill: true,
-    hasTownPages: true,
-  },
-  texas: {
-    hasCountyAndMunicipalRates: false,
-    hasAverageTaxBill: false,
-    hasTownPages: true,
-  },
+const defaultCapabilities: StateCapabilities = {
+  hasCountyAndMunicipalRates: false,
+  hasComptrollerUnitRates: false,
+  hasAverageTaxBill: false,
+  hasTownPages: true,
 }
 
 /**
- * Get capability flags for a state. Returns defaults (all false) for unknown states.
+ * Get capability flags for a state. Returns defaults for unknown states.
  */
 export function getStateCapabilities(stateSlug: string): StateCapabilities {
-  const key = stateSlug?.toLowerCase()
-  return (
-    capabilitiesByState[key] ?? {
-      hasCountyAndMunicipalRates: false,
-      hasAverageTaxBill: false,
-      hasTownPages: true,
-    }
-  )
+  const key = stateSlug?.toLowerCase() ?? ''
+  const cfg = getStateMetricsConfig(key)
+  if (!cfg) {
+    return { ...defaultCapabilities }
+  }
+  return {
+    hasCountyAndMunicipalRates: cfg.calculator.hasCountyAndMunicipalRates,
+    hasComptrollerUnitRates: cfg.calculator.hasComptrollerUnitRates,
+    hasAverageTaxBill: stateSupportsAverageTaxBill(key),
+    hasTownPages: cfg.calculator.hasTownPages,
+  }
 }
 
 /**
  * Whether the calculator can run for this state (has at least county rate or equivalent).
  */
 export function canCalculateForState(stateSlug: string): boolean {
-  return getStateCapabilities(stateSlug).hasCountyAndMunicipalRates
+  const c = getStateCapabilities(stateSlug)
+  return c.hasCountyAndMunicipalRates || c.hasComptrollerUnitRates
 }

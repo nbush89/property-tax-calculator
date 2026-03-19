@@ -32,11 +32,7 @@ import { NJ_GTR_SOURCE_REF } from './state-metrics/nj/config'
 import { runNjModivAvgTax, NJ_MODIV_SOURCE_REF } from './state-metrics/nj/modiv'
 import { STATE_FIPS, isStateMetricsSlug } from './lib/state-metrics-registry'
 import { TX_RATE_YEARS, TX_RATES_SOURCE_REF } from './state-metrics/tx/config'
-import {
-  fetchTexasRateMapsForYears,
-  mergeTownEffectiveFromTexasRates,
-  buildCountyEffectiveFromTexasRates,
-} from './state-metrics/tx/rates'
+import { applyTexasComptrollerRates } from './state-metrics/tx/rates'
 
 const CURRENT_YEAR = new Date().getFullYear()
 const ACS_YEARS = buildRecentYears({ endYear: CURRENT_YEAR - 2, window: 6 })
@@ -257,17 +253,13 @@ async function sourceTexas(options: { out: string }) {
     }
   }
 
-  const txRateMaps = await fetchTexasRateMapsForYears(TX_RATE_YEARS, log)
-  const txCountyRates = buildCountyEffectiveFromTexasRates(
+  await applyTexasComptrollerRates(
     stateJson.counties ?? [],
+    countyOut,
+    townsOut,
     TX_RATE_YEARS,
-    txRateMaps
+    log
   )
-  for (const [slug, data] of Object.entries(txCountyRates)) {
-    if (!countyOut[slug]) countyOut[slug] = { metrics: {} }
-    countyOut[slug].metrics = { ...countyOut[slug].metrics, ...data.metrics }
-  }
-  mergeTownEffectiveFromTexasRates(townsOut, TX_RATE_YEARS, txRateMaps, log)
 
   const sourceRefs: string[] = [ACS_SOURCE_REF]
   if (texasPayloadHasRateData(countyOut, townsOut)) {

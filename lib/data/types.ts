@@ -119,7 +119,8 @@ export interface TownData {
   slug: string
   /** Optional display name (e.g. "Lakewood Township"); falls back to name in UI */
   displayName?: string
-  asOfYear: number
+  /** Tax year for legacy snapshot fields; may be derived from overview in the adapter */
+  asOfYear?: number
   metrics?: TownMetrics
   copy?: TownCopy
   overrides?: TownOverrides

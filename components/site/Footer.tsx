@@ -14,7 +14,7 @@ export default function Footer() {
             <ul className="space-y-2">
               <li>
                 <Link
-                  href="/new-jersey/property-tax-calculator"
+                  href="/property-tax-calculator"
                   className="text-sm text-text-muted transition-colors hover:text-text focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded"
                 >
                   Calculator

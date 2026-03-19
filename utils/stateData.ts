@@ -4,6 +4,7 @@
 import njStateDataRaw from '@/data/states/new-jersey.json'
 import { slugifyLocation } from './locationUtils'
 import { normalizeStateData } from '@/lib/data/adapter'
+import { getTownBySlugs as getTownBySlugsFromRegistry } from '@/lib/geo'
 import type { StateData, CountyData, TownData } from '@/lib/data/types'
 
 // Normalize the data to use the new metrics structure
@@ -50,23 +51,14 @@ export function getCountyByName(countyName: string): CountyData | null {
 }
 
 /**
- * Get a town by county and town slug
+ * Get a town by county and town slug (New Jersey only; legacy helper).
+ * Prefer `getTownBySlugs` from `@/lib/geo` for multi-state routes.
  */
 export function getTownBySlugs(
   countySlug: string,
   townSlug: string
 ): { county: CountyData; town: TownData } | null {
-  const county = getCountyBySlug(countySlug)
-  if (!county || !county.towns) return null
-
-  const normalizedTownSlug = townSlug.toLowerCase().replace(/-property-tax$/, '')
-  const town = county.towns.find(
-    t =>
-      slugifyLocation(t.name) === normalizedTownSlug ||
-      t.name.toLowerCase() === normalizedTownSlug.replace(/-/g, ' ')
-  )
-
-  return town ? { county, town } : null
+  return getTownBySlugsFromRegistry('new-jersey', countySlug, townSlug)
 }
 
 /**

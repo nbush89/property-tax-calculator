@@ -228,10 +228,11 @@ function ensureSourcesTx(
   if (payloadSourceRefs?.includes(TX_RATES_SOURCE_REF)) {
     sources[TX_RATES_SOURCE_REF] ??= {
       publisher: 'Texas Comptroller of Public Accounts',
-      title: 'Property tax rates (official)',
-      type: 'web',
+      title: 'Tax Rates and Levies (county & city workbooks)',
+      type: 'xlsx',
       homepageUrl: 'https://comptroller.texas.gov/taxes/property-tax/',
-      notes: 'County/municipal effective rates when sourced from official Texas data.',
+      notes:
+        'Published total tax rate ($ / $100 taxable value) for the county or city taxing unit per year. Same numeric value as percent of taxable value for that unit only—not combined overlapping jurisdictions.',
     }
   }
 }

@@ -119,15 +119,14 @@ export function getCountyShortSlug(county: CountyData): string {
 export function selectRelatedTowns(
   county: CountyData,
   currentTownSlug: string,
-  options: { max?: number } = {}
+  options: { max?: number; stateSlug?: string } = {}
 ): Array<{ name: string; href: string }> {
-  const { max = 3 } = options
+  const { max = 3, stateSlug = 'new-jersey' } = options
   if (!county.towns || county.towns.length === 0) return []
 
   const shortSlug = getCountyShortSlug(county)
   const currentSlug = currentTownSlug.replace(/-property-tax$/, '')
 
-  const stateSlug = 'new-jersey'
   const withHref = county.towns
     .filter(t => getTownSlug(t) && getTownSlug(t) !== currentSlug)
     .map(t => ({
@@ -161,9 +160,9 @@ export function selectRelatedTowns(
  */
 export function selectCountyTownLinks(
   county: CountyData,
-  options: { max?: number } = {}
+  options: { max?: number; stateSlug?: string } = {}
 ): TownLink[] {
-  const { max = 3 } = options
+  const { max = 3, stateSlug = 'new-jersey' } = options
 
   if (!county.towns || county.towns.length === 0) {
     return []
@@ -213,7 +212,7 @@ export function selectCountyTownLinks(
 
     return {
       name: getTownDisplayName(town),
-      href: buildTownHref('new-jersey', county.slug, getTownSlug(town)),
+      href: buildTownHref(stateSlug, county.slug, getTownSlug(town)),
       reason,
     }
   })

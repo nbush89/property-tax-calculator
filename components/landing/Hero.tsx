@@ -40,7 +40,7 @@ export default function Hero({ statesForHero }: HeroProps) {
               </LinkButton>
             </div>
             <p className="mb-8 text-xs text-text-muted">
-              Currently available for New Jersey, with more states coming soon.
+              Available for New Jersey and Texas, with more states coming soon.
             </p>
             {/* Trust Badges */}
             <div className="flex flex-wrap items-center justify-center gap-4 lg:justify-start">

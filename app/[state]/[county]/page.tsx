@@ -11,14 +11,19 @@ import TaxForm from '@/components/TaxForm'
 import TaxResults from '@/components/TaxResults'
 import { Card } from '@/components/ui/Card'
 import LocationFAQ from '@/components/location/LocationFAQ'
-import { getStateData, getCountyBySlug, formatUSD } from '@/lib/geo'
+import { getStateData, getCountyBySlug } from '@/lib/geo'
 import { getCountyNames, getMunicipalitiesByCountyMap } from '@/lib/rates-from-state'
 import { slugifyLocation } from '@/utils/locationUtils'
 import { formatStateName, isValidState } from '@/utils/stateUtils'
 import { getCountyFaqData } from '@/data/countyFaqData'
-import { getLatestValue, getLatestYear } from '@/lib/data/metrics'
 import { resolveSource, resolveSourceUrl } from '@/lib/data/town-helpers'
 import CountyTaxTrendsChart from '@/components/CountyTaxTrendsChart'
+import {
+  getCountyHeroHighlight,
+  formatResolvedMetricValue,
+  formatResolvedMetricYear,
+} from '@/lib/metrics/resolveDisplayMetrics'
+import { MetricCaveatTrigger } from '@/components/metrics/MetricCaveatTrigger'
 import {
   selectFeaturedTowns,
   buildCountyTownsIndexHref,
@@ -42,19 +47,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const stateName = stateData.state.name
   const path = `/${encodeURIComponent(state)}/${countySlug}`
-  const latestTaxBill = getLatestValue(county.metrics?.averageResidentialTaxBill)
-  const latestYear = getLatestYear(county.metrics?.averageResidentialTaxBill)
-  const avgTaxBill = latestTaxBill ? formatUSD(latestTaxBill) : 'N/A'
-  const yearLabel = latestYear != null ? ` (${latestYear})` : ''
+  const hero = getCountyHeroHighlight(state, county.metrics)
+  const heroYear = hero?.latestPoint?.year
+  const yearLabel = heroYear != null ? ` (${heroYear})` : ''
+  const heroTitlePart = hero?.show
+    ? `${hero.catalog.shortLabel ?? hero.catalog.label}${yearLabel}`
+    : 'Property tax calculator'
+  const heroValuePart = hero?.show ? formatResolvedMetricValue(hero) : ''
 
   return buildMetadata({
-    title: `${county.name} County ${stateData.state.abbreviation} Property Tax Calculator | Avg Tax Bill${yearLabel}`,
-    description: `Estimate property taxes in ${county.name} County, ${stateName}. Includes average residential tax bill data${yearLabel} (${avgTaxBill}) and a planning-focused calculator.`,
+    title: `${county.name} County ${stateData.state.abbreviation} Property Tax Calculator | ${heroTitlePart}`,
+    description: `Estimate property taxes in ${county.name} County, ${stateName}.${hero?.show ? ` Includes ${hero.catalog.label.toLowerCase()}${yearLabel}: ${heroValuePart}.` : ''} Planning-focused calculator.`,
     path,
     keywords: `${county.name} County property tax, ${county.name} County ${stateData.state.abbreviation} tax calculator, ${stateName} ${county.name} County property tax rate`,
     openGraph: {
       title: `${county.name} County ${stateData.state.abbreviation} Property Tax Calculator`,
-      description: `Estimate property taxes in ${county.name} County, ${stateName}. Average residential tax bill${yearLabel}: ${avgTaxBill}.`,
+      description: `Estimate property taxes in ${county.name} County, ${stateName}.${hero?.show ? ` ${hero.catalog.shortLabel ?? hero.catalog.label}${yearLabel}: ${heroValuePart}.` : ''}`,
       type: 'website',
     },
   })
@@ -71,11 +79,12 @@ export default async function CountyPropertyTaxPage({ params }: Props) {
   if (!county) notFound()
 
   const stateName = stateData.state.name
-  const pageUrl = `${SITE_URL}/${encodeURIComponent(state)}/${countySlug}`
+  const encState = encodeURIComponent(state)
+  const pageUrl = `${SITE_URL}/${encState}/${countySlug}`
   const faqs = getCountyFaqData(county.name)
-  const latestTaxBill = getLatestValue(county.metrics?.averageResidentialTaxBill)
-  const latestYear = getLatestYear(county.metrics?.averageResidentialTaxBill)
-  const avgTaxBill = latestTaxBill ? formatUSD(latestTaxBill) : 'N/A'
+  const countyHero = getCountyHeroHighlight(state, county.metrics)
+  const countyHeroYear = countyHero?.latestPoint?.year
+  const countyHeroValue = countyHero?.show ? formatResolvedMetricValue(countyHero) : null
   const neighborCounties =
     county.neighborCounties
       ?.map(name => getCountyBySlug(stateData, slugifyLocation(name)))
@@ -86,14 +95,14 @@ export default async function CountyPropertyTaxPage({ params }: Props) {
       <JsonLd
         data={breadcrumbJsonLd([
           { name: 'Home', url: `${SITE_URL}/` },
-          { name: stateName, url: `${SITE_URL}/${state}` },
+          { name: stateName, url: `${SITE_URL}/${encState}` },
           { name: `${county.name} County`, url: pageUrl },
         ])}
       />
       <JsonLd
         data={webAppJsonLd({
           pageUrl,
-          description: `Estimate property taxes in ${county.name} County, ${stateName}. Average residential tax bill${latestYear != null ? ` (${latestYear})` : ''}: ${avgTaxBill}.`,
+          description: `Estimate property taxes in ${county.name} County, ${stateName}.${countyHero?.show ? ` ${countyHero.catalog.label}${countyHeroYear != null ? ` (${countyHeroYear})` : ''}: ${countyHeroValue}.` : ''}`,
         })}
       />
       <JsonLd data={faqJsonLd(pageUrl, faqs)} />
@@ -113,11 +122,28 @@ export default async function CountyPropertyTaxPage({ params }: Props) {
               <h1 className="text-4xl font-bold text-text mb-4">
                 {county.name} County, {stateData.state.abbreviation} Property Tax Calculator
               </h1>
-              <p className="text-lg text-text-muted">
-                Average Residential Tax Bill
-                {latestYear != null && <span className="text-text-muted"> ({latestYear})</span>}
-                : <span className="font-semibold text-text">{avgTaxBill}</span>
-              </p>
+              {countyHero?.show ? (
+                <p className="text-lg text-text-muted flex flex-wrap items-center justify-center gap-1">
+                  <span>
+                    {countyHero.catalog.label}
+                    {formatResolvedMetricYear(countyHero) != null && (
+                      <span className="text-text-muted"> ({formatResolvedMetricYear(countyHero)})</span>
+                    )}
+                    :{' '}
+                    <span className="font-semibold text-text">{countyHeroValue}</span>
+                  </span>
+                  <MetricCaveatTrigger
+                    semantics={countyHero.semantics}
+                    comparability={countyHero.comparability}
+                    note={countyHero.note}
+                    catalogCaveat={countyHero.catalog.defaultCaveat}
+                  />
+                </p>
+              ) : (
+                <p className="text-lg text-text-muted">
+                  Property tax estimates vary by municipality — use the calculator below.
+                </p>
+              )}
               <div className="mt-4 flex justify-center gap-4">
                 <Link href={`/${state}`} className="hover:text-primary transition-colors underline">Back to {stateName}</Link>
                 <Link href={`/${state}/property-tax-rates`} className="hover:text-primary transition-colors underline">View {stateName} tax rates</Link>
@@ -139,28 +165,41 @@ export default async function CountyPropertyTaxPage({ params }: Props) {
                 </p>
               )}
               {(() => {
-                const latestBill = county.metrics?.averageResidentialTaxBill?.[county.metrics.averageResidentialTaxBill.length - 1]
-                if (!latestBill) return null
-                const source = resolveSource(stateData, latestBill.sourceRef)
-                const sourceUrl = resolveSourceUrl(stateData, latestBill.sourceRef, latestBill.year)
+                const pt = countyHero?.latestPoint
+                if (!pt) return null
+                const source = resolveSource(stateData, pt.sourceRef)
+                const sourceUrl = resolveSourceUrl(stateData, pt.sourceRef, pt.year)
                 if (!source) return null
                 return (
                   <div className="mt-6 pt-6 border-t border-border">
                     <p className="text-sm text-text-muted">
                       Source:{' '}
                       <a href={sourceUrl || source.homepageUrl} target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary-hover underline">
-                        {source.publisher} - {source.title} ({latestBill.year})
+                        {source.publisher} - {source.title} ({pt.year})
                       </a>
                     </p>
                   </div>
                 )
               })()}
+              {county.copy?.disclaimer && (
+                <div className="mt-6 p-4 bg-warning/10 border border-warning/30 rounded-lg not-prose">
+                  <p className="text-sm text-text">{county.copy.disclaimer}</p>
+                  <p className="text-xs text-text-muted mt-4">
+                    For details on data sources and how estimates are calculated, see our{' '}
+                    <Link href="/methodology" className="text-primary hover:text-primary-hover underline">
+                      methodology
+                    </Link>
+                    .
+                  </p>
+                </div>
+              )}
             </div>
 
             <div className="grid lg:grid-cols-2 gap-8 mb-12">
               <Card className="p-6">
                 <h2 className="text-2xl font-semibold mb-4 text-text">Calculate Your Property Tax</h2>
                 <TaxForm
+                  stateSlug={state}
                   defaultCounty={county.name}
                   countyNames={getCountyNames(stateData)}
                   municipalitiesByCounty={getMunicipalitiesByCountyMap(stateData)}
@@ -168,7 +207,7 @@ export default async function CountyPropertyTaxPage({ params }: Props) {
               </Card>
               <Card className="p-6">
                 <h2 className="text-2xl font-semibold mb-4 text-text">Tax Estimate</h2>
-                <TaxResults />
+                <TaxResults stateSlug={state} />
               </Card>
             </div>
 
@@ -202,7 +241,7 @@ export default async function CountyPropertyTaxPage({ params }: Props) {
               )
             })()}
 
-            <CountyTaxTrendsChart county={county} />
+            <CountyTaxTrendsChart county={county} stateSlug={state} />
             <p className="text-xs text-text-muted mt-4">
               Learn more in our <Link href="/methodology" className="text-primary hover:text-primary-hover underline">methodology</Link>.
             </p>

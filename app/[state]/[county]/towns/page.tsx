@@ -13,6 +13,8 @@ import { getTownDisplayName } from '@/utils/locationUtils'
 import { getMetricLatest } from '@/lib/data/town-helpers'
 import { isTownPublished } from '@/lib/sitemaps'
 import { isValidState } from '@/utils/stateUtils'
+import { isMetricDisplayAllowed } from '@/lib/metrics/stateMetricCapabilities'
+import { getStateCapabilities } from '@/lib/state-capabilities'
 import CountyTownDirectory from '@/components/location/CountyTownDirectory'
 import CountyTownsFilter from '@/components/CountyTownsFilter'
 import CountyTownsLoadMore from '@/components/CountyTownsLoadMore'
@@ -64,15 +66,25 @@ export default async function CountyTownsIndexPage({ params }: Props) {
   const countyPageUrl = `${SITE_URL}/${encodeURIComponent(state)}/${countySegment}`
   const countyCalculatorHref = `/${state}/${countySegment}/property-tax-calculator`
   const stateCalculatorHref = `/${state}/property-tax-calculator`
+  const calcCaps = getStateCapabilities(state)
+
+  const rateSupported = isMetricDisplayAllowed(state, 'town', 'effectiveTaxRate')
+  const billSupported = isMetricDisplayAllowed(state, 'town', 'averageResidentialTaxBill')
 
   const directoryItems = publishedTowns.map(town => {
-    const effectiveRate = getMetricLatest({ town, county, metricKey: 'effectiveTaxRate' })
-    const avgBill = getMetricLatest({ town, county, metricKey: 'averageResidentialTaxBill' })
+    const effectiveRate = rateSupported
+      ? getMetricLatest({ town, county, metricKey: 'effectiveTaxRate' })
+      : undefined
+    const avgBill = billSupported
+      ? getMetricLatest({ town, county, metricKey: 'averageResidentialTaxBill' })
+      : undefined
     return {
       name: getTownDisplayName(town),
       href: buildTownHref(state, shortSlug, getTownSlug(town)),
-      rate: effectiveRate?.value ?? (town.avgRate != null ? town.avgRate * 100 : null),
-      taxBill: avgBill?.value ?? null,
+      rate: rateSupported
+        ? effectiveRate?.value ?? (town.avgRate != null ? town.avgRate * 100 : null)
+        : null,
+      taxBill: billSupported ? avgBill?.value ?? null : null,
     }
   })
 
@@ -104,8 +116,11 @@ export default async function CountyTownsIndexPage({ params }: Props) {
               Property tax towns in {county.name} County, {stateData.state.abbreviation}
             </h1>
             <p className="text-lg text-text-muted mb-6">
-              Explore property taxes by town in {county.name} County. Each link goes to a town page
-              with rates, average tax bill, and a planning calculator.
+              Explore property taxes by town in {county.name} County.
+              {calcCaps.hasAverageTaxBill
+                ? ' Each town page includes published rates and average tax bill when available in our dataset.'
+                : ' Each town page includes published rate data when available in our dataset.'}{' '}
+              Use the on-page calculator for planning estimates.
             </p>
 
             <nav className="mb-8 flex flex-wrap items-center gap-2 text-sm text-text-muted" aria-label="Calculators">

@@ -26,7 +26,7 @@
 **Current code usage:**
 
 - `lib/geo.ts`: Defines `StateData` and `CountyData` types, provides `getStateData()`, `getCountyBySlug()`, `formatUSD()`
-- `app/new-jersey/[county]/page.tsx`: Reads `county.avgResidentialTaxBill2024` directly for display
+- `app/[state]/[county]/page.tsx`: County metrics via year-aware helpers (see county `metrics`)
 - Direct field access: `county.avgResidentialTaxBill2024`, `county.avgEffectiveRate`
 
 ## B) Proposed Evolved JSON Structure
@@ -290,7 +290,7 @@ npx tsx scripts/validate-data.ts
 ### Files Modified:
 
 1. `/lib/geo.ts` - Uses adapter, exports new types
-2. `/app/new-jersey/[county]/page.tsx` - Uses helpers, shows historical section
+2. `/app/[state]/[county]/page.tsx` - Uses helpers, shows historical section
 
 ### Backward Compatibility:
 

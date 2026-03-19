@@ -153,7 +153,7 @@ export function getStateLastmod(stateSlug: string, stateData: StateData | null):
 
 /**
  * Generate static page URLs only (truly global: home, faq, about, etc.).
- * State-specific routes like /new-jersey/property-tax-calculator live in getStateUrls to avoid duplicates.
+ * State-specific routes like /:state/property-tax-calculator live in getStateUrls to avoid duplicates.
  */
 export function getStaticPageUrls(baseUrl: string): Array<{
   loc: string

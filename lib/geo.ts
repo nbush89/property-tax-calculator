@@ -2,7 +2,7 @@ import njStateDataRaw from '@/data/states/new-jersey.json'
 import texasStateDataRaw from '@/data/states/texas.json'
 import { slugifyLocation } from '@/utils/locationUtils'
 import { normalizeStateData } from '@/lib/data/adapter'
-import type { StateData, CountyData } from '@/lib/data/types'
+import type { StateData, CountyData, TownData } from '@/lib/data/types'
 
 // Normalize the raw JSON data to the new year-aware format
 const njStateData = normalizeStateData(njStateDataRaw as any)
@@ -92,12 +92,43 @@ export function getNJStateData(): StateData {
  * Get a county by slug
  */
 export function getCountyBySlug(state: StateData, countySlug: string): CountyData | null {
-  const normalizedSlug = countySlug.toLowerCase().replace(/-county$/, '')
+  const normalizedSlug = countySlug
+    .toLowerCase()
+    .replace(/-county-property-tax$/, '')
+    .replace(/-county$/, '')
   return (
     state.counties.find(
       county => county.slug === normalizedSlug || slugifyLocation(county.name) === normalizedSlug
     ) || null
   )
+}
+
+/**
+ * Resolve a town from URL segments: /[state]/[countySlug]/[townSlug]-property-tax
+ * Accepts short county slug (e.g. bergen) or full route segment (e.g. bergen-county-property-tax).
+ */
+export function getTownBySlugs(
+  stateSlug: string,
+  countySlug: string,
+  townSlug: string
+): { county: CountyData; town: TownData } | null {
+  const stateData = getStateData(stateSlug)
+  if (!stateData) return null
+
+  const decodedCounty = decodeURIComponent(countySlug)
+  const county = getCountyBySlug(stateData, decodedCounty)
+  if (!county || !county.towns) return null
+
+  const normalizedTownSlug = decodeURIComponent(townSlug)
+    .toLowerCase()
+    .replace(/-property-tax$/, '')
+  const town = county.towns.find(
+    t =>
+      slugifyLocation(t.name) === normalizedTownSlug ||
+      t.name.toLowerCase() === normalizedTownSlug.replace(/-/g, ' ')
+  )
+
+  return town ? { county, town } : null
 }
 
 /**

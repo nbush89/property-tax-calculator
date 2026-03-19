@@ -13,12 +13,20 @@ import { trackEvent } from '@/lib/analytics'
 import { validateTaxForm } from '@/lib/tax-form-schema'
 
 type TaxFormProps = {
+  /** State slug for API, deep links, and county/town pages (e.g. new-jersey, texas). */
+  stateSlug?: string
   defaultCounty?: string
   defaultMunicipality?: string
   /** County names from state data; pass from server so dropdown uses state JSON as source of truth. */
   countyNames?: string[]
   /** Municipalities by county name; pass from server. */
   municipalitiesByCounty?: Record<string, string[]>
+}
+
+function analyticsStateFromSlug(slug: string): string {
+  if (slug === 'new-jersey') return 'NJ'
+  if (slug === 'texas') return 'TX'
+  return slug.slice(0, 2).toUpperCase()
 }
 
 const PROPERTY_TYPES = [
@@ -30,11 +38,14 @@ const PROPERTY_TYPES = [
 ]
 
 export default function TaxForm({
+  stateSlug = 'new-jersey',
   defaultCounty,
   defaultMunicipality,
   countyNames = [],
   municipalitiesByCounty = {},
 }: TaxFormProps) {
+  const analyticsState = analyticsStateFromSlug(stateSlug)
+  const showNjExemptions = stateSlug === 'new-jersey'
   const [homeValue, setHomeValue] = useState('')
   const [county, setCounty] = useState(defaultCounty || '')
   const [town, setTown] = useState(defaultMunicipality || '')
@@ -74,8 +85,8 @@ export default function TaxForm({
           county: payload.county,
           town: payload.town || undefined,
           propertyType: payload.propertyType,
-          exemptions: payload.exemptions,
-          stateSlug: 'new-jersey',
+          exemptions: showNjExemptions ? payload.exemptions : [],
+          stateSlug,
         }),
       })
 
@@ -83,7 +94,7 @@ export default function TaxForm({
 
       if (response.ok) {
         trackEvent('calculate_tax', {
-          state: 'NJ',
+          state: analyticsState,
           page_type: 'calculator',
           county: slugifyLocation(payload.county),
           town: payload.town ? slugifyLocation(payload.town) : undefined,
@@ -180,7 +191,7 @@ export default function TaxForm({
             setTown(value)
             if (value)
               trackEvent('select_town', {
-                state: 'NJ',
+                state: analyticsState,
                 page_type: 'calculator',
                 county: slugifyLocation(county),
                 town: slugifyLocation(value),
@@ -192,7 +203,7 @@ export default function TaxForm({
         {county && (
           <div className="mt-2 text-sm">
             <Link
-              href={`/new-jersey/${slugifyLocation(county)}-county-property-tax`}
+              href={`/${stateSlug}/${slugifyLocation(county)}-county-property-tax`}
               className="text-primary hover:text-primary-hover underline"
             >
               View {county} County property tax page →
@@ -200,7 +211,7 @@ export default function TaxForm({
             {town && <span className="text-text-muted"> | </span>}
             {town && (
               <Link
-                href={`/new-jersey/${slugifyLocation(county)}/${slugifyLocation(town)}-property-tax`}
+                href={`/${stateSlug}/${slugifyLocation(county)}/${slugifyLocation(town)}-property-tax`}
                 className="text-primary hover:text-primary-hover underline"
               >
                 View {town} property tax page →
@@ -227,30 +238,32 @@ export default function TaxForm({
         </Select>
       </div>
 
-      <div>
-        <label className="block text-sm font-medium text-text mb-3">Exemptions (Optional)</label>
-        <div className="space-y-2">
-          {exemptionOptions.map(exemption => (
-            <label key={exemption.id} className="flex items-center space-x-2 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={selectedExemptions.includes(exemption.id)}
-                onChange={e => {
-                  if (e.target.checked) {
-                    setSelectedExemptions([...selectedExemptions, exemption.id])
-                  } else {
-                    setSelectedExemptions(selectedExemptions.filter(id => id !== exemption.id))
-                  }
-                }}
-                className="w-4 h-4 text-primary border-border rounded focus:ring-primary focus:ring-2"
-              />
-              <span className="text-sm text-text-muted">
-                {exemption.name} (${exemption.amount.toLocaleString()})
-              </span>
-            </label>
-          ))}
+      {showNjExemptions && (
+        <div>
+          <label className="block text-sm font-medium text-text mb-3">Exemptions (Optional)</label>
+          <div className="space-y-2">
+            {exemptionOptions.map(exemption => (
+              <label key={exemption.id} className="flex items-center space-x-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={selectedExemptions.includes(exemption.id)}
+                  onChange={e => {
+                    if (e.target.checked) {
+                      setSelectedExemptions([...selectedExemptions, exemption.id])
+                    } else {
+                      setSelectedExemptions(selectedExemptions.filter(id => id !== exemption.id))
+                    }
+                  }}
+                  className="w-4 h-4 text-primary border-border rounded focus:ring-primary focus:ring-2"
+                />
+                <span className="text-sm text-text-muted">
+                  {exemption.name} (${exemption.amount.toLocaleString()})
+                </span>
+              </label>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       <Button type="submit" disabled={isCalculating} className="w-full" size="lg">
         {isCalculating ? 'Calculating...' : 'Calculate Property Tax'}
