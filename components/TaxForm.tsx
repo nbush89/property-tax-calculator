@@ -7,10 +7,11 @@ import MunicipalityDropdown from './MunicipalityDropdown'
 import Input from '@/components/ui/Input'
 import Select from '@/components/ui/Select'
 import Button from '@/components/ui/Button'
-import njExemptions from '@/data/nj_exemptions.json'
 import { slugifyLocation } from '@/utils/locationUtils'
 import { trackEvent } from '@/lib/analytics'
 import { validateTaxForm } from '@/lib/tax-form-schema'
+import { ReliefProgramsCalculatorSection } from '@/components/calculator/ReliefProgramsCalculatorSection'
+import type { SelectedReliefInputs } from '@/lib/relief/types'
 
 type TaxFormProps = {
   /** State slug for API, deep links, and county/town pages (e.g. new-jersey, texas). */
@@ -45,12 +46,13 @@ export default function TaxForm({
   municipalitiesByCounty = {},
 }: TaxFormProps) {
   const analyticsState = analyticsStateFromSlug(stateSlug)
-  const showNjExemptions = stateSlug === 'new-jersey'
+  const isNj = stateSlug === 'new-jersey'
+  const isTx = stateSlug === 'texas'
   const [homeValue, setHomeValue] = useState('')
   const [county, setCounty] = useState(defaultCounty || '')
   const [town, setTown] = useState(defaultMunicipality || '')
   const [propertyType, setPropertyType] = useState('single_family')
-  const [selectedExemptions, setSelectedExemptions] = useState<string[]>([])
+  const [reliefSelections, setReliefSelections] = useState<SelectedReliefInputs>({})
   const [isCalculating, setIsCalculating] = useState(false)
   const [errors, setErrors] = useState<Partial<Record<string, string>>>({})
 
@@ -63,7 +65,7 @@ export default function TaxForm({
       county,
       town,
       propertyType,
-      selectedExemptions,
+      selectedExemptions: [],
     })
 
     if (!validation.success) {
@@ -85,7 +87,8 @@ export default function TaxForm({
           county: payload.county,
           town: payload.town || undefined,
           propertyType: payload.propertyType,
-          exemptions: showNjExemptions ? payload.exemptions : [],
+          exemptions: [],
+          reliefSelections,
           stateSlug,
         }),
       })
@@ -100,7 +103,7 @@ export default function TaxForm({
           town: payload.town ? slugifyLocation(payload.town) : undefined,
           home_value: payload.homeValue,
           property_type: payload.propertyType,
-          exemptions_count: payload.exemptions.length,
+          exemptions_count: Object.values(reliefSelections).filter(v => v === true).length,
         })
         window.dispatchEvent(new CustomEvent('taxCalculated', { detail: result }))
       } else {
@@ -114,11 +117,14 @@ export default function TaxForm({
     }
   }
 
-  const exemptionOptions = Object.keys(njExemptions).map(key => ({
-    id: key,
-    name: key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
-    amount: njExemptions[key as keyof typeof njExemptions],
-  }))
+  function toggleRelief(programId: string, checked: boolean) {
+    setReliefSelections(prev => {
+      const next = { ...prev }
+      if (checked) next[programId] = true
+      else delete next[programId]
+      return next
+    })
+  }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6" noValidate>
@@ -238,31 +244,12 @@ export default function TaxForm({
         </Select>
       </div>
 
-      {showNjExemptions && (
-        <div>
-          <label className="block text-sm font-medium text-text mb-3">Exemptions (Optional)</label>
-          <div className="space-y-2">
-            {exemptionOptions.map(exemption => (
-              <label key={exemption.id} className="flex items-center space-x-2 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={selectedExemptions.includes(exemption.id)}
-                  onChange={e => {
-                    if (e.target.checked) {
-                      setSelectedExemptions([...selectedExemptions, exemption.id])
-                    } else {
-                      setSelectedExemptions(selectedExemptions.filter(id => id !== exemption.id))
-                    }
-                  }}
-                  className="w-4 h-4 text-primary border-border rounded focus:ring-primary focus:ring-2"
-                />
-                <span className="text-sm text-text-muted">
-                  {exemption.name} (${exemption.amount.toLocaleString()})
-                </span>
-              </label>
-            ))}
-          </div>
-        </div>
+      {(isNj || isTx) && (
+        <ReliefProgramsCalculatorSection
+          stateSlug={stateSlug}
+          reliefSelections={reliefSelections}
+          onToggleProgram={toggleRelief}
+        />
       )}
 
       <Button type="submit" disabled={isCalculating} className="w-full" size="lg">

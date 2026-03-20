@@ -11,7 +11,8 @@ import { trackEvent } from '@/lib/analytics'
 import { validateTaxForm } from '@/lib/tax-form-schema'
 import TaxResults from '@/components/TaxResults'
 import type { StateOptionForHero } from '@/lib/geo'
-import njExemptions from '@/data/nj_exemptions.json'
+import { ReliefProgramsCalculatorSection } from '@/components/calculator/ReliefProgramsCalculatorSection'
+import type { SelectedReliefInputs } from '@/lib/relief/types'
 
 const PROPERTY_TYPES = [
   { value: 'single_family', label: 'Single Family Home' },
@@ -47,7 +48,7 @@ export default function UniversalTaxCalculator({
   const [townSlug, setTownSlug] = useState(initialValues?.townSlug ?? '')
   const [homeValue, setHomeValue] = useState(initialValues?.homeValue ?? '')
   const [propertyType, setPropertyType] = useState('single_family')
-  const [selectedExemptions, setSelectedExemptions] = useState<string[]>([])
+  const [reliefSelections, setReliefSelections] = useState<SelectedReliefInputs>({})
   const [isCalculating, setIsCalculating] = useState(false)
   const [errors, setErrors] = useState<Partial<Record<string, string>>>({})
   const [hasAutoCalculated, setHasAutoCalculated] = useState(false)
@@ -70,7 +71,7 @@ export default function UniversalTaxCalculator({
       county: countyName,
       town: townName,
       propertyType,
-      selectedExemptions,
+      selectedExemptions: [],
     })
     if (!validation.success) return
 
@@ -85,7 +86,8 @@ export default function UniversalTaxCalculator({
           county: payload.county,
           town: payload.town || undefined,
           propertyType: payload.propertyType,
-          exemptions: payload.exemptions,
+          exemptions: [],
+          reliefSelections,
           stateSlug: stateSlug || 'new-jersey',
         }),
       })
@@ -98,7 +100,7 @@ export default function UniversalTaxCalculator({
           town: payload.town ? slugifyLocation(payload.town) : undefined,
           home_value: payload.homeValue,
           property_type: payload.propertyType,
-          exemptions_count: payload.exemptions.length,
+          exemptions_count: Object.values(reliefSelections).filter(v => v === true).length,
         })
         window.dispatchEvent(new CustomEvent('taxCalculated', { detail: result }))
       }
@@ -113,7 +115,7 @@ export default function UniversalTaxCalculator({
     townName,
     homeValue,
     propertyType,
-    selectedExemptions,
+    reliefSelections,
     stateSlug,
     pageType,
   ])
@@ -168,7 +170,7 @@ export default function UniversalTaxCalculator({
       county: countyName,
       town: townName,
       propertyType,
-      selectedExemptions,
+      selectedExemptions: [],
     })
 
     if (!validation.success) {
@@ -183,6 +185,7 @@ export default function UniversalTaxCalculator({
     setStateSlug(value)
     setCountySlug('')
     setTownSlug('')
+    setReliefSelections({})
     if (value) trackEvent('select_state', { state: value, page_type: pageType ?? 'calculator' })
   }
 
@@ -201,11 +204,14 @@ export default function UniversalTaxCalculator({
     }
   }
 
-  const exemptionOptions = Object.keys(njExemptions).map(key => ({
-    id: key,
-    name: key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
-    amount: njExemptions[key as keyof typeof njExemptions],
-  }))
+  function toggleRelief(programId: string, checked: boolean) {
+    setReliefSelections(prev => {
+      const next = { ...prev }
+      if (checked) next[programId] = true
+      else delete next[programId]
+      return next
+    })
+  }
 
   return (
     <div className="grid lg:grid-cols-2 gap-8">
@@ -316,39 +322,24 @@ export default function UniversalTaxCalculator({
           </div>
 
           {isNj && (
-            <>
-              <div>
-                <label className="block text-sm font-medium text-text mb-2">Property Type</label>
-                <Select value={propertyType} onChange={e => setPropertyType(e.target.value)}>
-                  {PROPERTY_TYPES.map(type => (
-                    <option key={type.value} value={type.value}>
-                      {type.label}
-                    </option>
-                  ))}
-                </Select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-text mb-3">Exemptions (Optional)</label>
-                <div className="space-y-2">
-                  {exemptionOptions.map(opt => (
-                    <label key={opt.id} className="flex items-center gap-2 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={selectedExemptions.includes(opt.id)}
-                        onChange={e => {
-                          if (e.target.checked) setSelectedExemptions([...selectedExemptions, opt.id])
-                          else setSelectedExemptions(selectedExemptions.filter(id => id !== opt.id))
-                        }}
-                        className="w-4 h-4 text-primary border-border rounded focus:ring-primary focus:ring-2"
-                      />
-                      <span className="text-sm text-text-muted">
-                        {opt.name} (${opt.amount.toLocaleString()})
-                      </span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-            </>
+            <div>
+              <label className="block text-sm font-medium text-text mb-2">Property Type</label>
+              <Select value={propertyType} onChange={e => setPropertyType(e.target.value)}>
+                {PROPERTY_TYPES.map(type => (
+                  <option key={type.value} value={type.value}>
+                    {type.label}
+                  </option>
+                ))}
+              </Select>
+            </div>
+          )}
+
+          {(stateSlug === 'texas' || isNj) && (
+            <ReliefProgramsCalculatorSection
+              stateSlug={stateSlug}
+              reliefSelections={reliefSelections}
+              onToggleProgram={toggleRelief}
+            />
           )}
 
           <Button

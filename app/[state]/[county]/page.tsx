@@ -33,6 +33,7 @@ import {
   CountyEstimateGuideSection,
   CountyRelatedCountiesSection,
 } from '@/components/county/CountyPageSections'
+import { CountyReliefSection } from '@/components/relief/CountyReliefSection'
 
 type Props = {
   params: Promise<{ state: string; county: string }>
@@ -212,6 +213,10 @@ export default async function CountyPropertyTaxPage({ params }: Props) {
               </Link>{' '}
               for how we compute displayed figures.
             </p>
+          </div>
+
+          <div className="mb-10">
+            <CountyReliefSection stateSlug={state} countyDisplayName={county.name} />
           </div>
 
           <div className="grid lg:grid-cols-2 gap-8 mb-12">

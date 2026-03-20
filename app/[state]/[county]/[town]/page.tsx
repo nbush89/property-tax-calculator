@@ -26,6 +26,7 @@ import { resolveTownPageOverview } from '@/lib/town-overview/resolve-page-overvi
 import { resolveTownPageSections } from '@/lib/content/townContent'
 import { getStateCapabilities } from '@/lib/state-capabilities'
 import { buildTownMetadataForRoute, buildTownSeoFields } from '@/lib/seo/townMetadata'
+import { TownReliefSection } from '@/components/relief/TownReliefSection'
 
 function townSlugForLookup(townSlug: string): string {
   return decodeURIComponent(townSlug).replace(/-property-tax$/, '')
@@ -287,6 +288,14 @@ export default async function TownPropertyTaxPage({ params }: Props) {
               Use the calculator below with your home value. Estimates are for planning only—verify
               with your local assessor.
             </p>
+            <div className="mb-6">
+              <TownReliefSection
+                stateSlug={state}
+                townDisplayName={townDisplayName}
+                countyDisplayName={county.name}
+                countyPathSegment={countySlug}
+              />
+            </div>
             <div className="grid lg:grid-cols-2 gap-8 mt-4">
               <Card className="p-6">
                 <TaxForm

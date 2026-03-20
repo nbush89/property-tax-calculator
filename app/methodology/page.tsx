@@ -142,16 +142,53 @@ export default function MethodologyPage() {
                 </li>
               </ul>
               <p className="mb-4">
-                <strong className="font-semibold text-text">Important:</strong> We do not model
-                individual property assessments, exemptions, abatements, or appeals. If you qualify
-                for exemptions or have a property with a unique assessment history, your actual tax
-                bill will differ from our estimates.
+                <strong className="font-semibold text-text">Important:</strong> We use published
+                rates and a home value you enter as a planning baseline. We optionally apply{' '}
+                <strong className="font-semibold text-text">simplified, state-configured relief</strong>{' '}
+                when you opt in (for example, a general homestead-style reduction in taxable value in
+                Texas, or illustrative flat credits in New Jersey). We do not model every exemption,
+                rebate, freeze, or reimbursement program, and we do not replace official
+                assessments or appeals.
               </p>
               <p>
                 <strong className="font-semibold text-text">Fallback logic:</strong> For town-level
                 pages, if town-specific data is not available, we fall back to county-level data and
                 clearly label it as "county context." This ensures users always have useful
                 comparison data, even when town-level metrics aren't published.
+              </p>
+            </section>
+
+            {/* Section: Exemptions & relief */}
+            <section className="mb-10">
+              <h2 className="text-2xl font-semibold mb-4 text-text">
+                Exemptions, Credits, and State Relief Programs
+              </h2>
+              <p className="mb-4">
+                Property tax relief is defined mainly at the state level, but eligibility and amounts
+                often depend on local taxing units, income, age, filings, and timing. This site keeps
+                two kinds of program presentation:
+              </p>
+              <ul className="list-disc pl-6 mb-4 space-y-2">
+                <li>
+                  <strong className="font-semibold text-text">Included in estimate (when you select it):</strong>{' '}
+                  Simplified adjustments the calculator can apply deterministically — for example, a
+                  flat reduction to estimated taxable value before applying the rate, or an
+                  illustrative flat credit after the rate math. Methodology notes on the result explain
+                  what was applied.
+                </li>
+                <li>
+                  <strong className="font-semibold text-text">Informational only:</strong> Programs
+                  that are reimbursement-based, filing-based, or too variable to model honestly (e.g.
+                  many rebate and freeze programs) are described on state and locality pages and in the
+                  calculator&apos;s relief section, but they do not change the numeric estimate unless
+                  explicitly marked as calculator-adjustable.
+                </li>
+              </ul>
+              <p className="mb-4">
+                Actual tax bills can still differ because of assessment practices, caps, optional local
+                exemptions, veteran disability tiers, school-tax limitations, and other rules. Always
+                confirm benefits with your county appraisal district, municipal tax collector, or state
+                tax agency.
               </p>
             </section>
 
@@ -218,11 +255,11 @@ export default function MethodologyPage() {
                 </li>
                 <li>
                   <strong className="font-semibold text-text">
-                    Exemptions and appeals are not modeled.
+                    Many exemptions and appeals are not fully modeled.
                   </strong>{' '}
-                  If you qualify for senior, veteran, disabled, or other exemptions, your actual tax
-                  bill will be lower than our estimates. Similarly, if you successfully appeal your
-                  assessment, your bill will change.
+                  The calculator may apply a few optional, simplified relief selections you choose; it
+                  does not cover every program. If you qualify for additional exemptions or appeal your
+                  assessment, your actual bill will differ.
                 </li>
                 <li>
                   <strong className="font-semibold text-text">
