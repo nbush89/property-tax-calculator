@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import Header from '@/components/site/Header'
 import Footer from '@/components/site/Footer'
-import { buildMetadata } from '@/lib/seo'
 import { breadcrumbJsonLd, webAppJsonLd, faqJsonLd } from '@/lib/jsonld'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { SITE_URL } from '@/lib/site'
@@ -26,6 +25,7 @@ import { isValidState } from '@/utils/stateUtils'
 import { resolveTownPageOverview } from '@/lib/town-overview/resolve-page-overview'
 import { resolveTownPageSections } from '@/lib/content/townContent'
 import { getStateCapabilities } from '@/lib/state-capabilities'
+import { buildTownMetadataForRoute, buildTownSeoFields } from '@/lib/seo/townMetadata'
 
 function townSlugForLookup(townSlug: string): string {
   return decodeURIComponent(townSlug).replace(/-property-tax$/, '')
@@ -61,45 +61,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { county, town } = result
   const stateData = getStateData(state)!
   const pageOverview = resolveTownPageOverview(town, county, stateData)
-  const effectiveRate = getMetricLatest({
+
+  return buildTownMetadataForRoute({
     town,
     county,
-    metricKey: 'effectiveTaxRate',
-  })
-  const overview = pageOverview
-  const asOfYear =
-    overview?.asOfYear ?? effectiveRate?.year ?? town.asOfYear ?? stateData.state.asOfYear
-  const rateText =
-    overview?.effectiveTaxRatePct != null
-      ? `${overview.effectiveTaxRatePct.toFixed(2)}%`
-      : effectiveRate
-        ? `${effectiveRate.value.toFixed(2)}%`
-        : ''
-  const avgBillText =
-    overview?.avgResidentialTaxBill != null
-      ? `Avg tax bill ${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(overview.avgResidentialTaxBill)}. `
-      : ''
-  const titleSuffix =
-    rateText || asOfYear
-      ? ` (${[asOfYear, rateText].filter(Boolean).join(' · ')} Rates & Estimates)`
-      : ''
-  const townDisplayName = getTownDisplayName(town)
-  const stateName = stateData.state.name
-  const abbrev = stateData.state.abbreviation
-  const path = `/${encodeURIComponent(state)}/${encodeURIComponent(countySlug)}/${encodeURIComponent(townSlug)}`
-  const title = `${townDisplayName}, ${county.name} County ${abbrev} Property Tax Calculator${titleSuffix}`
-  const description = `Calculate property taxes for ${townDisplayName}, ${county.name} County, ${stateName}. ${avgBillText}${rateText ? `Effective rate: ${rateText}. ` : ''}Planning estimates with our free calculator.`
-
-  return buildMetadata({
-    title,
-    description,
-    path,
-    keywords: `${townDisplayName} property tax, ${townDisplayName} ${county.name} County tax calculator, ${stateName} ${townDisplayName} property tax rate`,
-    openGraph: {
-      title: title.trim(),
-      description,
-      type: 'website',
-    },
+    stateData,
+    overview: pageOverview,
+    stateSlug: state,
+    countySlugParam: countySlug,
+    townSlugParam: townSlug,
   })
 }
 
@@ -136,6 +106,7 @@ export default async function TownPropertyTaxPage({ params }: Props) {
   })
 
   const pageOverview = resolveTownPageOverview(town, county, stateData)
+  const townSeo = buildTownSeoFields({ town, county, stateData, overview: pageOverview })
   const sections = resolveTownPageSections({
     town,
     county,
@@ -188,7 +159,7 @@ export default async function TownPropertyTaxPage({ params }: Props) {
       <JsonLd
         data={webAppJsonLd({
           pageUrl,
-          description: `Calculate property taxes for ${townDisplayName}, ${county.name} County, ${stateName}.`,
+          description: townSeo.description,
         })}
       />
       <JsonLd data={faqJsonLd(pageUrl, faqs)} />
@@ -199,7 +170,7 @@ export default async function TownPropertyTaxPage({ params }: Props) {
             '@context': 'https://schema.org',
             '@type': 'WebPage',
             url: pageUrl,
-            name: `${townDisplayName}, ${county.name} County ${abbrev} Property Tax Calculator`,
+            name: townSeo.title,
             dateModified:
               town.overview?.provenance?.lastUpdated ??
               (town.overview?.sources?.[0] as { retrieved?: string } | undefined)?.retrieved,

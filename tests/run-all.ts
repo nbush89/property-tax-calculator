@@ -9,6 +9,10 @@ import './effectivePublishStatus.test'
 import './rates-from-state.test'
 
 import { runSitemapTownIndexableTests } from './sitemapTownIndexable.test'
+import './seoPathToEntity.test'
+import './seoCtrOpportunity.test'
+import './seoImportCsv.test'
+import './townMetadata.test'
 
 async function main(): Promise<void> {
   await runSitemapTownIndexableTests()

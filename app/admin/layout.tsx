@@ -13,6 +13,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               <Link href="/admin/publish-readiness" className="hover:text-primary">
                 Publish readiness
               </Link>
+              <Link href="/admin/seo-opportunities" className="hover:text-primary">
+                SEO opportunities
+              </Link>
             </nav>
           </div>
           <Link href="/" className="text-sm text-text-muted hover:text-primary">
