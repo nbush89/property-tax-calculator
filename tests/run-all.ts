@@ -13,6 +13,8 @@ import './seoPathToEntity.test'
 import './seoCtrOpportunity.test'
 import './seoImportCsv.test'
 import './townMetadata.test'
+import './relief.test'
+import './reliefPresentation.test'
 
 async function main(): Promise<void> {
   await runSitemapTownIndexableTests()

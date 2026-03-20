@@ -2,11 +2,21 @@ import { NextRequest, NextResponse } from 'next/server'
 import { calculatePropertyTax } from '@/utils/calculateTax'
 import { getStateData } from '@/lib/geo'
 import { canCalculateForState } from '@/lib/state-capabilities'
+import { normalizeReliefSelections } from '@/lib/relief/stateReliefConfigs'
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { homeValue, county, town, propertyType, exemptions = [], stateSlug = 'new-jersey' } = body
+    const {
+      homeValue,
+      county,
+      town,
+      propertyType,
+      exemptions = [],
+      reliefSelections: rawRelief,
+      stateSlug = 'new-jersey',
+    } = body
+    const reliefSelections = normalizeReliefSelections(rawRelief)
 
     if (!homeValue || !county) {
       return NextResponse.json(
@@ -30,6 +40,7 @@ export async function POST(request: NextRequest) {
         town,
         propertyType,
         exemptions,
+        reliefSelections,
       },
       stateData
     )

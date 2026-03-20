@@ -2,6 +2,7 @@
  * State hub page FAQs — shared by app route and publish-readiness validator.
  */
 import type { FAQItem } from './faqData'
+import { getReliefFaqDoesCalculatorIncludeExemptions } from '@/lib/relief/faqSnippets'
 
 export function getStatePageFaqData(stateSlug: string): FAQItem[] {
   const njSourceAnswer =
@@ -32,11 +33,10 @@ export function getStatePageFaqData(stateSlug: string): FAQItem[] {
     },
   ]
 
-  if (stateSlug === 'new-jersey') {
+  if (stateSlug === 'new-jersey' || stateSlug === 'texas') {
     base.push({
-      question: 'Does this include exemptions?',
-      answer:
-        'The calculator supports some exemption scenarios (senior freeze, veteran, disabled person), but individual eligibility and amounts vary. Always verify exemption details with your local tax assessor, as exemptions can significantly reduce your actual tax bill.',
+      question: 'Does this calculator include homestead exemptions or other relief?',
+      answer: getReliefFaqDoesCalculatorIncludeExemptions(stateSlug),
     })
   }
 

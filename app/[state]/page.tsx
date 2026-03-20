@@ -27,6 +27,7 @@ import { LinkButton } from '@/components/ui/Button'
 import { CtaCalculateLink } from '@/components/cta/CtaCalculateLink'
 import { Card } from '@/components/ui/Card'
 import Section from '@/components/ui/Section'
+import { StateReliefSection } from '@/components/relief/StateReliefSection'
 
 type Props = {
   params: Promise<{ state: string }>
@@ -115,6 +116,12 @@ export default async function StatePage({ params }: Props) {
                 specific towns or calculations.
               </p>
             </div>
+          </div>
+        </section>
+
+        <section className="pt-4 pb-2 bg-bg">
+          <div className="container-page max-w-4xl mx-auto">
+            <StateReliefSection stateSlug={state} />
           </div>
         </section>
 
