@@ -27,7 +27,7 @@ export default function LocationFAQ({
 
   return (
     <Section title={title} subtitle={subtitle} titleId={titleId} className="bg-bg">
-      <div className="mt-12 max-w-3xl mx-auto space-y-4">
+      <div className="mt-12 w-full max-w-none space-y-4">
         {faqs.map((item, index) => (
           <Card key={index} className="overflow-hidden">
             <button

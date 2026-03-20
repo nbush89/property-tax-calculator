@@ -1,0 +1,364 @@
+{
+  "meta": {
+    "stateSlug": "texas",
+    "generatedAt": "2026-03-18T00:40:57.292Z",
+    "sourceRefs": [
+      "us_census_acs_profile_dp04"
+    ]
+  },
+  "counties": {
+    "harris": {
+      "metrics": {}
+    },
+    "dallas": {
+      "metrics": {}
+    },
+    "tarrant": {
+      "metrics": {}
+    },
+    "travis": {
+      "metrics": {}
+    },
+    "bexar": {
+      "metrics": {}
+    }
+  },
+  "towns": {
+    "harris/houston": {
+      "medianHomeValue": [
+        {
+          "year": 2020,
+          "value": 186800,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2021,
+          "value": 200700,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2022,
+          "value": 235000,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2023,
+          "value": 253400,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2024,
+          "value": 277800,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        }
+      ],
+      "effectiveTaxRate": [],
+      "debug": {
+        "acsMatchKey": "HOUSTON",
+        "countySlug": "harris",
+        "countyName": "Harris",
+        "townSlug": "houston",
+        "townName": "Houston"
+      }
+    },
+    "harris/pasadena": {
+      "medianHomeValue": [
+        {
+          "year": 2020,
+          "value": 132300,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2021,
+          "value": 142900,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2022,
+          "value": 171600,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2023,
+          "value": 193600,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2024,
+          "value": 209600,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        }
+      ],
+      "effectiveTaxRate": [],
+      "debug": {
+        "acsMatchKey": "PASADENA",
+        "countySlug": "harris",
+        "countyName": "Harris",
+        "townSlug": "pasadena",
+        "townName": "Pasadena"
+      }
+    },
+    "dallas/dallas": {
+      "medianHomeValue": [
+        {
+          "year": 2020,
+          "value": 208700,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2021,
+          "value": 230000,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2022,
+          "value": 270700,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2023,
+          "value": 295300,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2024,
+          "value": 320700,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        }
+      ],
+      "effectiveTaxRate": [],
+      "debug": {
+        "acsMatchKey": "DALLAS",
+        "countySlug": "dallas",
+        "countyName": "Dallas",
+        "townSlug": "dallas",
+        "townName": "Dallas"
+      }
+    },
+    "dallas/plano": {
+      "medianHomeValue": [
+        {
+          "year": 2020,
+          "value": 341800,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2021,
+          "value": 358100,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2022,
+          "value": 412500,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2023,
+          "value": 440600,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2024,
+          "value": 465900,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        }
+      ],
+      "effectiveTaxRate": [],
+      "debug": {
+        "acsMatchKey": "PLANO",
+        "countySlug": "dallas",
+        "countyName": "Dallas",
+        "townSlug": "plano",
+        "townName": "Plano"
+      }
+    },
+    "tarrant/fort-worth": {
+      "medianHomeValue": [
+        {
+          "year": 2020,
+          "value": 190400,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2021,
+          "value": 212300,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2022,
+          "value": 250300,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2023,
+          "value": 277300,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2024,
+          "value": 303000,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        }
+      ],
+      "effectiveTaxRate": [],
+      "debug": {
+        "acsMatchKey": "FORT WORTH",
+        "countySlug": "tarrant",
+        "countyName": "Tarrant",
+        "townSlug": "fort-worth",
+        "townName": "Fort Worth"
+      }
+    },
+    "tarrant/arlington": {
+      "medianHomeValue": [
+        {
+          "year": 2020,
+          "value": 188100,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2021,
+          "value": 210800,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2022,
+          "value": 251300,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2023,
+          "value": 276400,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2024,
+          "value": 304700,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        }
+      ],
+      "effectiveTaxRate": [],
+      "debug": {
+        "acsMatchKey": "ARLINGTON",
+        "countySlug": "tarrant",
+        "countyName": "Tarrant",
+        "townSlug": "arlington",
+        "townName": "Arlington"
+      }
+    },
+    "travis/austin": {
+      "medianHomeValue": [
+        {
+          "year": 2020,
+          "value": 358600,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2021,
+          "value": 381400,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2022,
+          "value": 461500,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2023,
+          "value": 512700,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2024,
+          "value": 555300,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        }
+      ],
+      "effectiveTaxRate": [],
+      "debug": {
+        "acsMatchKey": "AUSTIN",
+        "countySlug": "travis",
+        "countyName": "Travis",
+        "townSlug": "austin",
+        "townName": "Austin"
+      }
+    },
+    "bexar/san-antonio": {
+      "medianHomeValue": [
+        {
+          "year": 2020,
+          "value": 156700,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2021,
+          "value": 167700,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2022,
+          "value": 198000,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2023,
+          "value": 219700,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        },
+        {
+          "year": 2024,
+          "value": 235700,
+          "unit": "USD",
+          "sourceRef": "us_census_acs_profile_dp04"
+        }
+      ],
+      "effectiveTaxRate": [],
+      "debug": {
+        "acsMatchKey": "SAN ANTONIO",
+        "countySlug": "bexar",
+        "countyName": "Bexar",
+        "townSlug": "san-antonio",
+        "townName": "San Antonio"
+      }
+    }
+  }
+}

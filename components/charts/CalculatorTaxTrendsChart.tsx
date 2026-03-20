@@ -1,9 +1,7 @@
 'use client'
 
 /**
- * Calculator Tax Trends Chart Component
- * Displays a historical chart of county average residential tax bill
- * Only renders when series has at least 3 data points
+ * Calculator Tax Trends Chart — supports currency (tax bill, home value) or percent (effective rate).
  */
 
 import {
@@ -20,7 +18,11 @@ import { computeYoYStats } from '@/lib/data/metrics'
 
 interface CalculatorTaxTrendsChartProps {
   series: YearValue[]
-  countyName: string
+  /** Legacy label used in default copy when chartTitle not set */
+  countyName?: string
+  valueFormat?: 'usd' | 'percent'
+  chartTitle?: string
+  chartSubtitle?: string
   className?: string
 }
 
@@ -47,22 +49,29 @@ function formatPercent(value: number): string {
 /**
  * Custom tooltip for the chart
  */
-function CustomTooltip({ active, payload }: any) {
-  if (active && payload && payload.length) {
-    const data = payload[0].payload
-    return (
-      <div className="bg-surface border border-border rounded-lg p-3 shadow-lg">
-        <p className="text-sm font-semibold text-text">{data.year}</p>
-        <p className="text-sm text-text">{formatUSD(data.value)}</p>
-      </div>
-    )
+function makeTooltip(format: 'usd' | 'percent') {
+  return function CustomTooltip({ active, payload }: any) {
+    if (active && payload && payload.length) {
+      const data = payload[0].payload
+      const val =
+        format === 'usd' ? formatUSD(data.value) : `${Number(data.value).toFixed(2)}%`
+      return (
+        <div className="bg-surface border border-border rounded-lg p-3 shadow-lg">
+          <p className="text-sm font-semibold text-text">{data.year}</p>
+          <p className="text-sm text-text">{val}</p>
+        </div>
+      )
+    }
+    return null
   }
-  return null
 }
 
 export default function CalculatorTaxTrendsChart({
   series,
-  countyName,
+  countyName = '',
+  valueFormat = 'usd',
+  chartTitle,
+  chartSubtitle,
   className = '',
 }: CalculatorTaxTrendsChartProps) {
   // Don't render if insufficient data
@@ -94,22 +103,35 @@ export default function CalculatorTaxTrendsChart({
   }))
 
   const latestYear = sorted[sorted.length - 1].year
+  const title = chartTitle ?? 'Tax trend'
+  const subtitle =
+    chartSubtitle ??
+    (countyName
+      ? `County average residential tax bill in ${countyName} County. As of ${latestYear}. Planning/comparison only.`
+      : `As of ${latestYear}. Planning/comparison only.`)
 
   return (
     <div className={`mt-6 ${className}`}>
-      <h3 className="font-semibold text-text mb-3">Tax Trend</h3>
-      <p className="text-sm text-text-muted mb-4">
-        County average residential tax bill trend in {countyName} County. As of {latestYear}.
-        Planning/comparison only.
-      </p>
+      <h3 className="font-semibold text-text mb-3">{title}</h3>
+      <p className="text-sm text-text-muted mb-4">{subtitle}</p>
 
       {/* YoY Stats */}
       {stats && (
         <div className="mb-4 text-sm text-text-muted">
           <span className="font-medium text-text">Latest YoY: </span>
           <span className="text-text">
-            {stats.delta >= 0 ? '+' : ''}
-            {formatUSD(stats.delta)} ({formatPercent(stats.deltaPct)}) from {stats.prevYear}
+            {valueFormat === 'usd' ? (
+              <>
+                {stats.delta >= 0 ? '+' : ''}
+                {formatUSD(stats.delta)} ({formatPercent(stats.deltaPct)}) from {stats.prevYear}
+              </>
+            ) : (
+              <>
+                {stats.delta >= 0 ? '+' : ''}
+                {stats.latestValue.toFixed(3)}% vs {stats.prevValue.toFixed(3)}% (
+                {formatPercent(stats.deltaPct)}) from {stats.prevYear}
+              </>
+            )}
           </span>
         </div>
       )}
@@ -130,14 +152,16 @@ export default function CalculatorTaxTrendsChart({
               className="text-text-muted"
               tick={{ fill: 'currentColor', fontSize: 12 }}
               tickFormatter={value => {
-                // Abbreviate large numbers (e.g., $10K, $15K)
+                if (valueFormat === 'percent') {
+                  return `${Number(value).toFixed(2)}%`
+                }
                 if (value >= 1000) {
                   return `$${(value / 1000).toFixed(0)}K`
                 }
                 return `$${value.toFixed(0)}`
               }}
             />
-            <Tooltip content={<CustomTooltip />} />
+            <Tooltip content={makeTooltip(valueFormat)} />
             <Line
               type="monotone"
               dataKey="value"

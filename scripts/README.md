@@ -4,10 +4,13 @@
 
 ## Overview
 
-`source-nj-tier1-metrics.ts` scrapes effective tax rates and median home values for Tier-1 NJ towns from:
+**Primary CLI:** `source-state-metrics.ts` / `merge-state-metrics.ts` (see [RUNNING-SCRIPTS.md](./RUNNING-SCRIPTS.md)). NJ Tier-1 towns are configured in **`state-metrics/nj/config.ts`**.
+
+For New Jersey, sourcing uses:
 
 - **Census Data API** (ACS 5-year estimates) for median home values
-- **NJ Division of Taxation PDFs** for effective tax rates
+- **NJ Division of Taxation** GTR PDFs for effective tax rates
+- **MOD IV** (XLSX/PDF) for average residential tax bills
 
 ## Setup
 
@@ -26,18 +29,12 @@
 Run the script to fetch data for the last 5 years:
 
 ```bash
-npm run scrape-town-metrics > town_metrics_output.json
-```
-
-Or run directly with tsx:
-
-```bash
-npx tsx scripts/source-nj-tier1-metrics.ts > /tmp/nj-tier1-metrics.json
-npx tsx scripts/merge-nj-tier1-metrics.ts /tmp/nj-tier1-metrics.json
-npx tsx scripts/source-nj-avg-tax-bill.ts > /tmp/nj-avg-tax-bill.json
-npx tsx scripts/merge-nj-avg-tax-bill.ts /tmp/nj-avg-tax-bill.json
+npm run scrape-town-metrics
+npm run merge-town-metrics
+# Or full NJ (ACS + GTR + MOD IV) in one file:
+npx tsx scripts/source-state-metrics.ts --state new-jersey --out /tmp/nj-full.json
+npx tsx scripts/merge-state-metrics.ts --state new-jersey /tmp/nj-full.json
 npx tsx scripts/apply-town-overviews.ts
-
 ```
 
 After merging metrics, run **`apply-town-overviews.ts`** so every town gets a standardized `overview` object (built from existing town/county/state metrics). It logs warnings for towns missing `overview.avgResidentialTaxBill` or `overview.effectiveTaxRatePct` but does not fail the build.
@@ -99,8 +96,8 @@ If a town shows `[MISSING]` in the output:
 ## Adding the next batch of towns
 
 1. **Add towns to JSON** (`/data/states/new-jersey.json`): Under the correct county `towns` array, add an object with at least `name`, `slug` (use `slugifyLocation` rules: lowercase, hyphens, no punctuation), and optionally `asOfYear`, `rollout: { tier, featured, isReady, rank }` so they appear in the county “Featured towns” list.
-2. **Add towns to the ingestion script** (`scripts/source-nj-avg-tax-bill.ts`): Append entries to the `TIER1` array with `countySlug`, `townSlug`, and `townName` (match NJ MOD IV report names; use `normalizeTownNameForMatch` for matching).
-3. **Run pipeline**: `npx tsx scripts/source-nj-avg-tax-bill.ts > /tmp/nj-avg-tax-bill.json` then `npx tsx scripts/merge-nj-avg-tax-bill.ts /tmp/nj-avg-tax-bill.json`. Check script stderr for unmatched town names and fix name mapping if needed.
+2. **Add towns to** `scripts/state-metrics/nj/config.ts`: append to `NJ_TIER1` (and `PDF_DISTRICT_OVERRIDES` if GTR PDF names differ). Match MOD IV report names for `townName`.
+3. **Run pipeline**: full NJ source + merge, or MOD IV only via `--only modiv` + merge. Check stderr for unmatched towns.
 4. **Slugging**: Use a single slug function everywhere (`utils/locationUtils.ts`: `slugifyLocation` / `slugifyTown`). Town slugs must be stable (e.g. "Atlantic City" → `atlantic-city`).
 
 ## Notes

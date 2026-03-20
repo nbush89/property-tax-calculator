@@ -76,14 +76,6 @@ export interface TownMetrics {
 }
 
 /**
- * County copy content
- */
-export interface CountyCopy {
-  paragraphs: string[]
-  disclaimer: string
-}
-
-/**
  * Town copy content (structured for UI rendering)
  */
 export interface TownCopy {
@@ -119,7 +111,8 @@ export interface TownData {
   slug: string
   /** Optional display name (e.g. "Lakewood Township"); falls back to name in UI */
   displayName?: string
-  asOfYear: number
+  /** Tax year for legacy snapshot fields; may be derived from overview in the adapter */
+  asOfYear?: number
   metrics?: TownMetrics
   copy?: TownCopy
   overrides?: TownOverrides
@@ -137,7 +130,6 @@ export interface CountyData {
   asOfYear?: number
   neighborCounties?: string[]
   metrics?: CountyMetrics
-  copy?: CountyCopy
   towns?: TownData[]
 }
 

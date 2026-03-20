@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 /**
  * Apply TownOverview to every town from existing metrics.
- * Run after merge-nj-avg-tax-bill and merge-nj-tier1-metrics so metrics are present.
+ * Run after merge-state-metrics (NJ) so metrics are present.
  * Logs warnings for towns missing avgResidentialTaxBill or effectiveTaxRatePct; does not fail.
  */
 

@@ -2,7 +2,7 @@
 /**
  * Cross-reference Tier 1 towns: ensure they have town-level metrics and
  * overview values that differ from county (where expected).
- * Run after: merge-nj-tier1-metrics, merge-nj-avg-tax-bill, apply-town-overviews.
+ * Run after: merge-state-metrics (NJ), apply-town-overviews.
  */
 
 import fs from 'node:fs'
@@ -92,7 +92,7 @@ function main() {
     }
     if (!hasTownBill && billSame) {
       issues.push(
-        `${t.townName}: no town-level averageResidentialTaxBill; overview shows county value (${ov.avgResidentialTaxBill}). Run source-nj-avg-tax-bill + merge-nj-avg-tax-bill.`
+        `${t.townName}: no town-level averageResidentialTaxBill; overview shows county value (${ov.avgResidentialTaxBill}). Run source-state-metrics (NJ full or --only modiv) + merge-state-metrics.`
       )
     } else if (hasTownBill && billSame) {
       issues.push(
@@ -101,7 +101,7 @@ function main() {
     }
     if (!hasTownRate && rateSame) {
       issues.push(
-        `${t.townName}: no town-level effectiveTaxRate; overview shows county value (${ov.effectiveTaxRatePct}%). Run source-nj-tier1-metrics + merge-nj-tier1-metrics.`
+        `${t.townName}: no town-level effectiveTaxRate; overview shows county value (${ov.effectiveTaxRatePct}%). Run source-state-metrics (NJ, skip-modiv or full) + merge-state-metrics.`
       )
     } else if (hasTownRate && rateSame) {
       issues.push(

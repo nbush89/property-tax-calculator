@@ -10,11 +10,20 @@ import {
   type ComparisonLabel,
 } from '@/lib/town-overview/format'
 import { Card } from '@/components/ui/Card'
+import {
+  getMetricAvailability,
+  isMetricDisplayAllowed,
+} from '@/lib/metrics/stateMetricCapabilities'
+import { METRIC_CATALOG } from '@/lib/metrics/metricCatalog'
+import type { MetricComparability, MetricSemantics } from '@/lib/metrics/capabilityTypes'
+import { MetricCaveatTrigger } from '@/components/metrics/MetricCaveatTrigger'
 
 export interface TownAtAGlanceProps {
   townName: string
   countyName: string
   stateCode: string
+  /** State slug for capability checks (e.g. new-jersey, texas) */
+  stateSlug: string
   overview?: TownOverviewType | null
 }
 
@@ -26,6 +35,7 @@ export default function TownAtAGlance({
   townName,
   countyName,
   stateCode,
+  stateSlug,
   overview,
 }: TownAtAGlanceProps) {
   if (overview == null) {
@@ -71,8 +81,25 @@ export default function TownAtAGlance({
         ? ` (${trendEnd})`
         : ''
 
-  const bullets: { label: string; value: string; yearLabel?: string }[] = []
-  if (o.avgResidentialTaxBill != null) {
+  const billCap = getMetricAvailability(stateSlug, 'town', 'averageResidentialTaxBill')
+  const rateCap = getMetricAvailability(stateSlug, 'town', 'effectiveTaxRate')
+  const medianCap = getMetricAvailability(stateSlug, 'town', 'medianHomeValue')
+  const billAllowed = isMetricDisplayAllowed(stateSlug, 'town', 'averageResidentialTaxBill')
+  const rateAllowed = isMetricDisplayAllowed(stateSlug, 'town', 'effectiveTaxRate')
+  const medianAllowed = isMetricDisplayAllowed(stateSlug, 'town', 'medianHomeValue')
+
+  const bullets: {
+    label: string
+    value: string
+    yearLabel?: string
+    caveat?: {
+      semantics?: MetricSemantics
+      comparability?: MetricComparability
+      note?: string
+      catalogCaveat?: string
+    }
+  }[] = []
+  if (billAllowed && o.avgResidentialTaxBill != null) {
     const label = billIsCountyFallback
       ? 'Avg residential tax bill (county average)'
       : 'Avg residential tax bill'
@@ -80,9 +107,16 @@ export default function TownAtAGlance({
       label,
       value: formatUSD(o.avgResidentialTaxBill),
       yearLabel: ` (${billYear})`,
+      caveat: billCap
+        ? {
+            semantics: billCap.semantics,
+            comparability: billCap.comparability,
+            note: billCap.note,
+          }
+        : undefined,
     })
   }
-  if (o.effectiveTaxRatePct != null) {
+  if (rateAllowed && o.effectiveTaxRatePct != null) {
     const label = rateIsCountyFallback
       ? 'Effective tax rate (county average)'
       : 'Effective tax rate'
@@ -90,16 +124,43 @@ export default function TownAtAGlance({
       label,
       value: formatPct(o.effectiveTaxRatePct),
       yearLabel: ` (${rateYear})`,
+      caveat: rateCap
+        ? {
+            semantics: rateCap.semantics,
+            comparability: rateCap.comparability,
+            note: rateCap.note,
+            catalogCaveat: METRIC_CATALOG.effectiveTaxRate.defaultCaveat,
+          }
+        : {
+            catalogCaveat: METRIC_CATALOG.effectiveTaxRate.defaultCaveat,
+          },
     })
   }
-  if (o.medianHomeValue != null) {
+  if (medianAllowed && o.medianHomeValue != null) {
     bullets.push({
       label: 'Median home value',
       value: formatUSD(o.medianHomeValue),
       yearLabel: ` (${medianYear})`,
+      caveat: medianCap
+        ? {
+            semantics: medianCap.semantics,
+            comparability: medianCap.comparability,
+            note: medianCap.note,
+          }
+        : undefined,
     })
-  } else if (o.typicalHomeValue != null) {
-    bullets.push({ label: 'Typical home value', value: formatUSD(o.typicalHomeValue) })
+  } else if (medianAllowed && o.typicalHomeValue != null) {
+    bullets.push({
+      label: 'Typical home value',
+      value: formatUSD(o.typicalHomeValue),
+      caveat: medianCap
+        ? {
+            semantics: medianCap.semantics,
+            comparability: medianCap.comparability,
+            note: medianCap.note,
+          }
+        : undefined,
+    })
   }
   if (vsCounty && (vsCounty === 'higher' || vsCounty === 'lower')) {
     bullets.push({
@@ -158,10 +219,20 @@ export default function TownAtAGlance({
       {bullets.length > 0 && (
         <ul className="list-disc list-inside space-y-1.5 text-text-muted mb-4">
           {bullets.map((b, i) => (
-            <li key={i}>
-              <span className="text-text">{b.label}:</span> {b.value}
-              {b.yearLabel != null && (
-                <span className="text-text-muted">{b.yearLabel}</span>
+            <li key={i} className="flex flex-wrap items-baseline gap-x-1">
+              <span>
+                <span className="text-text">{b.label}:</span> {b.value}
+                {b.yearLabel != null && (
+                  <span className="text-text-muted">{b.yearLabel}</span>
+                )}
+              </span>
+              {b.caveat && (
+                <MetricCaveatTrigger
+                  semantics={b.caveat.semantics}
+                  comparability={b.caveat.comparability}
+                  note={b.caveat.note}
+                  catalogCaveat={b.caveat.catalogCaveat}
+                />
               )}
             </li>
           ))}

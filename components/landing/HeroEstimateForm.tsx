@@ -33,10 +33,9 @@ export default function HeroEstimateForm({ states }: HeroEstimateFormProps) {
     router.push(href)
   }
 
-  // Only surface states that are production-ready in the hero.
-  const popularStates = ['new-jersey'] as const
-  const popularStateOptions = states.filter(s => popularStates.includes(s.slug as any))
-  const selectableStates = states.filter(s => s.slug === 'new-jersey')
+  const popularStates = ['new-jersey', 'texas'] as const
+  const popularStateOptions = states.filter(s => popularStates.includes(s.slug as 'new-jersey' | 'texas'))
+  const selectableStates = states.filter(s => s.slug === 'new-jersey' || s.slug === 'texas')
 
   return (
     <div className="w-full max-w-md">

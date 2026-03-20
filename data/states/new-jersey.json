@@ -26,13 +26,6 @@
         "2024": "https://www.nj.gov/treasury/taxation/pdf/lpt/gtr/2024taxrates.pdf"
       }
     },
-    "us_census_acs_dp04": {
-      "publisher": "U.S. Census Bureau",
-      "title": "ACS 5-year Profile",
-      "type": "api",
-      "homepageUrl": "https://api.census.gov/data.html",
-      "notes": "DP04_0089E = Owner-occupied units: Median value (dollars)."
-    },
     "us_census_acs_profile_dp04": {
       "publisher": "U.S. Census Bureau",
       "title": "ACS 5-year Profile (DP04_0089E median home value)",
@@ -77,16 +70,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 6799,
-            "effectiveTaxRatePct": 1.85,
+            "effectiveTaxRatePct": 2.1470000000000002,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 7.460091670617987,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -149,16 +142,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 6799,
-            "effectiveTaxRatePct": 1.85,
+            "effectiveTaxRatePct": 2.1470000000000002,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 7.460091670617987,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -221,16 +214,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 6799,
-            "effectiveTaxRatePct": 1.85,
+            "effectiveTaxRatePct": 2.1470000000000002,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 7.460091670617987,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -293,16 +286,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 6799,
-            "effectiveTaxRatePct": 1.85,
+            "effectiveTaxRatePct": 2.1470000000000002,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 7.460091670617987,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -365,16 +358,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 6799,
-            "effectiveTaxRatePct": 1.85,
+            "effectiveTaxRatePct": 2.1470000000000002,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 7.460091670617987,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -432,15 +425,6 @@
           }
         }
       ],
-      "copy": {
-        "paragraphs": [
-          "Atlantic County's property tax landscape reflects its mix of coastal communities, suburban areas, and rural towns, each with distinct tax rates based on local service needs.",
-          "The NJ Division of Taxation's 2024 Average Residential Tax Report shows Atlantic County's average residential tax bill at approximately $6,799.",
-          "Whether you're budgeting for a primary residence or evaluating investment properties, this calculator helps you estimate annual and monthly tax obligations across different Atlantic County municipalities.",
-          "Municipal selection can significantly refine your estimate, as neighboring towns often have different rates due to varying school district funding and local service levels."
-        ],
-        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
-      },
       "asOfYear": 2024,
       "metrics": {
         "averageResidentialTaxBill": [
@@ -626,19 +610,19 @@
           },
           "avgRate": 0.0034,
           "overview": {
-            "asOfYear": 2024,
+            "asOfYear": 2025,
             "avgResidentialTaxBill": 20375,
             "effectiveTaxRatePct": 1.944,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               },
               {
                 "name": "U.S. Census Bureau",
                 "url": "https://api.census.gov/data.html",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
@@ -707,16 +691,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 13600,
-            "effectiveTaxRatePct": 2.31,
+            "effectiveTaxRatePct": 1.9926,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 8.323377140581442,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -779,16 +763,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 13600,
-            "effectiveTaxRatePct": 2.31,
+            "effectiveTaxRatePct": 1.9926,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 8.323377140581442,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -851,16 +835,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 13600,
-            "effectiveTaxRatePct": 2.31,
+            "effectiveTaxRatePct": 1.9926,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 8.323377140581442,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -1024,19 +1008,19 @@
           },
           "avgRate": 0.003,
           "overview": {
-            "asOfYear": 2024,
+            "asOfYear": 2025,
             "avgResidentialTaxBill": 12095,
             "effectiveTaxRatePct": 1.434,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               },
               {
                 "name": "U.S. Census Bureau",
                 "url": "https://api.census.gov/data.html",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
@@ -1100,15 +1084,6 @@
           }
         }
       ],
-      "copy": {
-        "paragraphs": [
-          "Bergen County is consistently one of the highest-tax areas in New Jersey, and tax bills can vary widely by municipality even for similarly priced homes.",
-          "Use this page to estimate annual and monthly property tax costs for planning and comparison. Enter your property value and select your municipality if known to refine the estimate.",
-          "According to the NJ Division of Taxation's 2024 Average Residential Tax Report, the average residential tax bill in Bergen County was about $13,600.",
-          "This calculator is best used for planning and comparison: try different home values, and (if available in your dataset) select a town to see how the estimate changes."
-        ],
-        "disclaimer": "This tool provides estimates, not official tax bills. Always verify with your local tax assessor."
-      },
       "asOfYear": 2024,
       "metrics": {
         "averageResidentialTaxBill": [
@@ -1194,16 +1169,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7786,
-            "effectiveTaxRatePct": 1.95,
+            "effectiveTaxRatePct": 2.1145,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 8.229079788712816,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -1266,16 +1241,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7786,
-            "effectiveTaxRatePct": 1.95,
+            "effectiveTaxRatePct": 2.1145,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 8.229079788712816,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -1338,16 +1313,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7786,
-            "effectiveTaxRatePct": 1.95,
+            "effectiveTaxRatePct": 2.1145,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 8.229079788712816,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -1410,16 +1385,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7786,
-            "effectiveTaxRatePct": 1.95,
+            "effectiveTaxRatePct": 2.1145,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 8.229079788712816,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -1482,16 +1457,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7786,
-            "effectiveTaxRatePct": 1.95,
+            "effectiveTaxRatePct": 2.1145,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 8.229079788712816,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -1549,15 +1524,6 @@
           }
         }
       ],
-      "copy": {
-        "paragraphs": [
-          "Homeowners in Burlington County benefit from a range of suburban communities, but property tax rates can differ meaningfully between municipalities.",
-          "Based on 2024 data from the NJ Division of Taxation, the average residential property tax bill in Burlington County came to $7,786.",
-          "This planning tool lets you explore how different property values and municipal selections affect your estimated tax burden in Burlington County.",
-          "When comparing homes in different Burlington towns, remember that even similar property values can yield different tax bills due to local rate variations."
-        ],
-        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
-      },
       "asOfYear": 2024,
       "metrics": {
         "averageResidentialTaxBill": [
@@ -1727,19 +1693,19 @@
             ]
           },
           "overview": {
-            "asOfYear": 2024,
+            "asOfYear": 2025,
             "avgResidentialTaxBill": 2072,
             "effectiveTaxRatePct": 2.329,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               },
               {
                 "name": "U.S. Census Bureau",
                 "url": "https://api.census.gov/data.html",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
@@ -1878,14 +1844,14 @@
           },
           "avgRate": 0.0028,
           "overview": {
-            "asOfYear": 2024,
+            "asOfYear": 2025,
             "avgResidentialTaxBill": 9379,
             "effectiveTaxRatePct": 2.598,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
@@ -1952,16 +1918,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7468,
-            "effectiveTaxRatePct": 2.25,
+            "effectiveTaxRatePct": 2.5582000000000003,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 7.391429393155019,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -2024,16 +1990,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7468,
-            "effectiveTaxRatePct": 2.25,
+            "effectiveTaxRatePct": 2.5582000000000003,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 7.391429393155019,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -2096,16 +2062,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7468,
-            "effectiveTaxRatePct": 2.25,
+            "effectiveTaxRatePct": 2.5582000000000003,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 7.391429393155019,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -2163,15 +2129,6 @@
           }
         }
       ],
-      "copy": {
-        "paragraphs": [
-          "Camden County encompasses diverse communities from urban centers to suburban neighborhoods, each with its own property tax structure.",
-          "The 2024 Average Residential Tax Report from the NJ Division of Taxation indicates Camden County's average residential tax bill was around $7,468.",
-          "Use the calculator to model different property values and see how municipal selection impacts your estimated annual and monthly tax payments.",
-          "Understanding these estimates helps with financial planning, whether you're buying, refinancing, or simply reviewing your housing costs in Camden County."
-        ],
-        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
-      },
       "asOfYear": 2024,
       "metrics": {
         "averageResidentialTaxBill": [
@@ -2254,16 +2211,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 6273,
-            "effectiveTaxRatePct": 1.55,
+            "effectiveTaxRatePct": 1.046,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 14.054545454545456,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -2326,16 +2283,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 6273,
-            "effectiveTaxRatePct": 1.55,
+            "effectiveTaxRatePct": 1.046,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 14.054545454545456,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -2398,16 +2355,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 6273,
-            "effectiveTaxRatePct": 1.55,
+            "effectiveTaxRatePct": 1.046,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 14.054545454545456,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -2470,16 +2427,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 6273,
-            "effectiveTaxRatePct": 1.55,
+            "effectiveTaxRatePct": 1.046,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 14.054545454545456,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -2543,16 +2500,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 6273,
-            "effectiveTaxRatePct": 1.55,
+            "effectiveTaxRatePct": 1.046,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 14.054545454545456,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -2610,15 +2567,6 @@
           }
         }
       ],
-      "copy": {
-        "paragraphs": [
-          "Cape May County's property tax rates reflect its unique character as a coastal destination, with seasonal and year-round communities each setting rates based on local needs.",
-          "Per the NJ Division of Taxation's 2024 report, Cape May County had an average residential tax bill of $6,273, making it one of the more affordable counties in New Jersey.",
-          "This estimation tool is particularly useful for comparing seasonal versus year-round property ownership costs, or evaluating different Cape May municipalities.",
-          "Enter your property value below and, if you know your municipality, select it to get a more precise estimate of your annual and monthly tax obligations."
-        ],
-        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
-      },
       "asOfYear": 2024,
       "metrics": {
         "averageResidentialTaxBill": [
@@ -2703,16 +2651,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 4832,
-            "effectiveTaxRatePct": 2.05,
+            "effectiveTaxRatePct": 2.337,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 5.594405594405594,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -2775,16 +2723,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 4832,
-            "effectiveTaxRatePct": 2.05,
+            "effectiveTaxRatePct": 2.337,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 5.594405594405594,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -2847,16 +2795,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 4832,
-            "effectiveTaxRatePct": 2.05,
+            "effectiveTaxRatePct": 2.337,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 5.594405594405594,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -2919,16 +2867,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 4832,
-            "effectiveTaxRatePct": 2.05,
+            "effectiveTaxRatePct": 2.337,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 5.594405594405594,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -2991,16 +2939,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 4832,
-            "effectiveTaxRatePct": 2.05,
+            "effectiveTaxRatePct": 2.337,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 5.594405594405594,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -3058,15 +3006,6 @@
           }
         }
       ],
-      "copy": {
-        "paragraphs": [
-          "Cumberland County offers some of New Jersey's most affordable property tax rates, though individual municipalities still show meaningful variation.",
-          "The NJ Division of Taxation's 2024 data shows Cumberland County with the lowest average residential tax bill statewide at $4,832.",
-          "This calculator helps you understand how property taxes factor into your total housing costs in Cumberland County, whether you're planning a purchase or reviewing current expenses.",
-          "Municipal selection matters here too—even within this lower-tax county, choosing a specific town can refine your estimate for more accurate budgeting."
-        ],
-        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
-      },
       "asOfYear": 2024,
       "metrics": {
         "averageResidentialTaxBill": [
@@ -3248,19 +3187,19 @@
             "rank": 116
           },
           "overview": {
-            "asOfYear": 2024,
+            "asOfYear": 2025,
             "avgResidentialTaxBill": 10299,
             "effectiveTaxRatePct": 2.886,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               },
               {
                 "name": "U.S. Census Bureau",
                 "url": "https://api.census.gov/data.html",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
@@ -3399,14 +3338,14 @@
           },
           "avgRate": 0.0029,
           "overview": {
-            "asOfYear": 2024,
+            "asOfYear": 2025,
             "avgResidentialTaxBill": 21635,
             "effectiveTaxRatePct": 2.16,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
@@ -3473,16 +3412,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 13615,
-            "effectiveTaxRatePct": 2.54,
+            "effectiveTaxRatePct": 2.374,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 7.3484191437357085,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -3637,19 +3576,19 @@
             ]
           },
           "overview": {
-            "asOfYear": 2024,
+            "asOfYear": 2025,
             "avgResidentialTaxBill": 7238,
             "effectiveTaxRatePct": 1.845,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               },
               {
                 "name": "U.S. Census Bureau",
                 "url": "https://api.census.gov/data.html",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
@@ -3718,16 +3657,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 13615,
-            "effectiveTaxRatePct": 2.54,
+            "effectiveTaxRatePct": 2.374,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 7.3484191437357085,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -3790,16 +3729,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 13615,
-            "effectiveTaxRatePct": 2.54,
+            "effectiveTaxRatePct": 2.374,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 7.3484191437357085,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -3857,16 +3796,6 @@
           }
         }
       ],
-      "copy": {
-        "paragraphs": [
-          "Essex County property taxes vary significantly by municipality, driven by differences in local budgets and school tax contributions.",
-          "If you're comparing homes across Essex towns, a consistent estimation tool can make \"true monthly cost\" easier to evaluate.",
-          "According to the NJ Division of Taxation's 2024 Average Residential Tax Report, Essex County's average residential tax bill was approximately $13,615, making it one of the highest-tax counties in New Jersey.",
-          "Use the calculator below to estimate annual and monthly property taxes using county/town rate assumptions from NJ tax data tables (general and effective tax rate reporting is published by the NJ Division of Taxation).",
-          "For best results, select a specific municipality when available—neighboring towns can produce very different estimates even with the same home value."
-        ],
-        "disclaimer": "Estimates only; confirm with local assessor."
-      },
       "asOfYear": 2024,
       "metrics": {
         "averageResidentialTaxBill": [
@@ -3951,16 +3880,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7662,
-            "effectiveTaxRatePct": 1.95,
+            "effectiveTaxRatePct": 2.2369999999999997,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 5.464556090846524,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -4023,16 +3952,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7662,
-            "effectiveTaxRatePct": 1.95,
+            "effectiveTaxRatePct": 2.2369999999999997,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 5.464556090846524,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -4095,16 +4024,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7662,
-            "effectiveTaxRatePct": 1.95,
+            "effectiveTaxRatePct": 2.2369999999999997,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 5.464556090846524,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -4167,16 +4096,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7662,
-            "effectiveTaxRatePct": 1.95,
+            "effectiveTaxRatePct": 2.2369999999999997,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 5.464556090846524,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -4239,16 +4168,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7662,
-            "effectiveTaxRatePct": 1.95,
+            "effectiveTaxRatePct": 2.2369999999999997,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 5.464556090846524,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -4306,15 +4235,6 @@
           }
         }
       ],
-      "copy": {
-        "paragraphs": [
-          "Gloucester County's property tax structure balances suburban development with agricultural areas, creating a range of rates across its municipalities.",
-          "The 2024 Average Residential Tax Report from the NJ Division of Taxation shows Gloucester County's average residential tax bill at $7,662.",
-          "Whether you're evaluating homes in different Gloucester towns or planning your annual budget, this calculator provides quick estimates of annual and monthly tax costs.",
-          "Selecting a specific municipality when available will give you a more accurate picture, as local school funding and service levels vary throughout the county."
-        ],
-        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
-      },
       "asOfYear": 2024,
       "metrics": {
         "averageResidentialTaxBill": [
@@ -4499,19 +4419,19 @@
           },
           "avgRate": 0.0035,
           "overview": {
-            "asOfYear": 2024,
+            "asOfYear": 2025,
             "avgResidentialTaxBill": 9317,
             "effectiveTaxRatePct": 1.07,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               },
               {
                 "name": "U.S. Census Bureau",
                 "url": "https://api.census.gov/data.html",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
@@ -4672,19 +4592,19 @@
             ]
           },
           "overview": {
-            "asOfYear": 2024,
+            "asOfYear": 2025,
             "avgResidentialTaxBill": 10624,
             "effectiveTaxRatePct": 1.847,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               },
               {
                 "name": "U.S. Census Bureau",
                 "url": "https://api.census.gov/data.html",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
@@ -4753,16 +4673,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 10065,
-            "effectiveTaxRatePct": 2.05,
+            "effectiveTaxRatePct": 1.7599999999999998,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 19.098331558395458,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -4831,12 +4751,12 @@
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               },
               {
                 "name": "U.S. Census Bureau",
                 "url": "https://api.census.gov/data.html",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
@@ -4980,16 +4900,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 10065,
-            "effectiveTaxRatePct": 2.05,
+            "effectiveTaxRatePct": 1.7599999999999998,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 19.098331558395458,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -5047,15 +4967,6 @@
           }
         }
       ],
-      "copy": {
-        "paragraphs": [
-          "Hudson County includes a mix of dense cities and smaller municipalities, which can lead to meaningful tax differences within a short distance.",
-          "According to the NJ Division of Taxation's 2024 Average Residential Tax Report, the average residential tax bill in Hudson County was about $10,065.",
-          "This estimation tool is especially valuable when comparing Hudson County municipalities, as urban centers like Jersey City and Hoboken can have very different tax profiles than smaller towns.",
-          "Enter your property value and select your municipality to see how annual and monthly tax estimates vary across Hudson County's diverse communities."
-        ],
-        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
-      },
       "asOfYear": 2024,
       "metrics": {
         "averageResidentialTaxBill": [
@@ -5140,16 +5051,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 11198,
-            "effectiveTaxRatePct": 1.85,
+            "effectiveTaxRatePct": 2.3666,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 10.08651199370822,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -5212,16 +5123,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 11198,
-            "effectiveTaxRatePct": 1.85,
+            "effectiveTaxRatePct": 2.3666,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 10.08651199370822,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -5284,16 +5195,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 11198,
-            "effectiveTaxRatePct": 1.85,
+            "effectiveTaxRatePct": 2.3666,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 10.08651199370822,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -5356,16 +5267,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 11198,
-            "effectiveTaxRatePct": 1.85,
+            "effectiveTaxRatePct": 2.3666,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 10.08651199370822,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -5428,16 +5339,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 11198,
-            "effectiveTaxRatePct": 1.85,
+            "effectiveTaxRatePct": 2.3666,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 10.08651199370822,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -5495,15 +5406,6 @@
           }
         }
       ],
-      "copy": {
-        "paragraphs": [
-          "Hunterdon County's rural and suburban communities maintain relatively high property tax rates, reflecting strong school systems and local service levels.",
-          "The NJ Division of Taxation's 2024 report indicates Hunterdon County's average residential tax bill reached $11,198, placing it among the higher-tax counties in New Jersey.",
-          "This calculator helps you understand how property taxes contribute to your total cost of ownership in Hunterdon County, useful for both buyers and current homeowners reviewing their expenses.",
-          "Municipal selection can make a noticeable difference in your estimate, as Hunterdon's towns vary in their tax rates based on local budget priorities."
-        ],
-        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
-      },
       "asOfYear": 2024,
       "metrics": {
         "averageResidentialTaxBill": [
@@ -5681,19 +5583,19 @@
             ]
           },
           "overview": {
-            "asOfYear": 2024,
+            "asOfYear": 2025,
             "avgResidentialTaxBill": 3690,
             "effectiveTaxRatePct": 3.468,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               },
               {
                 "name": "U.S. Census Bureau",
                 "url": "https://api.census.gov/data.html",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
@@ -5863,19 +5765,19 @@
           },
           "avgRate": 0.0028,
           "overview": {
-            "asOfYear": 2024,
+            "asOfYear": 2025,
             "avgResidentialTaxBill": 22658,
             "effectiveTaxRatePct": 1.814,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               },
               {
                 "name": "U.S. Census Bureau",
                 "url": "https://api.census.gov/data.html",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
@@ -6004,14 +5906,14 @@
             ]
           },
           "overview": {
-            "asOfYear": 2024,
+            "asOfYear": 2025,
             "avgResidentialTaxBill": 5681,
             "effectiveTaxRatePct": 2.434,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
@@ -6078,16 +5980,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 9543,
-            "effectiveTaxRatePct": 2.15,
+            "effectiveTaxRatePct": 2.4344,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 9.175151584486901,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -6150,16 +6052,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 9543,
-            "effectiveTaxRatePct": 2.15,
+            "effectiveTaxRatePct": 2.4344,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 9.175151584486901,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -6217,15 +6119,6 @@
           }
         }
       ],
-      "copy": {
-        "paragraphs": [
-          "Mercer County spans from the state capital of Trenton to suburban communities like Princeton and Hamilton, each with distinct property tax characteristics.",
-          "Per the 2024 Average Residential Tax Report from the NJ Division of Taxation, Mercer County's average residential tax bill was $9,543.",
-          "This estimation tool is helpful when comparing properties across Mercer County's diverse municipalities, where tax rates can vary significantly between urban and suburban areas.",
-          "Enter your property value below and select your municipality if known to get a clearer picture of your annual and monthly tax obligations in Mercer County."
-        ],
-        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
-      },
       "asOfYear": 2024,
       "metrics": {
         "averageResidentialTaxBill": [
@@ -6381,14 +6274,14 @@
             "rank": 112
           },
           "overview": {
-            "asOfYear": 2024,
+            "asOfYear": 2025,
             "avgResidentialTaxBill": 8657,
             "effectiveTaxRatePct": 1.836,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
@@ -6455,16 +6348,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 9528,
-            "effectiveTaxRatePct": 2.11,
+            "effectiveTaxRatePct": 2.0269999999999997,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 7.612378585949853,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -6597,14 +6490,14 @@
           },
           "avgRate": 0.0029,
           "overview": {
-            "asOfYear": 2024,
+            "asOfYear": 2025,
             "avgResidentialTaxBill": 10513,
             "effectiveTaxRatePct": 2.005,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
@@ -6670,14 +6563,14 @@
           "slug": "piscataway",
           "avgRate": 0.0028,
           "overview": {
-            "asOfYear": 2024,
+            "asOfYear": 2025,
             "avgResidentialTaxBill": 8520,
             "effectiveTaxRatePct": 1.708,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
@@ -6859,14 +6752,14 @@
             ]
           },
           "overview": {
-            "asOfYear": 2024,
+            "asOfYear": 2025,
             "avgResidentialTaxBill": 9242,
             "effectiveTaxRatePct": 2.234,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
@@ -6932,14 +6825,14 @@
           "slug": "east-brunswick",
           "avgRate": 0.0026,
           "overview": {
-            "asOfYear": 2023,
+            "asOfYear": 2025,
             "avgResidentialTaxBill": 10940,
             "effectiveTaxRatePct": 2.287,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2023,
@@ -7050,15 +6943,6 @@
           "asOfYear": 2025
         }
       ],
-      "copy": {
-        "paragraphs": [
-          "Middlesex County's property tax rates reflect its mix of suburban communities, each balancing local services and school funding needs differently.",
-          "The NJ Division of Taxation's 2024 data shows Middlesex County with an average residential tax bill of $9,528.",
-          "When shopping for homes in Middlesex County, this calculator helps you quickly compare how property taxes affect total monthly costs across different municipalities.",
-          "Selecting a specific town refines your estimate, as neighboring Middlesex communities can have meaningfully different rates despite similar property values."
-        ],
-        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
-      },
       "asOfYear": 2024,
       "metrics": {
         "averageResidentialTaxBill": [
@@ -7142,16 +7026,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 10930,
-            "effectiveTaxRatePct": 2.19,
+            "effectiveTaxRatePct": 1.61,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 12.240706510577121,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -7214,16 +7098,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 10930,
-            "effectiveTaxRatePct": 2.19,
+            "effectiveTaxRatePct": 1.61,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 12.240706510577121,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -7286,16 +7170,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 10930,
-            "effectiveTaxRatePct": 2.19,
+            "effectiveTaxRatePct": 1.61,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 12.240706510577121,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -7364,14 +7248,14 @@
           },
           "avgRate": 0.0026,
           "overview": {
-            "asOfYear": 2024,
+            "asOfYear": 2025,
             "avgResidentialTaxBill": 10674,
             "effectiveTaxRatePct": 1.735,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
@@ -7493,16 +7377,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 10930,
-            "effectiveTaxRatePct": 2.19,
+            "effectiveTaxRatePct": 1.61,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 12.240706510577121,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -7560,15 +7444,6 @@
           }
         }
       ],
-      "copy": {
-        "paragraphs": [
-          "Monmouth County combines coastal communities with inland suburbs, creating a range of property tax rates that reflect local priorities and school quality.",
-          "The 2024 Average Residential Tax Report from the NJ Division of Taxation shows Monmouth County's average residential tax bill at $10,930.",
-          "This planning tool is particularly useful for comparing beachfront versus inland properties, or evaluating different Monmouth municipalities when house hunting.",
-          "Municipal selection makes a real difference here—coastal towns often have different tax structures than inland communities, so selecting your town provides a more accurate estimate."
-        ],
-        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
-      },
       "asOfYear": 2024,
       "metrics": {
         "averageResidentialTaxBill": [
@@ -7757,19 +7632,19 @@
           },
           "avgRate": 0.0028,
           "overview": {
-            "asOfYear": 2024,
+            "asOfYear": 2025,
             "avgResidentialTaxBill": 10008,
             "effectiveTaxRatePct": 1.681,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               },
               {
                 "name": "U.S. Census Bureau",
                 "url": "https://api.census.gov/data.html",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
@@ -7838,16 +7713,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 11757,
-            "effectiveTaxRatePct": 1.95,
+            "effectiveTaxRatePct": 1.74925,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 7.271897810218977,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -7910,16 +7785,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 11757,
-            "effectiveTaxRatePct": 1.95,
+            "effectiveTaxRatePct": 1.74925,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 7.271897810218977,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -7982,16 +7857,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 11757,
-            "effectiveTaxRatePct": 1.95,
+            "effectiveTaxRatePct": 1.74925,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 7.271897810218977,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -8054,16 +7929,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 11757,
-            "effectiveTaxRatePct": 1.95,
+            "effectiveTaxRatePct": 1.74925,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 7.271897810218977,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -8121,15 +7996,6 @@
           }
         }
       ],
-      "copy": {
-        "paragraphs": [
-          "Morris County is known for strong school systems and quality municipal services, factors that contribute to its above-average property tax rates.",
-          "The NJ Division of Taxation's 2024 report indicates Morris County had an average residential tax bill of $11,757, ranking among New Jersey's higher-tax counties.",
-          "This calculator helps you understand how property taxes factor into your total housing costs in Morris County, whether you're evaluating a purchase or planning your annual budget.",
-          "Different Morris municipalities can show meaningful rate variations, so selecting your specific town when available will give you a more precise estimate of annual and monthly tax obligations."
-        ],
-        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
-      },
       "asOfYear": 2024,
       "metrics": {
         "averageResidentialTaxBill": [
@@ -8273,14 +8139,14 @@
             ]
           },
           "overview": {
-            "asOfYear": 2024,
+            "asOfYear": 2025,
             "avgResidentialTaxBill": 7896,
             "effectiveTaxRatePct": 1.523,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
@@ -8347,16 +8213,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7593,
-            "effectiveTaxRatePct": 1.75,
+            "effectiveTaxRatePct": 1.4742000000000002,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 13.2776368790094,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -8425,14 +8291,14 @@
           },
           "avgRate": 0.0018,
           "overview": {
-            "asOfYear": 2024,
+            "asOfYear": 2025,
             "avgResidentialTaxBill": 8450,
             "effectiveTaxRatePct": 1.378,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
@@ -8554,16 +8420,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7593,
-            "effectiveTaxRatePct": 1.75,
+            "effectiveTaxRatePct": 1.4742000000000002,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 13.2776368790094,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -8626,16 +8492,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7593,
-            "effectiveTaxRatePct": 1.75,
+            "effectiveTaxRatePct": 1.4742000000000002,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 13.2776368790094,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -8693,15 +8559,6 @@
           }
         }
       ],
-      "copy": {
-        "paragraphs": [
-          "Ocean County's property tax landscape reflects its mix of beach communities, retirement areas, and suburban developments, each with different service and school funding needs.",
-          "The 2024 Average Residential Tax Report from the NJ Division of Taxation shows Ocean County's average residential tax bill at $7,593.",
-          "This estimation tool is useful for comparing seasonal versus year-round property costs, or evaluating different Ocean County municipalities when considering a purchase.",
-          "Enter your property value and select your municipality if known to see how annual and monthly tax estimates vary across Ocean County's diverse communities."
-        ],
-        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
-      },
       "asOfYear": 2024,
       "metrics": {
         "averageResidentialTaxBill": [
@@ -8878,19 +8735,19 @@
             ]
           },
           "overview": {
-            "asOfYear": 2024,
+            "asOfYear": 2025,
             "avgResidentialTaxBill": 9943,
             "effectiveTaxRatePct": 2.421,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               },
               {
                 "name": "U.S. Census Bureau",
                 "url": "https://api.census.gov/data.html",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
@@ -8959,16 +8816,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 11212,
-            "effectiveTaxRatePct": 2.25,
+            "effectiveTaxRatePct": 2.23,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 8.067469879518072,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -9037,14 +8894,14 @@
           },
           "avgRate": 0.0032,
           "overview": {
-            "asOfYear": 2024,
+            "asOfYear": 2025,
             "avgResidentialTaxBill": 13702,
             "effectiveTaxRatePct": 2.253,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
@@ -9166,16 +9023,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 11212,
-            "effectiveTaxRatePct": 2.25,
+            "effectiveTaxRatePct": 2.23,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 8.067469879518072,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -9238,16 +9095,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 11212,
-            "effectiveTaxRatePct": 2.25,
+            "effectiveTaxRatePct": 2.23,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 8.067469879518072,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -9305,15 +9162,6 @@
           }
         }
       ],
-      "copy": {
-        "paragraphs": [
-          "Passaic County encompasses both urban centers like Paterson and suburban communities, creating a range of property tax rates across its municipalities.",
-          "The NJ Division of Taxation's 2024 data shows Passaic County with an average residential tax bill of $11,212, placing it among New Jersey's higher-tax counties.",
-          "This calculator helps you understand how property taxes contribute to total housing costs in Passaic County, useful for buyers comparing different municipalities or current homeowners reviewing expenses.",
-          "Municipal selection matters here—urban and suburban Passaic communities often have different tax structures, so selecting your specific town provides a more accurate estimate."
-        ],
-        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
-      },
       "asOfYear": 2024,
       "metrics": {
         "averageResidentialTaxBill": [
@@ -9396,16 +9244,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 6706,
-            "effectiveTaxRatePct": 1.75,
+            "effectiveTaxRatePct": 3.385,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 11.284434118818453,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -9468,16 +9316,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 6706,
-            "effectiveTaxRatePct": 1.75,
+            "effectiveTaxRatePct": 3.385,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 11.284434118818453,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -9540,16 +9388,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 6706,
-            "effectiveTaxRatePct": 1.75,
+            "effectiveTaxRatePct": 3.385,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 11.284434118818453,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -9612,16 +9460,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 6706,
-            "effectiveTaxRatePct": 1.75,
+            "effectiveTaxRatePct": 3.385,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 11.284434118818453,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -9684,16 +9532,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 6706,
-            "effectiveTaxRatePct": 1.75,
+            "effectiveTaxRatePct": 3.385,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 11.284434118818453,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -9751,15 +9599,6 @@
           }
         }
       ],
-      "copy": {
-        "paragraphs": [
-          "Salem County offers some of New Jersey's more affordable property tax rates, with a mix of rural and small-town communities setting rates based on local needs.",
-          "The 2024 Average Residential Tax Report from the NJ Division of Taxation shows Salem County's average residential tax bill at $6,706.",
-          "This estimation tool helps you understand how property taxes factor into your total cost of ownership in Salem County, whether you're planning a purchase or reviewing current expenses.",
-          "While Salem County generally has lower rates, municipal selection can still refine your estimate, as individual towns vary in their tax structures."
-        ],
-        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
-      },
       "asOfYear": 2024,
       "metrics": {
         "averageResidentialTaxBill": [
@@ -9845,14 +9684,14 @@
           "slug": "bridgewater",
           "avgRate": 0.0025,
           "overview": {
-            "asOfYear": 2024,
+            "asOfYear": 2025,
             "avgResidentialTaxBill": 10857,
             "effectiveTaxRatePct": 1.829,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
@@ -9986,19 +9825,19 @@
           },
           "avgRate": 0.0024,
           "overview": {
-            "asOfYear": 2024,
+            "asOfYear": 2025,
             "avgResidentialTaxBill": 6921,
             "effectiveTaxRatePct": 2.337,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               },
               {
                 "name": "U.S. Census Bureau",
                 "url": "https://api.census.gov/data.html",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
@@ -10154,16 +9993,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 11355,
-            "effectiveTaxRatePct": 1.95,
+            "effectiveTaxRatePct": 2.0040000000000004,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 9.81624758220503,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -10226,16 +10065,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 11355,
-            "effectiveTaxRatePct": 1.95,
+            "effectiveTaxRatePct": 2.0040000000000004,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 9.81624758220503,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -10298,16 +10137,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 11355,
-            "effectiveTaxRatePct": 1.95,
+            "effectiveTaxRatePct": 2.0040000000000004,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 9.81624758220503,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -10365,15 +10204,6 @@
           }
         }
       ],
-      "copy": {
-        "paragraphs": [
-          "Somerset County's property tax rates reflect its reputation for strong schools and quality municipal services, with rates varying across its suburban communities.",
-          "The NJ Division of Taxation's 2024 report shows Somerset County with an average residential tax bill of $11,355, ranking among the state's higher-tax counties.",
-          "When evaluating homes in Somerset County, this calculator helps you quickly see how property taxes affect total monthly costs, making it easier to compare properties across different municipalities.",
-          "Selecting a specific Somerset municipality refines your estimate, as neighboring towns can have meaningfully different rates despite similar property values."
-        ],
-        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
-      },
       "asOfYear": 2024,
       "metrics": {
         "averageResidentialTaxBill": [
@@ -10457,16 +10287,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 8640,
-            "effectiveTaxRatePct": 1.85,
+            "effectiveTaxRatePct": 2.3692,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 7.676969092721834,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -10529,16 +10359,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 8640,
-            "effectiveTaxRatePct": 1.85,
+            "effectiveTaxRatePct": 2.3692,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 7.676969092721834,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -10601,16 +10431,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 8640,
-            "effectiveTaxRatePct": 1.85,
+            "effectiveTaxRatePct": 2.3692,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 7.676969092721834,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -10673,16 +10503,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 8640,
-            "effectiveTaxRatePct": 1.85,
+            "effectiveTaxRatePct": 2.3692,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 7.676969092721834,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -10745,16 +10575,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 8640,
-            "effectiveTaxRatePct": 1.85,
+            "effectiveTaxRatePct": 2.3692,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 7.676969092721834,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -10812,15 +10642,6 @@
           }
         }
       ],
-      "copy": {
-        "paragraphs": [
-          "Sussex County's rural and suburban communities maintain property tax rates that balance local services with the county's more affordable cost structure compared to other northern New Jersey counties.",
-          "The 2024 Average Residential Tax Report from the NJ Division of Taxation indicates Sussex County's average residential tax bill was $8,640.",
-          "This calculator helps you understand how property taxes contribute to your total housing costs in Sussex County, useful for both prospective buyers and current homeowners planning their budgets.",
-          "Municipal selection can make a difference in your estimate, as Sussex County's towns vary in their tax rates based on local budget priorities and school funding needs."
-        ],
-        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
-      },
       "asOfYear": 2024,
       "metrics": {
         "averageResidentialTaxBill": [
@@ -10998,19 +10819,19 @@
             ]
           },
           "overview": {
-            "asOfYear": 2024,
+            "asOfYear": 2025,
             "avgResidentialTaxBill": 9215,
             "effectiveTaxRatePct": 2.113,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               },
               {
                 "name": "U.S. Census Bureau",
                 "url": "https://api.census.gov/data.html",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
@@ -11079,16 +10900,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 12047,
-            "effectiveTaxRatePct": 2.15,
+            "effectiveTaxRatePct": 1.9928000000000001,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 4.792971468336813,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -11252,19 +11073,19 @@
           },
           "avgRate": 0.0028,
           "overview": {
-            "asOfYear": 2024,
+            "asOfYear": 2025,
             "avgResidentialTaxBill": 18977,
             "effectiveTaxRatePct": 1.475,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               },
               {
                 "name": "U.S. Census Bureau",
                 "url": "https://api.census.gov/data.html",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
@@ -11434,19 +11255,19 @@
           },
           "avgRate": 0.0027,
           "overview": {
-            "asOfYear": 2024,
+            "asOfYear": 2025,
             "avgResidentialTaxBill": 18487,
             "effectiveTaxRatePct": 1.81,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               },
               {
                 "name": "U.S. Census Bureau",
                 "url": "https://api.census.gov/data.html",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
@@ -11515,16 +11336,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 12047,
-            "effectiveTaxRatePct": 2.15,
+            "effectiveTaxRatePct": 1.9928000000000001,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 4.792971468336813,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -11582,15 +11403,6 @@
           }
         }
       ],
-      "copy": {
-        "paragraphs": [
-          "Union County has some of New Jersey's highest property tax rates, reflecting strong school systems and comprehensive municipal services across its suburban communities.",
-          "The NJ Division of Taxation's 2024 data shows Union County with the highest average residential tax bill statewide at $12,047.",
-          "This estimation tool is essential when comparing properties in Union County, as property taxes represent a significant portion of total monthly housing costs here.",
-          "Selecting a specific Union County municipality refines your estimate, as rates can vary meaningfully between neighboring towns despite similar property values."
-        ],
-        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
-      },
       "asOfYear": 2024,
       "metrics": {
         "averageResidentialTaxBill": [
@@ -11675,16 +11487,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7879,
-            "effectiveTaxRatePct": 1.75,
+            "effectiveTaxRatePct": 2.8014,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 9.720094694332266,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -11747,16 +11559,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7879,
-            "effectiveTaxRatePct": 1.75,
+            "effectiveTaxRatePct": 2.8014,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 9.720094694332266,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -11819,16 +11631,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7879,
-            "effectiveTaxRatePct": 1.75,
+            "effectiveTaxRatePct": 2.8014,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 9.720094694332266,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -11891,16 +11703,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7879,
-            "effectiveTaxRatePct": 1.75,
+            "effectiveTaxRatePct": 2.8014,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 9.720094694332266,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -11963,16 +11775,16 @@
           "overview": {
             "asOfYear": 2024,
             "avgResidentialTaxBill": 7879,
-            "effectiveTaxRatePct": 1.75,
+            "effectiveTaxRatePct": 2.8014,
             "sources": [
               {
                 "name": "NJ Division of Taxation",
                 "url": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
-                "retrieved": "2026-02-14"
+                "retrieved": "2026-03-18"
               }
             ],
             "avgResidentialTaxBillYear": 2024,
-            "effectiveTaxRateYear": 2024,
+            "effectiveTaxRateYear": 2025,
             "trendPct": 9.720094694332266,
             "trendStartYear": 2021,
             "trendEndYear": 2024,
@@ -12030,15 +11842,6 @@
           }
         }
       ],
-      "copy": {
-        "paragraphs": [
-          "Warren County's property tax rates reflect its rural and small-town character, generally offering more affordable rates compared to many other New Jersey counties.",
-          "The 2024 Average Residential Tax Report from the NJ Division of Taxation shows Warren County's average residential tax bill at $7,879.",
-          "This calculator helps you understand how property taxes factor into your total cost of ownership in Warren County, useful for buyers evaluating homes or current homeowners reviewing expenses.",
-          "While Warren County maintains relatively lower rates overall, municipal selection can still refine your estimate, as individual towns vary in their tax structures and service levels."
-        ],
-        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills vary by municipality and exemptions. Verify details with your local tax assessor."
-      },
       "asOfYear": 2024,
       "metrics": {
         "averageResidentialTaxBill": [

@@ -26,7 +26,7 @@
 **Current code usage:**
 
 - `lib/geo.ts`: Defines `StateData` and `CountyData` types, provides `getStateData()`, `getCountyBySlug()`, `formatUSD()`
-- `app/new-jersey/[county]/page.tsx`: Reads `county.avgResidentialTaxBill2024` directly for display
+- `app/[state]/[county]/page.tsx`: County metrics via year-aware helpers (see county `metrics`)
 - Direct field access: `county.avgResidentialTaxBill2024`, `county.avgEffectiveRate`
 
 ## B) Proposed Evolved JSON Structure
@@ -290,7 +290,7 @@ npx tsx scripts/validate-data.ts
 ### Files Modified:
 
 1. `/lib/geo.ts` - Uses adapter, exports new types
-2. `/app/new-jersey/[county]/page.tsx` - Uses helpers, shows historical section
+2. `/app/[state]/[county]/page.tsx` - Uses helpers, shows historical section
 
 ### Backward Compatibility:
 
@@ -304,3 +304,16 @@ npx tsx scripts/validate-data.ts
 1. Add historical data to JSON files as it becomes available
 2. Update town pages to use metrics (if needed)
 3. Consider adding charts/visualizations for historical trends
+
+---
+
+## County page content (generated, not JSON prose)
+
+County landing pages (`app/[state]/[county]/page.tsx`) **do not** use `county.copy.paragraphs` or `county.copy.disclaimer` from state JSON. Copy is assembled in code:
+
+- **`lib/content/countyContent.ts`** — `resolveCountyPageContent`, section builders (overview, comparison vs peer counties, tax factors from `getStateCapabilities`, estimate guide, town insights from published town metrics, related counties).
+- **`components/county/CountyPageSections.tsx`** — presentational sections only.
+
+**JSON should keep facts** (metrics, `neighborCounties`, sources), not long-form county narratives. County-level `copy` was removed from `new-jersey.json`; town-level `copy` remains for town pages.
+
+**Tests:** `npm test` (includes county content suite in `tests/`)

@@ -53,7 +53,8 @@ export default async function PropertyTaxCalculatorPage({ searchParams }: PagePr
             <h1 className="section-title mb-4">Property Tax Calculator</h1>
             <p className="text-lg text-text-muted max-w-2xl mx-auto">
               Select your state, county, and town, then enter your home value to see estimated
-              property taxes. Available for New Jersey; more states coming as data is published.
+              property taxes. Available for New Jersey and Texas; more states coming as data is
+              published.
             </p>
           </div>
           <UniversalTaxCalculator

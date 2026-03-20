@@ -40,8 +40,20 @@ export function normalizeStateData(raw: any): StateData {
 function normalizeTownData(raw: any): TownData {
   const name = raw.name
   const slug = raw.slug ?? slugifyLocation(name)
-  const asOfYear = raw.asOfYear ?? new Date().getFullYear()
-  return { ...raw, name, slug, asOfYear } as TownData
+  // Never default missing tax year to the current calendar year — that mislabels data (e.g. 2026
+  // while rates are tax year 2025). Prefer explicit field, then overview tax-year fields.
+  const asOfYear =
+    (typeof raw.asOfYear === 'number' && Number.isFinite(raw.asOfYear) ? raw.asOfYear : undefined) ??
+    (typeof raw.overview?.effectiveTaxRateYear === 'number'
+      ? raw.overview.effectiveTaxRateYear
+      : undefined) ??
+    (typeof raw.overview?.asOfYear === 'number' ? raw.overview.asOfYear : undefined)
+  return {
+    ...raw,
+    name,
+    slug,
+    ...(asOfYear != null ? { asOfYear } : {}),
+  } as TownData
 }
 
 function normalizeCountyData(raw: any): CountyData {
@@ -50,7 +62,6 @@ function normalizeCountyData(raw: any): CountyData {
     slug: raw.slug,
     asOfYear: raw.asOfYear,
     neighborCounties: raw.neighborCounties,
-    copy: raw.copy,
     towns: Array.isArray(raw.towns) ? raw.towns.map((t: any) => normalizeTownData(t)) : undefined,
   }
 

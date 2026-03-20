@@ -123,5 +123,29 @@ export function enrichOverviewYearsFromMetrics(
     const latest = getMetricLatest({ town, county, metricKey: 'medianHomeValue' })
     if (latest?.year != null) result.medianHomeValueYear = latest.year
   }
+
+  // Headline town values when JSON overview omitted them but metrics exist (e.g. Texas towns).
+  if (result.effectiveTaxRatePct == null) {
+    const latest = getMetricLatest({ town, county, metricKey: 'effectiveTaxRate' })
+    if (latest != null) {
+      result.effectiveTaxRatePct = latest.value
+      if (result.effectiveTaxRateYear == null) result.effectiveTaxRateYear = latest.year
+    }
+  }
+  if (result.avgResidentialTaxBill == null) {
+    const latest = getMetricLatest({ town, county, metricKey: 'averageResidentialTaxBill' })
+    if (latest != null) {
+      result.avgResidentialTaxBill = latest.value
+      if (result.avgResidentialTaxBillYear == null) result.avgResidentialTaxBillYear = latest.year
+    }
+  }
+  if (result.medianHomeValue == null) {
+    const latest = getMetricLatest({ town, county, metricKey: 'medianHomeValue' })
+    if (latest != null) {
+      result.medianHomeValue = latest.value
+      if (result.medianHomeValueYear == null) result.medianHomeValueYear = latest.year
+    }
+  }
+
   return result
 }

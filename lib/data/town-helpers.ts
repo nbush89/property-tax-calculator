@@ -3,7 +3,11 @@
  * Provides safe fallback logic: town metric -> county metric -> undefined
  */
 
+import type { MetricKey } from '@/lib/metrics/metricKeys'
 import type { DataPoint, TownData, CountyData, StateData, Source, MetricSeries } from './types'
+
+/** Metrics that can be resolved from town and/or county series (not state-level averageTaxRate). */
+export type TownCountyMetricKey = Exclude<MetricKey, 'averageTaxRate'>
 
 /**
  * Get the latest (most recent) datapoint from a series
@@ -125,7 +129,7 @@ export function resolveSourceUrl(
 export function getMetricSeries(params: {
   town?: TownData
   county: CountyData
-  metricKey: 'averageResidentialTaxBill' | 'effectiveTaxRate' | 'medianHomeValue'
+  metricKey: TownCountyMetricKey
 }): DataPoint[] | MetricSeries | undefined {
   const { town, county, metricKey } = params
 
@@ -156,7 +160,7 @@ export function getMetricSeries(params: {
 export function getMetricLatest(params: {
   town?: TownData
   county: CountyData
-  metricKey: 'averageResidentialTaxBill' | 'effectiveTaxRate' | 'medianHomeValue'
+  metricKey: TownCountyMetricKey
 }): DataPoint | undefined {
   const series = getMetricSeries(params)
 

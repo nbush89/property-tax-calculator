@@ -17,8 +17,10 @@ import {
 } from 'recharts'
 import type { MetricSeries } from '@/lib/data/types'
 import { computeYoYStats } from '@/lib/data/metrics'
+import { shouldShowCountyAverageTaxBillTrend } from '@/lib/metrics/resolveDisplayMetrics'
 
 interface CountyTaxTrendsChartProps {
+  stateSlug: string
   county: {
     name: string
     slug: string
@@ -64,7 +66,11 @@ function CustomTooltip({ active, payload }: any) {
   return null
 }
 
-export default function CountyTaxTrendsChart({ county }: CountyTaxTrendsChartProps) {
+export default function CountyTaxTrendsChart({ stateSlug, county }: CountyTaxTrendsChartProps) {
+  if (!shouldShowCountyAverageTaxBillTrend(stateSlug)) {
+    return null
+  }
+
   const series = county.metrics?.averageResidentialTaxBill ?? []
 
   // Don't render if insufficient data
@@ -162,8 +168,8 @@ export default function CountyTaxTrendsChart({ county }: CountyTaxTrendsChartPro
 
       {/* Footnote */}
       <p className="text-xs text-gray-500 dark:text-gray-400 mt-4 italic">
-        Data reflects county-wide averages and may not represent individual municipality tax bills.
-        Years shown are tax years as reported by the NJ Division of Taxation.
+        Data reflects county-wide averages where published and may not represent individual
+        municipality tax bills. Years shown follow each source’s reporting.
       </p>
     </section>
   )

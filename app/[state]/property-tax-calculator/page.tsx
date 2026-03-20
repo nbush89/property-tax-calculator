@@ -69,6 +69,14 @@ export default async function StatePropertyTaxCalculatorPage({ params }: Props) 
             <p className="text-lg text-text-muted">
               Enter your property details to calculate your estimated property taxes
             </p>
+            <div className="mt-4">
+              <a
+                href={`/${encodeURIComponent(state)}/property-tax-rates`}
+                className="text-sm text-text-muted hover:text-primary transition-colors underline"
+              >
+                See {stateName} property tax rates by county and municipality →
+              </a>
+            </div>
           </div>
           <UniversalTaxCalculator
             states={states}

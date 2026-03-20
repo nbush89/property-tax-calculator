@@ -94,7 +94,7 @@ nj-property-tax-calculator/
 │   │       ├── page.tsx              # County overview
 │   │       ├── property-tax-calculator/page.tsx
 │   │       └── [town]/page.tsx       # Town page
-│   └── new-jersey/                   # NJ-specific routes
+│   └── [state]/                      # Dynamic state routes (e.g. /new-jersey, /texas)
 │       ├── page.tsx
 │       ├── property-tax-calculator/page.tsx
 │       ├── property-tax-rates/page.tsx
@@ -157,13 +157,14 @@ nj-property-tax-calculator/
 
 ### New Jersey
 
-- `/new-jersey` – State overview
-- `/new-jersey/property-tax-calculator` – Main calculator
-- `/new-jersey/property-tax-rates` – Tax rates overview
-- `/new-jersey/[county]` – County overview
-- `/new-jersey/[county]/towns` – County towns list
-- `/new-jersey/[county]/property-tax-calculator` – County calculator
-- `/new-jersey/[county]/[town]` – Town page (at-a-glance, overview)
+- `/:state` – State overview (`/new-jersey`, `/texas`, …)
+- `/:state/property-tax-calculator` – State-scoped calculator
+- `/:state/property-tax-rates` – Tax rates overview
+- `/:state/[county]` – County overview
+- `/:state/[county]/towns` – County towns list
+- `/:state/[county]/property-tax-calculator` – County calculator
+- `/:state/[county]/[town]` – Town page (at-a-glance, overview)
+- `/property-tax-calculator` – Primary calculator (multi-state)
 
 ### Dynamic state (expandable)
 

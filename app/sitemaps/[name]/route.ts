@@ -35,7 +35,7 @@ export async function GET(request: NextRequest, context: { params: Promise<{ nam
       const stateSlugs = listStateSlugs()
       if (stateSlugs.includes(name)) {
         // State-specific sitemap
-        urls = getStateUrls(baseUrl, name)
+        urls = await getStateUrls(baseUrl, name)
       } else {
         // Unknown sitemap name - return 404
         return new NextResponse('Sitemap not found', { status: 404 })

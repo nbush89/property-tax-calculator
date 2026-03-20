@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { calculatePropertyTax } from '@/utils/calculateTax'
 import { getStateData } from '@/lib/geo'
+import { canCalculateForState } from '@/lib/state-capabilities'
 
 export async function POST(request: NextRequest) {
   try {
@@ -10,6 +11,13 @@ export async function POST(request: NextRequest) {
     if (!homeValue || !county) {
       return NextResponse.json(
         { error: 'Missing required fields: homeValue, county' },
+        { status: 400 }
+      )
+    }
+
+    if (!canCalculateForState(stateSlug)) {
+      return NextResponse.json(
+        { error: 'Rate data is not yet available for this state. Try another state or check back later.' },
         { status: 400 }
       )
     }

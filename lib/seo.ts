@@ -6,6 +6,8 @@ const DEFAULT_DESCRIPTION =
 
 type SeoParams = {
   title: string;
+  /** When true, ignores parent layout `title.template` (use for state-specific page titles). */
+  absoluteTitle?: boolean;
   description?: string;
   path?: string;
   keywords?: string;
@@ -26,6 +28,7 @@ type SeoParams = {
 
 export function buildMetadata({
   title,
+  absoluteTitle = false,
   description = DEFAULT_DESCRIPTION,
   path = "",
   noIndex = false,
@@ -37,7 +40,7 @@ export function buildMetadata({
   const url = `${SITE_URL}${normalizedPath}`;
 
   return {
-    title,
+    title: absoluteTitle ? { absolute: title } : title,
     description,
     keywords: ['property tax calculator', 'property tax estimator', 'property tax calculator by state', 'property tax calculator by county', 'property tax calculator by town', 'property tax calculator by city', 'property tax calculator by zip code', 'property tax calculator by address'],
     metadataBase: new URL(SITE_URL),

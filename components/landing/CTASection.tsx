@@ -12,7 +12,7 @@ export default function CTASection() {
         </p>
         <div className="mt-8">
           <LinkButton
-            href="/new-jersey/property-tax-calculator"
+            href="/property-tax-calculator"
             variant="secondary"
             size="lg"
             className="bg-white text-primary hover:bg-white/90"

@@ -41,12 +41,7 @@ export function getStateAbbreviation(stateSlug: string): string {
 }
 
 export function isValidState(stateSlug: string): boolean {
-  // List of supported states (can be expanded)
-  const supportedStates = [
-    'new-jersey',
-    // Add more states as they're implemented
-  ]
-  
+  const supportedStates = ['new-jersey', 'texas']
   return supportedStates.includes(stateSlug.toLowerCase())
 }
 

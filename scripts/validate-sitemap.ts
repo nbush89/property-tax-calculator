@@ -1,25 +1,26 @@
 /* eslint-disable no-console */
 /**
  * Validate sitemap generation: no duplicate locs, state overview URL present,
- * unpublished towns excluded. Run with: npx tsx scripts/validate-sitemap.ts
+ * town URLs match publish-readiness indexable towns. Run with: npx tsx scripts/validate-sitemap.ts
  */
 
+import { slugifyLocation } from '@/utils/locationUtils'
+import { getTownSlug } from '@/lib/links/towns'
 import {
   getBaseUrl,
   getStaticPageUrls,
   getStateUrls,
   listStateSlugs,
-  isTownPublished,
   loadStateData,
 } from '../lib/sitemaps'
+import { isTownIndexable } from '../lib/sitemap/isTownIndexable'
 
-function main() {
+async function main() {
   const baseUrl = getBaseUrl()
   const allLocs: string[] = []
   const locSet = new Set<string>()
   const duplicates: string[] = []
 
-  // Static URLs
   const staticUrls = getStaticPageUrls(baseUrl)
   for (const u of staticUrls) {
     allLocs.push(u.loc)
@@ -27,14 +28,13 @@ function main() {
     else locSet.add(u.loc)
   }
 
-  // State URLs (no state-specific routes in static – avoid duplicates)
   const stateSlugs = listStateSlugs()
   const missingStateOverview: string[] = []
   let townUrlCount = 0
-  let publishedTownCount = 0
+  let indexableTownCount = 0
 
   for (const stateSlug of stateSlugs) {
-    const stateUrls = getStateUrls(baseUrl, stateSlug)
+    const stateUrls = await getStateUrls(baseUrl, stateSlug)
     const stateOverviewLoc = `${baseUrl.replace(/\/$/, '')}/${stateSlug}`
 
     let stateOverviewFound = false
@@ -43,7 +43,6 @@ function main() {
       if (locSet.has(u.loc)) duplicates.push(u.loc)
       else locSet.add(u.loc)
       if (u.loc === stateOverviewLoc) stateOverviewFound = true
-      // Town pages: /base/state/county/town-property-tax (3 path segments, last ends with -property-tax)
       const pathSegments = u.loc.replace(baseUrl.replace(/\/$/, ''), '').split('/').filter(Boolean)
       if (pathSegments.length === 3 && pathSegments[2].endsWith('-property-tax')) {
         townUrlCount++
@@ -57,14 +56,18 @@ function main() {
     const stateData = loadStateData(stateSlug)
     if (stateData) {
       for (const county of stateData.counties ?? []) {
+        const countySlugShort = county.slug || slugifyLocation(county.name)
         for (const town of county.towns ?? []) {
-          if (isTownPublished(town)) publishedTownCount++
+          const townSlug = getTownSlug(town)
+          if (!townSlug) continue
+          if (await isTownIndexable({ stateSlug, countySlug: countySlugShort, townSlug, town })) {
+            indexableTownCount++
+          }
         }
       }
     }
   }
 
-  // Report
   let failed = false
   if (duplicates.length > 0) {
     console.error(
@@ -83,14 +86,14 @@ function main() {
     console.log('[OK] State overview URL (e.g. /new-jersey) present for each state.')
   }
 
-  if (townUrlCount > publishedTownCount) {
+  if (townUrlCount !== indexableTownCount) {
     console.error(
-      `[FAIL] Town URLs (${townUrlCount}) exceed published towns (${publishedTownCount}).`
+      `[FAIL] Town URLs in sitemap (${townUrlCount}) !== indexable towns (${indexableTownCount}).`
     )
     failed = true
   } else {
     console.log(
-      `[OK] Town URLs (${townUrlCount}) <= published towns (${publishedTownCount}). Unpublished towns excluded.`
+      `[OK] Town URLs (${townUrlCount}) match publish-readiness indexable count (${indexableTownCount}).`
     )
   }
 
@@ -99,4 +102,7 @@ function main() {
   console.log('Sitemap validation passed.')
 }
 
-main()
+main().catch(e => {
+  console.error(e)
+  process.exit(1)
+})

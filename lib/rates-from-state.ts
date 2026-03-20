@@ -4,7 +4,7 @@
  */
 
 import type { StateData, CountyData, TownData } from '@/lib/data/types'
-import { getLatestValue } from '@/lib/data/metrics'
+import { getLatestValue, getLatestYear } from '@/lib/data/metrics'
 
 /**
  * Get county effective tax rate as decimal (e.g. 0.0185 for 1.85%).
@@ -117,4 +117,64 @@ export function getMunicipalRatesByCountyFromState(
     if (Object.keys(byTown).length) out[c.name] = byTown
   }
   return out
+}
+
+/**
+ * Tax year for the county rate displayed by getCountyRate (latest point in effectiveTaxRate series).
+ */
+export function getCountyEffectiveTaxRateYear(
+  stateData: StateData | null,
+  countyName: string
+): number | null {
+  const county = stateData?.counties?.find(
+    c => c.name.toLowerCase() === countyName.toLowerCase()
+  )
+  return getLatestYear(county?.metrics?.effectiveTaxRate) ?? null
+}
+
+/**
+ * Tax year for the municipal rate from getMunicipalRate: series latest, else town.asOfYear when only avgRate.
+ */
+export function getTownEffectiveTaxRateYear(
+  stateData: StateData | null,
+  countyName: string,
+  townName: string
+): number | null {
+  const county = stateData?.counties?.find(
+    c => c.name.toLowerCase() === countyName.toLowerCase()
+  )
+  const town = county?.towns?.find(t => t.name.toLowerCase() === townName.toLowerCase())
+  if (!town) return null
+  const fromSeries = getLatestYear(town.metrics?.effectiveTaxRate)
+  if (fromSeries != null) return fromSeries
+  if (typeof town.avgRate === 'number' && Number.isFinite(town.avgRate)) {
+    return (
+      town.asOfYear ??
+      town.overview?.effectiveTaxRateYear ??
+      town.overview?.asOfYear ??
+      null
+    )
+  }
+  return null
+}
+
+/**
+ * Newest tax year across all county/town effective-rate data in the state (for page-level copy).
+ */
+export function getMaxEffectiveTaxRateYearInState(stateData: StateData | null): number | null {
+  if (!stateData?.counties?.length) return null
+  let max: number | null = null
+  for (const c of stateData.counties) {
+    const yc = getLatestYear(c.metrics?.effectiveTaxRate)
+    if (yc != null && (max == null || yc > max)) max = yc
+    for (const t of c.towns ?? []) {
+      let yt = getLatestYear(t.metrics?.effectiveTaxRate)
+      if (yt == null && typeof t.avgRate === 'number' && Number.isFinite(t.avgRate)) {
+        yt =
+          t.asOfYear ?? t.overview?.effectiveTaxRateYear ?? t.overview?.asOfYear ?? null
+      }
+      if (yt != null && (max == null || yt > max)) max = yt
+    }
+  }
+  return max
 }

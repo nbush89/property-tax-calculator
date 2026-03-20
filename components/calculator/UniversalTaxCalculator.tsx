@@ -59,11 +59,12 @@ export default function UniversalTaxCalculator({
   const towns = selectedCounty?.towns ?? []
 
   const isNj = stateSlug === 'new-jersey'
+  const supportsCalculator = stateSlug === 'new-jersey' || stateSlug === 'texas'
   const countyName = selectedCounty?.name ?? ''
   const townName = selectedTown?.name ?? ''
 
   const runCalculation = useCallback(async () => {
-    if (!isNj || !countyName || !homeValue.trim()) return
+    if (!supportsCalculator || !countyName || !homeValue.trim()) return
     const validation = validateTaxForm({
       homeValue,
       county: countyName,
@@ -107,7 +108,7 @@ export default function UniversalTaxCalculator({
       setIsCalculating(false)
     }
   }, [
-    isNj,
+    supportsCalculator,
     countyName,
     townName,
     homeValue,
@@ -127,9 +128,12 @@ export default function UniversalTaxCalculator({
 
   // Auto-run calculation once when opened with prefill (e.g. from homepage or deep link)
   useEffect(() => {
+    const prefillState = initialValues?.stateSlug
+    const prefillSupported =
+      prefillState === 'new-jersey' || prefillState === 'texas'
     if (
       hasAutoCalculated ||
-      initialValues?.stateSlug !== 'new-jersey' ||
+      !prefillSupported ||
       !initialValues?.countySlug ||
       !initialValues?.homeValue ||
       !selectedCounty
@@ -151,8 +155,11 @@ export default function UniversalTaxCalculator({
     e.preventDefault()
     setErrors({})
 
-    if (!isNj) {
-      setErrors({ county: 'Calculator is currently available for New Jersey. More states coming soon.' })
+    if (!supportsCalculator) {
+      setErrors({
+        county:
+          'Calculator is available for New Jersey and Texas. Select a supported state to continue.',
+      })
       return
     }
 
@@ -285,10 +292,10 @@ export default function UniversalTaxCalculator({
                 </option>
               ))}
             </Select>
-            {isNj && countyName && (
+            {supportsCalculator && countyName && (
               <div className="mt-2 text-sm">
                 <Link
-                  href={`/new-jersey/${slugifyLocation(countyName)}-county-property-tax`}
+                  href={`/${stateSlug}/${slugifyLocation(countyName)}-county-property-tax`}
                   className="text-primary hover:text-primary-hover underline"
                 >
                   View {countyName} County property tax page →
@@ -297,7 +304,7 @@ export default function UniversalTaxCalculator({
                   <>
                     <span className="text-text-muted"> | </span>
                     <Link
-                      href={`/new-jersey/${slugifyLocation(countyName).replace(/-county$/, '')}/${slugifyLocation(townName)}-property-tax`}
+                      href={`/${stateSlug}/${slugifyLocation(countyName).replace(/-county$/, '')}/${slugifyLocation(townName)}-property-tax`}
                       className="text-primary hover:text-primary-hover underline"
                     >
                       View {townName} property tax page →
@@ -344,8 +351,17 @@ export default function UniversalTaxCalculator({
             </>
           )}
 
-          <Button type="submit" disabled={isCalculating || !isNj} className="w-full" size="lg">
-            {isCalculating ? 'Calculating...' : isNj ? 'Calculate Property Tax' : 'Select New Jersey to calculate'}
+          <Button
+            type="submit"
+            disabled={isCalculating || !supportsCalculator}
+            className="w-full"
+            size="lg"
+          >
+            {isCalculating
+              ? 'Calculating...'
+              : supportsCalculator
+                ? 'Calculate Property Tax'
+                : 'Select New Jersey or Texas to calculate'}
           </Button>
         </form>
       </Card>
