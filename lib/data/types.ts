@@ -76,14 +76,6 @@ export interface TownMetrics {
 }
 
 /**
- * County copy content
- */
-export interface CountyCopy {
-  paragraphs: string[]
-  disclaimer: string
-}
-
-/**
  * Town copy content (structured for UI rendering)
  */
 export interface TownCopy {
@@ -138,7 +130,6 @@ export interface CountyData {
   asOfYear?: number
   neighborCounties?: string[]
   metrics?: CountyMetrics
-  copy?: CountyCopy
   towns?: TownData[]
 }
 

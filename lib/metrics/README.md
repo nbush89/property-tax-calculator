@@ -17,8 +17,10 @@
 
 ## Tests
 
+Metric resolver coverage lives in `tests/resolveDisplayMetrics.test.ts`. Run everything:
+
 ```bash
-npx tsx lib/metrics/resolveDisplayMetrics.test.ts
+npm test
 ```
 
 ## Follow-ups

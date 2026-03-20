@@ -229,15 +229,6 @@
           }
         ]
       },
-      "copy": {
-        "paragraphs": [
-          "Harris County sits at the heart of the Houston metro and includes a mix of large cities, suburbs, and specialized districts—each with its own property tax picture.",
-          "Published rates from the Texas Comptroller and local appraisal districts help compare typical combined burdens across places like Houston and Pasadena, but your bill still depends on how jurisdictions overlap where the property sits.",
-          "Use this calculator to explore how estimated taxes change across municipalities or school districts when you hold home value constant.",
-          "Enter your property value below and choose a city when you know it to get a clearer planning estimate of annual and monthly property taxes."
-        ],
-        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills depend on appraisal, exemptions, and overlapping taxing units (county, city, school, and special districts). Verify amounts with your county appraisal district and local taxing entities."
-      },
       "asOfYear": 2025
     },
     {
@@ -438,15 +429,6 @@
             "sourceRef": "tx_comptroller_tax_rates_levies"
           }
         ]
-      },
-      "copy": {
-        "paragraphs": [
-          "Dallas County anchors the eastern side of the Dallas–Fort Worth region, with dense urban districts alongside fast-growing suburbs—each subject to different combinations of city, school, and county rates.",
-          "Effective-rate style figures from Texas Comptroller workbooks are useful for head-to-head comparisons of Dallas versus Plano or other cities in the county, before you layer in homestead and exemption details.",
-          "This tool is especially helpful when you are weighing a move within North Texas and want a quick comparison of typical tax load at the same home value.",
-          "Enter your property value below and select a city when you can to narrow the estimate toward the place you have in mind."
-        ],
-        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills depend on appraisal, exemptions, and overlapping taxing units (county, city, school, and special districts). Verify amounts with your county appraisal district and local taxing entities."
       },
       "asOfYear": 2025
     },
@@ -649,15 +631,6 @@
           }
         ]
       },
-      "copy": {
-        "paragraphs": [
-          "Tarrant County is home to Fort Worth, Arlington, and many smaller communities across western DFW, where school districts and city boundaries can swing the total rate noticeably block by block.",
-          "Comptroller-published total rates for each taxing unit are a practical starting point for comparing Fort Worth with Arlington or other cities before you account for exemptions and protest outcomes.",
-          "Use the estimator to compare typical tax outcomes when you are deciding between neighborhoods or cities within the county.",
-          "Enter your property value and pick a city when available to translate those rates into monthly and annual planning figures."
-        ],
-        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills depend on appraisal, exemptions, and overlapping taxing units (county, city, school, and special districts). Verify amounts with your county appraisal district and local taxing entities."
-      },
       "asOfYear": 2025
     },
     {
@@ -782,15 +755,6 @@
           }
         ]
       },
-      "copy": {
-        "paragraphs": [
-          "Travis County centers on Austin and Central Texas growth corridors, where rapid development and strong demand can make year-over-year appraisals and rate debates especially relevant to owners.",
-          "Figures based on Comptroller tax-rate publications help benchmark Austin against smaller places in the county while you factor in homestead caps and exemption eligibility.",
-          "The calculator is useful for stress-testing affordability in different parts of the county under the same assumed home value.",
-          "Enter a value below and select Austin (or another listed city) when you have one to tighten the estimate around your situation."
-        ],
-        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills depend on appraisal, exemptions, and overlapping taxing units (county, city, school, and special districts). Verify amounts with your county appraisal district and local taxing entities."
-      },
       "asOfYear": 2025
     },
     {
@@ -914,15 +878,6 @@
             "sourceRef": "tx_comptroller_tax_rates_levies"
           }
         ]
-      },
-      "copy": {
-        "paragraphs": [
-          "Bexar County includes San Antonio and surrounding communities in South Texas, where city, school, and special district rates combine differently depending on address.",
-          "Using Comptroller-sourced tax rates as a baseline makes it easier to reason about typical burdens before you dive into appraisal notices and exemption paperwork.",
-          "Try the calculator to compare how an assumed home value translates into monthly taxes for San Antonio versus other in-county options as you expand coverage.",
-          "Enter your property value below and choose San Antonio when it applies to see planning estimates tailored to that city."
-        ],
-        "disclaimer": "This page provides estimates for planning and comparison. Actual tax bills depend on appraisal, exemptions, and overlapping taxing units (county, city, school, and special districts). Verify amounts with your county appraisal district and local taxing entities."
       },
       "asOfYear": 2025
     }

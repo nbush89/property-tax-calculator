@@ -62,7 +62,6 @@ function normalizeCountyData(raw: any): CountyData {
     slug: raw.slug,
     asOfYear: raw.asOfYear,
     neighborCounties: raw.neighborCounties,
-    copy: raw.copy,
     towns: Array.isArray(raw.towns) ? raw.towns.map((t: any) => normalizeTownData(t)) : undefined,
   }
 

@@ -56,8 +56,7 @@ export default async function StatePropertyTaxRatesPage({ params }: Props) {
   const pageUrl = `${SITE_URL}/${encodeURIComponent(state)}/property-tax-rates`
   const fallbackYear = stateData.state.asOfYear ?? new Date().getFullYear()
   /** Align UI with actual series: county cards use latest datapoint year, not only state.asOfYear */
-  const latestRateYearInState =
-    getMaxEffectiveTaxRateYearInState(stateData) ?? fallbackYear
+  const latestRateYearInState = getMaxEffectiveTaxRateYearInState(stateData) ?? fallbackYear
 
   const faqs = [
     {
@@ -88,7 +87,7 @@ export default async function StatePropertyTaxRatesPage({ params }: Props) {
       />
       <JsonLd data={faqJsonLd(pageUrl, faqs)} />
       <Header />
-      <main className="min-h-screen bg-bg">
+      <main className="min-h-screen bg-page-like-home">
         <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
           <nav className="mb-6 text-sm text-text-muted" aria-label="Breadcrumb">
             <ol className="flex items-center gap-2">
@@ -118,17 +117,20 @@ export default async function StatePropertyTaxRatesPage({ params }: Props) {
             </p>
             <div className="mt-6 max-w-prose">
               <p className="text-text-muted leading-relaxed">
-                Property tax rates in {stateName} vary by county and municipality due to
-                differences in local budgets, school funding, and assessment practices. Rates below
-                are labeled by year and intended for planning and comparison only—verify details
-                with local assessors.
+                Property tax rates in {stateName} vary by county and municipality due to differences
+                in local budgets, school funding, and assessment practices. Rates below are labeled
+                by year and intended for planning and comparison only—verify details with local
+                assessors.
               </p>
             </div>
             <div className="mt-8">
               <h2 className="text-lg font-semibold text-text mb-3">Related resources</h2>
               <ul className="space-y-1 text-sm text-text-muted">
                 <li>
-                  <Link href={`/${state}`} className="hover:text-primary transition-colors underline">
+                  <Link
+                    href={`/${state}`}
+                    className="hover:text-primary transition-colors underline"
+                  >
                     {stateName} property tax overview
                   </Link>
                 </li>
@@ -141,7 +143,10 @@ export default async function StatePropertyTaxRatesPage({ params }: Props) {
                   </Link>
                 </li>
                 <li>
-                  <Link href={`/${state}#counties`} className="hover:text-primary transition-colors underline">
+                  <Link
+                    href={`/${state}#counties`}
+                    className="hover:text-primary transition-colors underline"
+                  >
                     Browse {stateName} counties
                   </Link>
                 </li>
@@ -151,8 +156,14 @@ export default async function StatePropertyTaxRatesPage({ params }: Props) {
 
           {!hasRates ? (
             <div className="rounded-lg border border-border bg-surface p-6 text-center text-text-muted">
-              <p>County and municipal rate data for {stateName} is being added. Check back soon or use the calculator for estimates.</p>
-              <Link href={`/${state}/property-tax-calculator`} className="mt-4 inline-block text-primary hover:text-primary-hover underline">
+              <p>
+                County and municipal rate data for {stateName} is being added. Check back soon or
+                use the calculator for estimates.
+              </p>
+              <Link
+                href={`/${state}/property-tax-calculator`}
+                className="mt-4 inline-block text-primary hover:text-primary-hover underline"
+              >
                 Go to {stateName} calculator →
               </Link>
             </div>
@@ -168,7 +179,10 @@ export default async function StatePropertyTaxRatesPage({ params }: Props) {
                   const countyRateYear =
                     getCountyEffectiveTaxRateYear(stateData, county) ?? fallbackYear
                   return (
-                    <div key={county} className="rounded-lg border border-border bg-surface shadow-sm">
+                    <div
+                      key={county}
+                      className="rounded-lg border border-border bg-surface shadow-sm"
+                    >
                       <div className="border-b border-border bg-bg px-6 py-4">
                         <div className="flex items-center justify-between">
                           <div>
@@ -207,11 +221,8 @@ export default async function StatePropertyTaxRatesPage({ params }: Props) {
                                 const countySlug = slugifyLocation(county)
                                 const townSlug = slugifyLocation(municipality)
                                 const townYear =
-                                  getTownEffectiveTaxRateYear(
-                                    stateData,
-                                    county,
-                                    municipality
-                                  ) ?? countyRateYear
+                                  getTownEffectiveTaxRateYear(stateData, county, municipality) ??
+                                  countyRateYear
                                 return (
                                   <Link
                                     key={municipality}

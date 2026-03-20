@@ -1,5 +1,5 @@
 /**
- * Lightweight assertions for display resolver (run: npx tsx lib/metrics/resolveDisplayMetrics.test.ts)
+ * Display resolver assertions. Run all tests: npm test
  */
 import assert from 'node:assert/strict'
 import type { MetricSeries } from '@/lib/data/types'
@@ -8,9 +8,11 @@ import {
   hasUsableMetricValue,
   getCountyHeroHighlight,
   canCompareMetricAcrossStates,
-} from './resolveDisplayMetrics'
-import { getMetricAvailability } from './stateMetricCapabilities'
-import { isMetricDisplayAllowed } from './stateMetricCapabilities'
+} from '@/lib/metrics/resolveDisplayMetrics'
+import {
+  getMetricAvailability,
+  isMetricDisplayAllowed,
+} from '@/lib/metrics/stateMetricCapabilities'
 
 const billSeries: MetricSeries = [
   { year: 2023, value: 9000, unit: 'USD', sourceRef: 't' },

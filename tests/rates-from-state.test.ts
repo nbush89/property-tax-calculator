@@ -1,5 +1,5 @@
 /**
- * Run: npx tsx lib/rates-from-state.test.ts
+ * Rates/year helpers. Run all tests: npm test
  */
 import assert from 'node:assert/strict'
 import { normalizeStateData } from '@/lib/data/adapter'
@@ -41,4 +41,4 @@ assert.equal(
   'municipal avgRate row should use overview.effectiveTaxRateYear, not calendar year from retrieved date'
 )
 
-console.log('rates-from-state tests ok')
+console.log('[OK] rates-from-state tests passed')

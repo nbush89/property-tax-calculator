@@ -35,3 +35,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# Local editorial overrides (optional — remove this line to commit overrides)
+data/admin/publish-overrides.json
+

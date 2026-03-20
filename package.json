@@ -20,7 +20,8 @@
     "validate:tier1-overviews": "tsx scripts/validate-tier1-overviews.ts",
     "validate:tier1-overviews:report": "tsx scripts/validate-tier1-overviews.ts --report",
     "validate:sitemap": "tsx scripts/validate-sitemap.ts",
-    "test:metrics": "tsx lib/metrics/resolveDisplayMetrics.test.ts",
+    "validate:publish": "tsx scripts/validate-publish-readiness.ts",
+    "test": "tsx tests/run-all.ts",
     "generate-favicons": "tsx scripts/generate-favicons.ts"
   },
   "dependencies": {

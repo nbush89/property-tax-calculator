@@ -18,15 +18,14 @@ import { selectRelatedTowns, getCountyShortSlug } from '@/lib/links/towns'
 import { buildCalculatorHref } from '@/lib/links/hero'
 import RelatedTowns from '@/components/location/RelatedTowns'
 import { getTownFaqData } from '@/data/townFaqData'
-import { buildTownCopyContext } from '@/lib/data/copy'
 import TownAtAGlance from '@/components/town/TownAtAGlance'
 import { TownPageTracker } from '@/components/town/TownPageTracker'
 import CalculatorTaxTrendsChart from '@/components/charts/CalculatorTaxTrendsChart'
-import { validateTownOverview } from '@/lib/town-overview/validate'
-import { enrichOverviewYearsFromMetrics } from '@/lib/town-overview/derive'
-import { getCountyAvgTaxBillSeries } from '@/utils/getCountySeries'
 import { getMetricLatest } from '@/lib/data/town-helpers'
 import { isValidState } from '@/utils/stateUtils'
+import { resolveTownPageOverview } from '@/lib/town-overview/resolve-page-overview'
+import { resolveTownPageSections } from '@/lib/content/townContent'
+import { getStateCapabilities } from '@/lib/state-capabilities'
 
 function townSlugForLookup(townSlug: string): string {
   return decodeURIComponent(townSlug).replace(/-property-tax$/, '')
@@ -61,12 +60,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const { county, town } = result
   const stateData = getStateData(state)!
+  const pageOverview = resolveTownPageOverview(town, county, stateData)
   const effectiveRate = getMetricLatest({
     town,
     county,
     metricKey: 'effectiveTaxRate',
   })
-  const overview = town.overview && validateTownOverview(town.overview) ? town.overview : null
+  const overview = pageOverview
   const asOfYear =
     overview?.asOfYear ?? effectiveRate?.year ?? town.asOfYear ?? stateData.state.asOfYear
   const rateText =
@@ -130,30 +130,50 @@ export default async function TownPropertyTaxPage({ params }: Props) {
   const pageUrl = `${SITE_URL}/${encState}/${encCountySeg}/${encTownSeg}`
   const countyPageUrl = `${SITE_URL}/${encState}/${encodeURIComponent(countyRouteSegment)}`
   const countyCalculatorHref = `/${state}/${countyRouteSegment}/property-tax-calculator`
-  const relatedTowns = selectRelatedTowns(county, townSlugForLookup(townSlug), { max: 3, stateSlug: state })
-  const faqs = getTownFaqData(town.name, county.name)
-  const copyContext = buildTownCopyContext({ state: stateData, county, town })
-  const enrichedOverview =
-    town.overview && validateTownOverview(town.overview)
-      ? enrichOverviewYearsFromMetrics(town, county, town.overview, stateData)
-      : null
+  const relatedTowns = selectRelatedTowns(county, townSlugForLookup(townSlug), {
+    max: 6,
+    stateSlug: state,
+  })
+
+  const pageOverview = resolveTownPageOverview(town, county, stateData)
+  const sections = resolveTownPageSections({
+    town,
+    county,
+    stateData,
+    townDisplayName,
+    overview: pageOverview,
+  })
+
   const effectiveRate = getMetricLatest({
     town,
     county,
     metricKey: 'effectiveTaxRate',
   })
   const taxYearForSources =
-    enrichedOverview?.effectiveTaxRateYear ??
-    enrichedOverview?.asOfYear ??
+    pageOverview?.effectiveTaxRateYear ??
+    pageOverview?.asOfYear ??
     effectiveRate?.year ??
-    copyContext.asOfYear
-  const countySeries = getCountyAvgTaxBillSeries(state, county.name)
-  const showTrendsChart = countySeries.length >= 3
+    town.asOfYear
 
-  const sourcesBlurb =
-    state === 'new-jersey'
-      ? 'New Jersey Division of Taxation, U.S. Census Bureau, and other public data.'
-      : 'Public tax and housing data for this state. See methodology for details.'
+  const hasTownAvgBill = Boolean(town.metrics?.averageResidentialTaxBill?.length)
+  const hasTownRate = Boolean(town.metrics?.effectiveTaxRate?.length)
+  const usesCountyFallback =
+    pageOverview != null &&
+    ((pageOverview.countyAvgTaxBill != null &&
+      pageOverview.avgResidentialTaxBill === pageOverview.countyAvgTaxBill) ||
+      (pageOverview.countyEffectiveRatePct != null &&
+        pageOverview.effectiveTaxRatePct === pageOverview.countyEffectiveRatePct))
+
+  const faqs = getTownFaqData(town.name, county.name, state, {
+    hasTownAvgBillMetric: hasTownAvgBill,
+    hasTownRateMetric: hasTownRate,
+    usesCountyFallback: Boolean(usesCountyFallback),
+  })
+
+  const cap = getStateCapabilities(state)
+  const sourcesBlurb = cap.hasComptrollerUnitRates
+    ? 'Texas Comptroller–style taxing-unit rates and other public sources where cited.'
+    : 'New Jersey Division of Taxation, U.S. Census Bureau, and other public data.'
 
   return (
     <>
@@ -195,167 +215,227 @@ export default async function TownPropertyTaxPage({ params }: Props) {
       />
       <Header />
       <main className="min-h-screen bg-gradient-to-br from-bg-gradient-from to-bg-gradient-to">
-        <div className="container mx-auto px-4 py-8">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-6">
-              <h1 className="text-4xl font-bold text-text mb-2">
-                {townDisplayName}, {county.name} County {abbrev} Property Tax Calculator
-              </h1>
-              <p className="text-sm text-text-muted italic">Planning estimate (not official tax data)</p>
-            </div>
+        <div className="container-page py-8">
+          <div className="text-center mb-6">
+            <h1 className="text-4xl font-bold text-text mb-2">
+              {townDisplayName}, {county.name} County {abbrev} Property Tax Calculator
+            </h1>
+            <p className="text-sm text-text-muted italic">
+              Planning estimate (not official tax data)
+            </p>
+          </div>
 
-            <nav className="text-sm text-text-muted mb-4" aria-label="Breadcrumb">
-              <Link href="/" className="hover:text-primary">
-                Home
-              </Link>
-              <span className="mx-2">→</span>
-              <Link href={`/${state}`} className="hover:text-primary">
-                {stateName}
-              </Link>
-              <span className="mx-2">→</span>
-              <Link href={countyPageUrl} className="hover:text-primary">
-                {county.name} County
-              </Link>
-              <span className="mx-2">→</span>
-              <span className="text-text">{townDisplayName}</span>
-            </nav>
+          <nav className="text-sm text-text-muted mb-4" aria-label="Breadcrumb">
+            <Link href="/" className="hover:text-primary">
+              Home
+            </Link>
+            <span className="mx-2">→</span>
+            <Link href={`/${state}`} className="hover:text-primary">
+              {stateName}
+            </Link>
+            <span className="mx-2">→</span>
+            <Link href={countyPageUrl} className="hover:text-primary">
+              {county.name} County
+            </Link>
+            <span className="mx-2">→</span>
+            <span className="text-text">{townDisplayName}</span>
+          </nav>
 
-            <nav
-              className="mb-6 flex flex-wrap items-center gap-2 text-xs text-text-muted"
-              aria-label="Explore calculators"
+          <nav
+            className="mb-6 flex flex-wrap items-center gap-2 text-xs text-text-muted"
+            aria-label="Explore calculators"
+          >
+            <span>Explore:</span>
+            <Link
+              href={buildCalculatorHref({ stateSlug: state })}
+              className="text-text-muted hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 rounded"
             >
-              <span>Explore:</span>
-              <Link
-                href={buildCalculatorHref({ stateSlug: state })}
-                className="text-text-muted hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 rounded"
-              >
-                {abbrev} calculator
-              </Link>
-              <span aria-hidden>·</span>
-              <Link
-                href={buildCalculatorHref({
-                  stateSlug: state,
-                  countySlug: getCountyShortSlug(county),
-                  townSlug: town.slug || slugifyLocation(town.name),
-                })}
-                className="text-text-muted hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 rounded"
-              >
-                Calculator with {townDisplayName} prefilled
-              </Link>
-            </nav>
+              {abbrev} calculator
+            </Link>
+            <span aria-hidden>·</span>
+            <Link
+              href={buildCalculatorHref({
+                stateSlug: state,
+                countySlug: getCountyShortSlug(county),
+                townSlug: town.slug || slugifyLocation(town.name),
+              })}
+              className="text-text-muted hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 rounded"
+            >
+              Calculator with {townDisplayName} prefilled
+            </Link>
+          </nav>
 
-            <TownAtAGlance
-              townName={townDisplayName}
-              countyName={county.name}
-              stateCode={abbrev}
-              stateSlug={state}
-              overview={enrichedOverview ?? (town.overview ?? undefined)}
-            />
+          <TownAtAGlance
+            townName={townDisplayName}
+            countyName={county.name}
+            stateCode={abbrev}
+            stateSlug={state}
+            overview={pageOverview ?? undefined}
+          />
 
-            <section className="mb-12" aria-labelledby="estimate-heading">
-              <h2 id="estimate-heading" className="text-2xl font-semibold mb-4 text-text">
-                Estimate property taxes
+          {sections.overviewParagraphs.length > 0 && (
+            <section className="mb-10" aria-labelledby="town-overview-heading">
+              <h2 id="town-overview-heading" className="text-xl font-semibold text-text mb-3">
+                Overview
               </h2>
-              <p className="text-text-muted mb-2">
-                Use the calculator below with your home value. Estimates are for planning only—verify
-                with your local assessor.
-              </p>
-              <div className="grid lg:grid-cols-2 gap-8 mt-4">
-                <Card className="p-6">
-                  <TaxForm
-                    stateSlug={state}
-                    defaultCounty={county.name}
-                    defaultMunicipality={town.name}
-                    countyNames={getCountyNames(stateData)}
-                    municipalitiesByCounty={getMunicipalitiesByCountyMap(stateData)}
-                  />
-                </Card>
-                <Card className="p-6">
-                  <TaxResults stateSlug={state} />
-                </Card>
+              <div className="prose prose-lg max-w-none text-text-muted space-y-2">
+                {sections.overviewParagraphs.map((p, i) => (
+                  <p key={i}>{p}</p>
+                ))}
               </div>
             </section>
+          )}
 
-            {relatedTowns.length > 0 && (
-              <RelatedTowns
-                towns={relatedTowns}
-                title={`Explore other towns in ${county.name} County`}
-              />
-            )}
-
-            {showTrendsChart && (
-              <section className="mb-12" aria-labelledby="trends-heading">
-                <h2 id="trends-heading" className="text-2xl font-semibold mb-4 text-text">
-                  {countySeries.length >= 5
-                    ? '5-year trend'
-                    : `${countySeries.length}-year trend (${countySeries[0].year}–${countySeries[countySeries.length - 1].year})`}
-                </h2>
-                <p className="text-sm text-text-muted mb-4">
-                  County average residential tax bill. Planning context only.
-                </p>
-                <CalculatorTaxTrendsChart series={countySeries} countyName={county.name} />
-              </section>
-            )}
-
-            <section className="mb-12" aria-labelledby="faq-heading">
-              <LocationFAQ
-                faqs={faqs}
-                title={`${townDisplayName} Property Tax FAQ`}
-                subtitle={`Common questions about property taxes in ${townDisplayName}, ${county.name} County`}
-                titleId="faq-heading"
-              />
-            </section>
-
-            <section className="mb-12 border-t border-border pt-8" aria-labelledby="sources-heading">
-              <h2 id="sources-heading" className="text-2xl font-semibold mb-4 text-text">
-                Sources
+          {sections.comparison && sections.comparison.items.length > 0 && (
+            <section className="mb-10" aria-labelledby="town-compare-heading">
+              <h2 id="town-compare-heading" className="text-xl font-semibold text-text mb-3">
+                {sections.comparison.title}
               </h2>
-              <p className="text-text-muted mb-4">
-                This page provides estimates for planning and comparison only. Actual property tax bills
-                depend on official assessments, exemptions, and local decisions. Data as of latest
-                available year by source
-                {taxYearForSources != null ? (
-                  <> — tax rates updated through {taxYearForSources} where available.</>
-                ) : (
-                  '.'
-                )}{' '}
-                Verify with your local assessor.
-              </p>
-              <p className="text-sm text-text-muted">
-                {sourcesBlurb}{' '}
-                <Link href="/methodology" className="text-primary hover:text-primary-hover underline">
+              {sections.comparison.summary && (
+                <p className="text-sm text-text-muted mb-3">{sections.comparison.summary}</p>
+              )}
+              <ul className="space-y-2">
+                {sections.comparison.items.map((item, i) => (
+                  <li
+                    key={i}
+                    className="rounded-lg border border-border bg-surface p-3 text-sm text-text-muted"
+                  >
+                    <span className="font-medium text-text">{item.label}</span>
+                    <p className="mt-1">{item.body}</p>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+
+          <section className="mb-12" aria-labelledby="estimate-heading">
+            <h2 id="estimate-heading" className="text-2xl font-semibold mb-4 text-text">
+              Estimate property taxes
+            </h2>
+            <p className="text-text-muted mb-2">
+              Use the calculator below with your home value. Estimates are for planning only—verify
+              with your local assessor.
+            </p>
+            <div className="grid lg:grid-cols-2 gap-8 mt-4">
+              <Card className="p-6">
+                <TaxForm
+                  stateSlug={state}
+                  defaultCounty={county.name}
+                  defaultMunicipality={town.name}
+                  countyNames={getCountyNames(stateData)}
+                  municipalitiesByCounty={getMunicipalitiesByCountyMap(stateData)}
+                />
+              </Card>
+              <Card className="p-6">
+                <TaxResults stateSlug={state} />
+              </Card>
+            </div>
+          </section>
+
+          <section className="mb-10" aria-labelledby="town-estimate-guide-heading">
+            <h2 id="town-estimate-guide-heading" className="text-xl font-semibold text-text mb-3">
+              {sections.estimateGuide.title}
+            </h2>
+            <ol className="list-decimal pl-5 space-y-2 text-text-muted text-sm">
+              {sections.estimateGuide.steps.map((s, i) => (
+                <li key={i}>{s}</li>
+              ))}
+            </ol>
+            {sections.estimateGuide.note && (
+              <p className="mt-3 text-sm text-text-muted border-t border-border pt-3">
+                {sections.estimateGuide.note}{' '}
+                <Link
+                  href="/methodology"
+                  className="text-primary hover:text-primary-hover underline"
+                >
                   Methodology
                 </Link>
                 .
               </p>
-            </section>
+            )}
+          </section>
 
-            <div className="flex flex-wrap gap-4 text-sm">
-              <Link href={`/${state}`} className="text-primary hover:text-primary-hover underline">
-                {stateName} overview
+          {relatedTowns.length > 0 && (
+            <RelatedTowns
+              towns={relatedTowns}
+              title={`Explore other towns in ${county.name} County`}
+              intro={sections.relatedTownsIntro}
+            />
+          )}
+
+          {sections.trendChart && (
+            <section className="mb-12" aria-labelledby="trends-heading">
+              <h2 id="trends-heading" className="text-2xl font-semibold mb-4 text-text">
+                Trend context
+              </h2>
+              <CalculatorTaxTrendsChart
+                series={sections.trendChart.series}
+                countyName={county.name}
+                valueFormat={sections.trendChart.valueFormat}
+                chartTitle={sections.trendChart.title}
+                chartSubtitle={sections.trendChart.subtitle}
+              />
+            </section>
+          )}
+
+          <section className="mb-12" aria-labelledby="faq-heading">
+            <LocationFAQ
+              faqs={faqs}
+              title={`${townDisplayName} Property Tax FAQ`}
+              subtitle={`Common questions about property taxes in ${townDisplayName}, ${county.name} County`}
+              titleId="faq-heading"
+            />
+          </section>
+
+          <section className="mb-12 border-t border-border pt-8" aria-labelledby="sources-heading">
+            <h2 id="sources-heading" className="text-2xl font-semibold mb-4 text-text">
+              Sources
+            </h2>
+            <p className="text-text-muted mb-4">
+              This page provides estimates for planning and comparison only. Actual property tax
+              bills depend on official assessments, exemptions, and local decisions. Data as of
+              latest available year by source
+              {taxYearForSources != null ? (
+                <> — tax rates updated through {taxYearForSources} where available.</>
+              ) : (
+                '.'
+              )}{' '}
+              Verify with your local assessor.
+            </p>
+            <p className="text-sm text-text-muted">
+              {sourcesBlurb}{' '}
+              <Link href="/methodology" className="text-primary hover:text-primary-hover underline">
+                Methodology
               </Link>
-              <Link
-                href={`/${state}/property-tax-calculator`}
-                className="text-primary hover:text-primary-hover underline"
-              >
-                {abbrev} calculator
-              </Link>
-              <Link href={countyPageUrl} className="text-primary hover:text-primary-hover underline">
-                {county.name} County
-              </Link>
-              <Link
-                href={countyCalculatorHref}
-                className="text-primary hover:text-primary-hover underline"
-              >
-                {county.name} County calculator
-              </Link>
-              <Link
-                href={`/${state}/property-tax-rates`}
-                className="text-primary hover:text-primary-hover underline"
-              >
-                {stateName} property tax rates
-              </Link>
-            </div>
+              .
+            </p>
+          </section>
+
+          <div className="flex flex-wrap gap-4 text-sm">
+            <Link href={`/${state}`} className="text-primary hover:text-primary-hover underline">
+              {stateName} overview
+            </Link>
+            <Link
+              href={`/${state}/property-tax-calculator`}
+              className="text-primary hover:text-primary-hover underline"
+            >
+              {abbrev} calculator
+            </Link>
+            <Link href={countyPageUrl} className="text-primary hover:text-primary-hover underline">
+              {county.name} County
+            </Link>
+            <Link
+              href={countyCalculatorHref}
+              className="text-primary hover:text-primary-hover underline"
+            >
+              {county.name} County calculator
+            </Link>
+            <Link
+              href={`/${state}/property-tax-rates`}
+              className="text-primary hover:text-primary-hover underline"
+            >
+              {stateName} property tax rates
+            </Link>
           </div>
         </div>
       </main>

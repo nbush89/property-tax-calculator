@@ -156,24 +156,6 @@
             }
           }
         },
-        "copy": {
-          "type": "object",
-          "required": ["paragraphs", "disclaimer"],
-          "properties": {
-            "paragraphs": {
-              "type": "array",
-              "minItems": 1,
-              "items": {
-                "type": "string"
-              },
-              "description": "County-specific content paragraphs"
-            },
-            "disclaimer": {
-              "type": "string",
-              "description": "Disclaimer text for estimates"
-            }
-          }
-        },
         "towns": {
           "type": "array",
           "items": {

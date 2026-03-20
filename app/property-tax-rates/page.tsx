@@ -31,7 +31,7 @@ export default function PropertyTaxRatesLandingPage() {
         ])}
       />
       <Header />
-      <main className="min-h-screen bg-bg">
+      <main className="min-h-screen bg-page-like-home">
         <div className="container-page py-12">
           <div className="mb-10 text-center">
             <h1 className="section-title mb-4">Property Tax Rates by State</h1>

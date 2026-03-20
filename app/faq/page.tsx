@@ -14,7 +14,8 @@ import { SITE_URL } from '@/lib/site'
  */
 export const metadata = buildMetadata({
   title: 'Frequently Asked Questions | NJ Property Tax Calculator',
-  description: 'Get answers to common questions about the New Jersey property tax calculator, accuracy, exemptions, and how to use the tool.',
+  description:
+    'Get answers to common questions about the New Jersey property tax calculator, accuracy, exemptions, and how to use the tool.',
   path: '/faq',
   keywords: 'NJ property tax FAQ, property tax calculator questions, New Jersey tax exemptions',
 })
@@ -41,4 +42,3 @@ export default function FAQPage() {
     </>
   )
 }
-

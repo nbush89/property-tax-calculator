@@ -5,7 +5,7 @@
  */
 
 import { getStateData } from '@/lib/geo'
-import { isTownPublished } from '@/lib/sitemaps'
+import { isTownPublished } from '@/lib/town/isTownPublished'
 
 function main() {
   const stateData = getStateData('new-jersey')

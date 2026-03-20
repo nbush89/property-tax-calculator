@@ -4,6 +4,8 @@ import { SITE_URL } from './site'
 import { getStateData } from './geo'
 import { slugifyLocation } from '@/utils/locationUtils'
 import type { TownData, StateData } from '@/lib/data/types'
+import { getTownSlug } from '@/lib/links/towns'
+import { isTownIndexable } from '@/lib/sitemap/isTownIndexable'
 
 /**
  * Get base URL, using fallback during build, throwing only at runtime in production if missing
@@ -109,26 +111,8 @@ export function loadStateData(slug: string): StateData | null {
   return getStateData(slug)
 }
 
-/**
- * Deterministic "published/live" filter: include town in sitemap and county listings only when
- * it has real data (no future/placeholder towns). We filter so crawlers and users only see URLs
- * that resolve to meaningful content.
- */
-export function isTownPublished(town: TownData | Record<string, unknown>): boolean {
-  const t = town as Record<string, unknown>
-  if (t.isLive === true) {
-    return true
-  }
-  const metrics = t.metrics as
-    | { effectiveTaxRate?: unknown[]; averageResidentialTaxBill?: unknown[] }
-    | undefined
-  if (!metrics) {
-    return false
-  }
-  const hasRate = (metrics.effectiveTaxRate?.length ?? 0) > 0
-  const hasBill = (metrics.averageResidentialTaxBill?.length ?? 0) > 0
-  return hasRate || hasBill
-}
+/** @deprecated Import from `@/lib/town/isTownPublished` (re-export for older scripts). */
+export { isTownPublished } from '@/lib/town/isTownPublished'
 
 /**
  * Compute lastmod for a state: prefer asOfYear (data vintage) so we don't claim "updated today"
@@ -198,42 +182,35 @@ export function getStaticPageUrls(baseUrl: string): Array<{
   ]
 }
 
-/**
- * Generate state-specific URLs (state overview, calculator, rates, counties, towns).
- * Uses state/county/town asOfYear or file mtime for lastmod instead of "now" on every build.
- */
-export function getStateUrls(
-  baseUrl: string,
-  stateSlug: string
-): Array<{
+export type StateSitemapUrl = {
   loc: string
   lastmod: string
   changefreq?: string
   priority?: number
-}> {
+}
+
+/**
+ * Generate state-specific URLs (state overview, calculator, rates, counties, towns).
+ * Town URLs: only if {@link isTownIndexable} (publish readiness + manual overrides → effectively published).
+ * County `/towns` index: only if at least one indexable town.
+ *
+ * County listing URLs remain included for all counties (future: optional {@link isCountyIndexable}).
+ */
+export async function getStateUrls(baseUrl: string, stateSlug: string): Promise<StateSitemapUrl[]> {
   const stateData = loadStateData(stateSlug)
   if (!stateData) {
     return []
   }
 
-  // One state-level lastmod: from data vintage (asOfYear) or state JSON file mtime.
-  // We avoid new Date().toISOString() per URL so sitemaps don't churn every build.
   const stateLastmod = getStateLastmod(stateSlug, stateData)
 
-  const urls: Array<{
-    loc: string
-    lastmod: string
-    changefreq?: string
-    priority?: number
-  }> = []
+  const urls: StateSitemapUrl[] = []
 
-  // State overview route (e.g. /new-jersey) – exists in app
   urls.push({
     loc: joinUrl(baseUrl, `/${stateSlug}`),
     lastmod: stateLastmod,
   })
 
-  // State-level sub-pages (calculator, rates)
   urls.push({
     loc: joinUrl(baseUrl, `/${stateSlug}/property-tax-calculator`),
     lastmod: stateLastmod,
@@ -244,31 +221,42 @@ export function getStateUrls(
     lastmod: stateLastmod,
   })
 
-  // County pages and county town index (only if at least one published town)
   for (const county of stateData.counties) {
-    const countySlug = slugifyLocation(county.name)
-    const countyRouteSegment = `${countySlug}-county-property-tax`
-    const publishedTowns = (county.towns || []).filter(t => isTownPublished(t))
+    const countySlugShort = county.slug || slugifyLocation(county.name)
+    const countySlugForPath = slugifyLocation(county.name)
+    const countyRouteSegment = `${countySlugForPath}-county-property-tax`
 
     urls.push({
       loc: joinUrl(baseUrl, `/${stateSlug}/${countyRouteSegment}`),
       lastmod: stateLastmod,
     })
 
-    if (publishedTowns.length > 0) {
+    const indexableTowns: TownData[] = []
+    for (const town of county.towns || []) {
+      const townSlug = getTownSlug(town)
+      if (!townSlug) continue
+      const ok = await isTownIndexable({
+        stateSlug,
+        countySlug: countySlugShort,
+        townSlug,
+        town,
+      })
+      if (ok) indexableTowns.push(town)
+    }
+
+    if (indexableTowns.length > 0) {
       urls.push({
         loc: joinUrl(baseUrl, `/${stateSlug}/${countyRouteSegment}/towns`),
         lastmod: stateLastmod,
       })
     }
 
-    // Town pages: only published towns (have metrics so page is meaningful)
-    for (const town of publishedTowns) {
-      const townSlug = (town as TownData).slug || slugifyLocation((town as TownData).name)
+    for (const town of indexableTowns) {
+      const townSlug = getTownSlug(town)
       const townLastmod =
-        (town as TownData).asOfYear != null ? `${(town as TownData).asOfYear}-12-31` : stateLastmod
+        town.asOfYear != null ? `${town.asOfYear}-12-31` : stateLastmod
       urls.push({
-        loc: joinUrl(baseUrl, `/${stateSlug}/${countySlug}/${townSlug}-property-tax`),
+        loc: joinUrl(baseUrl, `/${stateSlug}/${countySlugForPath}/${townSlug}-property-tax`),
         lastmod: townLastmod,
       })
     }

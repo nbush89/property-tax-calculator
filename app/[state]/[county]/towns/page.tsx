@@ -11,7 +11,7 @@ import { getStateData, getCountyBySlug, formatUSD } from '@/lib/geo'
 import { buildTownHref, getTownSlug, getCountyShortSlug } from '@/lib/links/towns'
 import { getTownDisplayName } from '@/utils/locationUtils'
 import { getMetricLatest } from '@/lib/data/town-helpers'
-import { isTownPublished } from '@/lib/sitemaps'
+import { isTownPublished } from '@/lib/town/isTownPublished'
 import { isValidState } from '@/utils/stateUtils'
 import { isMetricDisplayAllowed } from '@/lib/metrics/stateMetricCapabilities'
 import { getStateCapabilities } from '@/lib/state-capabilities'
@@ -33,7 +33,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const county = getCountyBySlug(stateData, normalizedSlug)
   if (!county) return { title: 'County Not Found | Property Tax Calculator' }
 
-  const publishedCount = (county.towns || []).filter(t => getTownSlug(t) && isTownPublished(t)).length
+  const publishedCount = (county.towns || []).filter(
+    t => getTownSlug(t) && isTownPublished(t)
+  ).length
   const path = `/${encodeURIComponent(state)}/${countySegment}/towns`
   return buildMetadata({
     title: `Property Tax Towns in ${county.name} County, ${stateData.state.abbreviation}`,
@@ -82,9 +84,9 @@ export default async function CountyTownsIndexPage({ params }: Props) {
       name: getTownDisplayName(town),
       href: buildTownHref(state, shortSlug, getTownSlug(town)),
       rate: rateSupported
-        ? effectiveRate?.value ?? (town.avgRate != null ? town.avgRate * 100 : null)
+        ? (effectiveRate?.value ?? (town.avgRate != null ? town.avgRate * 100 : null))
         : null,
-      taxBill: billSupported ? avgBill?.value ?? null : null,
+      taxBill: billSupported ? (avgBill?.value ?? null) : null,
     }
   })
 
@@ -103,11 +105,17 @@ export default async function CountyTownsIndexPage({ params }: Props) {
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-6xl mx-auto">
             <nav className="text-sm text-text-muted mb-4" aria-label="Breadcrumb">
-              <Link href="/" className="hover:text-primary">Home</Link>
+              <Link href="/" className="hover:text-primary">
+                Home
+              </Link>
               <span className="mx-2">→</span>
-              <Link href={`/${state}`} className="hover:text-primary">{stateData.state.name}</Link>
+              <Link href={`/${state}`} className="hover:text-primary">
+                {stateData.state.name}
+              </Link>
               <span className="mx-2">→</span>
-              <Link href={`/${state}/${countySegment}`} className="hover:text-primary">{county.name} County</Link>
+              <Link href={`/${state}/${countySegment}`} className="hover:text-primary">
+                {county.name} County
+              </Link>
               <span className="mx-2">→</span>
               <span className="text-text">Towns</span>
             </nav>
@@ -123,28 +131,54 @@ export default async function CountyTownsIndexPage({ params }: Props) {
               Use the on-page calculator for planning estimates.
             </p>
 
-            <nav className="mb-8 flex flex-wrap items-center gap-2 text-sm text-text-muted" aria-label="Calculators">
-              <Link href={stateCalculatorHref} className="text-text-muted hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 rounded">
+            <nav
+              className="mb-8 flex flex-wrap items-center gap-2 text-sm text-text-muted"
+              aria-label="Calculators"
+            >
+              <Link
+                href={stateCalculatorHref}
+                className="text-text-muted hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 rounded"
+              >
                 {stateData.state.abbreviation} calculator
               </Link>
               <span aria-hidden>·</span>
-              <Link href={countyCalculatorHref} className="text-text-muted hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 rounded">
+              <Link
+                href={countyCalculatorHref}
+                className="text-text-muted hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 rounded"
+              >
                 {county.name} County calculator
               </Link>
             </nav>
 
-            <CountyTownsFilter listId="county-towns-list" totalCount={count} showSearchAndSort={count > 15} />
+            <CountyTownsFilter
+              listId="county-towns-list"
+              totalCount={count}
+              showSearchAndSort={count > 15}
+            />
             <CountyTownsLoadMore listId="county-towns-list" totalCount={count} pageSize={20} />
-            <CountyTownDirectory listId="county-towns-list" towns={directoryItems} formatTaxBill={v => formatUSD(v)} />
+            <CountyTownDirectory
+              listId="county-towns-list"
+              towns={directoryItems}
+              formatTaxBill={v => formatUSD(v)}
+            />
 
             <div className="mt-12 flex flex-wrap gap-4">
-              <Link href={`/${state}/${countySegment}`} className="px-4 py-2 bg-surface border border-border text-text rounded-lg hover:bg-bg transition-colors">
+              <Link
+                href={`/${state}/${countySegment}`}
+                className="px-4 py-2 bg-surface border border-border text-text rounded-lg hover:bg-bg transition-colors"
+              >
                 ← Back to {county.name} County
               </Link>
-              <Link href={`/${state}`} className="px-4 py-2 bg-surface border border-border text-text rounded-lg hover:bg-bg transition-colors">
+              <Link
+                href={`/${state}`}
+                className="px-4 py-2 bg-surface border border-border text-text rounded-lg hover:bg-bg transition-colors"
+              >
                 {stateData.state.name} overview
               </Link>
-              <Link href={`/${state}/property-tax-rates`} className="px-4 py-2 bg-surface border border-border text-text rounded-lg hover:bg-bg transition-colors">
+              <Link
+                href={`/${state}/property-tax-rates`}
+                className="px-4 py-2 bg-surface border border-border text-text rounded-lg hover:bg-bg transition-colors"
+              >
                 {stateData.state.abbreviation} property tax rates
               </Link>
             </div>

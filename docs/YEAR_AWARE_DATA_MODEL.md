@@ -304,3 +304,16 @@ npx tsx scripts/validate-data.ts
 1. Add historical data to JSON files as it becomes available
 2. Update town pages to use metrics (if needed)
 3. Consider adding charts/visualizations for historical trends
+
+---
+
+## County page content (generated, not JSON prose)
+
+County landing pages (`app/[state]/[county]/page.tsx`) **do not** use `county.copy.paragraphs` or `county.copy.disclaimer` from state JSON. Copy is assembled in code:
+
+- **`lib/content/countyContent.ts`** — `resolveCountyPageContent`, section builders (overview, comparison vs peer counties, tax factors from `getStateCapabilities`, estimate guide, town insights from published town metrics, related counties).
+- **`components/county/CountyPageSections.tsx`** — presentational sections only.
+
+**JSON should keep facts** (metrics, `neighborCounties`, sources), not long-form county narratives. County-level `copy` was removed from `new-jersey.json`; town-level `copy` remains for town pages.
+
+**Tests:** `npm test` (includes county content suite in `tests/`)
