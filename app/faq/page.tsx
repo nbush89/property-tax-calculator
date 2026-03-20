@@ -6,18 +6,19 @@ import { faqData } from '@/data/faqData'
 import { faqJsonLd, breadcrumbJsonLd } from '@/lib/jsonld'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { buildMetadata } from '@/lib/seo'
-import { SITE_URL } from '@/lib/site'
+import { SITE_NAME, SITE_URL } from '@/lib/site'
 
 /**
  * FAQ page metadata and JSON-LD structured data.
  * Includes: FAQPage and BreadcrumbList schemas.
  */
 export const metadata = buildMetadata({
-  title: 'Frequently Asked Questions | NJ Property Tax Calculator',
+  title: `Frequently Asked Questions | ${SITE_NAME}`,
   description:
-    'Get answers to common questions about the New Jersey property tax calculator, accuracy, exemptions, and how to use the tool.',
+    'Answers about the property tax calculator, planning estimates, exemptions and relief, accuracy, and supported states (including New Jersey and Texas).',
   path: '/faq',
-  keywords: 'NJ property tax FAQ, property tax calculator questions, New Jersey tax exemptions',
+  keywords:
+    'property tax FAQ, property tax calculator questions, state property tax exemptions, NJ property tax, Texas property tax',
 })
 
 export default function FAQPage() {

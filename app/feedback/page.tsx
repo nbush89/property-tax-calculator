@@ -5,12 +5,11 @@ import Feedback from '@/components/landing/Feedback'
 import { buildMetadata } from '@/lib/seo'
 import { breadcrumbJsonLd } from '@/lib/jsonld'
 import { JsonLd } from '@/components/seo/JsonLd'
-import { SITE_URL } from '@/lib/site'
+import { SITE_NAME, SITE_URL } from '@/lib/site'
 
 export const metadata: Metadata = buildMetadata({
-  title: 'Feedback | NJ Property Tax Calculator',
-  description:
-    'Share your feedback, suggestions, or report issues with the NJ Property Tax Calculator. Help us improve the tool.',
+  title: `Feedback | ${SITE_NAME}`,
+  description: `Share feedback or report issues for ${SITE_NAME}. Help us improve the calculator and state coverage.`,
   path: '/feedback',
   keywords: 'feedback, suggestions, report issue, contact',
 })

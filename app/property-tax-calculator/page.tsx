@@ -11,7 +11,7 @@ import { SITE_URL } from '@/lib/site'
 export const metadata: Metadata = buildMetadata({
   title: 'Property Tax Calculator by State | Estimate Your Property Taxes',
   description:
-    'Calculate property taxes by state, county, and town. Enter your home value for planning estimates, rates, and trends. Available for New Jersey with more states coming.',
+    'Calculate property taxes by state, county, and town. Planning estimates from published rates—supported states include New Jersey and Texas, with more as data is added.',
   path: '/property-tax-calculator',
   keywords:
     'property tax calculator, property tax by state, estimate property taxes, county property tax, municipal tax rates',

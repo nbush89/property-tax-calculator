@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { SITE_NAME } from '@/lib/site'
 
 type LogoProps = {
   showText?: boolean
@@ -11,7 +12,7 @@ export default function Logo({ showText = true, className = '' }: LogoProps) {
     <Link href="/" className={`flex items-center gap-2 ${className}`}>
       <Image
         src="/logo-light.svg"
-        alt="NJ Property Tax Calculator"
+        alt={SITE_NAME}
         width={65}
         height={65}
         priority

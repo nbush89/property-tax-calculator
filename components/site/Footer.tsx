@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { SITE_NAME } from '@/lib/site'
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
@@ -89,7 +90,7 @@ export default function Footer() {
 
         <div className="mt-8 border-t border-border pt-8">
           <p className="text-center text-sm text-text-muted">
-            © {currentYear} NJ Property Tax Calculator. All rights reserved.
+            © {currentYear} {SITE_NAME}. All rights reserved.
           </p>
         </div>
       </div>

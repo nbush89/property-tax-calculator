@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { SITE_NAME } from '@/lib/site'
 
 /**
  * API route to handle feedback form submissions
@@ -27,7 +28,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Prepare email content
-    const emailSubject = `Feedback from NJ Property Tax Calculator${name ? ` - ${name}` : ''}`
+    const emailSubject = `Feedback from ${SITE_NAME}${name ? ` - ${name}` : ''}`
     const emailBody = `
 New feedback submission:
 

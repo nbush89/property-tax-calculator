@@ -6,7 +6,8 @@
 const PRODUCTION_URL = 'https://www.home-property-tax.com'
 const DEV_DEFAULT_URL = 'http://localhost:3000'
 
-export const SITE_NAME = 'NJ Property Tax Calculator'
+/** Short brand name for metadata, JSON-LD, and UI (multi-state; not NJ-only). */
+export const SITE_NAME = 'Home Property Tax'
 
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ||

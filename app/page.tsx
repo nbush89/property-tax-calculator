@@ -9,30 +9,30 @@ import CTASection from '@/components/landing/CTASection'
 import { buildMetadata } from '@/lib/seo'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { breadcrumbJsonLd, organizationJsonLd, websiteJsonLd, webAppJsonLd } from '@/lib/jsonld'
-import { SITE_URL } from '@/lib/site'
+import { SITE_NAME, SITE_URL } from '@/lib/site'
 
 /**
  * Homepage metadata and JSON-LD structured data.
  * Includes: Organization, WebSite, WebApplication, and BreadcrumbList schemas.
  */
 export const metadata = buildMetadata({
-  title: 'NJ Property Tax Calculator | Estimate Your New Jersey Property Taxes',
+  title: `${SITE_NAME} | Property tax calculator & rates by state`,
   description:
-    'Calculate your New Jersey property taxes in seconds. Get accurate estimates with county and town breakdowns, exemptions support, and detailed analysis—all free and no sign-up required.',
+    'Estimate and compare property taxes by state, county, and town. Planning-focused calculator, published rates, and trend context—New Jersey, Texas, and expanding coverage. Free, no sign-up.',
   path: '/',
   keywords:
-    'New Jersey property tax, NJ property tax calculator, property tax estimator, New Jersey real estate taxes, NJ tax calculator',
+    'property tax calculator, property tax by state, county tax rates, New Jersey property tax, Texas property tax, home property tax',
   openGraph: {
-    title: 'NJ Property Tax Calculator | Estimate Your New Jersey Property Taxes',
+    title: `${SITE_NAME} | Property tax calculator & rates by state`,
     description:
-      'Calculate your New Jersey property taxes in seconds. Get accurate estimates with county and town breakdowns, exemptions support, and detailed analysis.',
+      'Run multi-state property tax planning estimates, browse county and town pages, and review methodology and sources.',
     type: 'website',
     images: [
       {
         url: '/logo-icon.png',
         width: 512,
         height: 512,
-        alt: 'NJ Property Tax Calculator',
+        alt: SITE_NAME,
       },
     ],
   },
@@ -53,7 +53,7 @@ export default function Home() {
         data={webAppJsonLd({
           pageUrl,
           description:
-            'Calculate your New Jersey property taxes in seconds. Get accurate estimates with county and town breakdowns, exemptions support, and detailed analysis.',
+            'Property tax planning estimates and comparisons by state, county, and town using public data.',
         })}
       />
       {/* BreadcrumbList schema - navigation hierarchy */}
