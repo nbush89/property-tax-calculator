@@ -26,5 +26,7 @@ export const TX_RATE_YEARS = buildRecentYears({
  * Key: `${countySlug}/${townSlug}` → workbook COUNTY NAME for city sheet lookup.
  */
 export const TEXAS_CITY_WORKBOOK_COUNTY: Record<string, string> = {
+  /** Plano is in Collin County in site data; keep legacy merge key for older metric extracts */
   'dallas/plano': 'Collin',
+  'collin/plano': 'Collin',
 }

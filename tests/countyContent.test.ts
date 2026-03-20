@@ -37,7 +37,7 @@ const bills = collectCountyLatestValues(nj!.counties, 'averageResidentialTaxBill
 assert.ok(bills.length > 10, 'NJ should have many county bills')
 
 const txRates = collectCountyLatestValues(tx!.counties, 'effectiveTaxRate')
-assert.equal(txRates.length, 5)
+assert.equal(txRates.length, 6)
 
 const townHl = buildCountyTownInsights({ stateSlug: 'texas', county: harris! })
 assert.ok(townHl, 'harris town insights')
