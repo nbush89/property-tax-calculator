@@ -32,6 +32,13 @@ export type SeoOpportunityRow = {
   opportunityLevel: ReturnType<typeof computeCtrOpportunity>['level']
   priorityScore: number
   opportunityReasons: string[]
+  /** Expected CTR at this average position using the position-curve benchmark */
+  expectedCtr: number
+  /**
+   * Actual CTR / expected CTR. < 0.7 means title/meta is likely the bottleneck.
+   * null when impressions are too thin to be meaningful.
+   */
+  ctrVsExpected: number | null
   effectivePublished: boolean
   effectiveStatus: EffectivePublishStatus
   validatorDecision: PublishDecision
@@ -206,6 +213,8 @@ export async function loadSeoOpportunityRows(): Promise<SeoOpportunityRow[]> {
       opportunityLevel: opp.level,
       priorityScore: opp.priorityScore,
       opportunityReasons: opp.reasons,
+      expectedCtr: opp.expectedCtr,
+      ctrVsExpected: opp.ctrVsExpected,
       effectivePublished: publish.effectivePublished,
       effectiveStatus: publish.effectiveStatus,
       validatorDecision: publish.validatorDecision,

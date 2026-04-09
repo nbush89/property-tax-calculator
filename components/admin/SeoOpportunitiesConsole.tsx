@@ -37,6 +37,31 @@ function ReviewBadge({ s }: { s: SeoReviewStatus }) {
   return <Badge variant={map[s]}>{s.replace('_', ' ')}</Badge>
 }
 
+/**
+ * Shows actual CTR as a ratio of the expected CTR at the page's average position.
+ * Helps distinguish "genuinely low CTR" from "low CTR because we rank at position 18."
+ *   ≥ 1.00 → at/above expected (ranking is the lever, not copy)
+ *   0.70–0.99 → slightly below (monitor)
+ *   < 0.70 → meaningfully below (title/meta work likely worth it)
+ */
+function CtrVsExpectedCell({ value }: { value: number | null }) {
+  if (value === null) {
+    return <span className="text-text-muted font-mono text-xs">—</span>
+  }
+  const pct = Math.round(value * 100)
+  const cls =
+    value >= 1.0
+      ? 'text-emerald-600'
+      : value >= 0.7
+        ? 'text-amber-600'
+        : 'text-red-600'
+  return (
+    <span className={cn('font-mono text-xs font-medium', cls)} title={`${pct}% of expected CTR for this position`}>
+      {pct}%
+    </span>
+  )
+}
+
 const ENTITY_OPTS: Array<'all' | SeoEntityType> = ['all', 'state', 'county', 'town']
 const OPP_OPTS = ['all', 'high', 'medium', 'low', 'none'] as const
 const REVIEW_OPTS: Array<'all' | SeoReviewStatus> = [
@@ -383,6 +408,12 @@ export default function SeoOpportunitiesConsole({ initialRows }: { initialRows: 
               <th className="p-2 font-medium text-right">Impr.</th>
               <th className="p-2 font-medium text-right">Clicks</th>
               <th className="p-2 font-medium text-right">CTR</th>
+              <th
+                className="p-2 font-medium text-right"
+                title="CTR as % of expected CTR for that average position. <70% = title/meta likely the issue. ≥100% = ranking is the lever."
+              >
+                vs Exp
+              </th>
               <th className="p-2 font-medium text-right">Pos</th>
               <th className="p-2 font-medium">Opp</th>
               <th className="p-2 font-medium text-right">Pri</th>
@@ -408,6 +439,9 @@ export default function SeoOpportunitiesConsole({ initialRows }: { initialRows: 
                 <td className="p-2 text-right font-mono">{row.impressions}</td>
                 <td className="p-2 text-right font-mono">{row.clicks}</td>
                 <td className="p-2 text-right font-mono">{(row.ctr * 100).toFixed(2)}%</td>
+                <td className="p-2 text-right">
+                  <CtrVsExpectedCell value={row.ctrVsExpected} />
+                </td>
                 <td className="p-2 text-right font-mono">{row.averagePosition.toFixed(1)}</td>
                 <td className="p-2">
                   <OppBadge level={row.opportunityLevel} />
@@ -539,6 +573,26 @@ function DetailDrawer({
             <div className="rounded-lg border border-border bg-bg p-2">
               <div className="text-text-muted text-xs">Avg position</div>
               <div className="font-semibold">{row.averagePosition.toFixed(1)}</div>
+            </div>
+            <div className="rounded-lg border border-border bg-bg p-2 col-span-2">
+              <div className="text-text-muted text-xs mb-1">
+                CTR vs expected for position {row.averagePosition.toFixed(0)}
+                {' '}(expected: {(row.expectedCtr * 100).toFixed(1)}%)
+              </div>
+              {row.ctrVsExpected === null ? (
+                <p className="text-xs text-text-muted">Not enough impressions to compare reliably.</p>
+              ) : (
+                <div className="flex items-center gap-3">
+                  <CtrVsExpectedCell value={row.ctrVsExpected} />
+                  <p className="text-xs text-text-muted">
+                    {row.ctrVsExpected >= 1.0
+                      ? 'At or above expected — ranking higher is the primary lever here, not copy changes.'
+                      : row.ctrVsExpected >= 0.7
+                        ? 'Slightly below expected — monitor; minor title/meta tweaks may help.'
+                        : 'Meaningfully below expected — title and meta description are likely the bottleneck. Prioritize copy changes.'}
+                  </p>
+                </div>
+              )}
             </div>
           </div>
 

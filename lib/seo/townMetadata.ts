@@ -90,13 +90,23 @@ export function generateTownSeoDescription(input: {
   townDisplayName: string
   stateName: string
   county: CountyData
+  /** Average residential tax bill in USD — included in description when present */
+  avgTaxBill?: number | null
+  /** Tax year the bill figure is from — shown in parens when present */
+  avgTaxBillYear?: number | null
 }): string {
-  const { townDisplayName, stateName, county } = input
+  const { townDisplayName, stateName, county, avgTaxBill, avgTaxBillYear } = input
   const countyPhrase = formatCountySeoPhrase(county)
 
   switch (input.tier) {
-    case 'strong':
-      return `Estimate property taxes in ${townDisplayName}, ${stateName}. Use the latest ${countyPhrase} data including average tax bills and rates. Compare and calculate your annual property taxes instantly.`
+    case 'strong': {
+      if (avgTaxBill != null && avgTaxBill > 0) {
+        const formatted = `$${Math.round(avgTaxBill).toLocaleString('en-US')}`
+        const yearSuffix = avgTaxBillYear ? ` (${avgTaxBillYear})` : ''
+        return `Avg property tax in ${townDisplayName}, ${stateName}: ${formatted}/yr${yearSuffix}. Use our ${countyPhrase} calculator to estimate your bill and compare rates with nearby towns.`
+      }
+      return `Estimate property taxes in ${townDisplayName}, ${stateName}. Use the latest ${countyPhrase} data including average tax bills and rates. Calculate your annual property taxes instantly.`
+    }
     case 'medium':
       return `Estimate property taxes in ${townDisplayName}, ${stateName} using current ${countyPhrase} tax rates. Calculate your annual property tax and understand how local rates compare.`
     default:
@@ -131,6 +141,12 @@ export function buildTownSeoFields(input: {
     county: input.county,
     metricKey: 'effectiveTaxRate',
   })
+  // Prefer town-level bill; fall back to county via getMetricLatest
+  const taxBill = getMetricLatest({
+    town: input.town,
+    county: input.county,
+    metricKey: 'averageResidentialTaxBill',
+  })
   const tier = resolveTownSeoTier(input.town)
   const year = resolveTownSeoYear({
     town: input.town,
@@ -155,6 +171,8 @@ export function buildTownSeoFields(input: {
     townDisplayName,
     stateName,
     county: input.county,
+    avgTaxBill: taxBill?.value ?? null,
+    avgTaxBillYear: taxBill?.year ?? null,
   })
   const keywords = buildTownKeywords(townDisplayName, input.county, stateName)
 

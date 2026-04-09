@@ -4,6 +4,13 @@
  */
 
 import { normalizeSitePath, pathToEntity } from './pathToEntity'
+import {
+  normalizeHeader,
+  parseCsvLine,
+  parseCtr,
+  parseFloatSafe,
+  parseIntSafe,
+} from './searchConsoleCsvCore'
 import type { SearchPerformanceSnapshotRecord, SeoEntityType } from './types'
 
 export type SearchConsoleImportSummary = {
@@ -14,44 +21,6 @@ export type SearchConsoleImportSummary = {
   invalid: number
   unmatchedSamples: string[]
   invalidSamples: string[]
-}
-
-function parseCsvLine(line: string): string[] {
-  const out: string[] = []
-  let cur = ''
-  let inQuotes = false
-  for (let i = 0; i < line.length; i++) {
-    const c = line[i]!
-    if (inQuotes) {
-      if (c === '"') {
-        if (line[i + 1] === '"') {
-          cur += '"'
-          i++
-        } else {
-          inQuotes = false
-        }
-      } else {
-        cur += c
-      }
-    } else if (c === '"') {
-      inQuotes = true
-    } else if (c === ',') {
-      out.push(cur)
-      cur = ''
-    } else {
-      cur += c
-    }
-  }
-  out.push(cur)
-  return out.map(s => s.trim())
-}
-
-function normalizeHeader(h: string): string {
-  return h
-    .trim()
-    .toLowerCase()
-    .replace(/\uFEFF/g, '')
-    .replace(/\s+/g, ' ')
 }
 
 /** Map header cell to canonical key */
@@ -75,30 +44,6 @@ function headerToKey(h: string): string | null {
   if (n === 'ctr') return 'ctr'
   if (n === 'position' || n === 'average position') return 'position'
   return null
-}
-
-function parseIntSafe(s: string): number | null {
-  const n = Number.parseInt(s.replace(/,/g, '').replace(/\s/g, ''), 10)
-  return Number.isFinite(n) ? n : null
-}
-
-function parseFloatSafe(s: string): number | null {
-  const n = Number.parseFloat(s.replace(/,/g, '').replace(/\s/g, ''))
-  return Number.isFinite(n) ? n : null
-}
-
-/** CTR as 0–1 fraction */
-function parseCtr(raw: string): number | null {
-  const s = raw.trim()
-  if (s.endsWith('%')) {
-    const n = parseFloatSafe(s.slice(0, -1))
-    if (n == null) return null
-    return Math.max(0, Math.min(1, n / 100))
-  }
-  const n = parseFloatSafe(s)
-  if (n == null) return null
-  if (n > 1 && n <= 100) return n / 100
-  return Math.max(0, Math.min(1, n))
 }
 
 export type ParsedSnapshotRow = Omit<SearchPerformanceSnapshotRecord, 'id' | 'importedAt'>
