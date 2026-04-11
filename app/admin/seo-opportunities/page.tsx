@@ -15,6 +15,10 @@ export default async function AdminSeoOpportunitiesPage() {
           <a href="/admin/publish-readiness" className="text-primary hover:underline">
             publish readiness
           </a>
+          . Query-level title/meta ideas live in{' '}
+          <a href="/admin/seo-recommendations" className="text-primary hover:underline">
+            SEO recommendations
+          </a>
           .
         </p>
         <p className="mt-2 text-xs text-text-muted">

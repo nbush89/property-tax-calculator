@@ -1,12 +1,23 @@
 import Link from 'next/link'
 import { adminLoginAction } from './actions'
 
-type Props = { searchParams?: Promise<{ from?: string; error?: string }> }
+function firstQueryString(
+  value: string | string[] | undefined,
+  fallback: string
+): string {
+  const raw = Array.isArray(value) ? value[0] : value
+  return typeof raw === 'string' && raw.length > 0 ? raw : fallback
+}
+
+type Props = {
+  searchParams?: Promise<{ from?: string | string[]; error?: string | string[] }>
+}
 
 export default async function AdminLoginPage({ searchParams }: Props) {
   const sp = searchParams ? await searchParams : {}
-  const from = sp.from ?? '/admin/publish-readiness'
-  const err = sp.error
+  const from = firstQueryString(sp.from, '/admin/publish-readiness')
+  const err = firstQueryString(sp.error, '')
+  const errKind = err === 'auth' || err === 'config' ? err : undefined
 
   const devOpen =
     process.env.NODE_ENV === 'development' &&
@@ -36,10 +47,8 @@ export default async function AdminLoginPage({ searchParams }: Props) {
         ) : (
           <form action={adminLoginAction} className="space-y-4">
             <input type="hidden" name="from" value={from} />
-            {err === 'auth' && (
-              <p className="text-sm text-red-600">Invalid password.</p>
-            )}
-            {err === 'config' && (
+            {errKind === 'auth' && <p className="text-sm text-red-600">Invalid password.</p>}
+            {errKind === 'config' && (
               <p className="text-sm text-red-600">
                 Set ADMIN_PUBLISH_PASSWORD and ADMIN_PUBLISH_TOKEN in the environment.
               </p>

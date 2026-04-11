@@ -8,7 +8,7 @@ import { JsonLd } from '@/components/seo/JsonLd'
 import { formatStateName, isValidState } from '@/utils/stateUtils'
 import { notFound } from 'next/navigation'
 import { SITE_URL } from '@/lib/site'
-import { getStatesForHero } from '@/lib/geo'
+import { getStatesForHero, getStateData } from '@/lib/geo'
 
 type Props = {
   params: Promise<{ state: string }>
@@ -17,11 +17,20 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { state: stateParam } = await params
   const state = decodeURIComponent(stateParam)
-  const stateName = formatStateName(state)
+  const stateData = getStateData(state)
+  const stateName = stateData?.state.name ?? formatStateName(state)
+  // Use abbreviation as the lead token — shorter, matches query patterns like
+  // "property tax nj calculator", and keeps the title under 65 chars with the year.
+  const abbrev = stateData?.state.abbreviation ?? formatStateName(state)
+  const dataYear = stateData?.state.asOfYear
+  const yearSuffix = dataYear ? ` (${dataYear})` : ''
   const path = `/${encodeURIComponent(state)}/property-tax-calculator`
 
+  // e.g. "NJ Property Tax Calculator | Calculate Your Taxes (2025)" = 56 chars
+  const title = `${abbrev} Property Tax Calculator | Calculate Your Taxes${yearSuffix}`
+
   return buildMetadata({
-    title: `${stateName} Property Tax Calculator | Calculate Your Property Taxes`,
+    title,
     description: `Calculate your ${stateName} property taxes by entering your property value, county, and municipality. Get accurate estimates with detailed breakdowns.`,
     path,
     keywords: `${stateName} property tax calculator, ${stateName} property tax, calculate property taxes, ${stateName} real estate taxes`,

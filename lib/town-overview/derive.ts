@@ -72,6 +72,10 @@ export function enrichOverviewYearsFromMetrics(
   stateData?: StateData
 ): TownOverview {
   const result = { ...overview }
+  const townMedianTaxes = getLatestValue(town.metrics?.medianTaxesPaid)
+  const townMedianTaxesYear = town.metrics?.medianTaxesPaid?.length
+    ? town.metrics.medianTaxesPaid[town.metrics.medianTaxesPaid.length - 1].year
+    : undefined
 
   // County-level context: always prefer county.metrics when available (single source of truth).
   // This keeps the town page "county average" in sync with the calculator's county rate.
@@ -82,7 +86,10 @@ export function enrichOverviewYearsFromMetrics(
 
   // When the town has no town-level series, use county metrics so "county average" display matches the calculator.
   const hasTownEffectiveRate = Boolean(town?.metrics?.effectiveTaxRate?.length)
-  const hasTownAvgBill = Boolean(town?.metrics?.averageResidentialTaxBill?.length)
+  const hasTownAvgBill = Boolean(
+    (town?.metrics?.averageResidentialTaxBill?.length ?? 0) > 0 ||
+      (town?.metrics?.medianTaxesPaid?.length ?? 0) > 0
+  )
   if (!hasTownEffectiveRate && countyRate != null) {
     result.effectiveTaxRatePct = countyRate
     const countyRateYear = county.metrics?.effectiveTaxRate?.length
@@ -96,6 +103,12 @@ export function enrichOverviewYearsFromMetrics(
       ? county.metrics.averageResidentialTaxBill[county.metrics.averageResidentialTaxBill.length - 1].year
       : undefined
     if (countyBillYear != null) result.avgResidentialTaxBillYear = countyBillYear
+  }
+
+  // Texas towns often provide ACS medianTaxesPaid (combined bill proxy) instead of avg bill.
+  if (result.avgResidentialTaxBill == null && townMedianTaxes != null) {
+    result.avgResidentialTaxBill = townMedianTaxes
+    if (townMedianTaxesYear != null) result.avgResidentialTaxBillYear = townMedianTaxesYear
   }
 
   // Fill state-level context from state.metrics when not on overview

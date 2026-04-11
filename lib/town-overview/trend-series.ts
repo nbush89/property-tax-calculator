@@ -53,6 +53,7 @@ const MIN_POINTS = 3
 
 const PRIORITY: TownCountyMetricKey[] = [
   'averageResidentialTaxBill',
+  'medianTaxesPaid',   // TX towns use this instead of averageResidentialTaxBill
   'effectiveTaxRate',
   'medianHomeValue',
 ]

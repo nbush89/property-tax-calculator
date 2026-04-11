@@ -15,11 +15,14 @@ import {
 } from 'recharts'
 import type { YearValue } from '@/utils/getCountySeries'
 import { computeYoYStats } from '@/lib/data/metrics'
+import { taxBillLabelForState } from '@/lib/content/townContent'
 
 interface CalculatorTaxTrendsChartProps {
   series: YearValue[]
   /** Legacy label used in default copy when chartTitle not set */
   countyName?: string
+  /** State slug for state-aware labels in default subtitle */
+  stateSlug?: string
   valueFormat?: 'usd' | 'percent'
   chartTitle?: string
   chartSubtitle?: string
@@ -69,11 +72,13 @@ function makeTooltip(format: 'usd' | 'percent') {
 export default function CalculatorTaxTrendsChart({
   series,
   countyName = '',
+  stateSlug = 'new-jersey',
   valueFormat = 'usd',
   chartTitle,
   chartSubtitle,
   className = '',
 }: CalculatorTaxTrendsChartProps) {
+  const { label: billLabel } = taxBillLabelForState(stateSlug)
   // Don't render if insufficient data
   if (series.length < 3) {
     return null
@@ -107,7 +112,7 @@ export default function CalculatorTaxTrendsChart({
   const subtitle =
     chartSubtitle ??
     (countyName
-      ? `County average residential tax bill in ${countyName} County. As of ${latestYear}. Planning/comparison only.`
+      ? `County ${billLabel} in ${countyName} County. As of ${latestYear}. Planning/comparison only.`
       : `As of ${latestYear}. Planning/comparison only.`)
 
   return (

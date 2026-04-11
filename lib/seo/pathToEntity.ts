@@ -144,5 +144,20 @@ export function pathToEntity(normalizedPath: string): PathToEntityResult {
     }
   }
 
+  // Accept legacy/non-canonical town URLs such as /new-jersey/camden/camden.
+  // Some Search Console exports include whichever URL variant Google indexed.
+  const resolved = getTownBySlugs(stateSlug, seg1, seg2)
+  if (resolved) {
+    const townShort = resolved.town.slug || slugifyLocation(resolved.town.name)
+    return {
+      matched: true,
+      normalizedPath: path,
+      entityType: 'town',
+      stateSlug,
+      countySlug: countyShort,
+      townSlug: townShort,
+    }
+  }
+
   return { matched: false, normalizedPath: path }
 }

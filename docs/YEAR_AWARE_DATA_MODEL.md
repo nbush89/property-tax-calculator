@@ -1,319 +1,166 @@
-# Year-Aware Data Model Implementation
+# Year-Aware Data Model
 
-## A) Current Structure Inventory
+**Last updated:** April 3, 2026  
 
-### Current JSON Shape (`/data/states/new-jersey.json`)
+This document describes how property tax data is stored and consumed with **tax years**, **time-series metrics**, and **centralized sources**—as implemented in the repo today.
 
-**Top-level keys:**
+---
 
-- `name`: string (e.g., "New Jersey")
-- `slug`: string (e.g., "new-jersey")
-- `abbreviation`: string (e.g., "NJ")
-- `avgTaxRate`: number (state-level average, e.g., 0.0202)
-- `source`: object with `name`, `year`, `url`
-- `counties`: array of county objects
+## 1. Goals
 
-**County object structure:**
+- Represent county and town metrics as **sorted time series** (up to five points per metric).
+- Anchor UI and SEO copy to a coherent **`asOfYear`** without mislabeling stale data as the current calendar year.
+- Deduplicate attribution via a top-level **`sources`** map and **`sourceRef`** on each datapoint.
+- Resolve “latest” values through shared helpers so pages, overviews, and tooling stay consistent.
 
-- `name`: string
-- `slug`: string
-- `avgEffectiveRate`: number
-- `avgResidentialTaxBill2024`: number (single year, hardcoded to 2024)
-- `neighborCounties`: string[] (optional)
-- `towns`: array of `{ name: string, avgRate: number }`
-- `copy`: object with `paragraphs: string[]` and `disclaimer: string`
+---
 
-**Current code usage:**
+## 2. Canonical JSON shape (`data/states/{state}.json`)
 
-- `lib/geo.ts`: Defines `StateData` and `CountyData` types, provides `getStateData()`, `getCountyBySlug()`, `formatUSD()`
-- `app/[state]/[county]/page.tsx`: County metrics via year-aware helpers (see county `metrics`)
-- Direct field access: `county.avgResidentialTaxBill2024`, `county.avgEffectiveRate`
+Runtime types live in `lib/data/types.ts`. Each state file loads as **`StateData`**:
 
-## B) Proposed Evolved JSON Structure
+| Section | Purpose |
+|--------|---------|
+| **`state`** | `StateMeta`: `name`, `slug`, `abbreviation`, **`asOfYear`**, optional `primarySources` |
+| **`sources`** | Map of source id → `Source` (publisher, title, type, `homepageUrl`, optional `yearUrls`, notes) |
+| **`metrics`** | Optional `StateMetrics` (e.g. `averageTaxRate` series) |
+| **`counties`** | `CountyData[]` |
 
-### Key Changes:
+**County (`CountyData`)**
 
-1. **Add `asOfYear`** at state and county levels (points to latest data year)
-2. **Add `metrics` object** with time series arrays (up to 5 years)
-3. **Keep all existing fields** for backward compatibility during transition
-4. **Preserve copy paragraphs** exactly as-is (no content changes)
+- `name`, `slug`, optional `asOfYear`, optional `neighborCounties`, optional **`metrics`** (`CountyMetrics`), optional **`towns`**
 
-### Structure:
+**Town (`TownData`)**
+
+- `name`, `slug`, optional `displayName`, optional **`asOfYear`**, optional **`metrics`** (`TownMetrics`), optional `overview` (`TownOverview`), optional `copy`, `overrides`, `rollout`
+- Legacy: **`avgRate`** may still appear for rates-style UX; prefer metric series when present
+
+**Metric series**
+
+- Keys used in code include: `averageResidentialTaxBill`, `effectiveTaxRate`, `medianHomeValue` (town/county), `averageTaxRate` (state)
+- Each series is an array of **`DataPoint`**: `{ year, value, unit, sourceRef }`
+- **`unit`** is `USD` or `PERCENT` (see validation in `scripts/validate-state-data.ts`)
+- **`sourceRef`** must exist in `state.sources`
+
+Example (abbreviated; matches live NJ data patterns):
 
 ```json
 {
-  "name": "New Jersey",
-  "slug": "new-jersey",
-  "abbreviation": "NJ",
-  "asOfYear": 2024,
-  "source": { ... },
+  "state": {
+    "name": "New Jersey",
+    "slug": "new-jersey",
+    "abbreviation": "NJ",
+    "asOfYear": 2024
+  },
+  "sources": {
+    "nj_modiv_avg_restax": {
+      "publisher": "NJ Division of Taxation",
+      "title": "MOD IV Average Residential Tax Report",
+      "type": "pdf",
+      "homepageUrl": "https://www.nj.gov/treasury/taxation/lpt/statdata.shtml",
+      "yearUrls": {
+        "2023": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2023.pdf",
+        "2024": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf"
+      }
+    }
+  },
   "metrics": {
-    "averageTaxRate": [ /* optional state-level series */ ]
+    "averageTaxRate": [
+      {
+        "year": 2024,
+        "value": 2.02,
+        "unit": "PERCENT",
+        "sourceRef": "nj_modiv_avg_restax"
+      }
+    ]
   },
   "counties": [
     {
       "name": "Bergen",
       "slug": "bergen",
-      "asOfYear": 2024,
-      "metrics": {
-        "averageResidentialTaxBill": [
-          { "year": 2020, "value": 13200, "unit": "USD", "source": {...} },
-          { "year": 2021, "value": 13350, "unit": "USD", "source": {...} },
-          { "year": 2022, "value": 13450, "unit": "USD", "source": {...} },
-          { "year": 2023, "value": 13500, "unit": "USD", "source": {...} },
-          { "year": 2024, "value": 13600, "unit": "USD", "source": {...} }
-        ],
-        "effectiveTaxRate": [
-          { "year": 2024, "value": 0.0231, "unit": "rate", "source": {...} }
-        ]
-      },
-      "copy": { /* unchanged */ },
-      "towns": [ /* unchanged structure */ ]
+      "neighborCounties": ["Passaic", "Hudson"],
+      "towns": [
+        {
+          "name": "Ridgewood",
+          "slug": "ridgewood",
+          "asOfYear": 2025,
+          "metrics": {
+            "averageResidentialTaxBill": [
+              {
+                "year": 2024,
+                "value": 20375,
+                "unit": "USD",
+                "sourceRef": "nj_modiv_avg_restax"
+              }
+            ]
+          }
+        }
+      ]
     }
   ]
 }
 ```
 
-## C) Example JSON Snippets
+---
 
-### County Example (Bergen with 5 years):
+## 3. Loading and normalization
 
-```json
-{
-  "name": "Bergen",
-  "slug": "bergen",
-  "asOfYear": 2024,
-  "avgEffectiveRate": 0.0231,
-  "avgResidentialTaxBill2024": 13600,
-  "neighborCounties": ["Passaic", "Hudson", "Essex", "Morris"],
-  "metrics": {
-    "averageResidentialTaxBill": [
-      {
-        "year": 2020,
-        "value": 13200,
-        "unit": "USD",
-        "source": {
-          "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-          "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2020.pdf",
-          "year": 2020
-        }
-      },
-      {
-        "year": 2021,
-        "value": 13350,
-        "unit": "USD",
-        "source": {
-          "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-          "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2021.pdf",
-          "year": 2021
-        }
-      },
-      {
-        "year": 2022,
-        "value": 13450,
-        "unit": "USD",
-        "source": {
-          "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-          "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2022.pdf",
-          "year": 2022
-        }
-      },
-      {
-        "year": 2023,
-        "value": 13500,
-        "unit": "USD",
-        "source": {
-          "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-          "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2023.pdf",
-          "year": 2023
-        }
-      },
-      {
-        "year": 2024,
-        "value": 13600,
-        "unit": "USD",
-        "source": {
-          "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-          "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-          "year": 2024
-        }
-      }
-    ],
-    "effectiveTaxRate": [
-      {
-        "year": 2024,
-        "value": 0.0231,
-        "unit": "rate",
-        "source": {
-          "name": "NJ Division of Taxation – MOD IV Average Residential Tax Report",
-          "reference": "https://www.nj.gov/treasury/taxation/pdf/lpt/AvgResTax/AvgTax2024.pdf",
-          "year": 2024
-        }
-      }
-    ]
-  },
-  "copy": {
-    "paragraphs": [
-      "Bergen County is consistently one of the highest-tax areas in New Jersey, and tax bills can vary widely by municipality even for similarly priced homes.",
-      "Use this page to estimate annual and monthly property tax costs for planning and comparison. Enter your property value and select your municipality if known to refine the estimate.",
-      "According to the NJ Division of Taxation's 2024 Average Residential Tax Report, the average residential tax bill in Bergen County was about $13,600.",
-      "This calculator is best used for planning and comparison: try different home values, and (if available in your dataset) select a town to see how the estimate changes."
-    ],
-    "disclaimer": "This tool provides estimates, not official tax bills. Always verify with your local tax assessor."
-  },
-  "towns": [
-    { "name": "Ridgewood", "avgRate": 0.0034 },
-    { "name": "Teaneck", "avgRate": 0.0032 }
-  ]
-}
-```
-
-### Town Example (if towns had metrics):
-
-```json
-{
-  "name": "Ridgewood",
-  "avgRate": 0.0034,
-  "metrics": {
-    "averageTaxRate": [
-      {
-        "year": 2023,
-        "value": 0.0033,
-        "unit": "rate",
-        "source": {
-          "name": "Ridgewood Township Tax Assessor",
-          "reference": "https://example.com/ridgewood-2023",
-          "year": 2023
-        }
-      },
-      {
-        "year": 2024,
-        "value": 0.0034,
-        "unit": "rate",
-        "source": {
-          "name": "Ridgewood Township Tax Assessor",
-          "reference": "https://example.com/ridgewood-2024",
-          "year": 2024
-        }
-      }
-    ]
-  }
-}
-```
-
-## D) JSON Schema
-
-See `/data/schema/state-data.schema.json` for the complete JSON Schema (draft 2020-12).
-
-**Key validation rules:**
-
-- `year`: integer between 2000 and 2030
-- Series arrays: maxItems = 5
-- Datapoint requires: `year`, `value`, `unit`, `source`
-- Source requires: `name` (minimum), optional `reference` and `year`
-- Note: Sorting by year ascending is documented but not enforced by schema (use runtime check)
-
-## E) TypeScript Types + Helpers
-
-### Files Created:
-
-- `/lib/data/types.ts`: All TypeScript interfaces
-- `/lib/data/metrics.ts`: Helper functions (`getLatest`, `getLastN`, `computeYoY`, `assertSorted`)
-- `/lib/data/adapter.ts`: Migration adapter (`normalizeStateData`, `getCountyLatestTaxBill`, `getCountyLatestRate`)
-
-### Key Functions:
-
-```typescript
-// Get latest value from a series
-getLatest(series: MetricSeries): MetricDatapoint | null
-
-// Get last N years
-getLastN(series: MetricSeries, n: number = 5): MetricSeries
-
-// Compute year-over-year change
-computeYoY(series: MetricSeries): number | null
-
-// Validate sorting (dev-only)
-assertSorted(series: MetricSeries, seriesName?: string): void
-
-// Backward compatibility helpers
-getCountyLatestTaxBill(county: CountyData): number | null
-getCountyLatestRate(county: CountyData): number | null
-```
-
-## F) Migration Plan
-
-### Step 1: Wrap Existing 2024 Data
-
-The `normalizeStateData()` adapter automatically wraps existing `avgResidentialTaxBill2024` values into `metrics.averageResidentialTaxBill` arrays. No manual JSON changes needed initially.
-
-### Step 2: Add Historical Data (Manual)
-
-When historical data becomes available, add entries to the arrays:
-
-```json
-"metrics": {
-  "averageResidentialTaxBill": [
-    { "year": 2022, "value": 13450, "unit": "USD", "source": {...} },
-    { "year": 2023, "value": 13500, "unit": "USD", "source": {...} },
-    { "year": 2024, "value": 13600, "unit": "USD", "source": {...} }
-  ]
-}
-```
-
-### Step 3: Component Updates
-
-- ✅ Updated `lib/geo.ts` to use adapter
-- ✅ Updated county page to use `getCountyLatestTaxBill()` helper
-- ✅ Added `HistoricalMetrics` component (renders when 2+ years available)
-
-### Step 4: Validation
-
-Run validation script:
-
-```bash
-npx tsx scripts/validate-data.ts
-```
-
-## Implementation Summary
-
-### Files Created:
-
-1. `/data/schema/state-data.schema.json` - JSON Schema
-2. `/lib/data/types.ts` - TypeScript types
-3. `/lib/data/metrics.ts` - Helper functions
-4. `/lib/data/adapter.ts` - Migration adapter
-5. `/components/location/HistoricalMetrics.tsx` - UI component
-6. `/scripts/validate-data.ts` - Validation script
-7. `/docs/YEAR_AWARE_DATA_MODEL.md` - This documentation
-
-### Files Modified:
-
-1. `/lib/geo.ts` - Uses adapter, exports new types
-2. `/app/[state]/[county]/page.tsx` - Uses helpers, shows historical section
-
-### Backward Compatibility:
-
-- ✅ Legacy fields (`avgResidentialTaxBill2024`, `avgEffectiveRate`) preserved
-- ✅ Adapter automatically wraps single-year data into arrays
-- ✅ Helper functions provide seamless access to latest values
-- ✅ Existing routes continue to work without changes
-
-### Next Steps:
-
-1. Add historical data to JSON files as it becomes available
-2. Update town pages to use metrics (if needed)
-3. Consider adding charts/visualizations for historical trends
+- **`lib/geo.ts`** imports raw JSON, runs **`normalizeStateData`** from `lib/data/adapter.ts`, and registers states (e.g. `new-jersey`, `texas`).
+- **`normalizeStateData`**: validates structure; for each county, validates metric series with **`assertSorted`** and **`assertMaxLength`** (`lib/data/metrics.ts`, max length 5).
+- **`normalizeTownData`** (private in adapter): sets town `slug` if missing; derives **`asOfYear`** from explicit `asOfYear`, or `overview.effectiveTaxRateYear`, or `overview.asOfYear`—**not** from the current calendar year (avoids mislabeling tax-year data).
 
 ---
 
-## County page content (generated, not JSON prose)
+## 4. Reading “latest” and year labels
 
-County landing pages (`app/[state]/[county]/page.tsx`) **do not** use `county.copy.paragraphs` or `county.copy.disclaimer` from state JSON. Copy is assembled in code:
+- **`lib/data/town-helpers.ts`**: **`getMetricLatest`**, **`getMetricSeries`**, **`getLatest`**, **`getLastN`**, **`resolveSource`**, YoY helpers—town series with **fallback to county** when a town point is missing.
+- **`lib/data/metrics.ts`**: **`getLatest`**, **`getLastN`**, **`computeYoY`**, **`computeYoYStats`** on raw `MetricSeries` (used where town/county context is not needed).
+- **Town overview:** `lib/town-overview/resolve-page-overview.ts` builds the rich **`TownOverview`** for town pages (`enrichOverviewYearsFromMetrics`, trend pick, comparisons). **`buildTownOverviewFromMetrics`** (`lib/town-overview/build-from-metrics.ts`) is used when constructing overview from metrics (e.g. merge tooling).
+- **SEO year:** `resolveTownSeoYear` in `lib/seo/townMetadata.ts` prefers overview/metric years, then town → county → state `asOfYear`, else calendar year.
+- **Copy context:** `lib/data/copy.ts` **`buildTownCopyContext`** uses **`asOfYear`** cascade town → county → state.
 
-- **`lib/content/countyContent.ts`** — `resolveCountyPageContent`, section builders (overview, comparison vs peer counties, tax factors from `getStateCapabilities`, estimate guide, town insights from published town metrics, related counties).
-- **`components/county/CountyPageSections.tsx`** — presentational sections only.
+---
 
-**JSON should keep facts** (metrics, `neighborCounties`, sources), not long-form county narratives. County-level `copy` was removed from `new-jersey.json`; town-level `copy` remains for town pages.
+## 5. UI and content (not legacy JSON prose)
 
-**Tests:** `npm test` (includes county content suite in `tests/`)
+- **County hubs:** Copy is **assembled in code** (`lib/content/countyContent.ts`, `components/county/CountyPageSections.tsx`), not from long `county.copy` blobs in JSON. Keep **facts** (metrics, neighbors, sources) in data.
+- **Town pages:** Use `getMetricLatest`, overview resolution, and state capabilities; see `app/[state]/[county]/[town]/page.tsx`.
+
+---
+
+## 6. Validation and updates
+
+- **Validate data:** `npm run validate:data` → `scripts/validate-state-data.ts` (structure, `sourceRef`, units, year ranges, series length).
+- **Annual / merge workflows:** See `docs/ANNUAL_DATA_UPDATE.md` and merge scripts under `scripts/` (e.g. `merge-state-metrics.ts`).
+- **`data/schema/state-data.schema.json`:** Historical JSON Schema artifact; **canonical contract is `lib/data/types.ts` + `validate-state-data.ts`**. If the schema disagrees with live files, treat types and validator as source of truth.
+
+---
+
+## 7. File reference (implementation)
+
+| Area | Location |
+|------|----------|
+| Types | `lib/data/types.ts` |
+| Normalize / validate series | `lib/data/adapter.ts`, `lib/data/metrics.ts` |
+| Town + county metric access | `lib/data/town-helpers.ts` |
+| Town overview | `lib/town-overview/*`, `lib/town-overview/types.ts` |
+| State registry | `lib/geo.ts` |
+| County page copy | `lib/content/countyContent.ts` |
+| SEO titles / years | `lib/seo/townMetadata.ts` |
+| Data validation CLI | `scripts/validate-state-data.ts` |
+
+---
+
+## 8. Tests
+
+- `npm test` includes suites that touch metrics and content (`tests/`).
+- Run `npm run validate:data` after editing `data/states/*.json`.
+
+---
+
+## 9. Removed or outdated (vs older drafts of this doc)
+
+- There is **no** `HistoricalMetrics.tsx` component in the repo.
+- **`getCountyLatestTaxBill` / `getCountyLatestRate`** are not part of the current adapter; use **`getMetricLatest`** from `town-helpers` with the appropriate `metricKey` and town/county context.
+- Metric points use **`sourceRef` + `sources`**, not inline `{ name, reference, year }` objects on each datapoint.
+- **Do not** assume `avgResidentialTaxBill2024` or flat state JSON (`name`/`slug` at root); live files use the nested **`state` / `sources` / `counties`** shape.

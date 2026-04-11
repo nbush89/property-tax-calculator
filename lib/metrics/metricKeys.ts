@@ -7,3 +7,4 @@ export type MetricKey =
   | 'averageResidentialTaxBill'
   | 'medianHomeValue'
   | 'averageTaxRate'
+  | 'medianTaxesPaid'

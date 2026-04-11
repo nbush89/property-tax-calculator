@@ -72,7 +72,10 @@ export function validateTownPublishReadiness(params: {
     overview,
   })
 
-  const hasTownAvgBill = Boolean(town.metrics?.averageResidentialTaxBill?.length)
+  const hasTownAvgBill = Boolean(
+    town.metrics?.averageResidentialTaxBill?.length ||
+    town.metrics?.medianTaxesPaid?.length
+  )
   const hasTownRate = Boolean(town.metrics?.effectiveTaxRate?.length)
   const usesCountyFallback =
     overview != null &&

@@ -38,14 +38,21 @@ export function buildTownOverviewFromMetrics(
   const asOfYear =
     town.asOfYear ?? county.asOfYear ?? state.state.asOfYear ?? new Date().getFullYear()
 
-  const townBill = getMetricLatest({ town, county, metricKey: 'averageResidentialTaxBill' })
+  const townBill =
+    getMetricLatest({ town, county, metricKey: 'averageResidentialTaxBill' }) ??
+    getMetricLatest({ town, county, metricKey: 'medianTaxesPaid' })
   const townRate = getMetricLatest({ town, county, metricKey: 'effectiveTaxRate' })
   const medianHome = getMetricLatest({ town, county, metricKey: 'medianHomeValue' })
 
+  // Prefer averageResidentialTaxBill (NJ) or medianTaxesPaid (TX) as the bill
+  // trend series — whichever is populated on the town. Fall back to county avg bill.
+  const townBillSeries =
+    (town.metrics?.averageResidentialTaxBill?.length ?? 0) > 0
+      ? town.metrics!.averageResidentialTaxBill!
+      : (town.metrics?.medianTaxesPaid ?? [])
   const seriesForTrend =
-    (town.metrics?.averageResidentialTaxBill?.length ?? 0) >=
-    (county.metrics?.averageResidentialTaxBill?.length ?? 0)
-      ? (town.metrics?.averageResidentialTaxBill ?? [])
+    townBillSeries.length >= (county.metrics?.averageResidentialTaxBill?.length ?? 0)
+      ? townBillSeries
       : (county.metrics?.averageResidentialTaxBill ?? [])
 
   const normalized = seriesForTrend

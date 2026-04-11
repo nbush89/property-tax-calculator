@@ -16,7 +16,12 @@ function defaultSourcesFromMetrics(
   county: CountyData
 ): TownOverview['sources'] {
   const refs = new Set<string>()
-  for (const key of ['averageResidentialTaxBill', 'effectiveTaxRate', 'medianHomeValue'] as const) {
+  for (const key of [
+    'averageResidentialTaxBill',
+    'effectiveTaxRate',
+    'medianHomeValue',
+    'medianTaxesPaid',
+  ] as const) {
     const s = town.metrics?.[key]
     const last = s?.[s.length - 1]
     if (last?.sourceRef) refs.add(last.sourceRef)

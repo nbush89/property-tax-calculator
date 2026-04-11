@@ -1,10 +1,12 @@
-import https from 'node:https'
 import pdfParse from 'pdf-parse'
 import * as XLSX from 'xlsx'
 import type { DataPoint } from '../../lib/state-metrics-types'
-import { NJ_TIER1 } from './config'
+import { downloadBuffer, tryDownloadFirst } from '../../lib/download'
+import { NJ_TIER1, PDF_DISTRICT_OVERRIDES } from './config'
 
 export const NJ_MODIV_SOURCE_REF = 'nj_modiv_avg_restax'
+
+const NJ_MODIV_USER_AGENT = 'nj-avg-tax-script/1.0'
 
 const COUNTY_SLUGS: Record<string, string> = {
   'ATLANTIC COUNTY': 'atlantic',
@@ -30,35 +32,6 @@ const COUNTY_SLUGS: Record<string, string> = {
   'WARREN COUNTY': 'warren',
 }
 
-function downloadBuffer(url: string): Promise<Buffer> {
-  return new Promise((resolve, reject) => {
-    https
-      .get(url, { headers: { 'User-Agent': 'nj-avg-tax-script/1.0' } }, res => {
-        const status = res.statusCode ?? 0
-        if (status < 200 || status >= 300) {
-          reject(new Error(`HTTP ${status} for ${url}`))
-          res.resume()
-          return
-        }
-        const chunks: Buffer[] = []
-        res.on('data', c => chunks.push(Buffer.isBuffer(c) ? c : Buffer.from(c)))
-        res.on('end', () => resolve(Buffer.concat(chunks)))
-      })
-      .on('error', reject)
-  })
-}
-
-async function tryDownloadFirst(urls: string[]): Promise<Buffer> {
-  for (const u of urls) {
-    try {
-      return await downloadBuffer(u)
-    } catch {
-      // continue
-    }
-  }
-  throw new Error(`All download attempts failed:\n${urls.join('\n')}`)
-}
-
 function moneyToNumber(raw: string): number | undefined {
   const cleaned = raw.replace(/\$/g, '').replace(/,/g, '').trim()
   const n = Number(cleaned)
@@ -68,7 +41,10 @@ function moneyToNumber(raw: string): number | undefined {
 function normalizeTownNameForMatch(name: string): string {
   const up = name.toUpperCase().trim()
   return up
-    .replace(/\b(CITY|TOWN|TWP|TOWNSHIP|BORO|BOROUGH|VILLAGE)\b/g, '')
+    .replace(/-/g, ' ')
+    .replace(/\bTROY\b/g, 'TR')
+    .replace(/\bHILLS?\b/g, 'HLS')
+    .replace(/\b(CITY|TOWN|TWP|TWNSHP|TOWNSHIP|BORO|BOROUGH|VILLAGE)\b/g, '')
     .replace(/\s+/g, ' ')
     .trim()
 }
@@ -195,7 +171,7 @@ export async function runNjModivAvgTax(
 
   const tierTownMatchTargets = NJ_TIER1.map(t => ({
     ...t,
-    matchKey: normalizeTownNameForMatch(t.townName),
+    matchKey: normalizeTownNameForMatch(PDF_DISTRICT_OVERRIDES[t.townName] ?? t.townName),
   }))
 
   for (const year of years) {
@@ -205,7 +181,7 @@ export async function runNjModivAvgTax(
       let rows: ParsedRow[] | null = null
       try {
         perYearDebugEntry.urlTried.push(xlsxUrl)
-        const xlsxBuf = await downloadBuffer(xlsxUrl)
+        const xlsxBuf = await downloadBuffer(xlsxUrl, { userAgent: NJ_MODIV_USER_AGENT })
         rows = parseFromXlsx(xlsxBuf)
         if (rows.length === 0) rows = null
       } catch {
@@ -214,7 +190,7 @@ export async function runNjModivAvgTax(
       if (!rows || rows.length === 0) {
         const pdfUrls = PDF_URL_CANDIDATES(year)
         perYearDebugEntry.urlTried.push(...pdfUrls)
-        const buf = await tryDownloadFirst(pdfUrls)
+        const buf = await tryDownloadFirst(pdfUrls, { userAgent: NJ_MODIV_USER_AGENT })
         const originalStdout = process.stdout.write
         const originalStderr = process.stderr.write
         process.stdout.write = function (chunk: unknown) {

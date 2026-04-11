@@ -22,6 +22,7 @@ type TownMetricsIn = {
   medianHomeValue?: DataPoint[]
   effectiveTaxRate?: DataPoint[]
   averageResidentialTaxBill?: DataPoint[]
+  medianTaxesPaid?: DataPoint[]
 }
 
 function readJson(p: string): unknown {
@@ -46,6 +47,39 @@ function parseArgs(): { state: string; metricsPath: string } {
     else if (!argv[i].startsWith('--') && !metricsPath) metricsPath = argv[i]
   }
   return { state, metricsPath }
+}
+
+/**
+ * Walk all counties (and their towns) in the merged stateData and derive the
+ * maximum asOfYear present anywhere.  Write that value back to state.asOfYear
+ * so the top-level field never drifts behind the actual data.
+ *
+ * Without this, bumping county/town asOfYear during a merge leaves state.asOfYear
+ * stale — causing the SEO recommendation engine to suggest an outdated year in
+ * titles, as happened when NJ data was updated to 2025 but the field read 2024.
+ */
+function syncStateAsOfYear(stateData: Record<string, unknown>): void {
+  const state = stateData.state as Record<string, unknown> | undefined
+  if (!state) return
+
+  let max = (state.asOfYear as number | undefined) ?? 0
+  const counties = (stateData.counties as any[]) ?? []
+  for (const county of counties) {
+    if (typeof county.asOfYear === 'number' && county.asOfYear > max) {
+      max = county.asOfYear
+    }
+    for (const town of county.towns ?? []) {
+      if (typeof town.asOfYear === 'number' && town.asOfYear > max) {
+        max = town.asOfYear
+      }
+    }
+  }
+
+  if (max > 0 && max !== (state.asOfYear as number | undefined)) {
+    const prev = state.asOfYear
+    state.asOfYear = max
+    console.log(`[INFO] state.asOfYear updated: ${prev ?? '(unset)'} → ${max}`)
+  }
 }
 
 function isNjModivLegacy(payload: Record<string, unknown>): boolean {
@@ -74,9 +108,10 @@ function ensureSourcesNj(stateData: Record<string, unknown>): void {
       'Effective Tax Rate is published by municipality; year-specific PDFs (e.g., 2024taxrates.pdf).',
   }
   sources['nj_modiv_avg_restax'] ??= {
-    name: 'NJ Division of Taxation',
-    reference: 'Average Residential Tax Report (MOD IV)',
-    url: 'https://www.nj.gov/treasury/taxation/lpt/statdata.shtml',
+    publisher: 'NJ Division of Taxation',
+    title: 'Average Residential Tax Report (MOD IV)',
+    type: 'web',
+    homepageUrl: 'https://www.nj.gov/treasury/taxation/lpt/statdata.shtml',
     notes: 'Municipality and county average residential tax bills by tax year.',
   }
 }
@@ -93,9 +128,10 @@ function mergeNjModivLegacy(
   const countyBySlug = new Map<string, any>(counties.map(c => [String(c.slug), c]))
   stateData.sources ??= {}
   ;(stateData.sources as Record<string, unknown>)[src.meta.sourceRef] ??= {
-    name: 'NJ Division of Taxation',
-    reference: 'Average Residential Tax Report (MOD IV)',
-    url: 'https://www.nj.gov/treasury/taxation/lpt/statdata.shtml',
+    publisher: 'NJ Division of Taxation',
+    title: 'Average Residential Tax Report (MOD IV)',
+    type: 'web',
+    homepageUrl: 'https://www.nj.gov/treasury/taxation/lpt/statdata.shtml',
     notes: 'Municipality and county average residential tax bills by tax year.',
   }
 
@@ -120,6 +156,8 @@ function mergeNjModivLegacy(
     const y = latestYear(series)
     if (y) town.asOfYear = y
   }
+
+  syncStateAsOfYear(stateData)
 }
 
 function mergeNewJerseyUnified(
@@ -191,16 +229,21 @@ function mergeNewJerseyUnified(
     if (metricsIn.averageResidentialTaxBill?.length) {
       town.metrics.averageResidentialTaxBill = metricsIn.averageResidentialTaxBill
     }
+    if (metricsIn.medianTaxesPaid?.length) {
+      town.metrics.medianTaxesPaid = metricsIn.medianTaxesPaid
+    }
 
     const y1 = latestYear(town.metrics.medianHomeValue)
     const y2 = latestYear(town.metrics.effectiveTaxRate)
     const y3 = latestYear(town.metrics.averageResidentialTaxBill)
-    const asOf = Math.max(y1 ?? 0, y2 ?? 0, y3 ?? 0)
+    const y4 = latestYear(town.metrics.medianTaxesPaid)
+    const asOf = Math.max(y1 ?? 0, y2 ?? 0, y3 ?? 0, y4 ?? 0)
     if (asOf > 0) town.asOfYear = asOf
 
     updatedTowns++
   }
 
+  syncStateAsOfYear(stateData)
   console.log(`[DONE] NJ: counties touched: ${updatedCounties}, towns: ${updatedTowns}`)
   if (missingTown) console.log(`[WARN] Missing town rows: ${missingTown}`)
 }
@@ -217,6 +260,14 @@ function ensureSourcesTx(
     type: 'api',
     homepageUrl: 'https://api.census.gov/data.html',
     notes: 'DP04_0089E = Owner-occupied units: Median value (dollars).',
+  }
+  sources['us_census_acs_b25103'] ??= {
+    publisher: 'U.S. Census Bureau',
+    title: 'ACS 5-year Table B25103 — Median Real Estate Taxes Paid',
+    type: 'api',
+    homepageUrl: 'https://api.census.gov/data.html',
+    notes:
+      'B25103_001E = Median real estate taxes paid (dollars) for all owner-occupied units. Covers combined bill across county, city, school district, and special districts net of homestead exemptions.',
   }
   sources['tx_comptroller_property_tax'] ??= {
     publisher: 'Texas Comptroller of Public Accounts',
@@ -290,16 +341,21 @@ function mergeTexas(stateData: Record<string, unknown>, rawPayload: Record<strin
       if (metricsIn.averageResidentialTaxBill?.length) {
         m.averageResidentialTaxBill = metricsIn.averageResidentialTaxBill
       }
+      if (metricsIn.medianTaxesPaid?.length) {
+        m.medianTaxesPaid = metricsIn.medianTaxesPaid
+      }
 
       const y1 = latestYear(metricsIn.medianHomeValue)
       const y2 = latestYear(metricsIn.effectiveTaxRate)
       const y3 = latestYear(metricsIn.averageResidentialTaxBill)
-      const asOf = Math.max(y1 ?? 0, y2 ?? 0, y3 ?? 0)
+      const y4 = latestYear(metricsIn.medianTaxesPaid)
+      const asOf = Math.max(y1 ?? 0, y2 ?? 0, y3 ?? 0, y4 ?? 0)
       if (asOf > 0) townObj.asOfYear = asOf
       updatedTowns++
     }
   }
 
+  syncStateAsOfYear(stateData)
   console.log(`[DONE] Texas: counties touched: ${updatedCounties}, towns: ${updatedTowns}`)
 }
 

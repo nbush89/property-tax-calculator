@@ -3,7 +3,7 @@
     "name": "Texas",
     "slug": "texas",
     "abbreviation": "TX",
-    "asOfYear": 2024
+    "asOfYear": 2025
   },
   "sources": {
     "us_census_acs_profile_dp04": {
@@ -25,7 +25,14 @@
       "title": "Tax Rates and Levies (county & city workbooks)",
       "type": "xlsx",
       "homepageUrl": "https://comptroller.texas.gov/taxes/property-tax/",
-      "notes": "Published total tax rate ($ / $100 taxable value) for the county or city taxing unit per year. Same numeric value as percent of taxable value for that unit only—not combined overlapping jurisdictions."
+      "notes": "Published total tax rate ($ / $100 taxable value) for the county or city taxing unit per year. Same numeric value as percent of taxable value for that unit only\u2014not combined overlapping jurisdictions."
+    },
+    "us_census_acs_b25103": {
+      "publisher": "U.S. Census Bureau",
+      "title": "ACS 5-year Table B25103 \u2014 Median Real Estate Taxes Paid",
+      "type": "api",
+      "homepageUrl": "https://api.census.gov/data.html",
+      "notes": "B25103_001E = Median real estate taxes paid (dollars) for all owner-occupied units. Covers combined bill across county, city, school district, and special districts net of homestead exemptions."
     }
   },
   "metrics": {},
@@ -47,7 +54,7 @@
           "rollout": {
             "tier": 1,
             "featured": true,
-            "isReady": false,
+            "isReady": true,
             "rank": 1
           },
           "metrics": {
@@ -114,6 +121,38 @@
                 "unit": "PERCENT",
                 "sourceRef": "tx_comptroller_tax_rates_levies"
               }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 3249,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 3434,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 3763,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 4003,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 4198,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
             ]
           }
         },
@@ -124,7 +163,7 @@
           "rollout": {
             "tier": 1,
             "featured": false,
-            "isReady": false,
+            "isReady": true,
             "rank": 2
           },
           "metrics": {
@@ -191,6 +230,519 @@
                 "unit": "PERCENT",
                 "sourceRef": "tx_comptroller_tax_rates_levies"
               }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 2374,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 2596,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 2733,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 2791,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 2899,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Baytown",
+          "slug": "baytown",
+          "asOfYear": 2025,
+          "rollout": {
+            "tier": 2,
+            "featured": false,
+            "isReady": true,
+            "rank": 3
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 126500,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 140000,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 162200,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 187900,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 197300,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ],
+            "effectiveTaxRate": [
+              {
+                "year": 2021,
+                "value": 0.785,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2022,
+                "value": 0.75,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2023,
+                "value": 0.72,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2024,
+                "value": 0.70042,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2025,
+                "value": 0.69803,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 2609,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 2759,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 2924,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 3288,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 3175,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Deer Park",
+          "slug": "deer-park",
+          "asOfYear": 2025,
+          "rollout": {
+            "tier": 2,
+            "featured": false,
+            "isReady": true,
+            "rank": 4
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 183000,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 190800,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 224200,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 238900,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 264600,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ],
+            "effectiveTaxRate": [
+              {
+                "year": 2021,
+                "value": 0.72,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2022,
+                "value": 0.72,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2023,
+                "value": 0.72,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2024,
+                "value": 0.72,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2025,
+                "value": 0.72,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 3285,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 3511,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 3681,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 3772,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 3954,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
+            ]
+          }
+        },
+        {
+          "name": "La Porte",
+          "slug": "la-porte",
+          "asOfYear": 2025,
+          "rollout": {
+            "tier": 2,
+            "featured": false,
+            "isReady": true,
+            "rank": 5
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 158500,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 165800,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 196500,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 217100,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 234600,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ],
+            "effectiveTaxRate": [
+              {
+                "year": 2021,
+                "value": 0.71,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2022,
+                "value": 0.71,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2023,
+                "value": 0.71,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2024,
+                "value": 0.71,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2025,
+                "value": 0.71,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 2991,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 3086,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 3210,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 3595,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 3657,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Bellaire",
+          "slug": "bellaire",
+          "asOfYear": 2025,
+          "rollout": {
+            "tier": 2,
+            "featured": false,
+            "isReady": true,
+            "rank": 6
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 829400,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 857900,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 958300,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 978300,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 1037500,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ],
+            "effectiveTaxRate": [
+              {
+                "year": 2021,
+                "value": 0.4473,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2022,
+                "value": 0.4473,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2023,
+                "value": 0.437,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2024,
+                "value": 0.4333,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2025,
+                "value": 0.4174,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              }
+            ]
+          }
+        },
+        {
+          "name": "West University Place",
+          "slug": "west-university-place",
+          "asOfYear": 2025,
+          "rollout": {
+            "tier": 2,
+            "featured": false,
+            "isReady": true,
+            "rank": 7
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 1179700,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 1192200,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 1361100,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 1406600,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 1472000,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ],
+            "effectiveTaxRate": [
+              {
+                "year": 2021,
+                "value": 0.278522,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2022,
+                "value": 0.277402,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2023,
+                "value": 0.26084,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2024,
+                "value": 0.24193,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2025,
+                "value": 0.229441,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              }
             ]
           }
         }
@@ -248,7 +800,7 @@
           "rollout": {
             "tier": 1,
             "featured": true,
-            "isReady": false,
+            "isReady": true,
             "rank": 1
           },
           "metrics": {
@@ -315,6 +867,38 @@
                 "unit": "PERCENT",
                 "sourceRef": "tx_comptroller_tax_rates_levies"
               }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 3645,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 4012,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 4528,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 4908,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 5075,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
             ]
           }
         }
@@ -373,7 +957,7 @@
           "rollout": {
             "tier": 1,
             "featured": true,
-            "isReady": false,
+            "isReady": true,
             "rank": 1
           },
           "metrics": {
@@ -440,6 +1024,38 @@
                 "unit": "PERCENT",
                 "sourceRef": "tx_comptroller_tax_rates_levies"
               }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 5854,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 6173,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 6683,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 6768,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 6700,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
             ]
           }
         },
@@ -450,7 +1066,7 @@
           "rollout": {
             "tier": 2,
             "featured": false,
-            "isReady": false,
+            "isReady": true,
             "rank": 2
           },
           "metrics": {
@@ -517,6 +1133,38 @@
                 "unit": "PERCENT",
                 "sourceRef": "tx_comptroller_tax_rates_levies"
               }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 8065,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 8584,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 9262,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 9591,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 9572,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
             ]
           }
         },
@@ -527,7 +1175,7 @@
           "rollout": {
             "tier": 2,
             "featured": false,
-            "isReady": false,
+            "isReady": true,
             "rank": 3
           },
           "metrics": {
@@ -594,6 +1242,38 @@
                 "unit": "PERCENT",
                 "sourceRef": "tx_comptroller_tax_rates_levies"
               }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 6544,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 6904,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 7513,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 7710,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 7791,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
             ]
           }
         },
@@ -604,7 +1284,7 @@
           "rollout": {
             "tier": 2,
             "featured": false,
-            "isReady": false,
+            "isReady": true,
             "rank": 4
           },
           "metrics": {
@@ -671,6 +1351,38 @@
                 "unit": "PERCENT",
                 "sourceRef": "tx_comptroller_tax_rates_levies"
               }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 6679,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 6845,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 7348,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 7721,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 7844,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
             ]
           }
         },
@@ -681,7 +1393,7 @@
           "rollout": {
             "tier": 2,
             "featured": false,
-            "isReady": false,
+            "isReady": true,
             "rank": 5
           },
           "metrics": {
@@ -748,6 +1460,38 @@
                 "unit": "PERCENT",
                 "sourceRef": "tx_comptroller_tax_rates_levies"
               }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 5535,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 5869,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 6290,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 6414,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 6399,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
             ]
           }
         },
@@ -758,7 +1502,7 @@
           "rollout": {
             "tier": 2,
             "featured": false,
-            "isReady": false,
+            "isReady": true,
             "rank": 6
           },
           "metrics": {
@@ -825,6 +1569,38 @@
                 "unit": "PERCENT",
                 "sourceRef": "tx_comptroller_tax_rates_levies"
               }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 6551,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 6982,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 7580,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 8901,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 9514,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
             ]
           }
         },
@@ -835,7 +1611,7 @@
           "rollout": {
             "tier": 2,
             "featured": false,
-            "isReady": false,
+            "isReady": true,
             "rank": 7
           },
           "metrics": {
@@ -902,6 +1678,14 @@
                 "unit": "PERCENT",
                 "sourceRef": "tx_comptroller_tax_rates_levies"
               }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 9905,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
             ]
           }
         },
@@ -912,7 +1696,7 @@
           "rollout": {
             "tier": 2,
             "featured": false,
-            "isReady": false,
+            "isReady": true,
             "rank": 8
           },
           "metrics": {
@@ -979,6 +1763,38 @@
                 "unit": "PERCENT",
                 "sourceRef": "tx_comptroller_tax_rates_levies"
               }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 7867,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 8081,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 8526,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 8958,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 8835,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
             ]
           }
         },
@@ -989,7 +1805,7 @@
           "rollout": {
             "tier": 2,
             "featured": false,
-            "isReady": false,
+            "isReady": true,
             "rank": 9
           },
           "metrics": {
@@ -1056,6 +1872,38 @@
                 "unit": "PERCENT",
                 "sourceRef": "tx_comptroller_tax_rates_levies"
               }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 4380,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 4922,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 5391,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 5649,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 5772,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
             ]
           }
         },
@@ -1066,7 +1914,7 @@
           "rollout": {
             "tier": 2,
             "featured": false,
-            "isReady": false,
+            "isReady": true,
             "rank": 10
           },
           "metrics": {
@@ -1190,7 +2038,7 @@
           "rollout": {
             "tier": 1,
             "featured": true,
-            "isReady": false,
+            "isReady": true,
             "rank": 1
           },
           "metrics": {
@@ -1257,6 +2105,38 @@
                 "unit": "PERCENT",
                 "sourceRef": "tx_comptroller_tax_rates_levies"
               }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 3873,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 4213,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 4732,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 5036,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 5191,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
             ]
           }
         },
@@ -1267,7 +2147,7 @@
           "rollout": {
             "tier": 1,
             "featured": false,
-            "isReady": false,
+            "isReady": true,
             "rank": 2
           },
           "metrics": {
@@ -1334,6 +2214,38 @@
                 "unit": "PERCENT",
                 "sourceRef": "tx_comptroller_tax_rates_levies"
               }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 3646,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 3935,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 4435,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 4666,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 4716,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
             ]
           }
         }
@@ -1391,7 +2303,7 @@
           "rollout": {
             "tier": 1,
             "featured": true,
-            "isReady": false,
+            "isReady": true,
             "rank": 1
           },
           "metrics": {
@@ -1458,6 +2370,38 @@
                 "unit": "PERCENT",
                 "sourceRef": "tx_comptroller_tax_rates_levies"
               }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 6199,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 6636,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 7320,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 7801,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 8024,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
             ]
           }
         }
@@ -1515,7 +2459,7 @@
           "rollout": {
             "tier": 1,
             "featured": true,
-            "isReady": false,
+            "isReady": true,
             "rank": 1
           },
           "metrics": {
@@ -1581,6 +2525,38 @@
                 "value": 0.54159,
                 "unit": "PERCENT",
                 "sourceRef": "tx_comptroller_tax_rates_levies"
+              }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 3070,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 3327,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 3730,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 3983,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 4122,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
               }
             ]
           }

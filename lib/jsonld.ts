@@ -33,9 +33,12 @@ export function webAppJsonLd({
 }
 
 export function faqJsonLd(
-    pageUrl: string,
+    _pageUrl: string,
     faqs: { question: string; answer: string }[]
   ) {
+    // Note: FAQPage does not have a `url` property in Schema.org — removed to keep
+    // the schema clean for Google's Rich Results Test. The `_pageUrl` param is kept
+    // for call-site compatibility; pass it in case we add mainEntityOfPage later.
     return {
       "@context": "https://schema.org",
       "@type": "FAQPage",
@@ -47,7 +50,6 @@ export function faqJsonLd(
           text: f.answer,
         },
       })),
-      url: pageUrl,
     };
   }
   
