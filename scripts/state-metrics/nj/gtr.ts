@@ -46,9 +46,11 @@ function parseNjEffectiveTaxRatesFromPdfText(text: string): Map<string, number> 
     .filter(Boolean)
 
   for (const line of lines) {
-    let m = rowRe1.exec(line)
-    if (!m) m = rowRe2.exec(line)
-    if (!m) m = rowRe3.exec(line)
+    // Some yearly PDFs inject OCR artifacts (e.g. "**RAD") between district and rates.
+    const cleaned = line.replace(/\*+\s*[A-Z]{2,}\b/g, ' ').replace(/\s+/g, ' ').trim()
+    let m = rowRe1.exec(cleaned)
+    if (!m) m = rowRe2.exec(cleaned)
+    if (!m) m = rowRe3.exec(cleaned)
     if (!m) continue
 
     const district = m[1].trim()
@@ -58,7 +60,7 @@ function parseNjEffectiveTaxRatesFromPdfText(text: string): Map<string, number> 
     const normalized = normalizeDistrictName(district)
     out.set(normalized, effective)
     const withoutSuffix = normalized
-      .replace(/\b(TWP|TWNSHP|CITY|TOWN|BORO|BOROUGH|VILLAGE)\b/g, '')
+      .replace(/\b(TWP|TWNSHP|CITY|TOWN|BORO|BOROUGH|VILLAGE|TOWNSHIP)\b/g, '')
       .replace(/\s+/g, ' ')
       .trim()
     if (withoutSuffix && withoutSuffix !== normalized) {
@@ -144,7 +146,7 @@ export function mergeTownEffectiveFromGtr(
     const pdfDistrict = (PDF_DISTRICT_OVERRIDES[townName] ?? townName).toUpperCase()
     const pdfKey = normalizeDistrictName(pdfDistrict)
     const pdfKeyNoSuffix = pdfKey
-      .replace(/\b(TWP|TWNSHP|CITY|TOWN|BORO|BOROUGH|VILLAGE)\b/g, '')
+      .replace(/\b(TWP|TWNSHP|CITY|TOWN|BORO|BOROUGH|VILLAGE|TOWNSHIP)\b/g, '')
       .replace(/\s+/g, ' ')
       .trim()
 

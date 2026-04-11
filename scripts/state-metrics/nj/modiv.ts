@@ -2,7 +2,7 @@ import pdfParse from 'pdf-parse'
 import * as XLSX from 'xlsx'
 import type { DataPoint } from '../../lib/state-metrics-types'
 import { downloadBuffer, tryDownloadFirst } from '../../lib/download'
-import { NJ_TIER1 } from './config'
+import { NJ_TIER1, PDF_DISTRICT_OVERRIDES } from './config'
 
 export const NJ_MODIV_SOURCE_REF = 'nj_modiv_avg_restax'
 
@@ -41,7 +41,10 @@ function moneyToNumber(raw: string): number | undefined {
 function normalizeTownNameForMatch(name: string): string {
   const up = name.toUpperCase().trim()
   return up
-    .replace(/\b(CITY|TOWN|TWP|TOWNSHIP|BORO|BOROUGH|VILLAGE)\b/g, '')
+    .replace(/-/g, ' ')
+    .replace(/\bTROY\b/g, 'TR')
+    .replace(/\bHILLS?\b/g, 'HLS')
+    .replace(/\b(CITY|TOWN|TWP|TWNSHP|TOWNSHIP|BORO|BOROUGH|VILLAGE)\b/g, '')
     .replace(/\s+/g, ' ')
     .trim()
 }
@@ -168,7 +171,7 @@ export async function runNjModivAvgTax(
 
   const tierTownMatchTargets = NJ_TIER1.map(t => ({
     ...t,
-    matchKey: normalizeTownNameForMatch(t.townName),
+    matchKey: normalizeTownNameForMatch(PDF_DISTRICT_OVERRIDES[t.townName] ?? t.townName),
   }))
 
   for (const year of years) {

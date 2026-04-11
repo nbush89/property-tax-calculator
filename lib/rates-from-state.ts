@@ -102,6 +102,8 @@ export function getAllCountyRatesFromState(
 /**
  * Municipal rates by county name then town name (for rates table page).
  * Structure: { [countyName]: { [townName]: rateDecimal } }
+ * Only includes towns where rollout.isReady !== false, so unfinished town pages
+ * are not linked from the public rates table.
  */
 export function getMunicipalRatesByCountyFromState(
   stateData: StateData | null
@@ -111,6 +113,8 @@ export function getMunicipalRatesByCountyFromState(
   for (const c of stateData.counties) {
     const byTown: Record<string, number> = {}
     for (const t of c.towns ?? []) {
+      // Skip towns explicitly marked as not ready — they don't have a public page yet
+      if (t.rollout?.isReady === false) continue
       const rate = getMunicipalRate(stateData, c.name, t.name)
       if (rate != null) byTown[t.name] = rate
     }

@@ -1,36 +1,37 @@
-/** Single source of truth for NJ tier-1 towns (metrics sourcing + merge). */
+/** Single source of truth for NJ towns targeted by metrics sourcing + merge. */
+import * as fs from 'node:fs'
+import * as path from 'node:path'
+import { fileURLToPath } from 'node:url'
 
-export const NJ_TIER1: Array<{ countySlug: string; townSlug: string; townName: string }> = [
-  { countySlug: 'essex', townSlug: 'montclair', townName: 'Montclair' },
-  { countySlug: 'hudson', townSlug: 'hoboken', townName: 'Hoboken' },
-  { countySlug: 'mercer', townSlug: 'princeton', townName: 'Princeton' },
-  { countySlug: 'bergen', townSlug: 'ridgewood', townName: 'Ridgewood' },
-  { countySlug: 'bergen', townSlug: 'paramus', townName: 'Paramus' },
-  { countySlug: 'union', townSlug: 'summit', townName: 'Summit' },
-  { countySlug: 'union', townSlug: 'westfield', townName: 'Westfield' },
-  { countySlug: 'morris', townSlug: 'morristown', townName: 'Morristown' },
-  { countySlug: 'middlesex', townSlug: 'edison', townName: 'Edison' },
-  { countySlug: 'camden', townSlug: 'cherry-hill', townName: 'Cherry Hill' },
-  { countySlug: 'essex', townSlug: 'newark', townName: 'Newark' },
-  { countySlug: 'hudson', townSlug: 'jersey-city', townName: 'Jersey City' },
-  { countySlug: 'passaic', townSlug: 'paterson', townName: 'Paterson' },
-  { countySlug: 'union', townSlug: 'elizabeth', townName: 'Elizabeth' },
-  { countySlug: 'middlesex', townSlug: 'woodbridge', townName: 'Woodbridge' },
-  { countySlug: 'ocean', townSlug: 'toms-river', townName: 'Toms River' },
-  { countySlug: 'mercer', townSlug: 'hamilton', townName: 'Hamilton' },
-  { countySlug: 'mercer', townSlug: 'trenton', townName: 'Trenton' },
-  { countySlug: 'camden', townSlug: 'camden', townName: 'Camden' },
-  { countySlug: 'ocean', townSlug: 'lakewood', townName: 'Lakewood Township' },
-  { countySlug: 'monmouth', townSlug: 'middletown', townName: 'Middletown Township' },
-  { countySlug: 'middlesex', townSlug: 'old-bridge', townName: 'Old Bridge Township' },
-  { countySlug: 'middlesex', townSlug: 'east-brunswick', townName: 'East Brunswick' },
-  { countySlug: 'somerset', townSlug: 'franklin', townName: 'Franklin Township' },
-  { countySlug: 'somerset', townSlug: 'bridgewater', townName: 'Bridgewater Township' },
-  { countySlug: 'passaic', townSlug: 'wayne', townName: 'Wayne Township' },
-  { countySlug: 'essex', townSlug: 'east-orange', townName: 'East Orange' },
-  { countySlug: 'hudson', townSlug: 'bayonne', townName: 'Bayonne' },
-  { countySlug: 'middlesex', townSlug: 'piscataway', townName: 'Piscataway' },
-]
+export type NjTownTarget = { countySlug: string; townSlug: string; townName: string }
+
+type NjStateShape = {
+  counties?: Array<{
+    slug?: string
+    towns?: Array<{ slug?: string; name?: string }>
+  }>
+}
+
+function loadNjTownTargetsFromStateJson(): NjTownTarget[] {
+  const here = path.dirname(fileURLToPath(import.meta.url))
+  const njPath = path.join(here, '../../../data/states/new-jersey.json')
+  const raw = JSON.parse(fs.readFileSync(njPath, 'utf8')) as NjStateShape
+  const out: NjTownTarget[] = []
+
+  for (const county of raw.counties ?? []) {
+    const countySlug = String(county.slug ?? '').trim()
+    if (!countySlug) continue
+    for (const town of county.towns ?? []) {
+      const townSlug = String(town.slug ?? '').trim()
+      const townName = String(town.name ?? '').trim()
+      if (!townSlug || !townName) continue
+      out.push({ countySlug, townSlug, townName })
+    }
+  }
+  return out
+}
+
+export const NJ_TIER1: NjTownTarget[] = loadNjTownTargetsFromStateJson()
 
 export const PDF_DISTRICT_OVERRIDES: Record<string, string> = {
   Montclair: 'MONTCLAIR TWP',
@@ -56,12 +57,30 @@ export const PDF_DISTRICT_OVERRIDES: Record<string, string> = {
   'Middletown Township': 'MIDDLETOWN TWP',
   'Old Bridge Township': 'OLD BRIDGE TWP',
   'East Brunswick': 'EAST BRUNSWICK TWP',
+  'Mount Laurel': 'MT LAUREL TWP',
+  Parsippany: 'PARSIPPANY TR HLS TWP',
   'Franklin Township': 'FRANKLIN TWP',
   'Bridgewater Township': 'BRIDGEWATER TWP',
   'Wayne Township': 'WAYNE TWP',
   'East Orange': 'EAST ORANGE CITY',
   Bayonne: 'BAYONNE CITY',
   Piscataway: 'PISCATAWAY TWP',
+  // Bergen County expansion
+  'Fair Lawn': 'FAIR LAWN BORO',
+  Garfield: 'GARFIELD CITY',
+  Englewood: 'ENGLEWOOD CITY',
+  Bergenfield: 'BERGENFIELD BORO',
+  Mahwah: 'MAHWAH TWP',
+  'Cliffside Park': 'CLIFFSIDE PARK BORO',
+  Lodi: 'LODI BORO',
+  Lyndhurst: 'LYNDHURST TWP',
+  Wyckoff: 'WYCKOFF TWP',
+  Rutherford: 'RUTHERFORD BORO',
+  Dumont: 'DUMONT BORO',
+  'New Milford': 'NEW MILFORD BORO',
+  Ramsey: 'RAMSEY BORO',
+  'Saddle Brook': 'SADDLE BROOK TWP',
+  'Glen Rock': 'GLEN ROCK BORO',
 }
 
 export const NJ_TAXRATE_PDF_URL_TEMPLATE =

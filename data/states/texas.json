@@ -25,11 +25,11 @@
       "title": "Tax Rates and Levies (county & city workbooks)",
       "type": "xlsx",
       "homepageUrl": "https://comptroller.texas.gov/taxes/property-tax/",
-      "notes": "Published total tax rate ($ / $100 taxable value) for the county or city taxing unit per year. Same numeric value as percent of taxable value for that unit only—not combined overlapping jurisdictions."
+      "notes": "Published total tax rate ($ / $100 taxable value) for the county or city taxing unit per year. Same numeric value as percent of taxable value for that unit only\u2014not combined overlapping jurisdictions."
     },
     "us_census_acs_b25103": {
       "publisher": "U.S. Census Bureau",
-      "title": "ACS 5-year Table B25103 — Median Real Estate Taxes Paid",
+      "title": "ACS 5-year Table B25103 \u2014 Median Real Estate Taxes Paid",
       "type": "api",
       "homepageUrl": "https://api.census.gov/data.html",
       "notes": "B25103_001E = Median real estate taxes paid (dollars) for all owner-occupied units. Covers combined bill across county, city, school district, and special districts net of homestead exemptions."
@@ -54,7 +54,7 @@
           "rollout": {
             "tier": 1,
             "featured": true,
-            "isReady": false,
+            "isReady": true,
             "rank": 1
           },
           "metrics": {
@@ -163,7 +163,7 @@
           "rollout": {
             "tier": 1,
             "featured": false,
-            "isReady": false,
+            "isReady": true,
             "rank": 2
           },
           "metrics": {
@@ -272,7 +272,7 @@
           "rollout": {
             "tier": 2,
             "featured": false,
-            "isReady": false,
+            "isReady": true,
             "rank": 3
           },
           "metrics": {
@@ -381,7 +381,7 @@
           "rollout": {
             "tier": 2,
             "featured": false,
-            "isReady": false,
+            "isReady": true,
             "rank": 4
           },
           "metrics": {
@@ -490,7 +490,7 @@
           "rollout": {
             "tier": 2,
             "featured": false,
-            "isReady": false,
+            "isReady": true,
             "rank": 5
           },
           "metrics": {
@@ -599,7 +599,7 @@
           "rollout": {
             "tier": 2,
             "featured": false,
-            "isReady": false,
+            "isReady": true,
             "rank": 6
           },
           "metrics": {
@@ -676,7 +676,7 @@
           "rollout": {
             "tier": 2,
             "featured": false,
-            "isReady": false,
+            "isReady": true,
             "rank": 7
           },
           "metrics": {
@@ -800,7 +800,7 @@
           "rollout": {
             "tier": 1,
             "featured": true,
-            "isReady": false,
+            "isReady": true,
             "rank": 1
           },
           "metrics": {
@@ -957,7 +957,7 @@
           "rollout": {
             "tier": 1,
             "featured": true,
-            "isReady": false,
+            "isReady": true,
             "rank": 1
           },
           "metrics": {
@@ -1066,7 +1066,7 @@
           "rollout": {
             "tier": 2,
             "featured": false,
-            "isReady": false,
+            "isReady": true,
             "rank": 2
           },
           "metrics": {
@@ -1175,7 +1175,7 @@
           "rollout": {
             "tier": 2,
             "featured": false,
-            "isReady": false,
+            "isReady": true,
             "rank": 3
           },
           "metrics": {
@@ -1284,7 +1284,7 @@
           "rollout": {
             "tier": 2,
             "featured": false,
-            "isReady": false,
+            "isReady": true,
             "rank": 4
           },
           "metrics": {
@@ -1393,7 +1393,7 @@
           "rollout": {
             "tier": 2,
             "featured": false,
-            "isReady": false,
+            "isReady": true,
             "rank": 5
           },
           "metrics": {
@@ -1502,7 +1502,7 @@
           "rollout": {
             "tier": 2,
             "featured": false,
-            "isReady": false,
+            "isReady": true,
             "rank": 6
           },
           "metrics": {
@@ -1611,7 +1611,7 @@
           "rollout": {
             "tier": 2,
             "featured": false,
-            "isReady": false,
+            "isReady": true,
             "rank": 7
           },
           "metrics": {
@@ -1696,7 +1696,7 @@
           "rollout": {
             "tier": 2,
             "featured": false,
-            "isReady": false,
+            "isReady": true,
             "rank": 8
           },
           "metrics": {
@@ -1805,7 +1805,7 @@
           "rollout": {
             "tier": 2,
             "featured": false,
-            "isReady": false,
+            "isReady": true,
             "rank": 9
           },
           "metrics": {
@@ -1914,7 +1914,7 @@
           "rollout": {
             "tier": 2,
             "featured": false,
-            "isReady": false,
+            "isReady": true,
             "rank": 10
           },
           "metrics": {
@@ -2038,7 +2038,7 @@
           "rollout": {
             "tier": 1,
             "featured": true,
-            "isReady": false,
+            "isReady": true,
             "rank": 1
           },
           "metrics": {
@@ -2147,7 +2147,7 @@
           "rollout": {
             "tier": 1,
             "featured": false,
-            "isReady": false,
+            "isReady": true,
             "rank": 2
           },
           "metrics": {
@@ -2303,7 +2303,7 @@
           "rollout": {
             "tier": 1,
             "featured": true,
-            "isReady": false,
+            "isReady": true,
             "rank": 1
           },
           "metrics": {
@@ -2459,7 +2459,7 @@
           "rollout": {
             "tier": 1,
             "featured": true,
-            "isReady": false,
+            "isReady": true,
             "rank": 1
           },
           "metrics": {

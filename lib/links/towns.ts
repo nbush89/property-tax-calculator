@@ -72,8 +72,8 @@ export function getTownSlug(town: TownData): string {
 
 /**
  * Select featured towns for county overview page (max 5–8). Used for "Top towns" grid.
- * Includes towns with slug (have a page); prioritizes featured > tier > rank > name.
- * Does NOT filter by isTownReady so new towns appear once they have a slug.
+ * Includes towns with slug (have a page) and rollout.isReady !== false.
+ * Prioritizes featured > tier > rank > name.
  * @param stateSlug - State slug for href (default 'new-jersey')
  */
 export function selectFeaturedTowns(
@@ -83,7 +83,7 @@ export function selectFeaturedTowns(
   const { max = 8, stateSlug = 'new-jersey' } = options
   if (!county.towns || county.towns.length === 0) return []
 
-  const withSlug = county.towns.filter(t => getTownSlug(t))
+  const withSlug = county.towns.filter(t => getTownSlug(t) && isTownReady(t))
   const sorted = [...withSlug].sort((a, b) => {
     const aFeatured = a.rollout?.featured ?? false
     const bFeatured = b.rollout?.featured ?? false
@@ -233,7 +233,7 @@ export function selectStateFeaturedTowns(
   for (const county of stateData.counties ?? []) {
     if (!county.towns) continue
     for (const town of county.towns) {
-      if (!getTownSlug(town)) continue
+      if (!getTownSlug(town) || !isTownReady(town)) continue
       acc.push({ town, county })
     }
   }

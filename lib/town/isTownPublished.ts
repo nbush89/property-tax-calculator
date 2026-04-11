@@ -14,6 +14,11 @@ export function isTownPublished(town: TownData | Record<string, unknown>): boole
   if (t.isLive === true) {
     return true
   }
+  // Gate towns whose rollout flag explicitly marks them as not ready
+  const rollout = t.rollout as { isReady?: boolean } | undefined
+  if (rollout?.isReady === false) {
+    return false
+  }
   const metrics = t.metrics as
     | { effectiveTaxRate?: unknown[]; averageResidentialTaxBill?: unknown[]; medianTaxesPaid?: unknown[] }
     | undefined
