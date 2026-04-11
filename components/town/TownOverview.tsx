@@ -8,11 +8,14 @@ import {
   buildTownOverviewSummary,
 } from '@/lib/town-overview/format'
 import { Card } from '@/components/ui/Card'
+import { taxBillLabelForState } from '@/lib/content/townContent'
 
 export interface TownOverviewProps {
   townName: string
   countyName: string
   stateCode: string
+  /** State slug for state-aware labels (e.g. 'new-jersey', 'texas') */
+  stateSlug?: string
   overview?: TownOverviewType | null
 }
 
@@ -24,6 +27,7 @@ export default function TownOverview({
   townName,
   countyName,
   stateCode,
+  stateSlug = 'new-jersey',
   overview,
 }: TownOverviewProps) {
   if (overview == null) {
@@ -41,10 +45,11 @@ export default function TownOverview({
   const { asOfYear, provenance, notes } = overview
   const summary = buildTownOverviewSummary({ townName, countyName, overview })
 
+  const { shortLabel: billShortLabel } = taxBillLabelForState(stateSlug)
   const bullets: { label: string; value: string }[] = []
   if (overview.avgResidentialTaxBill != null) {
     bullets.push({
-      label: 'Avg residential tax bill',
+      label: billShortLabel,
       value: formatUSD(overview.avgResidentialTaxBill),
     })
   }

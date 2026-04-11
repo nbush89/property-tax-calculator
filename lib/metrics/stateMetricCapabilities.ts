@@ -94,6 +94,14 @@ export const STATE_METRICS_REGISTRY: Record<string, StateMetricsConfig> = {
         averageResidentialTaxBill: {
           supported: false,
         },
+        medianTaxesPaid: {
+          supported: true,
+          semantics: 'state_specific',
+          comparability: 'medium',
+          sourceRef: 'us_census_acs_profile_dp04',
+          note:
+            'ACS median real estate taxes paid (B25103_001E): combined annual property tax across overlapping taxing units.',
+        },
         medianHomeValue: {
           supported: true,
           semantics: 'standard',
@@ -112,6 +120,14 @@ export const STATE_METRICS_REGISTRY: Record<string, StateMetricsConfig> = {
         },
         averageResidentialTaxBill: {
           supported: false,
+        },
+        medianTaxesPaid: {
+          supported: true,
+          semantics: 'state_specific',
+          comparability: 'medium',
+          sourceRef: 'us_census_acs_profile_dp04',
+          note:
+            'ACS median real estate taxes paid (B25103_001E): combined annual property tax across overlapping taxing units.',
         },
         medianHomeValue: {
           supported: true,

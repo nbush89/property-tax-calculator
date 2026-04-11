@@ -1,7 +1,7 @@
-import * as https from 'node:https'
 import pdfParse from 'pdf-parse'
 import type { CountyMetricsPayload, TownMetricsPayload } from '../../lib/state-metrics-types'
 import { buildSeries } from '../../lib/build-series'
+import { downloadBuffer } from '../../lib/download'
 import {
   NJ_GTR_SOURCE_REF,
   NJ_TAXRATE_PDF_URL_TEMPLATE,
@@ -9,23 +9,7 @@ import {
   NJ_TIER1,
 } from './config'
 
-function downloadBuffer(url: string): Promise<Buffer> {
-  return new Promise((resolve, reject) => {
-    https
-      .get(url, { headers: { 'User-Agent': 'nj-tax-metrics-script/1.0' } }, res => {
-        const status = res.statusCode ?? 0
-        if (status < 200 || status >= 300) {
-          reject(new Error(`HTTP ${status} for ${url}`))
-          res.resume()
-          return
-        }
-        const chunks: Buffer[] = []
-        res.on('data', c => chunks.push(Buffer.isBuffer(c) ? c : Buffer.from(c)))
-        res.on('end', () => resolve(Buffer.concat(chunks)))
-      })
-      .on('error', reject)
-  })
-}
+const NJ_GTR_USER_AGENT = 'nj-tax-metrics-script/1.0'
 
 function normalizeDistrictName(raw: string): string {
   return raw
@@ -98,7 +82,7 @@ export async function fetchGtrMapsForYears(
   for (const y of gtrYears) {
     const url = NJ_TAXRATE_PDF_URL_TEMPLATE.replace('{year}', String(y))
     try {
-      const pdfBuf = await downloadBuffer(url)
+      const pdfBuf = await downloadBuffer(url, { userAgent: NJ_GTR_USER_AGENT })
       const parsed = await pdfParse(pdfBuf)
       const map = parseNjEffectiveTaxRatesFromPdfText(parsed.text || '')
       gtrMaps.set(y, map)

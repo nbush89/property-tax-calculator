@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { notFound } from 'next/navigation'
+import { notFound, permanentRedirect } from 'next/navigation'
 import Header from '@/components/site/Header'
 import Footer from '@/components/site/Footer'
 import { breadcrumbJsonLd, webAppJsonLd, faqJsonLd } from '@/lib/jsonld'
@@ -30,6 +30,18 @@ import { TownReliefSection } from '@/components/relief/TownReliefSection'
 
 function townSlugForLookup(townSlug: string): string {
   return decodeURIComponent(townSlug).replace(/-property-tax$/, '')
+}
+
+function canonicalTownSlug(town: { slug?: string | null; name: string }): string {
+  return `${town.slug || slugifyLocation(town.name)}-property-tax`
+}
+
+function canonicalTownPath(input: {
+  state: string
+  countyShortSlug: string
+  town: { slug?: string | null; name: string }
+}): string {
+  return `/${input.state}/${input.countyShortSlug}/${canonicalTownSlug(input.town)}`
 }
 
 type Props = {
@@ -62,6 +74,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { county, town } = result
   const stateData = getStateData(state)!
   const pageOverview = resolveTownPageOverview(town, county, stateData)
+  const canonicalCountySlug = getCountyShortSlug(county)
+  const canonicalTownSegment = canonicalTownSlug(town)
 
   return buildTownMetadataForRoute({
     town,
@@ -69,8 +83,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     stateData,
     overview: pageOverview,
     stateSlug: state,
-    countySlugParam: countySlug,
-    townSlugParam: townSlug,
+    countySlugParam: canonicalCountySlug,
+    townSlugParam: canonicalTownSegment,
   })
 }
 
@@ -90,14 +104,25 @@ export default async function TownPropertyTaxPage({ params }: Props) {
   }
 
   const { county, town } = result
+  const countyShortSlug = getCountyShortSlug(county)
+  const canonicalPath = canonicalTownPath({
+    state,
+    countyShortSlug,
+    town,
+  })
+  const incomingPath = `/${state}/${decodeURIComponent(countySlug)}/${decodeURIComponent(townSlug)}`
+  if (incomingPath.toLowerCase() !== canonicalPath.toLowerCase()) {
+    permanentRedirect(canonicalPath)
+  }
+
   const townDisplayName = getTownDisplayName(town)
   const stateData = getStateData(state)!
   const stateName = stateData.state.name
   const abbrev = stateData.state.abbreviation
   const countyRouteSegment = `${slugifyLocation(county.name)}-county-property-tax`
   const encState = encodeURIComponent(state)
-  const encCountySeg = encodeURIComponent(countySlug)
-  const encTownSeg = encodeURIComponent(townSlug)
+  const encCountySeg = encodeURIComponent(countyShortSlug)
+  const encTownSeg = encodeURIComponent(canonicalTownSlug(town))
   const pageUrl = `${SITE_URL}/${encState}/${encCountySeg}/${encTownSeg}`
   const countyPageUrl = `${SITE_URL}/${encState}/${encodeURIComponent(countyRouteSegment)}`
   const countyCalculatorHref = `/${state}/${countyRouteSegment}/property-tax-calculator`

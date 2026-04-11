@@ -73,6 +73,14 @@ export interface TownMetrics {
   averageResidentialTaxBill?: MetricSeries
   effectiveTaxRate?: MetricSeries
   medianHomeValue?: MetricSeries
+  /**
+   * ACS DP04_0087E: Median real estate taxes paid by owner-occupied households.
+   * Captures the full combined bill (county + city + school district + special
+   * districts) net of homestead exemptions. Used as a combined-rate proxy for
+   * states (e.g. Texas) where overlapping taxing units cannot be reliably
+   * summed without address-level geographic lookups.
+   */
+  medianTaxesPaid?: MetricSeries
 }
 
 /**

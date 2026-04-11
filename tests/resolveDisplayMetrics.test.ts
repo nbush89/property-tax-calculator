@@ -72,6 +72,9 @@ assert.ok(txTown.some(m => m.key === 'effectiveTaxRate'))
 const avTxBill = getMetricAvailability('texas', 'county', 'averageResidentialTaxBill')
 assert.equal(avTxBill?.supported, false)
 assert.equal(isMetricDisplayAllowed('texas', 'town', 'averageResidentialTaxBill'), false)
+const txTownMedianTaxes = getMetricAvailability('texas', 'town', 'medianTaxesPaid')
+assert.equal(txTownMedianTaxes?.supported, true)
+assert.equal(isMetricDisplayAllowed('texas', 'town', 'medianTaxesPaid'), true)
 
 // —— Cross-state comparison guard
 assert.equal(

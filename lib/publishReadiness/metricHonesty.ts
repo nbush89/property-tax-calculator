@@ -16,9 +16,13 @@ export function findUnsupportedTownMetricsOnOverview(
 ): MetricKey[] {
   if (!overview) return []
   const bad: MetricKey[] = []
+  // Flag as unsupported only when neither the NJ-style avg bill nor the TX-style
+  // median taxes paid is allowed for this state. If medianTaxesPaid is supported,
+  // the overview's avgResidentialTaxBill field is legitimately populated from that source.
   if (
     overview.avgResidentialTaxBill != null &&
-    !isMetricDisplayAllowed(stateSlug, 'town', 'averageResidentialTaxBill')
+    !isMetricDisplayAllowed(stateSlug, 'town', 'averageResidentialTaxBill') &&
+    !isMetricDisplayAllowed(stateSlug, 'town', 'medianTaxesPaid')
   ) {
     bad.push('averageResidentialTaxBill')
   }

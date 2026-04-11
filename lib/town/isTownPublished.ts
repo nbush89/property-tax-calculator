@@ -15,12 +15,14 @@ export function isTownPublished(town: TownData | Record<string, unknown>): boole
     return true
   }
   const metrics = t.metrics as
-    | { effectiveTaxRate?: unknown[]; averageResidentialTaxBill?: unknown[] }
+    | { effectiveTaxRate?: unknown[]; averageResidentialTaxBill?: unknown[]; medianTaxesPaid?: unknown[] }
     | undefined
   if (!metrics) {
     return false
   }
   const hasRate = (metrics.effectiveTaxRate?.length ?? 0) > 0
-  const hasBill = (metrics.averageResidentialTaxBill?.length ?? 0) > 0
+  const hasBill =
+    (metrics.averageResidentialTaxBill?.length ?? 0) > 0 ||
+    (metrics.medianTaxesPaid?.length ?? 0) > 0
   return hasRate || hasBill
 }

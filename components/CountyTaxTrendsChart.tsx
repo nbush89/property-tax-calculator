@@ -18,6 +18,7 @@ import {
 import type { MetricSeries } from '@/lib/data/types'
 import { computeYoYStats } from '@/lib/data/metrics'
 import { shouldShowCountyAverageTaxBillTrend } from '@/lib/metrics/resolveDisplayMetrics'
+import { taxBillLabelForState } from '@/lib/content/townContent'
 
 interface CountyTaxTrendsChartProps {
   stateSlug: string
@@ -71,6 +72,7 @@ export default function CountyTaxTrendsChart({ stateSlug, county }: CountyTaxTre
     return null
   }
 
+  const { shortLabel: billShortLabel, label: billLabel } = taxBillLabelForState(stateSlug)
   const series = county.metrics?.averageResidentialTaxBill ?? []
 
   // Don't render if insufficient data
@@ -96,10 +98,10 @@ export default function CountyTaxTrendsChart({ stateSlug, county }: CountyTaxTre
   return (
     <section className="mb-12">
       <h2 className="text-2xl font-semibold mb-2 text-text">
-        Average Residential Property Tax Trend in {county.name} County
+        {billShortLabel} Trend in {county.name} County
       </h2>
       <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
-        Planning context only — historical averages for comparison. Actual tax bills vary by
+        Planning context only — historical {billLabel} for comparison. Actual tax bills vary by
         municipality and exemptions.
       </p>
 
@@ -168,8 +170,8 @@ export default function CountyTaxTrendsChart({ stateSlug, county }: CountyTaxTre
 
       {/* Footnote */}
       <p className="text-xs text-gray-500 dark:text-gray-400 mt-4 italic">
-        Data reflects county-wide averages where published and may not represent individual
-        municipality tax bills. Years shown follow each source’s reporting.
+        Data reflects county-wide {billLabel} where published and may not represent individual
+        municipality tax bills. Years shown follow each source&apos;s reporting.
       </p>
     </section>
   )

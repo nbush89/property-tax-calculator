@@ -13,6 +13,14 @@ export type TownMetricsPayload = {
   medianHomeValue?: DataPoint[]
   effectiveTaxRate?: DataPoint[]
   averageResidentialTaxBill?: DataPoint[]
+  /**
+   * ACS DP04_0087E: Median real estate taxes paid.
+   * Reflects the combined bill across all overlapping taxing units
+   * (county + city + school district + special districts), net of exemptions.
+   * Used as a combined-rate proxy for states where per-unit rates cannot be
+   * reliably summed without address-level geographic data (e.g. Texas).
+   */
+  medianTaxesPaid?: DataPoint[]
   debug?: Record<string, string>
 }
 

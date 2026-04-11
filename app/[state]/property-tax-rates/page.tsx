@@ -28,11 +28,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!isValidState(state)) {
     return { title: 'State Not Found | Property Tax Calculator' }
   }
-  const stateName = formatStateName(state)
+  const stateData = getStateData(state)
+  const stateName = stateData?.state.name ?? formatStateName(state)
+  const abbrev = stateData?.state.abbreviation
+  // Use the most recent year present in any metric series, not the state.asOfYear
+  // field, so the title stays current when data is updated without a field bump.
+  const dataYear = stateData ? (getMaxEffectiveTaxRateYearInState(stateData) ?? stateData.state.asOfYear) : null
+  const yearSuffix = dataYear ? ` (${dataYear})` : ''
+  const abbrevPrefix = abbrev ? `${abbrev} — ` : ''
   const path = `/${encodeURIComponent(state)}/property-tax-rates`
   return buildMetadata({
-    title: `${stateName} Property Tax Rates by County | Tax Rates`,
-    description: `View current property tax rates by county and municipality in ${stateName}. Planning estimates only.`,
+    title: `${abbrevPrefix}${stateName} Property Tax Rates by County | Tax Rates${yearSuffix}`,
+    description: `View current property tax rates by county and municipality in ${stateName}${dataYear ? ` (${dataYear} data)` : ''}. Compare county and town rates to plan your annual property tax costs.`,
     path,
     keywords: `${stateName} tax rates, ${stateName} county tax rates, property tax rates by county, ${stateName} municipal tax rates`,
   })

@@ -74,6 +74,24 @@ export const METRIC_CATALOG: Record<MetricKey, MetricCatalogEntry> = {
     useOnCountyCard: false,
     useOnCountyHero: false,
   },
+  medianTaxesPaid: {
+    key: 'medianTaxesPaid',
+    label: 'Median taxes paid',
+    shortLabel: 'Median bill',
+    description:
+      'Median annual property taxes paid by owner-occupied households (ACS DP04_0087E). ' +
+      'Reflects the combined bill across all overlapping taxing units — county, city, school ' +
+      'district, and special districts — net of homestead exemptions. Use as a combined-rate ' +
+      'proxy for states where individual taxing-unit rates cannot be summed without ' +
+      'address-level geographic lookups.',
+    format: 'currency',
+    priority: 15,
+    defaultComparable: true,
+    defaultCaveat:
+      'ACS survey-based estimate; lagged 1–2 years. Useful for combined-rate approximations.',
+    useOnCountyCard: false,
+    useOnCountyHero: false,
+  },
 }
 
 /** Stable iteration order for resolution */

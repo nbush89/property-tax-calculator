@@ -17,6 +17,7 @@ import {
 import { METRIC_CATALOG } from '@/lib/metrics/metricCatalog'
 import type { MetricComparability, MetricSemantics } from '@/lib/metrics/capabilityTypes'
 import { MetricCaveatTrigger } from '@/components/metrics/MetricCaveatTrigger'
+import { taxBillLabelForState } from '@/lib/content/townContent'
 
 export interface TownAtAGlanceProps {
   townName: string
@@ -81,10 +82,11 @@ export default function TownAtAGlance({
         ? ` (${trendEnd})`
         : ''
 
-  const billCap = getMetricAvailability(stateSlug, 'town', 'averageResidentialTaxBill')
+  const billMetricKey = stateSlug === 'texas' ? 'medianTaxesPaid' : 'averageResidentialTaxBill'
+  const billCap = getMetricAvailability(stateSlug, 'town', billMetricKey)
   const rateCap = getMetricAvailability(stateSlug, 'town', 'effectiveTaxRate')
   const medianCap = getMetricAvailability(stateSlug, 'town', 'medianHomeValue')
-  const billAllowed = isMetricDisplayAllowed(stateSlug, 'town', 'averageResidentialTaxBill')
+  const billAllowed = isMetricDisplayAllowed(stateSlug, 'town', billMetricKey)
   const rateAllowed = isMetricDisplayAllowed(stateSlug, 'town', 'effectiveTaxRate')
   const medianAllowed = isMetricDisplayAllowed(stateSlug, 'town', 'medianHomeValue')
 
@@ -100,9 +102,11 @@ export default function TownAtAGlance({
     }
   }[] = []
   if (billAllowed && o.avgResidentialTaxBill != null) {
+    const { shortLabel } = taxBillLabelForState(stateSlug)
+    const countyFallbackQualifier = stateSlug === 'texas' ? 'county median' : 'county average'
     const label = billIsCountyFallback
-      ? 'Avg residential tax bill (county average)'
-      : 'Avg residential tax bill'
+      ? `${shortLabel} (${countyFallbackQualifier})`
+      : shortLabel
     bullets.push({
       label,
       value: formatUSD(o.avgResidentialTaxBill),

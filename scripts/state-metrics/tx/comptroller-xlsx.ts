@@ -2,33 +2,18 @@
  * Download and parse Texas Comptroller Tax Rates and Levies XLSX workbooks.
  * Column detection is header-row based (first ~25 rows) to survive title rows.
  */
-import * as https from 'node:https'
 import * as XLSX from 'xlsx'
+import { downloadBuffer as _downloadBuffer } from '../../lib/download'
 import { normalizeTexasCountyKey } from './normalize'
 
-const USER_AGENT = 'state-metrics-texas-rates/1.0'
+const TX_USER_AGENT = 'state-metrics-texas-rates/1.0'
 
+/**
+ * Re-export so existing callers (rates.ts) can import from here without
+ * changing their import path, while the implementation lives in one place.
+ */
 export function downloadBuffer(url: string): Promise<Buffer> {
-  return new Promise((resolve, reject) => {
-    https
-      .get(url, { headers: { 'User-Agent': USER_AGENT } }, res => {
-        const code = res.statusCode ?? 0
-        if (code === 404) {
-          res.resume()
-          reject(new Error('NOT_FOUND'))
-          return
-        }
-        if (code < 200 || code >= 300) {
-          res.resume()
-          reject(new Error(`HTTP ${code}`))
-          return
-        }
-        const chunks: Buffer[] = []
-        res.on('data', c => chunks.push(Buffer.isBuffer(c) ? c : Buffer.from(c)))
-        res.on('end', () => resolve(Buffer.concat(chunks)))
-      })
-      .on('error', reject)
-  })
+  return _downloadBuffer(url, { userAgent: TX_USER_AGENT })
 }
 
 function sheetToAoA(ws: XLSX.WorkSheet): string[][] {

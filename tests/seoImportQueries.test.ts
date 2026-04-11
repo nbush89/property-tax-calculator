@@ -75,6 +75,14 @@ function run(): void {
   })
   assert.equal(singleRel.rows[0]!.pagePath, ridgewoodPath)
 
+  const legacyTownUrl = parseSearchConsoleQueriesCsv(csvNoPage, {
+    pagePathOverride: 'https://home-property-tax.com/new-jersey/Camden/Camden',
+  })
+  assert.equal(legacyTownUrl.rows.length, 2)
+  assert.equal(legacyTownUrl.summary.usedPageOverride, true)
+  assert.equal(legacyTownUrl.summary.pageOverride, '/new-jersey/camden/camden')
+  assert.equal(legacyTownUrl.summary.matchedRows, 2)
+
   assert.throws(
     () =>
       parseSearchConsoleQueriesCsv(csvNoPage, {

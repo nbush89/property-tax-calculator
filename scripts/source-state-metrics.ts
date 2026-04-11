@@ -12,9 +12,13 @@ import * as fs from 'node:fs'
 import * as path from 'node:path'
 import { buildRecentYears } from './utils/buildRecentYears'
 import {
+  fetchAcsDp04Maps,
   fetchAcsMedianHomeValueMap,
+  fetchAcsMedianTaxesPaidMap,
   medianHomeSeriesForTown,
+  medianTaxesSeriesForTown,
   ACS_SOURCE_REF,
+  ACS_TAX_SOURCE_REF,
 } from './lib/acs-median-home-value'
 import type {
   CountyMetricsPayload,
@@ -207,13 +211,29 @@ async function sourceTexas(options: { out: string }) {
   const stateJson = loadStateJson<{ counties: CountyList }>('texas')
   const log = (m: string) => console.error(m)
 
-  const acsMaps = await buildAcsMapsForState(
-    ACS_YEARS,
-    STATE_FIPS.texas,
-    'texas',
-    log,
-    'TX'
-  )
+  // Fetch median home value (DP04_0089E) from acs/acs5/profile per year.
+  // Fetch median real estate taxes paid (B25103_001E) from acs/acs5 per year.
+  // These use different API endpoints and must be fetched separately.
+  const mhvMaps = new Map<number, Map<string, number>>()
+  const taxMaps = new Map<number, Map<string, number>>()
+  for (const y of ACS_YEARS) {
+    try {
+      const { homeValue } = await fetchAcsDp04Maps(y, STATE_FIPS.texas, 'texas')
+      mhvMaps.set(y, homeValue)
+      log(`[OK] ACS DP04 ${y}: ${homeValue.size} TX places (homeValue)`)
+    } catch (e) {
+      log(`[WARN] ACS DP04 ${y} failed: ${String(e)}`)
+      mhvMaps.set(y, new Map())
+    }
+    try {
+      const taxMap = await fetchAcsMedianTaxesPaidMap(y, STATE_FIPS.texas, 'texas')
+      taxMaps.set(y, taxMap)
+      log(`[OK] ACS B25103 ${y}: ${taxMap.size} TX places (medianTaxesPaid)`)
+    } catch (e) {
+      log(`[WARN] ACS B25103 ${y} failed: ${String(e)}`)
+      taxMaps.set(y, new Map())
+    }
+  }
 
   const countyOut: Record<string, CountyMetricsPayload> = {}
   for (const county of stateJson.counties ?? []) {
@@ -229,18 +249,32 @@ async function sourceTexas(options: { out: string }) {
         : countySlug
     for (const town of county.towns ?? []) {
       const townKey = `${countySlug}/${town.slug}`
-      const { series, acsMatchKey } = medianHomeSeriesForTown(
+
+      const { series: mhvSeries, acsMatchKey } = medianHomeSeriesForTown(
         town.name,
         'Texas',
         ACS_YEARS,
-        acsMaps,
+        mhvMaps,
         'texas'
       )
-      if (series.length === 0) {
+      const { series: taxSeries } = medianTaxesSeriesForTown(
+        town.name,
+        'Texas',
+        ACS_YEARS,
+        taxMaps,
+        'texas'
+      )
+
+      if (mhvSeries.length === 0) {
         log(`[MISSING] medianHomeValue for ${town.name} (${townKey}) (ACS key: ${acsMatchKey})`)
       }
+      if (taxSeries.length === 0) {
+        log(`[MISSING] medianTaxesPaid for ${town.name} (${townKey}) (ACS key: ${acsMatchKey})`)
+      }
+
       townsOut[townKey] = {
-        medianHomeValue: series,
+        medianHomeValue: mhvSeries,
+        medianTaxesPaid: taxSeries,
         effectiveTaxRate: [],
         debug: {
           acsMatchKey,

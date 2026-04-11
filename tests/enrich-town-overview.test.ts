@@ -24,6 +24,19 @@ assert.ok(
   'sparse overview: town effective rate from metrics'
 )
 
+const murphy = getTownBySlugs('texas', 'collin', 'murphy')
+assert.ok(murphy, 'Murphy town')
+const { town: murphyTown, county: collinCounty } = murphy!
+const txMurphy = enrichOverviewYearsFromMetrics(murphyTown, collinCounty, { asOfYear: 2025 }, tx)
+assert.ok(
+  txMurphy.avgResidentialTaxBill != null && txMurphy.avgResidentialTaxBill > 0,
+  'TX medianTaxesPaid maps into headline tax-bill slot'
+)
+assert.ok(
+  txMurphy.avgResidentialTaxBillYear != null && txMurphy.avgResidentialTaxBillYear >= 2020,
+  'TX medianTaxesPaid year is carried into avgResidentialTaxBillYear'
+)
+
 const nj = getStateData('new-jersey')
 assert.ok(nj, 'NJ state data')
 const ridgewood = getTownBySlugs('new-jersey', 'bergen', 'ridgewood')

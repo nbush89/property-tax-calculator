@@ -1,5 +1,6 @@
 import type { StateData } from '@/lib/data/types'
 import { getCountyRate, getMunicipalRate } from '@/lib/rates-from-state'
+import { getLatestValue } from '@/lib/data/metrics'
 import type { SelectedReliefInputs } from '@/lib/relief/types'
 import { computeReliefAdjustments, uniqueNotes } from '@/lib/calculator/applyReliefPrograms'
 
@@ -18,6 +19,19 @@ export type TaxReliefSummary = {
   informationalProgramsSelected: Array<{ programId: string; label: string; summary: string }>
   methodologyNotes: string[]
 }
+
+/**
+ * How the rate used for this estimate was derived.
+ *
+ * - `'comptroller'`  — Texas Comptroller per-taxing-unit rate (city or county only;
+ *   does NOT include school district / MUD / hospital district). Will underestimate
+ *   the combined homeowner bill.
+ * - `'acs_implied'`  — Rate implied from ACS median taxes paid ÷ median home value.
+ *   Reflects the combined bill across all overlapping taxing units, net of typical
+ *   homestead exemptions. More accurate for Texas calculator estimates.
+ * - `'state_records'` — Rate from state tax records (e.g. NJ GTR).
+ */
+export type RateSource = 'comptroller' | 'acs_implied' | 'state_records'
 
 export type TaxCalculationResult = {
   homeValue: number
@@ -43,6 +57,16 @@ export type TaxCalculationResult = {
   }
   county: string
   relief?: TaxReliefSummary
+  /**
+   * How the effective rate was derived. Present on all results; drives UI labeling
+   * in TaxResults so users understand the basis of the estimate.
+   */
+  rateSource?: RateSource
+  /**
+   * Short note explaining the rate basis (shown in TaxResults for transparency).
+   * Only populated when the source warrants a user-visible explanation.
+   */
+  rateSourceNote?: string
 }
 
 /** Map legacy NJ exemption checkbox ids to relief program ids */
@@ -129,7 +153,38 @@ function calculatePropertyTaxNj(
     },
     county,
     relief: reliefSummary,
+    rateSource: 'state_records' as RateSource,
   }
+}
+
+/**
+ * Derive a combined effective rate for a Texas town from ACS data.
+ *
+ * Uses medianTaxesPaid (ACS B25103_001E — median real estate taxes paid) divided
+ * by medianHomeValue (ACS DP04_0089E). This implied rate reflects all overlapping
+ * taxing units (county + city + school district + special districts) and is the
+ * correct basis for a homeowner bill estimate, unlike the Comptroller per-unit rate.
+ *
+ * Returns null if either metric is missing or medianHomeValue is zero.
+ */
+function getTexasTownImpliedRate(
+  stateData: StateData,
+  countyName: string,
+  townName: string
+): number | null {
+  const county = stateData.counties.find(
+    c => c.name.toLowerCase() === countyName.toLowerCase()
+  )
+  const town = county?.towns?.find(
+    t => t.name.toLowerCase() === townName.toLowerCase()
+  )
+  if (!town?.metrics) return null
+
+  const bill = getLatestValue(town.metrics.medianTaxesPaid)
+  const mhv = getLatestValue(town.metrics.medianHomeValue)
+  if (bill == null || mhv == null || mhv <= 0) return null
+
+  return bill / mhv
 }
 
 function calculatePropertyTaxTexas(
@@ -138,40 +193,58 @@ function calculatePropertyTaxTexas(
   mergedRelief: SelectedReliefInputs | undefined
 ): TaxCalculationResult {
   const { homeValue, county, town } = input
-  const townDec =
-    town?.trim() ? getMunicipalRate(stateData, county, town.trim()) : null
-  const countyDec = getCountyRate(stateData, county)
 
   const reliefCompute = computeReliefAdjustments('texas', homeValue, mergedRelief)
   const taxable = reliefCompute.adjustedTaxableValue
 
-  let annualTax: number
+  let rateDec: number
+  let rateSource: RateSource
+  let rateSourceNote: string | undefined
   let countyRatePct: number
   let municipalRatePct: number
-  let base: number
-  let municipalAdjustment: number
-  let rateDec: number
 
-  if (townDec != null) {
-    municipalAdjustment = taxable * townDec
-    base = 0
-    annualTax = municipalAdjustment
+  // Prefer ACS-implied combined rate for towns: covers all overlapping taxing units.
+  const impliedRate = town?.trim()
+    ? getTexasTownImpliedRate(stateData, county, town.trim())
+    : null
+
+  if (impliedRate != null) {
+    rateDec = impliedRate
+    rateSource = 'acs_implied'
+    rateSourceNote =
+      'Rate implied from ACS median taxes paid ÷ median home value. ' +
+      'Reflects all taxing units (county, city, school district, special districts) ' +
+      'net of typical exemptions. Based on survey data; individual bills vary.'
     countyRatePct = 0
-    municipalRatePct = townDec * 100
-    rateDec = townDec
-  } else if (countyDec != null) {
-    base = taxable * countyDec
-    municipalAdjustment = 0
-    annualTax = base
-    countyRatePct = countyDec * 100
-    municipalRatePct = 0
-    rateDec = countyDec
+    municipalRatePct = impliedRate * 100
   } else {
-    throw new Error(
-      `Tax rates not found for ${county}${town?.trim() ? ` / ${town}` : ''}. Run Texas metrics sourcing and merge.`
-    )
+    // Fallback: Comptroller per-unit rate (city, then county).
+    const townDec = town?.trim() ? getMunicipalRate(stateData, county, town.trim()) : null
+    const countyDec = getCountyRate(stateData, county)
+
+    if (townDec != null) {
+      rateDec = townDec
+      countyRatePct = 0
+      municipalRatePct = townDec * 100
+    } else if (countyDec != null) {
+      rateDec = countyDec
+      countyRatePct = countyDec * 100
+      municipalRatePct = 0
+    } else {
+      throw new Error(
+        `Tax rates not found for ${county}${town?.trim() ? ` / ${town}` : ''}. Run Texas metrics sourcing and merge.`
+      )
+    }
+    rateSource = 'comptroller'
+    rateSourceNote =
+      'Rate from Texas Comptroller (single taxing unit only — does not include ' +
+      'school district or special districts). This estimate will understate the ' +
+      'typical combined bill. Run the sourcing pipeline to populate ACS data.'
   }
 
+  const annualTax = taxable * rateDec
+  const base = countyRatePct > 0 ? taxable * (countyRatePct / 100) : annualTax
+  const municipalAdjustment = municipalRatePct > 0 ? taxable * (municipalRatePct / 100) : 0
   const baseAnnualTaxBeforeRelief = Math.max(0, homeValue * rateDec)
   const monthlyTax = annualTax / 12
   const effectiveRate = homeValue > 0 ? (annualTax / homeValue) * 100 : 0
@@ -200,6 +273,8 @@ function calculatePropertyTaxTexas(
     },
     county,
     relief: reliefSummary,
+    rateSource,
+    rateSourceNote,
   }
 }
 

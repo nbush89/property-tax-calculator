@@ -39,6 +39,36 @@ export type TownPageSections = {
   relatedTownsIntro: string
 }
 
+/**
+ * State-aware label for the averageResidentialTaxBill metric.
+ *
+ * The field stores the combined annual property tax bill, but the underlying
+ * source differs by state:
+ *   - NJ: MOD IV published averages → "average residential tax bill"
+ *   - TX: ACS DP04_0087E median taxes paid → "median taxes paid"
+ *
+ * Using the wrong term (e.g. "average" when the data is a median) is
+ * technically inaccurate and can mislead users who know the difference.
+ */
+export function taxBillLabelForState(stateSlug: string): {
+  label: string
+  shortLabel: string
+  sourceNote: string
+} {
+  if (stateSlug === 'texas') {
+    return {
+      label: 'median taxes paid',
+      shortLabel: 'Median taxes paid',
+      sourceNote: 'ACS survey median — reflects all taxing units net of typical exemptions',
+    }
+  }
+  return {
+    label: 'average residential tax bill',
+    shortLabel: 'Avg residential tax bill',
+    sourceNote: 'From published state tax records',
+  }
+}
+
 function formatUsd(n: number): string {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -55,10 +85,12 @@ export function buildTownOverviewParagraphs(params: {
   townDisplayName: string
   countyName: string
   stateName: string
+  stateSlug: string
   overview: TownOverview
   cap: ReturnType<typeof getStateCapabilities>
 }): string[] {
-  const { townDisplayName, countyName, stateName, overview, cap } = params
+  const { townDisplayName, countyName, stateName, stateSlug, overview, cap } = params
+  const billLabel = taxBillLabelForState(stateSlug)
   const out: string[] = []
 
   const bill = overview.avgResidentialTaxBill
@@ -77,11 +109,11 @@ export function buildTownOverviewParagraphs(params: {
 
   if (cap.hasAverageTaxBill && bill != null && !billMatchesCounty) {
     out.push(
-      `The latest average residential tax bill we show for ${townDisplayName} is ${formatUsd(bill)} (tax year ${billYear}), from published data used on this site.`
+      `The latest ${billLabel.label} we show for ${townDisplayName} is ${formatUsd(bill)} (tax year ${billYear}), from published data used on this site.`
     )
   } else if (cap.hasAverageTaxBill && bill != null && billMatchesCounty) {
     out.push(
-      `Town-level average tax bill is not separately published in our dataset for ${townDisplayName}; the value shown matches the ${countyName} County average (${formatUsd(bill)}, tax year ${billYear}).`
+      `Town-level ${billLabel.label} is not separately published in our dataset for ${townDisplayName}; the value shown matches the ${countyName} County figure (${formatUsd(bill)}, tax year ${billYear}).`
     )
   }
 
@@ -122,9 +154,11 @@ export function buildTownComparisonSection(params: {
   townDisplayName: string
   countyName: string
   stateName: string
+  stateSlug: string
   overview: TownOverview
 }): TownPageSections['comparison'] | undefined {
-  const { townDisplayName, countyName, stateName, overview } = params
+  const { townDisplayName, countyName, stateName, stateSlug, overview } = params
+  const billLabel = taxBillLabelForState(stateSlug)
   const items: TownComparisonItem[] = []
   const vsCounty = overview.vsCounty ?? overview.comparisons?.vsCounty
   const vsState = overview.vsState ?? overview.comparisons?.vsState
@@ -136,7 +170,7 @@ export function buildTownComparisonSection(params: {
       overview.effectiveTaxRatePct !== overview.countyEffectiveRatePct
         ? 'effective rate'
         : overview.avgResidentialTaxBill != null
-          ? 'average residential tax bill'
+          ? billLabel.label
           : 'published tax metrics'
     items.push({
       label: `vs ${countyName} County`,
@@ -180,6 +214,7 @@ export function resolveTownTrendChartModel(params: {
   county: CountyData
   townDisplayName: string
   countyName: string
+  stateSlug: string
 }): TownTrendChartModel | null {
   const pick = pickBestTrendSeries(params.town, params.county)
   if (!pick || pick.points.length < 3) return null
@@ -188,10 +223,16 @@ export function resolveTownTrendChartModel(params: {
   const valueFormat: 'usd' | 'percent' = pick.metricKey === 'effectiveTaxRate' ? 'percent' : 'usd'
   const series: YearValue[] = pick.points.map(p => ({ year: p.year, value: p.value }))
 
+  // Use state-aware label for the tax bill metric so chart copy is accurate.
+  const metricLabel =
+    pick.metricKey === 'averageResidentialTaxBill'
+      ? taxBillLabelForState(params.stateSlug).label
+      : catalog.label.toLowerCase()
+
   const geo =
     pick.scope === 'town'
-      ? `${params.townDisplayName} (${catalog.label.toLowerCase()})`
-      : `${params.countyName} County (${catalog.label.toLowerCase()}, county context)`
+      ? `${params.townDisplayName} (${metricLabel})`
+      : `${params.countyName} County (${metricLabel}, county context)`
 
   return {
     series,
@@ -220,12 +261,15 @@ export function resolveTownPageSections(params: {
   const stateName = stateData.state.name
   const cap = getStateCapabilities(stateData.state.slug)
 
+  const stateSlug = stateData.state.slug
+
   const overviewParagraphs =
     overview != null
       ? buildTownOverviewParagraphs({
           townDisplayName,
           countyName: county.name,
           stateName,
+          stateSlug,
           overview,
           cap,
         })
@@ -239,6 +283,7 @@ export function resolveTownPageSections(params: {
           townDisplayName,
           countyName: county.name,
           stateName,
+          stateSlug,
           overview,
         })
       : undefined
@@ -255,6 +300,7 @@ export function resolveTownPageSections(params: {
       county,
       townDisplayName,
       countyName: county.name,
+      stateSlug,
     }),
     relatedTownsIntro: buildTownRelatedTownsIntro(county.name, townDisplayName),
   }

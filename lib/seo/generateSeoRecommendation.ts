@@ -12,12 +12,44 @@ import { resolveEntityPresentation } from './entityPresentation'
 import type { PathToEntityMatch } from './pathToEntity'
 import {
   buildTownSeoFields,
-  generateTownSeoDescription,
-  generateTownSeoTitle,
-  resolveTownSeoTier,
-  resolveTownSeoYear,
 } from './townMetadata'
 import type { SeoEntityType } from './types'
+import type { StateData } from '@/lib/data/types'
+
+/**
+ * Return the most recent data year present anywhere in a state's county or town
+ * metric series. Falls back to state.asOfYear when no series data exists.
+ *
+ * This prevents the recommendation engine from suggesting a stale year just
+ * because state.asOfYear hasn't been bumped after a data update.
+ */
+function resolveLatestDataYear(stateData: StateData): number {
+  let max = stateData.state.asOfYear ?? new Date().getFullYear()
+
+  for (const county of stateData.counties) {
+    if (county.asOfYear && county.asOfYear > max) max = county.asOfYear
+
+    for (const series of Object.values(county.metrics ?? {})) {
+      if (!Array.isArray(series)) continue
+      for (const pt of series) {
+        if (typeof pt.year === 'number' && pt.year > max) max = pt.year
+      }
+    }
+
+    for (const town of county.towns ?? []) {
+      if (town.asOfYear && town.asOfYear > max) max = town.asOfYear
+
+      for (const series of Object.values(town.metrics ?? {})) {
+        if (!Array.isArray(series)) continue
+        for (const pt of series) {
+          if (typeof pt.year === 'number' && pt.year > max) max = pt.year
+        }
+      }
+    }
+  }
+
+  return max
+}
 
 export type SeoRecommendationStrength = 'high' | 'medium' | 'low' | 'none'
 
@@ -193,46 +225,29 @@ function buildTownSuggestion(
   const { town, county } = resolved
   const stateData = getStateData(match.stateSlug)!
   const overview = resolveTownPageOverview(town, county, stateData)
-  const tier = resolveTownSeoTier(town)
-  const year = resolveTownSeoYear({
-    town,
-    county,
-    stateData,
-    overview,
-  })
-  const townDisplayName = getTownDisplayName(town)
   const abbrev = stateData.state.abbreviation
 
-  let title = generateTownSeoTitle({
-    tier,
-    townDisplayName,
-    stateAbbrev: abbrev,
-    year,
-    county,
-  })
-  let description = generateTownSeoDescription({
-    tier,
-    townDisplayName,
-    stateName: stateData.state.name,
-    county,
-  })
+  // Use buildTownSeoFields as the single source of truth so the suggestion always
+  // matches what the live page actually renders (including metric values in descriptions).
+  const baseFields = buildTownSeoFields({ town, county, stateData, overview })
+  let title = baseFields.title
+  let description = baseFields.description
 
-  rationale.push('Baseline title/description regenerated via generateTownSeoTitle / generateTownSeoDescription (tier + year from data).')
+  rationale.push('Baseline title/description from buildTownSeoFields (tier + year + metric values from data — matches live page output).')
 
   title = applyQuerySignalsToTitle(title, primaryQuery, pagePath, rationale)
   title = ensureAbbrevInTitle(title, abbrev, rationale)
-  title = ensureYearInTitle(title, year, rationale)
+  title = ensureYearInTitle(title, baseFields.year, rationale)
 
   const q = primaryQuery.toLowerCase()
   if (
-    (primaryQuery && (q.includes('rate') || q.includes('calculator'))) &&
+    primaryQuery && (q.includes('rate') || q.includes('calculator')) &&
     (description.length < 100 || !description.toLowerCase().includes('calculat'))
   ) {
-    description = buildTownSeoFields({ town, county, stateData, overview }).description
     if (q.includes('rate')) {
       description = `${description.replace(/\.\s*$/, '')}. Compare published rates and run estimates for your home value.`
     }
-    rationale.push('Meta refreshed from generateTownSeoDescription and expanded with a stronger CTA for query intent.')
+    rationale.push('Meta expanded with a stronger CTA to match query intent (rate/calculator signal).')
   } else if (description.length < 90) {
     description = `${description.replace(/\.\s*$/, '')}. Use the calculator to estimate annual property taxes from public data.`
     rationale.push('Meta was short or weak on action verbs; extended with calculator CTA.')
@@ -282,7 +297,9 @@ export function generateSeoRecommendation(
   } else {
     rationale.push('Non-town route: starting from resolveEntityPresentation copy, then applying query/year/abbrev rules.')
     const stateData = getStateData(match.stateSlug)
-    const year = stateData?.state.asOfYear ?? new Date().getFullYear()
+    // Use the max year found in any metric series, not state.asOfYear, to avoid
+    // suggesting a stale year when data has been updated but the field hasn't.
+    const year = stateData ? resolveLatestDataYear(stateData) : new Date().getFullYear()
     const abbrev = stateData?.state.abbreviation ?? ''
 
     suggestedTitle = applyQuerySignalsToTitle(suggestedTitle, primaryQuery, aggregate.pagePath, rationale)
