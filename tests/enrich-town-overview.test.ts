@@ -37,6 +37,9 @@ assert.ok(
   'TX medianTaxesPaid year is carried into avgResidentialTaxBillYear'
 )
 
+const eggHarbor = getTownBySlugs('new-jersey', 'atlantic', 'egg-harbor-property-tax')
+assert.ok(eggHarbor, 'Egg Harbor route resolves via explicit town.slug')
+
 const nj = getStateData('new-jersey')
 assert.ok(nj, 'NJ state data')
 const ridgewood = getTownBySlugs('new-jersey', 'bergen', 'ridgewood')
