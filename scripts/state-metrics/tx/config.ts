@@ -29,4 +29,8 @@ export const TEXAS_CITY_WORKBOOK_COUNTY: Record<string, string> = {
   /** Plano is in Collin County in site data; keep legacy merge key for older metric extracts */
   'dallas/plano': 'Collin',
   'collin/plano': 'Collin',
+  /** Multi-county cities — Comptroller lists them under their primary/incorporation county */
+  'dallas/carrollton': 'Dallas',   // spans Dallas/Denton/Collin; primary CAD is Dallas
+  'dallas/grand-prairie': 'Dallas', // spans Dallas/Tarrant; primary CAD is Dallas
+  'dallas/rowlett': 'Dallas',       // spans Dallas/Rockwall; primary CAD is Dallas
 }

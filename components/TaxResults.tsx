@@ -76,10 +76,16 @@ export default function TaxResults({ stateSlug = 'new-jersey' }: TaxResultsProps
       <Card className="bg-primary-soft border-primary/20">
         <CardContent className="text-center py-6">
           <p className="text-sm muted mb-2">
-            {hasReliefAdjustment ? 'Estimated annual property tax (adjusted)' : 'Annual property tax'}
+            {hasReliefAdjustment
+              ? 'Estimated annual property tax (adjusted)'
+              : 'Annual property tax'}
           </p>
-          <p className="text-4xl font-bold text-primary tabular-nums">{formatCurrency(result.annualTax)}</p>
-          <p className="text-sm muted mt-2 tabular-nums">{formatCurrency(result.monthlyTax)} per month</p>
+          <p className="text-4xl font-bold text-primary tabular-nums">
+            {formatCurrency(result.annualTax)}
+          </p>
+          <p className="text-sm muted mt-2 tabular-nums">
+            {formatCurrency(result.monthlyTax)} per month
+          </p>
         </CardContent>
       </Card>
 
@@ -88,59 +94,66 @@ export default function TaxResults({ stateSlug = 'new-jersey' }: TaxResultsProps
           <p className="font-medium text-text">Adjusted taxable value (estimate)</p>
           <p className="mt-1 tabular-nums text-text">{formatCurrency(result.taxableValueUsed)}</p>
           <p className="mt-1 text-xs text-text-muted">
-            Entered home value: {formatCurrency(result.homeValue)}. Exemptions that reduce taxable value are
-            applied before the rate (where modeled).
+            Entered home value: {formatCurrency(result.homeValue)}. Exemptions that reduce taxable
+            value are applied before the rate (where modeled).
           </p>
         </div>
       )}
 
-      {result.relief && (result.relief.appliedPrograms.length > 0 || result.relief.methodologyNotes.length > 0) && (
-        <div className="rounded-lg border border-border bg-bg px-4 py-3 text-sm space-y-2">
-          {result.relief.appliedPrograms.length > 0 && (
-            <div>
-              <p className="font-medium text-text">Included in this estimate</p>
-              <ul className="mt-1 list-disc pl-5 text-text-muted space-y-1">
-                {result.relief.appliedPrograms.map(p => (
-                  <li key={p.programId}>
-                    <span className="text-text font-medium">{p.label}</span>
-                    {p.summary ? ` — ${p.summary}` : ''}
-                  </li>
+      {result.relief &&
+        (result.relief.appliedPrograms.length > 0 || result.relief.methodologyNotes.length > 0) && (
+          <div className="rounded-lg border border-border bg-bg px-4 py-3 text-sm space-y-2">
+            {result.relief.appliedPrograms.length > 0 && (
+              <div>
+                <p className="font-medium text-text">Included in this estimate</p>
+                <ul className="mt-1 list-disc pl-5 text-text-muted space-y-1">
+                  {result.relief.appliedPrograms.map(p => (
+                    <li key={p.programId}>
+                      <span className="text-text font-medium">{p.label}</span>
+                      {p.summary ? ` — ${p.summary}` : ''}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {result.relief.informationalProgramsSelected.length > 0 && (
+              <div>
+                <p className="font-medium text-text">
+                  Selected for reference (not in number above)
+                </p>
+                <ul className="mt-1 list-disc pl-5 text-text-muted space-y-1">
+                  {result.relief.informationalProgramsSelected.map(p => (
+                    <li key={p.programId}>
+                      <span className="text-text font-medium">{p.label}</span>
+                      {p.summary ? ` — ${p.summary}` : ''}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {(getInformationalPrograms(stateSlug).length > 0 ||
+              result.relief.methodologyNotes.length > 0) && (
+              <p className="text-xs text-text-muted border-t border-border pt-2 mt-2">
+                Additional state relief programs may apply but are not fully modeled here.{' '}
+                {(result.relief.informationalProgramsSelected?.length ?? 0) === 0 &&
+                  getInformationalPrograms(stateSlug).length > 0 && (
+                    <>
+                      Open “Exemptions and tax relief” for programs that need official
+                      verification.{' '}
+                    </>
+                  )}
+                Confirm eligibility with your tax authority.
+              </p>
+            )}
+            {result.relief.methodologyNotes.length > 0 && (
+              <ul className="text-xs text-text-muted list-disc pl-5 space-y-1 pt-1">
+                {result.relief.methodologyNotes.map((note, i) => (
+                  <li key={i}>{note}</li>
                 ))}
               </ul>
-            </div>
-          )}
-          {result.relief.informationalProgramsSelected.length > 0 && (
-            <div>
-              <p className="font-medium text-text">Selected for reference (not in number above)</p>
-              <ul className="mt-1 list-disc pl-5 text-text-muted space-y-1">
-                {result.relief.informationalProgramsSelected.map(p => (
-                  <li key={p.programId}>
-                    <span className="text-text font-medium">{p.label}</span>
-                    {p.summary ? ` — ${p.summary}` : ''}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-          {(getInformationalPrograms(stateSlug).length > 0 || result.relief.methodologyNotes.length > 0) && (
-            <p className="text-xs text-text-muted border-t border-border pt-2 mt-2">
-              Additional state relief programs may apply but are not fully modeled here.{' '}
-              {(result.relief.informationalProgramsSelected?.length ?? 0) === 0 &&
-                getInformationalPrograms(stateSlug).length > 0 && (
-                  <>Open “Exemptions and tax relief” for programs that need official verification. </>
-                )}
-              Confirm eligibility with your tax authority.
-            </p>
-          )}
-          {result.relief.methodologyNotes.length > 0 && (
-            <ul className="text-xs text-text-muted list-disc pl-5 space-y-1 pt-1">
-              {result.relief.methodologyNotes.map((note, i) => (
-                <li key={i}>{note}</li>
-              ))}
-            </ul>
-          )}
-        </div>
-      )}
+            )}
+          </div>
+        )}
 
       <div className="space-y-4">
         <div className="border-b border-border pb-4">
@@ -153,8 +166,8 @@ export default function TaxResults({ stateSlug = 'new-jersey' }: TaxResultsProps
                   {formatNumber(result.effectiveRate, 3)}%
                 </p>
                 <p className="text-xs text-text-muted mt-1">
-                  Derived from ACS median taxes paid ÷ median home value. Includes county,
-                  city, school district, and special districts. Individual bills vary.
+                  Derived from ACS median taxes paid ÷ median home value. Includes county, city,
+                  school district, and special districts. Individual bills vary.
                 </p>
               </div>
             </div>
@@ -162,12 +175,16 @@ export default function TaxResults({ stateSlug = 'new-jersey' }: TaxResultsProps
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
                 <p className="muted">County Rate</p>
-                <p className="font-medium text-text tabular-nums">{formatNumber(result.countyRate)}%</p>
+                <p className="font-medium text-text tabular-nums">
+                  {formatNumber(result.countyRate)}%
+                </p>
               </div>
               {result.municipalRate > 0 && (
                 <div>
                   <p className="muted">Municipal Rate</p>
-                  <p className="font-medium text-text tabular-nums">{formatNumber(result.municipalRate)}%</p>
+                  <p className="font-medium text-text tabular-nums">
+                    {formatNumber(result.municipalRate)}%
+                  </p>
                 </div>
               )}
               <div className="col-span-2">
@@ -177,11 +194,10 @@ export default function TaxResults({ stateSlug = 'new-jersey' }: TaxResultsProps
                 </p>
               </div>
               {result.rateSource === 'comptroller' && (
-                <div className="col-span-2 rounded border border-amber-200 bg-amber-50 dark:bg-amber-950/20 dark:border-amber-800 px-3 py-2">
-                  <p className="text-xs text-amber-800 dark:text-amber-300">
-                    This rate reflects only one taxing unit (city or county). It does not
-                    include school district or special district levies. Your actual bill will
-                    be higher. Select a town to get a more accurate combined estimate.
+                <div className="col-span-2 rounded border border-warning/30 bg-warning/10 px-3 py-2">
+                  <p className="text-xs text-warning">
+                    This rate reflects only one taxing unit (city or county). It does not include
+                    school district or special district levies. Your actual bill will be higher.
                   </p>
                 </div>
               )}
@@ -194,7 +210,9 @@ export default function TaxResults({ stateSlug = 'new-jersey' }: TaxResultsProps
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">
               <span className="muted">Base Tax (County)</span>
-              <span className="font-medium text-text tabular-nums">{formatCurrency(result.breakdown.base)}</span>
+              <span className="font-medium text-text tabular-nums">
+                {formatCurrency(result.breakdown.base)}
+              </span>
             </div>
             {result.breakdown.municipalAdjustment > 0 && (
               <div className="flex justify-between">
@@ -213,7 +231,9 @@ export default function TaxResults({ stateSlug = 'new-jersey' }: TaxResultsProps
             {result.exemptions > 0 && (
               <div className="flex justify-between text-success">
                 <span>Credits / deductions (estimate)</span>
-                <span className="font-medium tabular-nums">-{formatCurrency(result.exemptions)}</span>
+                <span className="font-medium tabular-nums">
+                  -{formatCurrency(result.exemptions)}
+                </span>
               </div>
             )}
             <div className="flex justify-between border-t border-border pt-2 font-semibold">
@@ -225,7 +245,9 @@ export default function TaxResults({ stateSlug = 'new-jersey' }: TaxResultsProps
 
         <div>
           <h3 className="font-semibold text-text mb-3">Property Value</h3>
-          <p className="text-lg font-medium text-text tabular-nums">{formatCurrency(result.homeValue)}</p>
+          <p className="text-lg font-medium text-text tabular-nums">
+            {formatCurrency(result.homeValue)}
+          </p>
         </div>
       </div>
 

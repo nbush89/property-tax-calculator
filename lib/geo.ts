@@ -124,6 +124,7 @@ export function getTownBySlugs(
     .replace(/-property-tax$/, '')
   const town = county.towns.find(
     t =>
+      t.slug === normalizedTownSlug ||
       slugifyLocation(t.name) === normalizedTownSlug ||
       t.name.toLowerCase() === normalizedTownSlug.replace(/-/g, ' ')
   )

@@ -25,11 +25,11 @@
       "title": "Tax Rates and Levies (county & city workbooks)",
       "type": "xlsx",
       "homepageUrl": "https://comptroller.texas.gov/taxes/property-tax/",
-      "notes": "Published total tax rate ($ / $100 taxable value) for the county or city taxing unit per year. Same numeric value as percent of taxable value for that unit only\u2014not combined overlapping jurisdictions."
+      "notes": "Published total tax rate ($ / $100 taxable value) for the county or city taxing unit per year. Same numeric value as percent of taxable value for that unit only—not combined overlapping jurisdictions."
     },
     "us_census_acs_b25103": {
       "publisher": "U.S. Census Bureau",
-      "title": "ACS 5-year Table B25103 \u2014 Median Real Estate Taxes Paid",
+      "title": "ACS 5-year Table B25103 — Median Real Estate Taxes Paid",
       "type": "api",
       "homepageUrl": "https://api.census.gov/data.html",
       "notes": "B25103_001E = Median real estate taxes paid (dollars) for all owner-occupied units. Covers combined bill across county, city, school district, and special districts net of homestead exemptions."
@@ -901,6 +901,636 @@
               }
             ]
           }
+        },
+        {
+          "name": "Garland",
+          "slug": "garland",
+          "rollout": {
+            "tier": 1,
+            "featured": false,
+            "isReady": true,
+            "rank": 2
+          },
+          "metrics": {
+            "effectiveTaxRate": [
+              {
+                "year": 2021,
+                "value": 0.756965,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2022,
+                "value": 0.716692,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2023,
+                "value": 0.689746,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2024,
+                "value": 0.689746,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2025,
+                "value": 0.689746,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              }
+            ]
+          },
+          "asOfYear": 2025
+        },
+        {
+          "name": "Irving",
+          "slug": "irving",
+          "rollout": {
+            "tier": 1,
+            "featured": false,
+            "isReady": true,
+            "rank": 3
+          },
+          "metrics": {
+            "effectiveTaxRate": [
+              {
+                "year": 2021,
+                "value": 0.5941,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2022,
+                "value": 0.5891,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2023,
+                "value": 0.5891,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2024,
+                "value": 0.5891,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2025,
+                "value": 0.5891,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              }
+            ]
+          },
+          "asOfYear": 2025
+        },
+        {
+          "name": "Grand Prairie",
+          "slug": "grand-prairie",
+          "rollout": {
+            "tier": 1,
+            "featured": false,
+            "isReady": true,
+            "rank": 4
+          },
+          "metrics": {
+            "effectiveTaxRate": [
+              {
+                "year": 2021,
+                "value": 0.664998,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2022,
+                "value": 0.66,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2023,
+                "value": 0.66,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2024,
+                "value": 0.66,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2025,
+                "value": 0.66,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              }
+            ]
+          },
+          "asOfYear": 2025
+        },
+        {
+          "name": "Mesquite",
+          "slug": "mesquite",
+          "rollout": {
+            "tier": 2,
+            "featured": false,
+            "isReady": true,
+            "rank": 5
+          },
+          "metrics": {
+            "effectiveTaxRate": [
+              {
+                "year": 2021,
+                "value": 0.70862,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2022,
+                "value": 0.65814,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2023,
+                "value": 0.69,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2024,
+                "value": 0.69,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2025,
+                "value": 0.704692,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              }
+            ]
+          },
+          "asOfYear": 2025
+        },
+        {
+          "name": "Carrollton",
+          "slug": "carrollton",
+          "rollout": {
+            "tier": 2,
+            "featured": false,
+            "isReady": true,
+            "rank": 6
+          },
+          "metrics": {
+            "effectiveTaxRate": [
+              {
+                "year": 2021,
+                "value": 0.5825,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2022,
+                "value": 0.5625,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2023,
+                "value": 0.55375,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2024,
+                "value": 0.53875,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2025,
+                "value": 0.5375,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              }
+            ]
+          },
+          "asOfYear": 2025
+        },
+        {
+          "name": "Richardson",
+          "slug": "richardson",
+          "rollout": {
+            "tier": 2,
+            "featured": false,
+            "isReady": true,
+            "rank": 7
+          },
+          "metrics": {
+            "effectiveTaxRate": [
+              {
+                "year": 2021,
+                "value": 0.61516,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2022,
+                "value": 0.56095,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2023,
+                "value": 0.56095,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2024,
+                "value": 0.54218,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2025,
+                "value": 0.54218,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              }
+            ]
+          },
+          "asOfYear": 2025
+        },
+        {
+          "name": "Rowlett",
+          "slug": "rowlett",
+          "rollout": {
+            "tier": 2,
+            "featured": false,
+            "isReady": true,
+            "rank": 8
+          },
+          "metrics": {
+            "effectiveTaxRate": [
+              {
+                "year": 2021,
+                "value": 0.745,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2022,
+                "value": 0.681,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2023,
+                "value": 0.7104,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2024,
+                "value": 0.769691,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2025,
+                "value": 0.807891,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              }
+            ]
+          },
+          "asOfYear": 2025
+        },
+        {
+          "name": "DeSoto",
+          "slug": "desoto",
+          "rollout": {
+            "tier": 2,
+            "featured": false,
+            "isReady": true,
+            "rank": 9
+          },
+          "metrics": {
+            "effectiveTaxRate": [
+              {
+                "year": 2021,
+                "value": 0.701554,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2022,
+                "value": 0.691554,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2023,
+                "value": 0.685092,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2024,
+                "value": 0.684934,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2025,
+                "value": 0.684934,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              }
+            ]
+          },
+          "asOfYear": 2025
+        },
+        {
+          "name": "Cedar Hill",
+          "slug": "cedar-hill",
+          "rollout": {
+            "tier": 2,
+            "featured": false,
+            "isReady": true,
+            "rank": 10
+          },
+          "metrics": {
+            "effectiveTaxRate": [
+              {
+                "year": 2021,
+                "value": 0.697029,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2022,
+                "value": 0.657,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2023,
+                "value": 0.646525,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2024,
+                "value": 0.636455,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2025,
+                "value": 0.636449,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              }
+            ]
+          },
+          "asOfYear": 2025
+        },
+        {
+          "name": "Coppell",
+          "slug": "coppell",
+          "rollout": {
+            "tier": 2,
+            "featured": false,
+            "isReady": true,
+            "rank": 11
+          },
+          "metrics": {
+            "effectiveTaxRate": [
+              {
+                "year": 2021,
+                "value": 0.58,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2022,
+                "value": 0.518731,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2023,
+                "value": 0.491818,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2024,
+                "value": 0.458632,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2025,
+                "value": 0.444976,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              }
+            ]
+          },
+          "asOfYear": 2025
+        },
+        {
+          "name": "Duncanville",
+          "slug": "duncanville",
+          "rollout": {
+            "tier": 2,
+            "featured": false,
+            "isReady": true,
+            "rank": 12
+          },
+          "metrics": {
+            "effectiveTaxRate": [
+              {
+                "year": 2021,
+                "value": 0.7,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2022,
+                "value": 0.65046,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2023,
+                "value": 0.646034,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2024,
+                "value": 0.614834,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2025,
+                "value": 0.600166,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              }
+            ]
+          },
+          "asOfYear": 2025
+        },
+        {
+          "name": "Lancaster",
+          "slug": "lancaster",
+          "rollout": {
+            "tier": 2,
+            "featured": false,
+            "isReady": true,
+            "rank": 13
+          },
+          "metrics": {
+            "effectiveTaxRate": [
+              {
+                "year": 2021,
+                "value": 0.769287,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2022,
+                "value": 0.691822,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2023,
+                "value": 0.639004,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2024,
+                "value": 0.604606,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2025,
+                "value": 0.59949,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              }
+            ]
+          },
+          "asOfYear": 2025
+        },
+        {
+          "name": "Farmers Branch",
+          "slug": "farmers-branch",
+          "rollout": {
+            "tier": 2,
+            "featured": false,
+            "isReady": true,
+            "rank": 14
+          },
+          "metrics": {
+            "effectiveTaxRate": [
+              {
+                "year": 2021,
+                "value": 0.589,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2022,
+                "value": 0.589,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2023,
+                "value": 0.569,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2024,
+                "value": 0.5435,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2025,
+                "value": 0.5435,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              }
+            ]
+          },
+          "asOfYear": 2025
+        },
+        {
+          "name": "Balch Springs",
+          "slug": "balch-springs",
+          "rollout": {
+            "tier": 2,
+            "featured": false,
+            "isReady": true,
+            "rank": 15
+          },
+          "metrics": {
+            "effectiveTaxRate": [
+              {
+                "year": 2021,
+                "value": 0.794629,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2022,
+                "value": 0.794629,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2023,
+                "value": 0.794629,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2024,
+                "value": 0.794629,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              },
+              {
+                "year": 2025,
+                "value": 0.794629,
+                "unit": "PERCENT",
+                "sourceRef": "tx_comptroller_tax_rates_levies"
+              }
+            ]
+          },
+          "asOfYear": 2025
         }
       ],
       "metrics": {

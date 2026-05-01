@@ -27,6 +27,7 @@ import { resolveTownPageSections } from '@/lib/content/townContent'
 import { getStateCapabilities } from '@/lib/state-capabilities'
 import { buildTownMetadataForRoute, buildTownSeoFields } from '@/lib/seo/townMetadata'
 import { TownReliefSection } from '@/components/relief/TownReliefSection'
+import { TownAffiliateCtas } from '@/components/affiliates/TownAffiliateCtas'
 
 function townSlugForLookup(townSlug: string): string {
   return decodeURIComponent(townSlug).replace(/-property-tax$/, '')
@@ -269,6 +270,8 @@ export default async function TownPropertyTaxPage({ params }: Props) {
             stateSlug={state}
             overview={pageOverview ?? undefined}
           />
+
+          <TownAffiliateCtas stateSlug={state} townDisplayName={townDisplayName} />
 
           {sections.overviewParagraphs.length > 0 && (
             <section className="mb-10" aria-labelledby="town-overview-heading">
