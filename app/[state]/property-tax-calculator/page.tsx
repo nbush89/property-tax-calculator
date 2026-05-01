@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import Header from '@/components/site/Header'
 import Footer from '@/components/site/Footer'
-import UniversalTaxCalculator from '@/components/calculator/UniversalTaxCalculator'
+import SteppedCalculatorClient from '@/components/calculator/SteppedCalculatorClient'
 import { buildMetadata } from '@/lib/seo'
 import { breadcrumbJsonLd, webAppJsonLd } from '@/lib/jsonld'
 import { JsonLd } from '@/components/seo/JsonLd'
@@ -9,6 +10,8 @@ import { formatStateName, isValidState } from '@/utils/stateUtils'
 import { notFound } from 'next/navigation'
 import { SITE_URL } from '@/lib/site'
 import { getStatesForHero, getStateData } from '@/lib/geo'
+import { buildPreviewMetricsMap } from '@/lib/calculator/previewMetrics'
+import { getMaxEffectiveTaxRateYearInState } from '@/lib/rates-from-state'
 
 type Props = {
   params: Promise<{ state: string }>
@@ -19,18 +22,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const state = decodeURIComponent(stateParam)
   const stateData = getStateData(state)
   const stateName = stateData?.state.name ?? formatStateName(state)
-  // Use abbreviation as the lead token — shorter, matches query patterns like
-  // "property tax nj calculator", and keeps the title under 65 chars with the year.
   const abbrev = stateData?.state.abbreviation ?? formatStateName(state)
-  const dataYear = stateData?.state.asOfYear
+  const dataYear = stateData
+    ? (getMaxEffectiveTaxRateYearInState(stateData) ?? stateData.state.asOfYear)
+    : null
   const yearSuffix = dataYear ? ` (${dataYear})` : ''
   const path = `/${encodeURIComponent(state)}/property-tax-calculator`
 
-  // e.g. "NJ Property Tax Calculator | Calculate Your Taxes (2025)" = 56 chars
-  const title = `${abbrev} Property Tax Calculator | Calculate Your Taxes${yearSuffix}`
-
   return buildMetadata({
-    title,
+    title: `${abbrev} Property Tax Calculator | Calculate Your Taxes${yearSuffix}`,
     description: `Calculate your ${stateName} property taxes by entering your property value, county, and municipality. Get accurate estimates with detailed breakdowns.`,
     path,
     keywords: `${stateName} property tax calculator, ${stateName} property tax, calculate property taxes, ${stateName} real estate taxes`,
@@ -45,13 +45,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function StatePropertyTaxCalculatorPage({ params }: Props) {
   const { state: stateParam } = await params
   const state = decodeURIComponent(stateParam)
-  const stateName = formatStateName(state)
 
-  if (!isValidState(state)) {
-    notFound()
-  }
+  if (!isValidState(state)) notFound()
+
+  const stateData = getStateData(state)
+  const stateName = stateData?.state.name ?? formatStateName(state)
+  const stateAbbrev = stateData?.state.abbreviation ?? formatStateName(state)
 
   const states = getStatesForHero()
+  const previewMetrics = buildPreviewMetricsMap()
   const pageUrl = `${SITE_URL}/${encodeURIComponent(state)}/property-tax-calculator`
   const stateUrl = `${SITE_URL}/${encodeURIComponent(state)}`
 
@@ -72,26 +74,44 @@ export default async function StatePropertyTaxCalculatorPage({ params }: Props) 
       />
       <Header />
       <main className="min-h-screen bg-bg">
-        <div className="container-page py-12">
-          <div className="mb-10 text-center">
-            <h1 className="section-title mb-4">{stateName} Property Tax Calculator</h1>
-            <p className="text-lg text-text-muted">
-              Enter your property details to calculate your estimated property taxes
-            </p>
-            <div className="mt-4">
-              <a
-                href={`/${encodeURIComponent(state)}/property-tax-rates`}
-                className="text-sm text-text-muted hover:text-primary transition-colors underline"
-              >
-                See {stateName} property tax rates by county and municipality →
-              </a>
+        {/* Page header */}
+        <div className="page-header-bar">
+          <div className="container-page">
+            <nav className="text-sm text-text-muted mb-3" aria-label="Breadcrumb">
+              <Link href="/" className="hover:text-primary transition-colors">Home</Link>
+              <span className="mx-2">→</span>
+              <Link href={`/${state}`} className="hover:text-primary transition-colors">{stateName}</Link>
+              <span className="mx-2">→</span>
+              <span className="text-text">Property Tax Calculator</span>
+            </nav>
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <h1 className="text-2xl font-semibold tracking-tight text-text sm:text-3xl">
+                  {stateName} Property Tax Calculator
+                </h1>
+                <p className="mt-1 text-sm text-text-muted">
+                  Select your county and municipality, enter your home value, and get a planning estimate.
+                </p>
+              </div>
+              <div className="shrink-0">
+                <Link
+                  href={`/${state}/property-tax-rates`}
+                  className="text-sm font-medium text-primary hover:text-primary-hover whitespace-nowrap"
+                >
+                  View {stateAbbrev} rates by county →
+                </Link>
+              </div>
             </div>
           </div>
-          <UniversalTaxCalculator
+        </div>
+
+        <div className="container-page py-8">
+          <SteppedCalculatorClient
             states={states}
-            initialValues={{ stateSlug: state }}
-            showStateSelect={false}
-            pageType="calculator"
+            previewMetrics={previewMetrics}
+            initialStateSlug={state}
+            lockState={true}
+            pageType="state"
           />
         </div>
       </main>

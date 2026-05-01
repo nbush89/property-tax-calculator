@@ -124,7 +124,7 @@ export default function TownOverview({
                   {' '}
                   <Link
                     href={methodologyUrl}
-                    className="text-primary hover:text-primary-hover underline"
+                    className="data-link"
                   >
                     Methodology
                   </Link>

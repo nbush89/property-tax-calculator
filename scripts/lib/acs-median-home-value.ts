@@ -19,6 +19,11 @@ export const ACS_VAR_MEDIAN_TAXES_PAID = 'B25103_001E'
 export const ACS_TAX_DATASET = 'acs/acs5'
 export const ACS_SOURCE_REF = 'us_census_acs_profile_dp04'
 export const ACS_TAX_SOURCE_REF = 'us_census_acs_b25103'
+/**
+ * Source ref for county-level effective tax rates derived from ACS B25103 / B25077.
+ * Distinct from the place-level ACS source refs so the data lineage is clear.
+ */
+export const ACS_COUNTY_RATE_SOURCE_REF = 'us_census_acs_county_effective_rate'
 
 const USER_AGENT = 'state-metrics-script/1.0'
 
@@ -83,6 +88,14 @@ export function normalizePlaceNameTexasAcsKey(raw: string): string {
 /** @deprecated Use normalizePlaceNameTexasAcsKey for Texas ACS matching */
 export function normalizePlaceNameTexas(name: string): string {
   return normalizePlaceNameTexasAcsKey(name)
+}
+
+/**
+ * Normalize a Census county name like "Harris County, Texas" → "Harris".
+ * Used for county-level ACS lookups where the response NAME field includes " County, State".
+ */
+export function normalizeCountyNameFromAcs(raw: string): string {
+  return raw.split(' County,')[0].trim()
 }
 
 export type AcsPlaceStyle = 'nj' | 'texas'
@@ -188,6 +201,71 @@ export function medianHomeSeriesForTown(
     series: buildSeries(medianByYear, 'USD', ACS_SOURCE_REF),
     acsMatchKey: acsKey,
   }
+}
+
+/**
+ * Fetch county-level effective tax rates from ACS for a given year and state.
+ *
+ * Uses:
+ *   B25077_001E (acs/acs5)  — Median home value, owner-occupied units
+ *   B25103_001E (acs/acs5)  — Median real estate taxes paid, all owner-occupied units
+ *
+ * The effective rate is derived as (taxes_paid / home_value) * 100 and represents
+ * the blended rate across ALL overlapping taxing units (county + city + school district
+ * + special districts), net of homestead exemptions already reflected in ACS responses.
+ * This is the correct replacement for Comptroller county-unit-only rates.
+ *
+ * Returns a Map keyed by bare county name (e.g. "Harris", not "Harris County, Texas").
+ * Values are effective rate as a PERCENT (e.g. 1.85 for 1.85%).
+ */
+export async function fetchAcsCountyEffectiveRateMap(
+  year: number,
+  stateFips: string
+): Promise<Map<string, number>> {
+  const homeValueUrl = `https://api.census.gov/data/${year}/acs/acs5?get=NAME,B25077_001E&for=county:*&in=state:${stateFips}`
+  const taxesUrl = `https://api.census.gov/data/${year}/acs/acs5?get=NAME,B25103_001E&for=county:*&in=state:${stateFips}`
+
+  const [homeValueRows, taxesRows] = await Promise.all([
+    fetchJson(homeValueUrl) as Promise<string[][]>,
+    fetchJson(taxesUrl) as Promise<string[][]>,
+  ])
+
+  // Build home-value map keyed by bare county name
+  const hvHeader = homeValueRows[0]
+  const hvNameIdx = hvHeader.indexOf('NAME')
+  const hvValIdx = hvHeader.indexOf('B25077_001E')
+  const homeValueByCounty = new Map<string, number>()
+  for (const row of homeValueRows.slice(1)) {
+    const countyName = normalizeCountyNameFromAcs(row[hvNameIdx])
+    const val = Number(row[hvValIdx])
+    if (Number.isFinite(val) && val > 0 && val !== CENSUS_SUPPRESSED_NUM) {
+      homeValueByCounty.set(countyName, val)
+    }
+  }
+
+  // Build taxes-paid map keyed by bare county name
+  const txHeader = taxesRows[0]
+  const txNameIdx = txHeader.indexOf('NAME')
+  const txValIdx = txHeader.indexOf('B25103_001E')
+  const rateMap = new Map<string, number>()
+  for (const row of taxesRows.slice(1)) {
+    const countyName = normalizeCountyNameFromAcs(row[txNameIdx])
+    const taxes = Number(row[txValIdx])
+    const homeVal = homeValueByCounty.get(countyName)
+    if (
+      Number.isFinite(taxes) &&
+      taxes > 0 &&
+      taxes !== CENSUS_SUPPRESSED_NUM &&
+      taxes !== ACS_B25103_TOP_CODE &&
+      homeVal != null &&
+      homeVal > 0
+    ) {
+      const ratePct = (taxes / homeVal) * 100
+      rateMap.set(countyName, Math.round(ratePct * 10000) / 10000) // 4 decimal places
+    }
+  }
+
+  return rateMap
 }
 
 /**

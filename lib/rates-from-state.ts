@@ -7,18 +7,30 @@ import type { StateData, CountyData, TownData } from '@/lib/data/types'
 import { getLatestValue, getLatestYear } from '@/lib/data/metrics'
 
 /**
- * Get county effective tax rate as decimal (e.g. 0.0185 for 1.85%).
- * Uses county.metrics.effectiveTaxRate latest value (stored in percent); returns value/100.
+ * Get county effective tax rate as decimal together with the sourceRef of the latest data point.
+ * Use this when the caller needs to branch on whether the rate is ACS-derived vs Comptroller.
  */
-export function getCountyRate(stateData: StateData | null, countyName: string): number | null {
+export function getCountyRateWithSource(
+  stateData: StateData | null,
+  countyName: string
+): { rate: number; sourceRef: string } | null {
   if (!stateData?.counties?.length) return null
   const county = stateData.counties.find(
     (c) => c.name.toLowerCase() === countyName.toLowerCase()
   ) as CountyData | undefined
   if (!county?.metrics?.effectiveTaxRate?.length) return null
-  const value = getLatestValue(county.metrics.effectiveTaxRate)
-  if (value == null) return null
-  return value / 100
+  const series = county.metrics.effectiveTaxRate
+  const latest = series[series.length - 1]
+  if (latest?.value == null) return null
+  return { rate: latest.value / 100, sourceRef: latest.sourceRef ?? '' }
+}
+
+/**
+ * Get county effective tax rate as decimal (e.g. 0.0185 for 1.85%).
+ * Uses county.metrics.effectiveTaxRate latest value (stored in percent); returns value/100.
+ */
+export function getCountyRate(stateData: StateData | null, countyName: string): number | null {
+  return getCountyRateWithSource(stateData, countyName)?.rate ?? null
 }
 
 /**

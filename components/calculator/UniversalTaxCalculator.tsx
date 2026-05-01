@@ -302,7 +302,7 @@ export default function UniversalTaxCalculator({
               <div className="mt-2 text-sm">
                 <Link
                   href={`/${stateSlug}/${slugifyLocation(countyName)}-county-property-tax`}
-                  className="text-primary hover:text-primary-hover underline"
+                  className="data-link"
                 >
                   View {countyName} County property tax page →
                 </Link>
@@ -311,7 +311,7 @@ export default function UniversalTaxCalculator({
                     <span className="text-text-muted"> | </span>
                     <Link
                       href={`/${stateSlug}/${slugifyLocation(countyName).replace(/-county$/, '')}/${slugifyLocation(townName)}-property-tax`}
-                      className="text-primary hover:text-primary-hover underline"
+                      className="data-link"
                     >
                       View {townName} property tax page →
                     </Link>

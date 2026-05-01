@@ -7,14 +7,21 @@ import type { StateMetricsConfig } from './capabilityTypes'
 import type { GeographyLevel, MetricAvailability } from './capabilityTypes'
 import type { MetricKey } from './metricKeys'
 
+/**
+ * County effective rate: ACS-derived blended rate (B25103 median taxes / B25077 median home value).
+ * Covers all overlapping taxing units — county + city + school district + special districts.
+ */
 const TX_RATE_NOTE_COUNTY =
-  'Reflects the published total tax rate for the county taxing unit (Comptroller Tax Rates and Levies). Not combined with separate city rates for the same property.'
+  'Derived from U.S. Census ACS 5-year estimates: median real estate taxes paid (B25103) divided by median home value (B25077). Reflects the combined effective rate across all overlapping taxing units — county government, school district, city, and special districts — net of homestead exemptions already reflected in survey responses.'
 
 const TX_RATE_NOTE_TOWN =
-  'Reflects the published total tax rate for the city taxing unit (Comptroller Tax Rates and Levies).'
+  'Reflects the published total tax rate for the city taxing unit (Texas Comptroller Tax Rates and Levies). Covers only the city taxing unit — not the school district or other overlapping jurisdictions.'
 
-/** Primary workbook / program reference for Texas displayed rates */
+/** Primary workbook / program reference for Texas town-level rates (Comptroller) */
 const TX_SOURCE_KEY = 'tx_comptroller_tax_rates_levies'
+
+/** ACS-derived blended effective rate source ref for Texas county level */
+const TX_COUNTY_ACS_SOURCE_KEY = 'us_census_acs_county_effective_rate'
 
 export const STATE_METRICS_REGISTRY: Record<string, StateMetricsConfig> = {
   'new-jersey': {
@@ -86,9 +93,9 @@ export const STATE_METRICS_REGISTRY: Record<string, StateMetricsConfig> = {
       county: {
         effectiveTaxRate: {
           supported: true,
-          semantics: 'state_specific',
-          comparability: 'low',
-          sourceRef: TX_SOURCE_KEY,
+          semantics: 'standard',
+          comparability: 'high',
+          sourceRef: TX_COUNTY_ACS_SOURCE_KEY,
           note: TX_RATE_NOTE_COUNTY,
         },
         averageResidentialTaxBill: {

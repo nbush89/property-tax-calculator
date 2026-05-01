@@ -262,7 +262,7 @@ export default function TownAtAGlance({
                       href={s.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-primary hover:text-primary-hover underline"
+                      className="data-link"
                     >
                       {s.name}
                     </a>
@@ -273,10 +273,7 @@ export default function TownAtAGlance({
                   {i < sources.length - 1 ? '; ' : ''}
                 </span>
               ))}{' '}
-              <Link
-                href={methodologyUrl}
-                className="text-primary hover:text-primary-hover underline"
-              >
+              <Link href={methodologyUrl} className="data-link">
                 Methodology
               </Link>
             </>

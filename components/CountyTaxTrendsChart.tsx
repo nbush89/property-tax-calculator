@@ -100,7 +100,7 @@ export default function CountyTaxTrendsChart({ stateSlug, county }: CountyTaxTre
       <h2 className="text-2xl font-semibold mb-2 text-text">
         {billShortLabel} Trend in {county.name} County
       </h2>
-      <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
+      <p className="text-sm text-text-muted mb-6">
         Planning context only — historical {billLabel} for comparison. Actual tax bills vary by
         municipality and exemptions.
       </p>
@@ -108,13 +108,13 @@ export default function CountyTaxTrendsChart({ stateSlug, county }: CountyTaxTre
       {/* Statistics Row */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div className="bg-surface border border-border rounded-lg p-4">
-          <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Latest</p>
+          <p className="text-sm text-text-muted mb-1">Latest</p>
           <p className="text-xl font-semibold text-text">
             {formatUSD(stats.latestValue)} ({stats.latestYear})
           </p>
         </div>
         <div className="bg-surface border border-border rounded-lg p-4">
-          <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Year-over-Year Change</p>
+          <p className="text-sm text-text-muted mb-1">Year-over-Year Change</p>
           <p className="text-xl font-semibold text-text">
             {stats.delta >= 0 ? '+' : ''}
             {formatUSD(stats.delta)} ({formatPercent(stats.deltaPct)}) from {stats.prevYear}
@@ -122,7 +122,7 @@ export default function CountyTaxTrendsChart({ stateSlug, county }: CountyTaxTre
         </div>
         {stats.fiveYearDelta !== undefined && sorted.length >= 2 && (
           <div className="bg-surface border border-border rounded-lg p-4">
-            <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">
+            <p className="text-sm text-text-muted mb-1">
               {sorted.length}-Year Change
             </p>
             <p className="text-xl font-semibold text-text">
@@ -141,11 +141,11 @@ export default function CountyTaxTrendsChart({ stateSlug, county }: CountyTaxTre
             <CartesianGrid strokeDasharray="3 3" className="stroke-gray-200 dark:stroke-gray-700" />
             <XAxis
               dataKey="year"
-              className="text-gray-600 dark:text-gray-400"
+              className="text-text-muted"
               style={{ fontSize: '12px' }}
             />
             <YAxis
-              className="text-gray-600 dark:text-gray-400"
+              className="text-text-muted"
               style={{ fontSize: '12px' }}
               tickFormatter={value => {
                 // Format Y-axis as abbreviated currency (e.g., $10K, $15K)
@@ -169,7 +169,7 @@ export default function CountyTaxTrendsChart({ stateSlug, county }: CountyTaxTre
       </div>
 
       {/* Footnote */}
-      <p className="text-xs text-gray-500 dark:text-gray-400 mt-4 italic">
+      <p className="text-xs text-text-muted mt-4 italic">
         Data reflects county-wide {billLabel} where published and may not represent individual
         municipality tax bills. Years shown follow each source&apos;s reporting.
       </p>

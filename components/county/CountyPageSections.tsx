@@ -97,7 +97,7 @@ export function CountyEstimateGuideSection({
       {estimateGuide.note && (
         <p className="mt-4 text-sm text-text-muted w-full border-t border-border pt-4">
           {estimateGuide.note}{' '}
-          <Link href="/methodology" className="text-primary hover:text-primary-hover underline">
+          <Link href="/methodology" className="data-link">
             Methodology
           </Link>
           .

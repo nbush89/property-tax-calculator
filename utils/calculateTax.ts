@@ -1,5 +1,5 @@
 import type { StateData } from '@/lib/data/types'
-import { getCountyRate, getMunicipalRate } from '@/lib/rates-from-state'
+import { getCountyRate, getCountyRateWithSource, getMunicipalRate } from '@/lib/rates-from-state'
 import { getLatestValue } from '@/lib/data/metrics'
 import type { SelectedReliefInputs } from '@/lib/relief/types'
 import { computeReliefAdjustments, uniqueNotes } from '@/lib/calculator/applyReliefPrograms'
@@ -218,28 +218,46 @@ function calculatePropertyTaxTexas(
     countyRatePct = 0
     municipalRatePct = impliedRate * 100
   } else {
-    // Fallback: Comptroller per-unit rate (city, then county).
+    // No ACS town rate — fall back to Comptroller city rate, then county rate.
     const townDec = town?.trim() ? getMunicipalRate(stateData, county, town.trim()) : null
-    const countyDec = getCountyRate(stateData, county)
+    const countyInfo = getCountyRateWithSource(stateData, county)
 
     if (townDec != null) {
+      // Town rate from Comptroller (city taxing unit only)
       rateDec = townDec
       countyRatePct = 0
       municipalRatePct = townDec * 100
-    } else if (countyDec != null) {
-      rateDec = countyDec
-      countyRatePct = countyDec * 100
-      municipalRatePct = 0
+      rateSource = 'comptroller'
+      rateSourceNote =
+        'Rate from Texas Comptroller (city taxing unit only — does not include ' +
+        'school district or special districts). This estimate will understate the ' +
+        'typical combined bill.'
+    } else if (countyInfo != null) {
+      rateDec = countyInfo.rate
+      countyRatePct = 0
+      municipalRatePct = countyInfo.rate * 100
+
+      // ACS-derived county rate covers all overlapping taxing units
+      if (countyInfo.sourceRef === 'us_census_acs_county_effective_rate') {
+        rateSource = 'acs_implied'
+        rateSourceNote =
+          'Rate derived from ACS county-level data: median real estate taxes paid ÷ ' +
+          'median home value. Reflects all overlapping taxing units (county, city, school ' +
+          'district, special districts) net of typical homestead exemptions. ' +
+          'Individual bills vary — select a specific city for a more precise estimate.'
+      } else {
+        // Legacy Comptroller county rate
+        rateSource = 'comptroller'
+        rateSourceNote =
+          'Rate from Texas Comptroller (county taxing unit only — does not include ' +
+          'city, school district, or special district levies). This estimate will ' +
+          'understate the typical combined bill.'
+      }
     } else {
       throw new Error(
         `Tax rates not found for ${county}${town?.trim() ? ` / ${town}` : ''}. Run Texas metrics sourcing and merge.`
       )
     }
-    rateSource = 'comptroller'
-    rateSourceNote =
-      'Rate from Texas Comptroller (single taxing unit only — does not include ' +
-      'school district or special districts). This estimate will understate the ' +
-      'typical combined bill. Run the sourcing pipeline to populate ACS data.'
   }
 
   const annualTax = taxable * rateDec

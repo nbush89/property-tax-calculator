@@ -55,29 +55,232 @@
 }
 
 @layer components {
-  /* Container utility */
+  /* ── Layout ── */
+
+  /* Full-width constrained container (matches every page section) */
   .container-page {
     /* stylelint-disable-next-line at-rule-no-unknown */
     @apply mx-auto w-full max-w-screen-2xl px-4 sm:px-6 lg:px-8;
   }
 
-  /* Card utility */
+  /* Standard compact page header bar — used on every inner page */
+  .page-header-bar {
+    /* stylelint-disable-next-line at-rule-no-unknown */
+    @apply border-b border-border bg-gradient-to-b from-bg-gradient-from to-bg pb-5 pt-8;
+  }
+
+  /* ── Cards ── */
+
+  /* Base card — rounded-xl, subtle border, white surface */
   .card {
     /* stylelint-disable-next-line at-rule-no-unknown */
     @apply rounded-xl border border-border bg-surface shadow-sm;
   }
 
-  /* Section title utility */
+  /* Small bordered list item used inside comparison / breakdown sections */
+  .list-item-card {
+    /* stylelint-disable-next-line at-rule-no-unknown */
+    @apply rounded-lg border border-border bg-surface p-3 text-sm text-text-muted;
+  }
+
+  /* ── Typography ── */
+
+  /* Hero headline (homepage / state landing) */
   .section-title {
     /* stylelint-disable-next-line at-rule-no-unknown */
     @apply text-3xl font-semibold tracking-tight text-text sm:text-4xl;
   }
 
-  /* Muted text utility */
+  /* Standard h2 inside a content section */
+  .section-h2 {
+    /* stylelint-disable-next-line at-rule-no-unknown */
+    @apply text-xl font-semibold text-text mb-3;
+  }
+
+  /* Muted body text shorthand */
   .muted {
     /* stylelint-disable-next-line at-rule-no-unknown */
     @apply text-text-muted;
   }
+
+  /* ── Stat chips — rounded pill badges in page headers ── */
+
+  /* The pill wrapper */
+  .stat-chip {
+    /* stylelint-disable-next-line at-rule-no-unknown */
+    @apply inline-flex items-center gap-1.5 rounded-full border border-border bg-surface px-3 py-1 text-sm text-text-muted;
+  }
+
+  /* The numeric/bold value inside a chip */
+  .stat-chip-value {
+    /* stylelint-disable-next-line at-rule-no-unknown */
+    @apply font-semibold text-text;
+  }
+
+  /* ── Links ── */
+
+  /* Sub-navigation links shown below a page H1 (underlined, muted→primary on hover) */
+  .sub-nav-link {
+    /* stylelint-disable-next-line at-rule-no-unknown */
+    @apply text-sm text-text-muted underline underline-offset-2 hover:text-primary transition-colors;
+  }
+
+  /* Inline content links — primary colour with underline */
+  .data-link {
+    /* stylelint-disable-next-line at-rule-no-unknown */
+    @apply text-primary underline underline-offset-2 hover:text-primary-hover transition-colors;
+  }
+}
+
+/* ====== Stepped Calculator Design System ======
+   Scoped under .calc-stepped to avoid conflicting with Tailwind's RGB-triple CSS vars.
+   Uses --cs-* prefix so existing `rgb(var(--primary))` patterns are unaffected.
+   ============================================== */
+.calc-stepped {
+  --cs-navy:         #0F2E5C;
+  --cs-navy-2:       #1A3F7A;
+  --cs-ink:          #0B1B36;
+  --cs-ink-2:        #2E3F5C;
+  --cs-muted:        #6B7A95;
+  --cs-line:         #E1E6EE;
+  --cs-line-2:       #EEF1F6;
+  --cs-surface:      #FFFFFF;
+  --cs-surface-2:    #F9FAFC;
+  --cs-primary:      #1D4ED8;
+  --cs-primary-h:    #1A44BD;
+  --cs-primary-soft: #E8EEF8;
+  --cs-success:      #0A8E5F;
+  --cs-success-soft: #E5F4EC;
+  --cs-warn:         #B26A00;
+  --cs-warn-soft:    #FAF1E1;
+  --cs-radius:       10px;
+  --cs-radius-sm:    6px;
+  --cs-radius-lg:    14px;
+  --cs-shadow-sm:    0 1px 2px rgba(11,27,54,.04), 0 1px 1px rgba(11,27,54,.03);
+  --cs-shadow-md:    0 6px 20px -8px rgba(11,27,54,.12), 0 2px 6px rgba(11,27,54,.05);
+}
+
+/* ── Stepper header ── */
+.calc-stepper { display: flex; align-items: center; }
+.calc-step {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; color: var(--cs-muted); font-weight: 500;
+}
+.calc-step + .calc-step::before {
+  content: ''; display: block; width: 28px; height: 1px;
+  background: var(--cs-line); margin: 0 10px;
+}
+.cs-num {
+  width: 24px; height: 24px; border-radius: 50%;
+  display: grid; place-items: center; flex: none;
+  background: var(--cs-surface-2); color: var(--cs-muted);
+  border: 1px solid var(--cs-line);
+  font-size: 11.5px; font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.calc-step.cs-done .cs-num { background: var(--cs-success); color: #fff; border-color: transparent; }
+.calc-step.cs-active .cs-num { background: var(--cs-ink); color: #fff; border-color: transparent; }
+.calc-step.cs-active { color: var(--cs-ink); }
+.calc-step.cs-done { color: var(--cs-ink-2); }
+
+/* ── Hero bill card ── */
+.cs-hero-bill {
+  background: var(--cs-navy);
+  color: #fff;
+  border-radius: var(--cs-radius-lg);
+  padding: 28px 32px;
+  position: relative;
+  overflow: hidden;
+}
+.cs-hero-bill .cs-eyebrow {
+  color: rgba(255,255,255,.65); font-size: 11px;
+  font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+}
+.cs-hero-bill .cs-big {
+  font-variant-numeric: tabular-nums; font-size: 48px;
+  font-weight: 700; letter-spacing: -0.025em; line-height: 1; margin-top: 10px;
+}
+.cs-hero-bill .cs-meta { display: flex; flex-wrap: wrap; gap: 16px 24px; margin-top: 18px; }
+.cs-hero-bill .cs-meta-item {
+  font-size: 11px; color: rgba(255,255,255,.6);
+  min-width: 90px; line-height: 1.3;
+}
+.cs-hero-bill .cs-meta-item span {
+  display: block; color: #fff; font-variant-numeric: tabular-nums;
+  font-size: 15px; margin-top: 3px; font-weight: 500; white-space: nowrap;
+}
+.cs-hero-bill .cs-grain {
+  position: absolute; inset: 0;
+  background-image: radial-gradient(circle at 90% 0%, rgba(123,167,255,.18), transparent 50%);
+  pointer-events: none;
+}
+
+/* ── Stat tiles ── */
+.cs-stat {
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 16px 18px;
+  border: 1px solid var(--cs-line); border-radius: var(--cs-radius);
+  background: var(--cs-surface);
+  box-shadow: var(--cs-shadow-sm);
+}
+.cs-stat .cs-lbl { font-size: 11.5px; color: var(--cs-muted); font-weight: 500; }
+.cs-stat .cs-val {
+  font-variant-numeric: tabular-nums; font-size: 22px;
+  font-weight: 600; color: var(--cs-ink); letter-spacing: -0.01em;
+}
+.cs-stat .cs-sub { font-size: 11px; color: var(--cs-ink-2); }
+
+/* ── Comparison bars ── */
+.cs-cmp-row {
+  display: grid; grid-template-columns: 100px 1fr 88px;
+  align-items: center; gap: 12px; padding: 9px 0;
+}
+.cs-cmp-row + .cs-cmp-row { border-top: 1px dashed var(--cs-line); }
+.cs-cmp-label { font-size: 12.5px; color: var(--cs-ink-2); }
+.cs-cmp-track {
+  height: 9px; background: var(--cs-surface-2); border-radius: 999px;
+  position: relative; overflow: hidden;
+  border: 1px solid var(--cs-line-2);
+}
+.cs-cmp-fill {
+  position: absolute; inset: 0 auto 0 0; border-radius: 999px;
+  transition: width .4s cubic-bezier(.4,0,.2,1);
+}
+.cs-fill-you    { background: var(--cs-primary); }
+.cs-fill-county { background: var(--cs-navy); }
+.cs-fill-state  { background: #95A5C7; }
+.cs-cmp-val {
+  font-variant-numeric: tabular-nums; font-size: 12.5px;
+  text-align: right; color: var(--cs-ink);
+}
+
+/* ── Info note box ── */
+.cs-note {
+  display: flex; gap: 10px; padding: 10px 14px;
+  background: var(--cs-primary-soft); color: var(--cs-primary);
+  border-radius: 8px; font-size: 12.5px; line-height: 1.5;
+}
+.cs-note.cs-warn { background: var(--cs-warn-soft); color: var(--cs-warn); }
+
+/* ── Fade animation ── */
+.cs-fade { animation: cs-fade .22s ease-out; }
+@keyframes cs-fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+/* ── What-if slider ── */
+.calc-stepped input[type="range"] {
+  appearance: none; -webkit-appearance: none; width: 100%; height: 28px; background: transparent; cursor: pointer;
+}
+.calc-stepped input[type="range"]::-webkit-slider-runnable-track { height: 4px; background: var(--cs-line); border-radius: 999px; }
+.calc-stepped input[type="range"]::-moz-range-track { height: 4px; background: var(--cs-line); border-radius: 999px; }
+.calc-stepped input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%;
+  background: var(--cs-primary); border: 3px solid #fff;
+  box-shadow: 0 1px 4px rgba(29,78,216,.4); margin-top: -6px;
+}
+.calc-stepped input[type="range"]::-moz-range-thumb {
+  width: 16px; height: 16px; border-radius: 50%;
+  background: var(--cs-primary); border: 3px solid #fff;
+  box-shadow: 0 1px 4px rgba(29,78,216,.4); border: none;
 }
 
 @layer utilities {

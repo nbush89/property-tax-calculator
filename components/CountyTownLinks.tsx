@@ -34,7 +34,7 @@ export default function CountyTownLinks({ county }: CountyTownLinksProps) {
       <h2 className="text-2xl font-semibold mb-4 text-text">
         Popular towns in {county.name} County
       </h2>
-      <p className="text-gray-700 dark:text-gray-300 mb-4">
+      <p className="text-text-muted mb-4">
         Explore property tax information for specific municipalities in {county.name} County.
       </p>
       <div className="flex flex-wrap gap-4">

@@ -161,13 +161,15 @@ export default function TaxResults({ stateSlug = 'new-jersey' }: TaxResultsProps
           {result.rateSource === 'acs_implied' ? (
             <div className="space-y-3 text-sm">
               <div>
-                <p className="muted">Implied combined rate</p>
+                <p className="muted">Combined effective rate</p>
                 <p className="font-medium text-text text-lg tabular-nums">
                   {formatNumber(result.effectiveRate, 3)}%
                 </p>
                 <p className="text-xs text-text-muted mt-1">
-                  Derived from ACS median taxes paid ÷ median home value. Includes county, city,
-                  school district, and special districts. Individual bills vary.
+                  Derived from Census ACS data (median taxes paid ÷ median home value).
+                  Reflects all overlapping taxing units — county, city, school district, and
+                  special districts. Individual bills vary based on location, exemptions, and
+                  assessed value.
                 </p>
               </div>
             </div>
@@ -196,8 +198,8 @@ export default function TaxResults({ stateSlug = 'new-jersey' }: TaxResultsProps
               {result.rateSource === 'comptroller' && (
                 <div className="col-span-2 rounded border border-warning/30 bg-warning/10 px-3 py-2">
                   <p className="text-xs text-warning">
-                    This rate reflects only one taxing unit (city or county). It does not include
-                    school district or special district levies. Your actual bill will be higher.
+                    This rate covers only one taxing unit and does not include school district
+                    or special district levies. Your actual bill will be higher.
                   </p>
                 </div>
               )}

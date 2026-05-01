@@ -15,10 +15,12 @@ import {
   fetchAcsDp04Maps,
   fetchAcsMedianHomeValueMap,
   fetchAcsMedianTaxesPaidMap,
+  fetchAcsCountyEffectiveRateMap,
   medianHomeSeriesForTown,
   medianTaxesSeriesForTown,
   ACS_SOURCE_REF,
   ACS_TAX_SOURCE_REF,
+  ACS_COUNTY_RATE_SOURCE_REF,
 } from './lib/acs-median-home-value'
 import type {
   CountyMetricsPayload,
@@ -37,6 +39,7 @@ import { runNjModivAvgTax, NJ_MODIV_SOURCE_REF } from './state-metrics/nj/modiv'
 import { STATE_FIPS, isStateMetricsSlug } from './lib/state-metrics-registry'
 import { TX_RATE_YEARS, TX_RATES_SOURCE_REF } from './state-metrics/tx/config'
 import { applyTexasComptrollerRates } from './state-metrics/tx/rates'
+import { buildSeries } from './lib/build-series'
 
 const CURRENT_YEAR = new Date().getFullYear()
 const ACS_YEARS = buildRecentYears({ endYear: CURRENT_YEAR - 2, window: 6 })
@@ -287,16 +290,56 @@ async function sourceTexas(options: { out: string }) {
     }
   }
 
+  // County-level effectiveTaxRate: use ACS B25103/B25077 (blended rate across all taxing units).
+  // This replaces the Comptroller county-unit-only rates which only captured the county
+  // government's slice (~0.2–0.4%) rather than the full effective rate (~1.5–2.2%).
+  const countyRateMaps = new Map<number, Map<string, number>>()
+  for (const y of ACS_YEARS) {
+    try {
+      const rateMap = await fetchAcsCountyEffectiveRateMap(y, STATE_FIPS.texas)
+      countyRateMaps.set(y, rateMap)
+      log(`[OK] ACS county rates ${y}: ${rateMap.size} TX counties`)
+    } catch (e) {
+      log(`[WARN] ACS county rates ${y} failed: ${String(e)}`)
+      countyRateMaps.set(y, new Map())
+    }
+  }
+  for (const county of stateJson.counties ?? []) {
+    const countyName =
+      'name' in county && typeof (county as { name: string }).name === 'string'
+        ? (county as { name: string }).name
+        : county.slug
+    const yearToRate: Record<number, number | undefined> = {}
+    for (const [y, rateMap] of countyRateMaps) {
+      const rate = rateMap.get(countyName)
+      if (rate != null) yearToRate[y] = rate
+    }
+    const series = buildSeries(yearToRate, 'PERCENT', ACS_COUNTY_RATE_SOURCE_REF)
+    if (series.length) {
+      countyOut[county.slug] ??= { metrics: {} }
+      countyOut[county.slug].metrics ??= {}
+      countyOut[county.slug].metrics!.effectiveTaxRate = series
+      const latest = series[series.length - 1]
+      log(`[OK] ${countyName} county ACS rate: ${latest.value.toFixed(2)}% (${latest.year})`)
+    } else {
+      log(`[WARN] No ACS county rate found for ${countyName}`)
+    }
+  }
+
+  // Town-level effectiveTaxRate: still sourced from Comptroller (city-unit rates).
+  // These are also unit-only rates, but are used for relative within-county comparison.
+  // TODO: replace with ACS place-level derived rates (medianTaxesPaid / medianHomeValue)
+  // when sufficient ACS place coverage is confirmed for TX towns.
   await applyTexasComptrollerRates(
     stateJson.counties ?? [],
-    countyOut,
+    {} as Record<string, CountyMetricsPayload>, // skip county output — already set above
     townsOut,
     TX_RATE_YEARS,
     log
   )
 
-  const sourceRefs: string[] = [ACS_SOURCE_REF]
-  if (texasPayloadHasRateData(countyOut, townsOut)) {
+  const sourceRefs: string[] = [ACS_SOURCE_REF, ACS_COUNTY_RATE_SOURCE_REF]
+  if (texasPayloadHasRateData({}, townsOut)) {
     sourceRefs.push(TX_RATES_SOURCE_REF)
   }
 

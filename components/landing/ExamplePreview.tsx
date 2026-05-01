@@ -77,7 +77,7 @@ export default function ExamplePreview() {
           <h3 className="mb-2 text-lg font-semibold text-text">Transparent methodology</h3>
           <p className="text-sm text-text-muted">
             Every estimate includes source attribution and year labels. See our{' '}
-            <Link href="/methodology" className="text-primary hover:text-primary-hover underline">
+            <Link href="/methodology" className="data-link">
               methodology
             </Link>{' '}
             for details on data sources and calculations.

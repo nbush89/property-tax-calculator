@@ -164,7 +164,7 @@ export default function AboutPage() {
               <p>
                 If you have questions about our data sources, methodology, or how estimates are
                 calculated, please see our{' '}
-                <a href="/methodology" className="text-primary hover:text-primary-hover underline">
+                <a href="/methodology" className="data-link">
                   Methodology page
                 </a>{' '}
                 for detailed information.

@@ -113,6 +113,22 @@ export function getCountyShortSlug(county: CountyData): string {
 }
 
 /**
+ * Build href for a town-vs-town comparison page.
+ * Canonical order is alphabetical by slug — non-canonical links will 301 to canonical.
+ * @example buildComparisonHref('new-jersey', 'bergen', 'ridgewood', 'glen-rock')
+ *   → '/new-jersey/bergen/compare/glen-rock-vs-ridgewood'
+ */
+export function buildComparisonHref(
+  stateSlug: string,
+  countyShortSlug: string,
+  townSlugA: string,
+  townSlugB: string
+): string {
+  const [a, b] = [townSlugA, townSlugB].sort()
+  return `/${stateSlug}/${countyShortSlug}/compare/${a}-vs-${b}`
+}
+
+/**
  * Select 2–3 related towns for a town page (same county; prefer Tier1/2 and isReady).
  * Excludes the current town. Falls back to first N alphabetically if not enough preferred.
  */

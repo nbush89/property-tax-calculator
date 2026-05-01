@@ -74,14 +74,13 @@ export function generateTownSeoTitle(input: {
   county: CountyData
 }): string {
   const { townDisplayName, stateAbbrev, year } = input
-  const y = `(${year})`
   switch (input.tier) {
     case 'strong':
-      return `${townDisplayName}, ${stateAbbrev} Property Tax Calculator ${y} + Rates`
+      return `${townDisplayName}, ${stateAbbrev} Property Tax: ${year} Rate, Trends & Appeal Guide`
     case 'medium':
-      return `${townDisplayName}, ${stateAbbrev} Property Tax Calculator ${y} | County Rates`
+      return `${townDisplayName}, ${stateAbbrev} Property Tax Rate (${year}) | Calculator & Trends`
     default:
-      return `${townDisplayName}, ${stateAbbrev} Property Tax Estimate ${y} | ${formatCountySeoPhrase(input.county)}`
+      return `${townDisplayName}, ${stateAbbrev} Property Tax Estimate (${year}) | ${formatCountySeoPhrase(input.county)}`
   }
 }
 

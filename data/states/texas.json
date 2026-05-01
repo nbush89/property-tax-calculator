@@ -33,6 +33,13 @@
       "type": "api",
       "homepageUrl": "https://api.census.gov/data.html",
       "notes": "B25103_001E = Median real estate taxes paid (dollars) for all owner-occupied units. Covers combined bill across county, city, school district, and special districts net of homestead exemptions."
+    },
+    "us_census_acs_county_effective_rate": {
+      "publisher": "U.S. Census Bureau",
+      "title": "ACS 5-year — County Effective Tax Rate (B25103 / B25077)",
+      "type": "api",
+      "homepageUrl": "https://api.census.gov/data.html",
+      "notes": "Effective rate derived as median real estate taxes paid (B25103_001E) divided by median home value (B25077_001E) at the county level. Represents a homeowner's blended total effective rate across all overlapping taxing units (county + city + school district + special districts), net of homestead exemptions already reflected in ACS survey responses. Replaces Comptroller county-unit-only rates which captured only the county government's levy."
     }
   },
   "metrics": {},
@@ -750,34 +757,34 @@
       "metrics": {
         "effectiveTaxRate": [
           {
-            "year": 2021,
-            "value": 0.37693,
+            "year": 2020,
+            "value": 1.9361,
             "unit": "PERCENT",
-            "sourceRef": "tx_comptroller_tax_rates_levies"
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2021,
+            "value": 1.9076,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
           },
           {
             "year": 2022,
-            "value": 0.34373,
+            "value": 1.7714,
             "unit": "PERCENT",
-            "sourceRef": "tx_comptroller_tax_rates_levies"
+            "sourceRef": "us_census_acs_county_effective_rate"
           },
           {
             "year": 2023,
-            "value": 0.35007,
+            "value": 1.7184,
             "unit": "PERCENT",
-            "sourceRef": "tx_comptroller_tax_rates_levies"
+            "sourceRef": "us_census_acs_county_effective_rate"
           },
           {
             "year": 2024,
-            "value": 0.38529,
+            "value": 1.6229,
             "unit": "PERCENT",
-            "sourceRef": "tx_comptroller_tax_rates_levies"
-          },
-          {
-            "year": 2025,
-            "value": 0.38096,
-            "unit": "PERCENT",
-            "sourceRef": "tx_comptroller_tax_rates_levies"
+            "sourceRef": "us_census_acs_county_effective_rate"
           }
         ]
       },
@@ -2420,34 +2427,34 @@
       "metrics": {
         "effectiveTaxRate": [
           {
-            "year": 2021,
-            "value": 0.227946,
+            "year": 2020,
+            "value": 1.8412,
             "unit": "PERCENT",
-            "sourceRef": "tx_comptroller_tax_rates_levies"
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2021,
+            "value": 1.8075,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
           },
           {
             "year": 2022,
-            "value": 0.217946,
+            "value": 1.7288,
             "unit": "PERCENT",
-            "sourceRef": "tx_comptroller_tax_rates_levies"
+            "sourceRef": "us_census_acs_county_effective_rate"
           },
           {
             "year": 2023,
-            "value": 0.215718,
+            "value": 1.6797,
             "unit": "PERCENT",
-            "sourceRef": "tx_comptroller_tax_rates_levies"
+            "sourceRef": "us_census_acs_county_effective_rate"
           },
           {
             "year": 2024,
-            "value": 0.2155,
+            "value": 1.5835,
             "unit": "PERCENT",
-            "sourceRef": "tx_comptroller_tax_rates_levies"
-          },
-          {
-            "year": 2025,
-            "value": 0.2155,
-            "unit": "PERCENT",
-            "sourceRef": "tx_comptroller_tax_rates_levies"
+            "sourceRef": "us_census_acs_county_effective_rate"
           }
         ]
       },
@@ -3508,34 +3515,34 @@
       "metrics": {
         "effectiveTaxRate": [
           {
-            "year": 2021,
-            "value": 0.168087,
+            "year": 2020,
+            "value": 1.8912,
             "unit": "PERCENT",
-            "sourceRef": "tx_comptroller_tax_rates_levies"
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2021,
+            "value": 1.875,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
           },
           {
             "year": 2022,
-            "value": 0.152443,
+            "value": 1.7519,
             "unit": "PERCENT",
-            "sourceRef": "tx_comptroller_tax_rates_levies"
+            "sourceRef": "us_census_acs_county_effective_rate"
           },
           {
             "year": 2023,
-            "value": 0.149343,
+            "value": 1.6604,
             "unit": "PERCENT",
-            "sourceRef": "tx_comptroller_tax_rates_levies"
+            "sourceRef": "us_census_acs_county_effective_rate"
           },
           {
             "year": 2024,
-            "value": 0.149343,
+            "value": 1.5814,
             "unit": "PERCENT",
-            "sourceRef": "tx_comptroller_tax_rates_levies"
-          },
-          {
-            "year": 2025,
-            "value": 0.149343,
-            "unit": "PERCENT",
-            "sourceRef": "tx_comptroller_tax_rates_levies"
+            "sourceRef": "us_census_acs_county_effective_rate"
           }
         ]
       },
@@ -5025,34 +5032,34 @@
       "metrics": {
         "effectiveTaxRate": [
           {
-            "year": 2021,
-            "value": 0.229,
+            "year": 2020,
+            "value": 1.9399,
             "unit": "PERCENT",
-            "sourceRef": "tx_comptroller_tax_rates_levies"
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2021,
+            "value": 1.918,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
           },
           {
             "year": 2022,
-            "value": 0.224,
+            "value": 1.8229,
             "unit": "PERCENT",
-            "sourceRef": "tx_comptroller_tax_rates_levies"
+            "sourceRef": "us_census_acs_county_effective_rate"
           },
           {
             "year": 2023,
-            "value": 0.1945,
+            "value": 1.7718,
             "unit": "PERCENT",
-            "sourceRef": "tx_comptroller_tax_rates_levies"
+            "sourceRef": "us_census_acs_county_effective_rate"
           },
           {
             "year": 2024,
-            "value": 0.1875,
+            "value": 1.6468,
             "unit": "PERCENT",
-            "sourceRef": "tx_comptroller_tax_rates_levies"
-          },
-          {
-            "year": 2025,
-            "value": 0.1862,
-            "unit": "PERCENT",
-            "sourceRef": "tx_comptroller_tax_rates_levies"
+            "sourceRef": "us_census_acs_county_effective_rate"
           }
         ]
       },
@@ -5181,34 +5188,34 @@
       "metrics": {
         "effectiveTaxRate": [
           {
-            "year": 2021,
-            "value": 0.357365,
+            "year": 2020,
+            "value": 1.7708,
             "unit": "PERCENT",
-            "sourceRef": "tx_comptroller_tax_rates_levies"
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2021,
+            "value": 1.7709,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
           },
           {
             "year": 2022,
-            "value": 0.318239,
+            "value": 1.6097,
             "unit": "PERCENT",
-            "sourceRef": "tx_comptroller_tax_rates_levies"
+            "sourceRef": "us_census_acs_county_effective_rate"
           },
           {
             "year": 2023,
-            "value": 0.304655,
+            "value": 1.5355,
             "unit": "PERCENT",
-            "sourceRef": "tx_comptroller_tax_rates_levies"
+            "sourceRef": "us_census_acs_county_effective_rate"
           },
           {
             "year": 2024,
-            "value": 0.344445,
+            "value": 1.4774,
             "unit": "PERCENT",
-            "sourceRef": "tx_comptroller_tax_rates_levies"
-          },
-          {
-            "year": 2025,
-            "value": 0.375845,
-            "unit": "PERCENT",
-            "sourceRef": "tx_comptroller_tax_rates_levies"
+            "sourceRef": "us_census_acs_county_effective_rate"
           }
         ]
       },
@@ -5337,34 +5344,34 @@
       "metrics": {
         "effectiveTaxRate": [
           {
-            "year": 2021,
-            "value": 0.299999,
+            "year": 2020,
+            "value": 1.9854,
             "unit": "PERCENT",
-            "sourceRef": "tx_comptroller_tax_rates_levies"
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2021,
+            "value": 1.9856,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
           },
           {
             "year": 2022,
-            "value": 0.299999,
+            "value": 1.8763,
             "unit": "PERCENT",
-            "sourceRef": "tx_comptroller_tax_rates_levies"
+            "sourceRef": "us_census_acs_county_effective_rate"
           },
           {
             "year": 2023,
-            "value": 0.299999,
+            "value": 1.8144,
             "unit": "PERCENT",
-            "sourceRef": "tx_comptroller_tax_rates_levies"
+            "sourceRef": "us_census_acs_county_effective_rate"
           },
           {
             "year": 2024,
-            "value": 0.299999,
+            "value": 1.7296,
             "unit": "PERCENT",
-            "sourceRef": "tx_comptroller_tax_rates_levies"
-          },
-          {
-            "year": 2025,
-            "value": 0.299999,
-            "unit": "PERCENT",
-            "sourceRef": "tx_comptroller_tax_rates_levies"
+            "sourceRef": "us_census_acs_county_effective_rate"
           }
         ]
       },

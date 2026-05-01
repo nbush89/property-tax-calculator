@@ -1,11 +1,13 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import Header from '@/components/site/Header'
 import Footer from '@/components/site/Footer'
-import UniversalTaxCalculator from '@/components/calculator/UniversalTaxCalculator'
+import SteppedCalculatorClient from '@/components/calculator/SteppedCalculatorClient'
 import { buildMetadata } from '@/lib/seo'
 import { breadcrumbJsonLd, webAppJsonLd } from '@/lib/jsonld'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { getStatesForHero } from '@/lib/geo'
+import { buildPreviewMetricsMap } from '@/lib/calculator/previewMetrics'
 import { SITE_URL } from '@/lib/site'
 
 export const metadata: Metadata = buildMetadata({
@@ -29,6 +31,7 @@ export default async function PropertyTaxCalculatorPage({ searchParams }: PagePr
   const homeValue = typeof params.homeValue === 'string' ? params.homeValue : undefined
 
   const states = getStatesForHero()
+  const previewMetrics = buildPreviewMetricsMap()
   const pageUrl = `${SITE_URL}/property-tax-calculator`
 
   return (
@@ -48,24 +51,33 @@ export default async function PropertyTaxCalculatorPage({ searchParams }: PagePr
       />
       <Header />
       <main className="min-h-screen bg-bg">
-        <div className="container-page py-12">
-          <div className="mb-10 text-center">
-            <h1 className="section-title mb-4">Property Tax Calculator</h1>
-            <p className="text-lg text-text-muted max-w-2xl mx-auto">
-              Select your state, county, and town, then enter your home value to see estimated
-              property taxes. Available for New Jersey and Texas; more states coming as data is
-              published.
+        {/* Page header */}
+        <div className="page-header-bar">
+          <div className="container-page">
+            <nav className="text-sm text-text-muted mb-3" aria-label="Breadcrumb">
+              <Link href="/" className="hover:text-primary transition-colors">Home</Link>
+              <span className="mx-2">→</span>
+              <span className="text-text">Property Tax Calculator</span>
+            </nav>
+            <h1 className="text-2xl font-semibold tracking-tight text-text sm:text-3xl">
+              Property Tax Calculator
+            </h1>
+            <p className="mt-1 text-sm text-text-muted">
+              Select your state, county, and town, then enter your home value for a planning estimate.
+              New Jersey and Texas supported; more states added as data is published.
             </p>
           </div>
-          <UniversalTaxCalculator
+        </div>
+
+        <div className="container-page py-8">
+          <SteppedCalculatorClient
             states={states}
-            initialValues={{
-              stateSlug: state,
-              countySlug: county,
-              townSlug: town,
-              homeValue: homeValue ?? undefined,
-            }}
-            showStateSelect={true}
+            previewMetrics={previewMetrics}
+            initialStateSlug={state}
+            initialCountySlug={county}
+            initialTownSlug={town}
+            initialHomeValue={homeValue}
+            lockState={false}
             pageType="calculator"
           />
         </div>

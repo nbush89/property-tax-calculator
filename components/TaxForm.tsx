@@ -210,7 +210,7 @@ export default function TaxForm({
           <div className="mt-2 text-sm">
             <Link
               href={`/${stateSlug}/${slugifyLocation(county)}-county-property-tax`}
-              className="text-primary hover:text-primary-hover underline"
+              className="data-link"
             >
               View {county} County property tax page →
             </Link>
@@ -218,7 +218,7 @@ export default function TaxForm({
             {town && (
               <Link
                 href={`/${stateSlug}/${slugifyLocation(county)}/${slugifyLocation(town)}-property-tax`}
-                className="text-primary hover:text-primary-hover underline"
+                className="data-link"
               >
                 View {town} property tax page →
               </Link>

@@ -16,7 +16,7 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & BaseButtonPro
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary: 'bg-primary text-white hover:bg-primary-hover focus:ring-primary',
-  secondary: 'border-2 border-border bg-surface text-text hover:bg-bg focus:ring-primary',
+  secondary: 'border border-border bg-surface text-text hover:bg-bg focus:ring-primary',
   ghost: 'text-text hover:bg-bg focus:ring-primary',
 }
 

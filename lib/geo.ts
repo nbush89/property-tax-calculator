@@ -3,6 +3,8 @@ import texasStateDataRaw from '@/data/states/texas.json'
 import { slugifyLocation } from '@/utils/locationUtils'
 import { normalizeStateData } from '@/lib/data/adapter'
 import type { StateData, CountyData, TownData } from '@/lib/data/types'
+import { isTownPublished } from '@/lib/town/isTownPublished'
+import { getTownSlug } from '@/lib/links/towns'
 
 // Normalize the raw JSON data to the new year-aware format
 const njStateData = normalizeStateData(njStateDataRaw as any)
@@ -78,6 +80,85 @@ export function getStatesForHero(): StateOptionForHero[] {
       })),
     }
   })
+}
+
+/**
+ * A single county entry for the hero data table.
+ */
+export interface TopCountyForHero {
+  name: string
+  slug: string
+  effectiveRatePct: number | null
+  avgBill: number | null
+  /**
+   * Up to 5 deduplicated values for the sparkline, oldest→newest.
+   * Uses averageResidentialTaxBill (dollars) when available, falls back to effectiveTaxRate (%).
+   */
+  trend: number[]
+  /** What `trend` measures — determines sparkline label */
+  trendType: 'bill' | 'rate'
+  /** Number of published town pages for this county */
+  publishedTownCount: number
+}
+
+/**
+ * Top counties for the hero data table, sorted by avg residential tax bill descending.
+ * Falls back to effective rate ordering when avg bill is unavailable (e.g. Texas pre-pipeline).
+ */
+/**
+ * Deduplicate a metric series by year, keeping the last entry per year.
+ * Guards against duplicate-year artifacts from data merges.
+ */
+function dedupeByYear(series: { year: number; value: number }[]): { year: number; value: number }[] {
+  const map = new Map<number, number>()
+  for (const p of series) map.set(p.year, p.value)
+  return Array.from(map.entries())
+    .sort((a, b) => a[0] - b[0])
+    .map(([year, value]) => ({ year, value }))
+}
+
+export function getTopCountiesForHero(stateSlug: string, limit = 5): TopCountyForHero[] {
+  const data = getStateData(stateSlug)
+  if (!data) return []
+
+  const counties = data.counties.map(c => {
+    const rateSeries = dedupeByYear(c.metrics?.effectiveTaxRate ?? [])
+    const billSeries = dedupeByYear(c.metrics?.averageResidentialTaxBill ?? [])
+
+    const latestRate = rateSeries.length ? rateSeries[rateSeries.length - 1].value : null
+    const latestBill = billSeries.length ? billSeries[billSeries.length - 1].value : null
+
+    // Prefer bill trend (dollars people actually pay); fall back to rate trend
+    const hasBillTrend = billSeries.length >= 2
+    const trend = hasBillTrend
+      ? billSeries.slice(-5).map(p => p.value)
+      : rateSeries.slice(-5).map(p => p.value)
+    const trendType: 'bill' | 'rate' = hasBillTrend ? 'bill' : 'rate'
+
+    const publishedTownCount = (c.towns ?? []).filter(
+      t => getTownSlug(t) && isTownPublished(t)
+    ).length
+
+    return {
+      name: c.name,
+      slug: c.slug || slugifyLocation(c.name),
+      effectiveRatePct: latestRate,
+      avgBill: latestBill,
+      trend,
+      trendType,
+      publishedTownCount,
+    }
+  })
+
+  // Sort by avg bill desc; fall back to rate desc when bill is null
+  counties.sort((a, b) => {
+    if (a.avgBill != null && b.avgBill != null) return b.avgBill - a.avgBill
+    if (a.avgBill != null) return -1
+    if (b.avgBill != null) return 1
+    return (b.effectiveRatePct ?? 0) - (a.effectiveRatePct ?? 0)
+  })
+
+  return counties.slice(0, limit)
 }
 
 /**
