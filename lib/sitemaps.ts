@@ -221,6 +221,11 @@ export async function getStateUrls(baseUrl: string, stateSlug: string): Promise<
     lastmod: stateLastmod,
   })
 
+  urls.push({
+    loc: joinUrl(baseUrl, `/${stateSlug}/property-tax-appeal-calculator`),
+    lastmod: stateLastmod,
+  })
+
   for (const county of stateData.counties) {
     const countySlugShort = county.slug || slugifyLocation(county.name)
     const countySlugForPath = slugifyLocation(county.name)

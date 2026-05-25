@@ -334,7 +334,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     stateData.state.name,
     year
   )
-  const path = `/${encodeURIComponent(state)}/${encodeURIComponent(countyParam)}/compare/${comparison}`
+  // Always use the canonical (sorted) comparison slug so the metadata canonical
+  // matches the page the component redirects to — prevents GSC "duplicate without
+  // user-selected canonical" and "page with redirect" warnings on non-canonical orderings.
+  const canonicalSlug = canonicalComparisonSlug(slugA, slugB)
+  const path = `/${encodeURIComponent(state)}/${encodeURIComponent(countyParam)}/compare/${canonicalSlug}`
 
   return buildMetadata({
     title,

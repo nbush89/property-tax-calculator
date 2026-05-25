@@ -8,6 +8,15 @@
  *   npx tsx scripts/source-state-metrics.ts --state new-jersey --only modiv   (legacy MOD IV JSON to stdout)
  */
 /* eslint-disable no-console */
+
+// Load .env so CENSUS_API_KEY (and other vars) are available without dotenv.
+// process.loadEnvFile is available in Node 20.12+. Silently skip if file absent.
+try {
+  ;(process as unknown as { loadEnvFile: (p: string) => void }).loadEnvFile('.env')
+} catch {
+  // .env not present or Node < 20.12 — continue without it
+}
+
 import * as fs from 'node:fs'
 import * as path from 'node:path'
 import { buildRecentYears } from './utils/buildRecentYears'

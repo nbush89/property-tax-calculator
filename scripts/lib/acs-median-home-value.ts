@@ -27,6 +27,17 @@ export const ACS_COUNTY_RATE_SOURCE_REF = 'us_census_acs_county_effective_rate'
 
 const USER_AGENT = 'state-metrics-script/1.0'
 
+/**
+ * Append a Census API key to a URL if CENSUS_API_KEY is set in the environment.
+ * The Census API returns HTTP 302 for unauthenticated bulk requests; a key prevents this.
+ * Get a free key at: https://api.census.gov/data/key_signup.html
+ * Then add CENSUS_API_KEY=your-key to your .env file.
+ */
+function acsUrl(base: string): string {
+  const key = process.env.CENSUS_API_KEY?.trim()
+  return key ? `${base}&key=${key}` : base
+}
+
 export function fetchJson(url: string): Promise<unknown> {
   return new Promise((resolve, reject) => {
     https
@@ -119,7 +130,7 @@ export async function fetchAcsDp04Maps(
   stateFips: string,
   style: AcsPlaceStyle
 ): Promise<{ homeValue: Map<string, number>; taxesPaid: Map<string, number> }> {
-  const url = `https://api.census.gov/data/${year}/${ACS_DATASET}?get=NAME,${ACS_VAR_MEDIAN_HOME_VALUE}&for=place:*&in=state:${stateFips}`
+  const url = acsUrl(`https://api.census.gov/data/${year}/${ACS_DATASET}?get=NAME,${ACS_VAR_MEDIAN_HOME_VALUE}&for=place:*&in=state:${stateFips}`)
   const rows = (await fetchJson(url)) as string[][]
   const header = rows[0]
   const nameIdx = header.indexOf('NAME')
@@ -148,7 +159,7 @@ export async function fetchAcsMedianTaxesPaidMap(
   stateFips: string,
   style: AcsPlaceStyle
 ): Promise<Map<string, number>> {
-  const url = `https://api.census.gov/data/${year}/${ACS_TAX_DATASET}?get=NAME,${ACS_VAR_MEDIAN_TAXES_PAID}&for=place:*&in=state:${stateFips}`
+  const url = acsUrl(`https://api.census.gov/data/${year}/${ACS_TAX_DATASET}?get=NAME,${ACS_VAR_MEDIAN_TAXES_PAID}&for=place:*&in=state:${stateFips}`)
   const rows = (await fetchJson(url)) as string[][]
   const header = rows[0]
   const nameIdx = header.indexOf('NAME')
@@ -222,8 +233,8 @@ export async function fetchAcsCountyEffectiveRateMap(
   year: number,
   stateFips: string
 ): Promise<Map<string, number>> {
-  const homeValueUrl = `https://api.census.gov/data/${year}/acs/acs5?get=NAME,B25077_001E&for=county:*&in=state:${stateFips}`
-  const taxesUrl = `https://api.census.gov/data/${year}/acs/acs5?get=NAME,B25103_001E&for=county:*&in=state:${stateFips}`
+  const homeValueUrl = acsUrl(`https://api.census.gov/data/${year}/acs/acs5?get=NAME,B25077_001E&for=county:*&in=state:${stateFips}`)
+  const taxesUrl = acsUrl(`https://api.census.gov/data/${year}/acs/acs5?get=NAME,B25103_001E&for=county:*&in=state:${stateFips}`)
 
   const [homeValueRows, taxesRows] = await Promise.all([
     fetchJson(homeValueUrl) as Promise<string[][]>,

@@ -16,7 +16,12 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/api/', '/_next/'], // Block API routes and Next.js internals
+        disallow: [
+          '/api/',      // API routes
+          '/_next/',    // Next.js internals
+          '/*?*',       // Query-param variants (e.g. /property-tax-calculator?state=new-jersey)
+          '/admin/',    // Admin console
+        ],
       },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,

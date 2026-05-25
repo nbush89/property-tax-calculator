@@ -36,4 +36,8 @@ export const TEXAS_CITY_WORKBOOK_COUNTY: Record<string, string> = {
   'tarrant/euless': 'Tarrant',       // spans Tarrant/Dallas; primary CAD is Tarrant
   'tarrant/grapevine': 'Tarrant',    // spans Tarrant/Dallas; primary CAD is Tarrant
   'tarrant/burleson': 'Tarrant',     // spans Tarrant/Johnson; primary CAD is Tarrant
+  /** Travis County additions */
+  'travis/pflugerville': 'Williamson', // city is primarily in Williamson; Comptroller lists under Williamson
+  /** Bexar County additions */
+  'bexar/selma': 'Bexar',            // spans Bexar/Guadalupe/Comal; primary incorporation is Bexar
 }
