@@ -87,6 +87,16 @@ function normalizeCountyData(raw: any): CountyData {
       metrics.effectiveTaxRate = raw.metrics.effectiveTaxRate
     }
 
+    if (raw.metrics.medianTaxesPaid) {
+      assertSorted(raw.metrics.medianTaxesPaid, 'county.metrics.medianTaxesPaid')
+      assertMaxLength(raw.metrics.medianTaxesPaid, 'county.metrics.medianTaxesPaid')
+      metrics.medianTaxesPaid = raw.metrics.medianTaxesPaid
+    }
+
+    if (Array.isArray(raw.metrics.millage)) {
+      metrics.millage = raw.metrics.millage
+    }
+
     if (Object.keys(metrics).length > 0) {
       normalized.metrics = metrics
     }

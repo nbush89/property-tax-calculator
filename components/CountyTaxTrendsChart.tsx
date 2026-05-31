@@ -2,8 +2,20 @@
 
 /**
  * County Tax Trends Chart Component
- * Displays a historical chart of average residential tax bill with YoY statistics
- * Only renders when series has at least 2 data points
+ *
+ * Renders a 5-year trend chart with YoY + multi-year change stats for the
+ * county's primary historical bill metric. Always shown in dollars — the
+ * effective rate is deliberately NOT used as a fallback because it can
+ * decline while bills rise (when home values appreciate faster than millage),
+ * which misleads users.
+ *
+ * Mode is chosen by data availability:
+ *   - averageResidentialTaxBill — preferred when state publishes it (NJ).
+ *   - medianTaxesPaid (ACS B25103) — fallback when state doesn't publish a
+ *     per-municipality avg bill (GA, TX). Honest dollar figure homeowners
+ *     actually pay, surveyed and aggregated to county level.
+ *
+ * Returns null gracefully when neither dollar series has enough data.
  */
 
 import {
@@ -17,7 +29,10 @@ import {
 } from 'recharts'
 import type { MetricSeries } from '@/lib/data/types'
 import { computeYoYStats } from '@/lib/data/metrics'
-import { shouldShowCountyAverageTaxBillTrend } from '@/lib/metrics/resolveDisplayMetrics'
+import {
+  shouldShowCountyAverageTaxBillTrend,
+} from '@/lib/metrics/resolveDisplayMetrics'
+import { getMetricAvailability } from '@/lib/metrics/stateMetricCapabilities'
 import { taxBillLabelForState } from '@/lib/content/townContent'
 
 interface CountyTaxTrendsChartProps {
@@ -27,13 +42,15 @@ interface CountyTaxTrendsChartProps {
     slug: string
     metrics?: {
       averageResidentialTaxBill?: MetricSeries
+      medianTaxesPaid?: MetricSeries
+      effectiveTaxRate?: MetricSeries
     }
   }
 }
 
-/**
- * Format a number as USD currency
- */
+/** Both modes display in dollars; difference is the data source and labeling. */
+type ChartMode = 'avg_bill' | 'median_taxes'
+
 function formatUSD(value: number): string {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -43,17 +60,16 @@ function formatUSD(value: number): string {
   }).format(value)
 }
 
-/**
- * Format a number as percentage with 1 decimal place
- */
-function formatPercent(value: number): string {
+function formatDeltaPercent(value: number): string {
   const sign = value >= 0 ? '+' : ''
   return `${sign}${value.toFixed(1)}%`
 }
 
-/**
- * Custom tooltip for the chart
- */
+function formatAbsoluteDelta(value: number): string {
+  const sign = value >= 0 ? '+' : ''
+  return `${sign}${formatUSD(value)}`
+}
+
 function CustomTooltip({ active, payload }: any) {
   if (active && payload && payload.length) {
     const data = payload[0].payload
@@ -68,28 +84,38 @@ function CustomTooltip({ active, payload }: any) {
 }
 
 export default function CountyTaxTrendsChart({ stateSlug, county }: CountyTaxTrendsChartProps) {
-  if (!shouldShowCountyAverageTaxBillTrend(stateSlug)) {
-    return null
-  }
+  const billSeries = county.metrics?.averageResidentialTaxBill ?? []
+  const medianTaxesSeries = county.metrics?.medianTaxesPaid ?? []
 
-  const { shortLabel: billShortLabel, label: billLabel } = taxBillLabelForState(stateSlug)
-  const series = county.metrics?.averageResidentialTaxBill ?? []
+  // Mode by data availability — both are dollars, both are honest trend metrics.
+  // Effective rate is deliberately NOT used here even when available, because
+  // a falling rate during rising bills creates the wrong impression.
+  const canShowAvgBill =
+    shouldShowCountyAverageTaxBillTrend(stateSlug) && billSeries.length >= 2
+  const medianTaxesAv = getMetricAvailability(stateSlug, 'county', 'medianTaxesPaid')
+  const canShowMedianTaxes =
+    (medianTaxesAv?.supported !== false) && medianTaxesSeries.length >= 2
 
-  // Don't render if insufficient data
-  if (series.length < 2) {
-    return null
-  }
+  let mode: ChartMode | null = null
+  if (canShowAvgBill) mode = 'avg_bill'
+  else if (canShowMedianTaxes) mode = 'median_taxes'
+  if (!mode) return null
 
-  // Sort by year ascending
+  const series = mode === 'avg_bill' ? billSeries : medianTaxesSeries
   const sorted = [...series].sort((a, b) => a.year - b.year)
 
-  // Compute statistics
   const stats = computeYoYStats(sorted)
-  if (!stats) {
-    return null
-  }
+  if (!stats) return null
 
-  // Prepare chart data
+  // Labels per mode
+  const billLabels = taxBillLabelForState(stateSlug)
+  const shortLabel = mode === 'avg_bill' ? billLabels.shortLabel : 'Median tax bill'
+  const longLabel =
+    mode === 'avg_bill'
+      ? billLabels.label
+      : 'median real estate taxes paid (ACS survey)'
+  const formatValue = formatUSD
+
   const chartData = sorted.map(d => ({
     year: d.year.toString(),
     value: d.value,
@@ -98,47 +124,60 @@ export default function CountyTaxTrendsChart({ stateSlug, county }: CountyTaxTre
   return (
     <section className="mb-12">
       <h2 className="text-2xl font-semibold mb-2 text-text">
-        {billShortLabel} Trend in {county.name} County
+        {shortLabel} trend in {county.name} County
       </h2>
-      <p className="text-sm text-text-muted mb-6">
-        Planning context only — historical {billLabel} for comparison. Actual tax bills vary by
-        municipality and exemptions.
+      <p className="text-sm text-text-muted mb-6 measure">
+        Planning context only — historical {longLabel} for comparison. Actual
+        tax bills vary by municipality and exemptions.
       </p>
 
-      {/* Statistics Row */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <div className="bg-surface border border-border rounded-lg p-4">
-          <p className="text-sm text-text-muted mb-1">Latest</p>
-          <p className="text-xl font-semibold text-text">
-            {formatUSD(stats.latestValue)} ({stats.latestYear})
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-px rounded-xl border border-border bg-border overflow-hidden mb-6">
+        <div className="bg-surface p-5">
+          <p className="text-xs font-medium uppercase tracking-wide text-text-muted">Latest</p>
+          <p className="text-[26px] font-semibold text-text leading-none mt-2 tabular-nums">
+            {formatValue(stats.latestValue)}
           </p>
+          <p className="text-xs text-text-muted mt-1.5 tabular-nums">{stats.latestYear}</p>
         </div>
-        <div className="bg-surface border border-border rounded-lg p-4">
-          <p className="text-sm text-text-muted mb-1">Year-over-Year Change</p>
-          <p className="text-xl font-semibold text-text">
-            {stats.delta >= 0 ? '+' : ''}
-            {formatUSD(stats.delta)} ({formatPercent(stats.deltaPct)}) from {stats.prevYear}
+        <div className="bg-surface p-5">
+          <p className="text-xs font-medium uppercase tracking-wide text-text-muted">Year over year</p>
+          <p
+            className={`text-[26px] font-semibold leading-none mt-2 tabular-nums ${
+              stats.delta >= 0 ? 'text-emerald-600' : 'text-text'
+            }`}
+          >
+            {formatAbsoluteDelta(stats.delta)}
+          </p>
+          <p className="text-xs text-text-muted mt-1.5 tabular-nums">
+            {formatDeltaPercent(stats.deltaPct)} from {stats.prevYear}
           </p>
         </div>
         {stats.fiveYearDelta !== undefined && sorted.length >= 2 && (
-          <div className="bg-surface border border-border rounded-lg p-4">
-            <p className="text-sm text-text-muted mb-1">
-              {sorted.length}-Year Change
+          <div className="bg-surface p-5">
+            <p className="text-xs font-medium uppercase tracking-wide text-text-muted">
+              {sorted.length}-Year change
             </p>
-            <p className="text-xl font-semibold text-text">
-              {stats.fiveYearDelta >= 0 ? '+' : ''}
-              {formatUSD(stats.fiveYearDelta)} ({formatPercent(stats.fiveYearDeltaPct ?? 0)}) from{' '}
-              {sorted[0].year}
+            <p
+              className={`text-[26px] font-semibold leading-none mt-2 tabular-nums ${
+                stats.fiveYearDelta >= 0 ? 'text-emerald-600' : 'text-text'
+              }`}
+            >
+              {formatAbsoluteDelta(stats.fiveYearDelta)}
+            </p>
+            <p className="text-xs text-text-muted mt-1.5 tabular-nums">
+              {formatDeltaPercent(stats.fiveYearDeltaPct ?? 0)} from {sorted[0].year}
             </p>
           </div>
         )}
       </div>
 
-      {/* Chart */}
       <div className="bg-surface border border-border rounded-lg p-6">
         <ResponsiveContainer width="100%" height={260}>
           <LineChart data={chartData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" className="stroke-gray-200 dark:stroke-gray-700" />
+            <CartesianGrid
+              strokeDasharray="3 3"
+              className="stroke-gray-200 dark:stroke-gray-700"
+            />
             <XAxis
               dataKey="year"
               className="text-text-muted"
@@ -147,13 +186,9 @@ export default function CountyTaxTrendsChart({ stateSlug, county }: CountyTaxTre
             <YAxis
               className="text-text-muted"
               style={{ fontSize: '12px' }}
-              tickFormatter={value => {
-                // Format Y-axis as abbreviated currency (e.g., $10K, $15K)
-                if (value >= 1000) {
-                  return `$${Math.round(value / 1000)}K`
-                }
-                return `$${value}`
-              }}
+              tickFormatter={value =>
+                value >= 1000 ? `$${Math.round(value / 1000)}K` : `$${value}`
+              }
             />
             <Tooltip content={<CustomTooltip />} />
             <Line
@@ -168,10 +203,11 @@ export default function CountyTaxTrendsChart({ stateSlug, county }: CountyTaxTre
         </ResponsiveContainer>
       </div>
 
-      {/* Footnote */}
       <p className="text-xs text-text-muted mt-4 italic">
-        Data reflects county-wide {billLabel} where published and may not represent individual
-        municipality tax bills. Years shown follow each source&apos;s reporting.
+        {mode === 'avg_bill'
+          ? `Data reflects county-wide ${longLabel} where published and may not represent individual municipality tax bills.`
+          : `U.S. Census ACS 5-year estimates (B25103_001E) — the median amount homeowners actually pay annually. Reflects all overlapping taxing units net of typical homestead exemptions. Bills for any specific home will vary with assessed value, millage components, and exemption stacking.`}{' '}
+        Years shown follow each source&apos;s reporting.
       </p>
     </section>
   )

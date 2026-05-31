@@ -18,6 +18,7 @@ import {
   buildComparisonHref,
 } from '@/lib/links/towns'
 import { getMetricLatest } from '@/lib/data/town-helpers'
+import { Divider } from '@/components/ui/Divider'
 import { AppealPromptCard } from '@/components/town/AppealPromptCard'
 import type { TownData, CountyData } from '@/lib/data/types'
 
@@ -49,7 +50,7 @@ function buildComparisonPath(
 
 export async function generateStaticParams() {
   const { getStateData } = await import('@/lib/geo')
-  const states = ['new-jersey', 'texas']
+  const states = ['new-jersey', 'texas', 'georgia']
   const params: { state: string; county: string; comparison: string }[] = []
 
   for (const stateSlug of states) {
@@ -420,7 +421,7 @@ export default async function ComparisonPage({ params }: Props) {
 
       <Header />
       <main className="min-h-screen bg-gradient-to-br from-bg-gradient-from to-bg-gradient-to">
-        <div className="container-page py-8">
+        <div className="container-content py-8">
 
           {/* Breadcrumb */}
           <nav className="text-sm text-text-muted mb-4" aria-label="Breadcrumb">
@@ -435,56 +436,84 @@ export default async function ComparisonPage({ params }: Props) {
 
           {/* H1 + intro */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-text mb-3">
+            <h1 className="text-3xl font-semibold tracking-tight text-text mb-3">
               {statsA.displayName} vs {statsB.displayName}: Property Tax Comparison
             </h1>
             <p className="text-sm text-text-muted mb-1">
               {county.name} County, {stateName}{year ? ` — ${year} data` : ''}
             </p>
-            <p className="text-base text-text-muted max-w-prose leading-relaxed mt-3">
+            <p className="text-base text-text-muted measure leading-relaxed mt-3">
               {introParagraph}
             </p>
           </div>
 
+          {/* Verdict hero */}
+          {statsA.avgBill != null && statsB.avgBill != null && statsA.avgBill !== statsB.avgBill && (() => {
+            const lower = statsA.avgBill! < statsB.avgBill! ? statsA : statsB
+            const higher = statsA.avgBill! < statsB.avgBill! ? statsB : statsA
+            const diff = Math.abs(statsA.avgBill! - statsB.avgBill!)
+            return (
+              <div className="mb-8 rounded-xl border border-border bg-[#0F2E5C] text-white p-6 relative overflow-hidden">
+                <div className="absolute inset-0 opacity-20" style={{ background: 'radial-gradient(circle at 88% 0%, #7BA7FF, transparent 55%)' }} />
+                <div className="relative flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                  <div>
+                    <p className="text-xs font-medium uppercase tracking-wide text-white/60">Lower average bill</p>
+                    <p className="text-2xl font-semibold mt-1">{lower.displayName} wins</p>
+                    <p className="text-sm text-white/70 mt-1 measure">
+                      On the typical home, {lower.displayName}&apos;s average residential bill runs lighter than {higher.displayName}&apos;s.
+                    </p>
+                  </div>
+                  <div className="text-right shrink-0">
+                    <p className="text-xs font-medium uppercase tracking-wide text-white/60">Difference / year</p>
+                    <p className="text-[44px] leading-none font-semibold mt-1 tabular-nums">{fmt(diff)}</p>
+                    <p className="text-xs text-white/60 mt-1 tabular-nums">≈ {fmt(diff * 30)} over 30 years</p>
+                  </div>
+                </div>
+              </div>
+            )
+          })()}
+
           {/* Side-by-side stats table */}
-          <section className="mb-10" aria-labelledby="comparison-heading">
+          <section className="mb-10 scroll-mt-24" aria-labelledby="comparison-heading">
             <h2 id="comparison-heading" className="text-xl font-semibold text-text mb-4">
               Side-by-side comparison
             </h2>
 
-            <div className="grid grid-cols-3 gap-2 mb-2 px-3">
-              <div />
-              <div className="text-center font-semibold text-text text-sm">{statsA.displayName}</div>
-              <div className="text-center font-semibold text-text text-sm">{statsB.displayName}</div>
+            <div className="rounded-xl border border-border overflow-hidden">
+              <div className="grid grid-cols-[1.2fr_1fr_1fr] bg-bg border-b border-border">
+                <div className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-text-muted">Metric</div>
+                <div className="px-4 py-3 text-center text-sm font-semibold text-text border-l border-border">{statsA.displayName}</div>
+                <div className="px-4 py-3 text-center text-sm font-semibold text-text border-l border-border">{statsB.displayName}</div>
+              </div>
+              <ComparisonRow
+                label="Effective tax rate"
+                valA={statsA.effectiveRatePct}
+                valB={statsB.effectiveRatePct}
+                yearA={statsA.effectiveRateYear}
+                yearB={statsB.effectiveRateYear}
+                format="rate"
+                lowerIsBetter
+              />
+              <ComparisonRow
+                label="Avg residential tax bill"
+                valA={statsA.avgBill}
+                valB={statsB.avgBill}
+                yearA={statsA.avgBillYear}
+                yearB={statsB.avgBillYear}
+                format="usd"
+                lowerIsBetter
+              />
+              <ComparisonRow
+                label="Median home value"
+                valA={statsA.medianHomeValue}
+                valB={statsB.medianHomeValue}
+                yearA={statsA.medianHomeValueYear}
+                yearB={statsB.medianHomeValueYear}
+                format="usd"
+                lowerIsBetter={false}
+                last
+              />
             </div>
-
-            <ComparisonRow
-              label="Effective tax rate"
-              valA={statsA.effectiveRatePct}
-              valB={statsB.effectiveRatePct}
-              yearA={statsA.effectiveRateYear}
-              yearB={statsB.effectiveRateYear}
-              format="rate"
-              lowerIsBetter
-            />
-            <ComparisonRow
-              label="Avg residential tax bill"
-              valA={statsA.avgBill}
-              valB={statsB.avgBill}
-              yearA={statsA.avgBillYear}
-              yearB={statsB.avgBillYear}
-              format="usd"
-              lowerIsBetter
-            />
-            <ComparisonRow
-              label="Median home value"
-              valA={statsA.medianHomeValue}
-              valB={statsB.medianHomeValue}
-              yearA={statsA.medianHomeValueYear}
-              yearB={statsB.medianHomeValueYear}
-              format="usd"
-              lowerIsBetter={false}
-            />
           </section>
 
           {/* Appeal prompt */}
@@ -493,7 +522,7 @@ export default async function ComparisonPage({ params }: Props) {
           )}
 
           {/* Full town page links */}
-          <section className="mb-10" aria-labelledby="full-pages-heading">
+          <section className="mb-10 scroll-mt-24" aria-labelledby="full-pages-heading">
             <h2 id="full-pages-heading" className="text-xl font-semibold text-text mb-3">
               Full town profiles
             </h2>
@@ -517,18 +546,15 @@ export default async function ComparisonPage({ params }: Props) {
           </section>
 
           {/* FAQ */}
-          <section className="mb-12" aria-labelledby="faq-heading">
+          <section className="mb-12 scroll-mt-24" aria-labelledby="faq-heading">
             <h2 id="faq-heading" className="text-2xl font-semibold text-text mb-4">
               {statsA.displayName} vs {statsB.displayName} — frequently asked questions
             </h2>
-            <div className="space-y-4">
+            <div className="divide-y divide-border rounded-xl border border-border bg-surface">
               {faqs.map((faq, i) => (
-                <div
-                  key={i}
-                  className="rounded-lg border border-border bg-surface p-5"
-                >
+                <div key={i} className="p-5">
                   <h3 className="font-semibold text-text mb-2 text-sm">{faq.question}</h3>
-                  <p className="text-sm text-text-muted leading-relaxed">{faq.answer}</p>
+                  <p className="text-sm text-text-muted leading-relaxed measure">{faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -536,7 +562,7 @@ export default async function ComparisonPage({ params }: Props) {
 
           {/* Related comparisons */}
           {otherTowns.length > 0 && (
-            <section className="mb-10" aria-labelledby="related-comparisons-heading">
+            <section className="mb-10 scroll-mt-24" aria-labelledby="related-comparisons-heading">
               <h2
                 id="related-comparisons-heading"
                 className="text-xl font-semibold text-text mb-3"
@@ -564,7 +590,8 @@ export default async function ComparisonPage({ params }: Props) {
           )}
 
           {/* Sources */}
-          <section className="mb-10 border-t border-border pt-6">
+          <Divider className="mb-6" />
+          <section className="mb-10">
             <p className="text-sm text-text-muted">
               Data sourced from state tax authority publications and the U.S. Census Bureau
               American Community Survey. Figures are for planning and comparison only — actual
@@ -590,6 +617,36 @@ export default async function ComparisonPage({ params }: Props) {
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
+function Cell({
+  val,
+  year,
+  win,
+  format,
+}: {
+  val: number | null
+  year: number | null
+  win: boolean
+  format: 'usd' | 'rate'
+}) {
+  const formatVal = (v: number) => (format === 'rate' ? fmtRate(v) : fmt(v))
+  return (
+    <div className={`px-4 py-3 text-center border-l border-border ${win ? 'bg-emerald-50/50' : ''}`}>
+      {val != null ? (
+        <>
+          <span className={`font-semibold text-sm tabular-nums ${win ? 'text-emerald-700 dark:text-emerald-400' : 'text-text'}`}>
+            {formatVal(val)}
+          </span>
+          <span className={`block text-[10px] ${win ? 'text-emerald-600 font-medium uppercase tracking-wide' : 'text-text-muted'}`}>
+            {win ? 'lower' : (year ?? '')}
+          </span>
+        </>
+      ) : (
+        <span className="text-sm text-text-muted">—</span>
+      )}
+    </div>
+  )
+}
+
 function ComparisonRow({
   label,
   valA,
@@ -598,6 +655,7 @@ function ComparisonRow({
   yearB,
   format,
   lowerIsBetter,
+  last = false,
 }: {
   label: string
   valA: number | null
@@ -606,57 +664,23 @@ function ComparisonRow({
   yearB: number | null
   format: 'usd' | 'rate'
   lowerIsBetter: boolean
+  last?: boolean
 }) {
-  const formatVal = (v: number) => (format === 'rate' ? fmtRate(v) : fmt(v))
-
   const winnerA =
     valA != null && valB != null ? (lowerIsBetter ? valA < valB : valA > valB) : false
   const winnerB =
     valA != null && valB != null ? (lowerIsBetter ? valB < valA : valB > valA) : false
 
   return (
-    <div className="grid grid-cols-3 gap-2 rounded-lg border border-border bg-surface p-3 mb-2 items-center">
-      <div className="text-sm text-text-muted">{label}</div>
-
-      <div className="text-center">
-        {valA != null ? (
-          <>
-            <span
-              className={`font-semibold text-sm ${winnerA ? 'text-green-700 dark:text-green-400' : 'text-text'}`}
-            >
-              {formatVal(valA)}
-              {winnerA && (
-                <span className="ml-1 text-xs font-normal text-green-600 dark:text-green-400">
-                  lower
-                </span>
-              )}
-            </span>
-            {yearA && <div className="text-xs text-text-muted">{yearA}</div>}
-          </>
-        ) : (
-          <span className="text-sm text-text-muted">—</span>
+    <div className={`grid grid-cols-[1.2fr_1fr_1fr] items-stretch ${last ? '' : 'border-b border-border'}`}>
+      <div className="px-4 py-3 text-sm text-text-muted flex items-center">
+        {label}
+        {lowerIsBetter && (
+          <span className="ml-1.5 text-[10px] text-text-muted/70">(lower better)</span>
         )}
       </div>
-
-      <div className="text-center">
-        {valB != null ? (
-          <>
-            <span
-              className={`font-semibold text-sm ${winnerB ? 'text-green-700 dark:text-green-400' : 'text-text'}`}
-            >
-              {formatVal(valB)}
-              {winnerB && (
-                <span className="ml-1 text-xs font-normal text-green-600 dark:text-green-400">
-                  lower
-                </span>
-              )}
-            </span>
-            {yearB && <div className="text-xs text-text-muted">{yearB}</div>}
-          </>
-        ) : (
-          <span className="text-sm text-text-muted">—</span>
-        )}
-      </div>
+      <Cell val={valA} year={yearA} win={winnerA} format={format} />
+      <Cell val={valB} year={yearB} win={winnerB} format={format} />
     </div>
   )
 }

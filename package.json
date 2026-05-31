@@ -15,6 +15,8 @@
     "merge-avg-tax-bill": "tsx scripts/merge-state-metrics.ts --state new-jersey /tmp/nj-avg-tax-bill.json",
     "source-texas-metrics": "tsx scripts/source-state-metrics.ts --state texas --out /tmp/texas-town-metrics.json",
     "merge-texas-metrics": "tsx scripts/merge-state-metrics.ts --state texas /tmp/texas-town-metrics.json",
+    "source-georgia-metrics": "tsx scripts/source-state-metrics.ts --state georgia --out /tmp/georgia-town-metrics.json",
+    "merge-georgia-metrics": "tsx scripts/merge-state-metrics.ts --state georgia /tmp/georgia-town-metrics.json",
     "apply-town-overviews": "tsx scripts/apply-town-overviews.ts",
     "validate:data": "tsx scripts/validate-state-data.ts",
     "validate:tier1-overviews": "tsx scripts/validate-tier1-overviews.ts",

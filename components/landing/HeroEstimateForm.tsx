@@ -33,9 +33,13 @@ export default function HeroEstimateForm({ states }: HeroEstimateFormProps) {
     router.push(href)
   }
 
-  const popularStates = ['new-jersey', 'texas'] as const
-  const popularStateOptions = states.filter(s => popularStates.includes(s.slug as 'new-jersey' | 'texas'))
-  const selectableStates = states.filter(s => s.slug === 'new-jersey' || s.slug === 'texas')
+  const popularStates = ['new-jersey', 'texas', 'georgia'] as const
+  const popularStateOptions = states.filter(s =>
+    popularStates.includes(s.slug as 'new-jersey' | 'texas' | 'georgia')
+  )
+  const selectableStates = states.filter(
+    s => s.slug === 'new-jersey' || s.slug === 'texas' || s.slug === 'georgia'
+  )
 
   return (
     <div className="w-full max-w-md">

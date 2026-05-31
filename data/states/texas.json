@@ -47,7 +47,12 @@
     {
       "name": "Harris",
       "slug": "harris",
-      "neighborCounties": ["Fort Bend", "Montgomery", "Galveston", "Brazoria"],
+      "neighborCounties": [
+        "Fort Bend",
+        "Montgomery",
+        "Galveston",
+        "Brazoria"
+      ],
       "towns": [
         {
           "name": "Houston",
@@ -781,6 +786,38 @@
             "unit": "PERCENT",
             "sourceRef": "us_census_acs_county_effective_rate"
           }
+        ],
+        "medianTaxesPaid": [
+          {
+            "year": 2020,
+            "value": 3667,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2021,
+            "value": 3838,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2022,
+            "value": 4168,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2023,
+            "value": 4382,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2024,
+            "value": 4489,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          }
         ]
       },
       "asOfYear": 2025
@@ -788,7 +825,12 @@
     {
       "name": "Dallas",
       "slug": "dallas",
-      "neighborCounties": ["Tarrant", "Collin", "Denton", "Rockwall"],
+      "neighborCounties": [
+        "Tarrant",
+        "Collin",
+        "Denton",
+        "Rockwall"
+      ],
       "towns": [
         {
           "name": "Dallas",
@@ -2446,6 +2488,38 @@
             "unit": "PERCENT",
             "sourceRef": "us_census_acs_county_effective_rate"
           }
+        ],
+        "medianTaxesPaid": [
+          {
+            "year": 2020,
+            "value": 3570,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2021,
+            "value": 3850,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2022,
+            "value": 4360,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2023,
+            "value": 4668,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2024,
+            "value": 4798,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          }
         ]
       },
       "asOfYear": 2025
@@ -2453,7 +2527,13 @@
     {
       "name": "Collin",
       "slug": "collin",
-      "neighborCounties": ["Dallas", "Denton", "Rockwall", "Grayson", "Hunt"],
+      "neighborCounties": [
+        "Dallas",
+        "Denton",
+        "Rockwall",
+        "Grayson",
+        "Hunt"
+      ],
       "towns": [
         {
           "name": "Plano",
@@ -3528,6 +3608,38 @@
             "unit": "PERCENT",
             "sourceRef": "us_census_acs_county_effective_rate"
           }
+        ],
+        "medianTaxesPaid": [
+          {
+            "year": 2020,
+            "value": 6377,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2021,
+            "value": 6658,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2022,
+            "value": 7202,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2023,
+            "value": 7432,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2024,
+            "value": 7521,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          }
         ]
       },
       "asOfYear": 2025
@@ -3535,7 +3647,12 @@
     {
       "name": "Tarrant",
       "slug": "tarrant",
-      "neighborCounties": ["Dallas", "Denton", "Johnson", "Parker"],
+      "neighborCounties": [
+        "Dallas",
+        "Denton",
+        "Johnson",
+        "Parker"
+      ],
       "towns": [
         {
           "name": "Fort Worth",
@@ -5040,6 +5157,38 @@
             "unit": "PERCENT",
             "sourceRef": "us_census_acs_county_effective_rate"
           }
+        ],
+        "medianTaxesPaid": [
+          {
+            "year": 2020,
+            "value": 4066,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2021,
+            "value": 4396,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2022,
+            "value": 4911,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2023,
+            "value": 5211,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2024,
+            "value": 5334,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          }
         ]
       },
       "asOfYear": 2025
@@ -5047,7 +5196,12 @@
     {
       "name": "Travis",
       "slug": "travis",
-      "neighborCounties": ["Williamson", "Hays", "Bastrop", "Caldwell"],
+      "neighborCounties": [
+        "Williamson",
+        "Hays",
+        "Bastrop",
+        "Caldwell"
+      ],
       "towns": [
         {
           "name": "Austin",
@@ -5999,6 +6153,38 @@
             "unit": "PERCENT",
             "sourceRef": "us_census_acs_county_effective_rate"
           }
+        ],
+        "medianTaxesPaid": [
+          {
+            "year": 2020,
+            "value": 6157,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2021,
+            "value": 6517,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2022,
+            "value": 7160,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2023,
+            "value": 7487,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2024,
+            "value": 7727,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          }
         ]
       },
       "asOfYear": 2025
@@ -6006,7 +6192,12 @@
     {
       "name": "Bexar",
       "slug": "bexar",
-      "neighborCounties": ["Comal", "Guadalupe", "Medina", "Atascosa"],
+      "neighborCounties": [
+        "Comal",
+        "Guadalupe",
+        "Medina",
+        "Atascosa"
+      ],
       "towns": [
         {
           "name": "San Antonio",
@@ -7502,6 +7693,38 @@
             "value": 1.7296,
             "unit": "PERCENT",
             "sourceRef": "us_census_acs_county_effective_rate"
+          }
+        ],
+        "medianTaxesPaid": [
+          {
+            "year": 2020,
+            "value": 3399,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2021,
+            "value": 3719,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2022,
+            "value": 4171,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2023,
+            "value": 4429,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2024,
+            "value": 4535,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
           }
         ]
       },

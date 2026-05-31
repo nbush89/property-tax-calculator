@@ -35,6 +35,9 @@ const PROJECTION_CONFIGS: Record<
 > = {
   'new-jersey': { center: [-74.5, 40.15], scale: 9500 },
   texas: { center: [-99.3, 31.2], scale: 2100 },
+  // GA: roughly 270 mi N-S, 230 mi E-W. State center ~32.7N, -83.4W. Scale tuned
+  // empirically against 600x420 SVG canvas — adjust if the rendered map looks off.
+  georgia: { center: [-83.4, 32.7], scale: 5400 },
 }
 
 // ─── Color scale ──────────────────────────────────────────────────────────────

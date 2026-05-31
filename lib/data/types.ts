@@ -13,6 +13,32 @@ export type { TownOverview }
 export type MetricUnit = 'USD' | 'PERCENT'
 
 /**
+ * State-specific structural tax mechanics. Currently used by Georgia
+ * (40% assessment ratio + statewide standard homestead exemption).
+ *
+ * For NJ / TX this is unused — they apply the rate directly to fair market
+ * value (NJ uses effective rate; TX uses Comptroller unit rate or ACS-implied).
+ */
+export interface StateTaxStructure {
+  /**
+   * Fraction of fair market value that becomes assessed value before millage
+   * is applied. Georgia: 0.40 (constitutional). Most other states: 1.0 (or
+   * omitted — see calculator).
+   */
+  assessmentRatio?: number
+  /**
+   * Standard statewide homestead exemption in dollars, subtracted from
+   * assessed value for owner-occupied primary residences.
+   *
+   * Georgia standard homestead: $2,000. Many GA counties stack additional
+   * local exemptions on top — those are not captured here.
+   */
+  standardHomesteadExemption?: number
+  /** Free-form notes about the tax structure (rendered into copy). */
+  notes?: string
+}
+
+/**
  * State metadata (nested under "state" key)
  */
 export interface StateMeta {
@@ -21,6 +47,8 @@ export interface StateMeta {
   abbreviation: string
   asOfYear: number
   primarySources?: Record<string, string> // Maps metric keys to sourceRef keys
+  /** State-specific structural tax mechanics (see StateTaxStructure). */
+  taxStructure?: StateTaxStructure
 }
 
 /**
@@ -59,11 +87,44 @@ export interface StateMetrics {
 }
 
 /**
+ * Per-jurisdiction millage breakdown for states that publish discrete county /
+ * city / school / state mill rates (currently Georgia). Values are in mills,
+ * NOT decimal — divide by 1000 before multiplying assessed value.
+ */
+export interface MillageBreakdown {
+  /** Tax year these mills apply to */
+  year: number
+  /** County M&O + Bond mills (county taxing unit) */
+  county?: number
+  /** City taxing unit mills (M&O + Bond). Town-level only. */
+  city?: number
+  /** School district mills (M&O + Bond). May be county-wide or independent. */
+  school?: number
+  /** State mills (typically 0.000 in GA since 2016). */
+  state?: number
+  /** Total = sum of present components. Persisted to avoid recomputation. */
+  total: number
+  /** sourceRef key into the state-level sources map. */
+  sourceRef: string
+}
+
+/**
  * County-level metrics (historical data)
  */
 export interface CountyMetrics {
   averageResidentialTaxBill?: MetricSeries
   effectiveTaxRate?: MetricSeries
+  /**
+   * ACS B25103 county-level — median real estate taxes paid (USD).
+   * Used as a trend metric for states without published averageResidentialTaxBill.
+   */
+  medianTaxesPaid?: MetricSeries
+  /**
+   * County-level millage components (Georgia). Present when published by the
+   * state DOR. Used as a fallback when a town does not have its own city
+   * millage row (e.g., user picks a county without selecting a city).
+   */
+  millage?: MillageBreakdown[]
 }
 
 /**
@@ -81,6 +142,11 @@ export interface TownMetrics {
    * summed without address-level geographic lookups.
    */
   medianTaxesPaid?: MetricSeries
+  /**
+   * Town-level millage components (Georgia). Sum of county + city + school +
+   * state mills, used in the assessed-value × millage calculator path.
+   */
+  millage?: MillageBreakdown[]
 }
 
 /**

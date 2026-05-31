@@ -27,8 +27,8 @@ export default function Hero({ statesForHero }: HeroProps) {
 
             {/* Subheadline */}
             <p className="mb-6 max-w-2xl text-lg text-text-muted sm:text-xl">
-              County and town-level rates, trends, and planning estimates built from public data.
-              No sign-up, no ads, no guesswork.
+              County and town-level rates, trends, and planning estimates built from public data. No
+              sign-up, no ads, no guesswork.
             </p>
 
             {/* CTAs */}
@@ -41,26 +41,41 @@ export default function Hero({ statesForHero }: HeroProps) {
               </LinkButton>
             </div>
             <p className="mb-8 text-xs text-text-muted">
-              New Jersey and Texas covered, with more states coming soon.
+              New Jersey, Texas, and Georgia covered, with more states coming soon.
             </p>
 
             {/* Trust Badges */}
             <div className="flex flex-wrap items-center justify-center gap-4 lg:justify-start">
               <Badge variant="success">
                 <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 13l4 4L19 7"
+                  />
                 </svg>
                 Free
               </Badge>
               <Badge variant="success">
                 <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 13l4 4L19 7"
+                  />
                 </svg>
                 No sign-up
               </Badge>
               <Badge variant="success">
                 <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 13l4 4L19 7"
+                  />
                 </svg>
                 Public data sources
               </Badge>

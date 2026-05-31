@@ -62,6 +62,14 @@ export function taxBillLabelForState(stateSlug: string): {
       sourceNote: 'ACS survey median — reflects all taxing units net of typical exemptions',
     }
   }
+  if (stateSlug === 'georgia') {
+    return {
+      label: 'median taxes paid',
+      shortLabel: 'Median taxes paid',
+      sourceNote:
+        'ACS survey median — reflects combined county + city + school millage net of typical homestead exemption',
+    }
+  }
   return {
     label: 'average residential tax bill',
     shortLabel: 'Avg residential tax bill',

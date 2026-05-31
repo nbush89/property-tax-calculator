@@ -21,6 +21,7 @@ import {
   formatResolvedMetricValue,
   shouldShowCountyAverageTaxBillTrend,
 } from '@/lib/metrics/resolveDisplayMetrics'
+import { getMetricAvailability } from '@/lib/metrics/stateMetricCapabilities'
 import { MetricCaveatTrigger } from '@/components/metrics/MetricCaveatTrigger'
 import {
   selectFeaturedTowns,
@@ -39,11 +40,16 @@ import {
   CountyRelatedCountiesSection,
 } from '@/components/county/CountyPageSections'
 import { CountyReliefSection } from '@/components/relief/CountyReliefSection'
+import Hb581ExplainerSection, { getHb581Status } from '@/components/county/Hb581ExplainerSection'
+import { getStateAffiliateConfig } from '@/lib/affiliates/affiliateConfig'
+import { ExemptionsCtaSection } from '@/components/county/ExemptionsCtaSection'
 import ChoroplethMap from '@/components/state/ChoroplethMap'
 import type { CountyRateData } from '@/components/state/ChoroplethMap'
 import { slugifyLocation } from '@/utils/locationUtils'
 import { CtaCalculateLink } from '@/components/cta/CtaCalculateLink'
 import { LinkButton } from '@/components/ui/Button'
+import { Divider } from '@/components/ui/Divider'
+import { getStateReliefConfig } from '@/lib/relief/stateReliefConfigs'
 
 type Props = {
   params: Promise<{ state: string; county: string }>
@@ -110,10 +116,21 @@ export default async function CountyPropertyTaxPage({ params }: Props) {
   const readyTownCount = (county.towns ?? []).filter(t => isTownReady(t)).length
   const countySlugShort = county.slug || slugifyLocation(county.name)
 
-  // Determine whether to show the bill trend chart (NJ yes, TX no)
+  // Determine whether to show the trend chart. NJ uses averageResidentialTaxBill;
+  // GA + TX fall back to ACS county-level medianTaxesPaid (B25103). Both modes
+  // display in dollars — we deliberately do NOT use effective rate here because
+  // a declining rate during rising bills (driven by faster-rising home values)
+  // would mislead users.
   const hasBillTrendData =
     shouldShowCountyAverageTaxBillTrend(state) &&
     (county.metrics?.averageResidentialTaxBill ?? []).length >= 2
+  const medianTaxesAv = getMetricAvailability(state, 'county', 'medianTaxesPaid')
+  const hasMedianTaxesTrendData =
+    !hasBillTrendData &&
+    medianTaxesAv?.supported !== false &&
+    (county.metrics?.medianTaxesPaid ?? []).length >= 2
+
+  const hasTrendData = hasBillTrendData || hasMedianTaxesTrendData
 
   // Build county rate data for the inset map (used when no trend chart)
   const countyMapData: CountyRateData[] = stateData.counties.map(c => {
@@ -148,7 +165,7 @@ export default async function CountyPropertyTaxPage({ params }: Props) {
 
         {/* Compact page header */}
         <div className="page-header-bar">
-          <div className="container-page">
+          <div className="container-content">
             {/* Breadcrumb */}
             <nav className="text-sm text-text-muted mb-3" aria-label="Breadcrumb">
               <Link href="/" className="hover:text-primary transition-colors">Home</Link>
@@ -228,9 +245,9 @@ export default async function CountyPropertyTaxPage({ params }: Props) {
 
         {/* Data hero — adapts to available data */}
         <section className="pt-8 pb-2 bg-bg">
-          <div className="container-page">
-            {hasBillTrendData ? (
-              /* NJ-style: full-width bill trend chart */
+          <div className="container-content">
+            {hasTrendData ? (
+              /* Trend chart — bill series for NJ, effective rate series for TX/GA */
               <CountyTaxTrendsChart county={county} stateSlug={state} />
             ) : (
               /* TX-style: key stats left + inset map right */
@@ -280,8 +297,9 @@ export default async function CountyPropertyTaxPage({ params }: Props) {
         </section>
 
         {/* Calculator */}
-        <section className="border-t border-border py-8 bg-bg">
-          <div className="container-page">
+        <Divider />
+        <section className="py-8 bg-bg">
+          <div className="container-content">
             <h2 className="text-xl font-semibold text-text mb-5">
               Calculate Your {county.name} County Property Tax
             </h2>
@@ -316,8 +334,13 @@ export default async function CountyPropertyTaxPage({ params }: Props) {
             return null
           }
           return (
-            <section className="border-t border-border py-8 bg-bg" id="compare-towns">
-              <div className="container-page">
+            <>
+            <Divider />
+            <section
+              className="py-8 bg-bg scroll-mt-24"
+              id="compare-towns"
+            >
+              <div className="container-content">
                 <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2 mb-4">
                   <h2 className="text-xl font-semibold text-text">
                     {insights?.title ?? `Towns in ${county.name} County`}
@@ -397,30 +420,181 @@ export default async function CountyPropertyTaxPage({ params }: Props) {
                 })()}
               </div>
             </section>
+            </>
           )
         })()}
 
-        {/* Overview + content sections */}
-        <section className="border-t border-border py-8 bg-bg">
-          <div className="container-page">
-            <CountyOverviewSection overview={countyContent.overview} />
-            {countyContent.comparison && (
-              <CountyComparisonSection comparison={countyContent.comparison} />
-            )}
-            <CountyTaxFactorsSection taxFactors={countyContent.taxFactors} />
+        {/* Overview + content sections — two-zone: prose left, sticky facts right */}
+        <Divider />
+        <section className="py-10 bg-bg">
+          <div className="container-content">
+            <div className="grid gap-10 lg:grid-cols-[1fr_300px] lg:items-start">
+              <div>
+                <CountyOverviewSection overview={countyContent.overview} />
+                {countyContent.comparison && (
+                  <CountyComparisonSection comparison={countyContent.comparison} />
+                )}
+                <CountyTaxFactorsSection taxFactors={countyContent.taxFactors} />
+              </div>
+              <aside className="lg:sticky lg:top-20">
+                <div className="rounded-xl border border-border bg-surface shadow-sm overflow-hidden">
+                  <div className="px-5 py-3 border-b border-border bg-bg">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-text-muted">
+                      Key facts
+                    </p>
+                  </div>
+                  <dl className="divide-y divide-border text-sm">
+                    {(() => {
+                      // Resolve each row explicitly from county.metrics so we
+                      // don't show two rows for the same metric (the prior bug
+                      // where countyHero collided with countyEffectiveRate for
+                      // TX, since TX's hero is also the effective rate).
+                      const fmtUSD = (n: number) =>
+                        new Intl.NumberFormat('en-US', {
+                          style: 'currency',
+                          currency: 'USD',
+                          maximumFractionDigits: 0,
+                        }).format(n)
+                      const latest = <T extends { year: number }>(
+                        arr?: T[]
+                      ): T | undefined =>
+                        arr?.length ? [...arr].sort((a, b) => a.year - b.year).pop() : undefined
+
+                      const rateRow =
+                        countyEffectiveRate != null
+                          ? {
+                              label: 'Effective rate',
+                              value: `${(countyEffectiveRate * 100).toFixed(2)}%`,
+                            }
+                          : null
+
+                      // Bill row — prefer published avg (NJ), fall back to ACS median (GA/TX)
+                      const avgBill = latest(county.metrics?.averageResidentialTaxBill)
+                      const medianTaxes = latest(county.metrics?.medianTaxesPaid)
+                      const billRow = avgBill
+                        ? {
+                            label: 'Avg residential bill',
+                            value: fmtUSD(avgBill.value),
+                            yearTag: avgBill.year,
+                          }
+                        : medianTaxes
+                          ? {
+                              label: 'Median bill',
+                              value: fmtUSD(medianTaxes.value),
+                              yearTag: medianTaxes.year,
+                            }
+                          : null
+
+                      const mhv = latest(
+                        (county.metrics as { medianHomeValue?: typeof avgBill }[] | undefined)
+                          ? undefined
+                          : undefined
+                      )
+                      // Note: medianHomeValue isn't currently stored at county
+                      // level in GA/TX (only town level). Skip the row rather
+                      // than render an empty one.
+
+                      // Total mills (GA only) — uniquely informative for GA users
+                      const millage = latest(county.metrics?.millage)
+                      const millsRow = millage
+                        ? {
+                            label: 'Total mills',
+                            value: millage.total.toFixed(3),
+                            yearTag: millage.year,
+                          }
+                        : null
+
+                      const rows = [rateRow, billRow, millsRow].filter(Boolean) as Array<{
+                        label: string
+                        value: string
+                        yearTag?: number
+                      }>
+
+                      return (
+                        <>
+                          {rows.map(r => (
+                            <div
+                              key={r.label}
+                              className="flex items-center justify-between px-5 py-3"
+                            >
+                              <dt className="text-text-muted">
+                                {r.label}
+                                {r.yearTag != null && (
+                                  <span className="ml-1 text-xs text-text-muted/70">
+                                    ({r.yearTag})
+                                  </span>
+                                )}
+                              </dt>
+                              <dd className="font-semibold tabular-nums">{r.value}</dd>
+                            </div>
+                          ))}
+                          {readyTownCount > 0 && (
+                            <div className="flex items-center justify-between px-5 py-3">
+                              <dt className="text-text-muted">Towns covered</dt>
+                              <dd className="font-semibold tabular-nums">{readyTownCount}</dd>
+                            </div>
+                          )}
+                        </>
+                      )
+                    })()}
+                  </dl>
+                  <div className="p-4 border-t border-border">
+                    <CtaCalculateLink
+                      href={`/${state}/property-tax-calculator`}
+                      variant="primary"
+                      size="sm"
+                      pageType="county"
+                      state={state}
+                      className="w-full justify-center"
+                    >
+                      Estimate my bill →
+                    </CtaCalculateLink>
+                  </div>
+                </div>
+              </aside>
+            </div>
           </div>
         </section>
 
-        {/* Relief programs */}
-        <section className="border-t border-border py-8 bg-bg">
-          <div className="container-page">
-            <CountyReliefSection stateSlug={state} countyDisplayName={county.name} />
-          </div>
-        </section>
+        {/* Policy callouts (HB 581 + Exemptions CTA) — separate section so the
+            sticky Key Facts rail above doesn't extend down past them. Same
+            two-zone grid skeleton (with an empty right column) keeps the
+            content visually aligned with the prose column above. Suppress the
+            section entirely when neither inner component will render. */}
+        {(() => {
+          const hb581Status = getHb581Status(state, county.name)
+          const exemptionsEnabled =
+            getStateAffiliateConfig(state).exemptionsCta?.enabled === true
+          if (!hb581Status && !exemptionsEnabled) return null
+          return (
+            <>
+              <Divider />
+              <section className="py-10 bg-bg">
+                <div className="container-content">
+                  <Hb581ExplainerSection stateSlug={state} countyName={county.name} inline />
+                  <ExemptionsCtaSection stateSlug={state} countyName={county.name} inline />
+                </div>
+              </section>
+            </>
+          )
+        })()}
+
+        {/* Relief programs — only rendered when the state has a relief config */}
+        {getStateReliefConfig(state) && (
+          <>
+            <Divider />
+            <section className="py-8 bg-bg">
+              <div className="container-content">
+                <CountyReliefSection stateSlug={state} countyDisplayName={county.name} />
+              </div>
+            </section>
+          </>
+        )}
 
         {/* Related counties + FAQ */}
-        <section className="border-t border-border py-8 bg-bg">
-          <div className="container-page">
+        <Divider />
+        <section className="py-8 bg-bg">
+          <div className="container-content">
             {countyContent.relatedCounties && (
               <div className="mb-8">
                 <CountyRelatedCountiesSection relatedCounties={countyContent.relatedCounties} />

@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { getTopCountiesForHero } from '@/lib/geo'
 import { buildCountyTownsIndexHref } from '@/lib/links/towns'
+import { taxBillLabelForState } from '@/lib/content/townContent'
 
 /**
  * Inline SVG sparkline. Uses a neutral blue — direction is shown by shape,
@@ -63,11 +64,17 @@ export default function TopCountiesTable({ stateSlug, stateName, limit = 100 }: 
 
   const hasAvgBill = counties.some(c => c.avgBill != null)
   const hasTrend = counties.some(c => c.trend.length >= 2)
-  // Label the trend column based on what data is available
-  const trendLabel = counties.some(c => c.trendType === 'bill') ? 'Bill Trend' : 'Rate Trend'
-  const trendNote = counties.some(c => c.trendType === 'bill')
-    ? 'Avg residential tax bill trend'
+  const hasBillTrend = counties.some(c => c.trendType === 'bill')
+  // State-aware label for the bill column + trend.
+  // NJ uses its published "average residential tax bill". GA/TX use the ACS
+  // county-level "median taxes paid" (B25103). Compact UI labels here.
+  const { label: billLongLabel } = taxBillLabelForState(stateSlug)
+  const billColumnLabel = billLongLabel.startsWith('average') ? 'Avg Bill' : 'Median Bill'
+  const trendLabel = hasBillTrend ? `${billColumnLabel} Trend` : 'Rate Trend'
+  const trendNote = hasBillTrend
+    ? `${billLongLabel} trend`
     : 'Effective rate trend (bill data unavailable)'
+  const sortLabel = hasAvgBill ? billLongLabel : 'effective rate'
 
   return (
     <div>
@@ -77,7 +84,7 @@ export default function TopCountiesTable({ stateSlug, stateName, limit = 100 }: 
             {stateName} counties — tax rates at a glance
           </h2>
           <p className="mt-1 text-sm text-text-muted">
-            Sorted by average residential tax bill, highest first.{' '}
+            Sorted by {sortLabel}, highest first.{' '}
             {hasTrend && trendNote + ', up to 5 years.'}
           </p>
         </div>
@@ -95,7 +102,9 @@ export default function TopCountiesTable({ stateSlug, stateName, limit = 100 }: 
             <tr className="border-b border-border bg-surface text-left">
               <th className="px-4 py-3 font-medium text-text-muted">County</th>
               {hasAvgBill && (
-                <th className="px-4 py-3 text-right font-medium text-text-muted">Avg Bill</th>
+                <th className="px-4 py-3 text-right font-medium text-text-muted">
+                  {billColumnLabel}
+                </th>
               )}
               <th className="px-4 py-3 text-right font-medium text-text-muted">Eff. Rate</th>
               {hasTrend && (

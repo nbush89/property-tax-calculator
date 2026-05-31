@@ -33,7 +33,7 @@ export function getStatePageFaqData(stateSlug: string): FAQItem[] {
     },
   ]
 
-  if (stateSlug === 'new-jersey' || stateSlug === 'texas') {
+  if (stateSlug === 'new-jersey' || stateSlug === 'texas' || stateSlug === 'georgia') {
     base.push({
       question: 'Does this calculator include homestead exemptions or other relief?',
       answer: getReliefFaqDoesCalculatorIncludeExemptions(stateSlug),

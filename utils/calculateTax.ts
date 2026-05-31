@@ -1,5 +1,10 @@
 import type { StateData } from '@/lib/data/types'
-import { getCountyRate, getCountyRateWithSource, getMunicipalRate } from '@/lib/rates-from-state'
+import {
+  getCountyRate,
+  getCountyRateWithSource,
+  getMunicipalRate,
+  getGaMillageBreakdown,
+} from '@/lib/rates-from-state'
 import { getLatestValue } from '@/lib/data/metrics'
 import type { SelectedReliefInputs } from '@/lib/relief/types'
 import { computeReliefAdjustments, uniqueNotes } from '@/lib/calculator/applyReliefPrograms'
@@ -12,6 +17,13 @@ export type CalculateTaxInput = {
   /** @deprecated prefer reliefSelections — merged with relief for NJ legacy keys */
   exemptions?: string[]
   reliefSelections?: SelectedReliefInputs
+  /**
+   * Whether this property is the homeowner's primary residence.
+   * Currently used by the Georgia calculator path to apply the standard
+   * $2,000 homestead exemption off assessed value. Defaults to true in the
+   * UI's calculator results panel; users can toggle off to see the gross bill.
+   */
+  isPrimaryResidence?: boolean
 }
 
 export type TaxReliefSummary = {
@@ -30,8 +42,11 @@ export type TaxReliefSummary = {
  *   Reflects the combined bill across all overlapping taxing units, net of typical
  *   homestead exemptions. More accurate for Texas calculator estimates.
  * - `'state_records'` — Rate from state tax records (e.g. NJ GTR).
+ * - `'ga_assessed_millage'` — Georgia: (FMV × 40% assessment ratio − homestead
+ *   exemption) × Σ(county + city + school + state mills). Per-jurisdiction
+ *   mills sourced from GA DOR consolidated millage digest.
  */
-export type RateSource = 'comptroller' | 'acs_implied' | 'state_records'
+export type RateSource = 'comptroller' | 'acs_implied' | 'state_records' | 'ga_assessed_millage'
 
 export type TaxCalculationResult = {
   homeValue: number
@@ -102,7 +117,129 @@ export function calculatePropertyTax(
     return calculatePropertyTaxTexas(input, stateData!, mergedRelief)
   }
 
+  if (stateSlug === 'georgia') {
+    return calculatePropertyTaxGeorgia(input, stateData!, mergedRelief)
+  }
+
   return calculatePropertyTaxNj(input, stateData, mergedRelief)
+}
+
+/**
+ * Calculate Georgia property tax using the constitutional 40% assessment
+ * ratio + per-jurisdiction millage from the GA Department of Revenue digest.
+ *
+ *   assessed_value = FMV × 0.40
+ *   taxable_value  = assessed_value − homestead_exemption (if primary residence)
+ *   annual_tax     = taxable_value × (total_mills / 1000)
+ *
+ * Falls back to ACS-implied effective rate when millage data is not yet
+ * populated (early-rollout / new cities not yet covered by the GA pipeline).
+ */
+function calculatePropertyTaxGeorgia(
+  input: CalculateTaxInput,
+  stateData: StateData,
+  mergedRelief: SelectedReliefInputs | undefined
+): TaxCalculationResult {
+  const { homeValue, county, town } = input
+  const isPrimary = input.isPrimaryResidence !== false // default true
+
+  const assessmentRatio = stateData.state?.taxStructure?.assessmentRatio ?? 0.4
+  const standardHomestead =
+    stateData.state?.taxStructure?.standardHomesteadExemption ?? 2000
+
+  const millage = getGaMillageBreakdown(stateData, county, town?.trim() || undefined)
+
+  // Primary path: discrete millage breakdown
+  if (millage && millage.total > 0) {
+    const assessedValue = Math.max(0, homeValue * assessmentRatio)
+    const homesteadApplied = isPrimary ? standardHomestead : 0
+    const taxableValueUsed = Math.max(0, assessedValue - homesteadApplied)
+    const totalRateDec = millage.total / 1000
+    const annualTax = taxableValueUsed * totalRateDec
+    const baseAnnualTaxBeforeRelief = assessedValue * totalRateDec
+    const monthlyTax = annualTax / 12
+    const effectiveRate = homeValue > 0 ? (annualTax / homeValue) * 100 : 0
+
+    // Display the rate breakdown in NJ-style countyRate/municipalRate fields
+    // for UI compatibility. countyRate captures county+school+state; municipalRate
+    // captures city only. Each expressed as % of home value for legibility.
+    const countyMills = (millage.county ?? 0) + (millage.school ?? 0) + (millage.state ?? 0)
+    const cityMills = millage.city ?? 0
+    const countyRatePct = (countyMills / 1000) * assessmentRatio * 100
+    const municipalRatePct = (cityMills / 1000) * assessmentRatio * 100
+
+    // Dollar tax savings from homestead = exemption × millage. NOT the raw
+    // $2,000 — the raw exemption is in assessed-value space, but the TaxResults
+    // UI subtracts `exemptions` from the subtotal in DOLLAR space. Mismatching
+    // these makes the displayed math fail (e.g. subtotal 6,170 − 2,000 ≠ 6,108).
+    const homesteadDollarSavings = homesteadApplied * totalRateDec
+
+    return {
+      homeValue,
+      taxableValueUsed,
+      countyRate: countyRatePct,
+      municipalRate: municipalRatePct,
+      totalRate: countyRatePct + municipalRatePct,
+      annualTax,
+      monthlyTax,
+      effectiveRate,
+      exemptions: homesteadDollarSavings,
+      finalTax: annualTax,
+      baseAnnualTaxBeforeRelief,
+      breakdown: {
+        base: assessedValue * ((millage.county ?? 0) / 1000),
+        municipalAdjustment: assessedValue * ((millage.city ?? 0) / 1000),
+        subtotal: assessedValue * totalRateDec,
+        exemptions: homesteadDollarSavings,
+        final: annualTax,
+      },
+      county,
+      rateSource: 'ga_assessed_millage' as RateSource,
+      rateSourceNote:
+        'Estimate uses the GA constitutional 40% assessment ratio. Millage rates sourced from the Georgia Department of Revenue annual consolidated digest (M&O + Bond). Standard $2,000 homestead exemption applied for primary residences (reduces taxable value by $2,000, saving roughly $' +
+        homesteadDollarSavings.toFixed(0) +
+        ' at this millage). Additional local homestead exemptions (senior, veteran, disability) are not modeled and will further reduce the actual bill.',
+    }
+  }
+
+  // Fallback: ACS-implied effective rate at county level. This already reflects
+  // the combined bill ÷ home value, so we apply it directly to FMV — do NOT
+  // re-apply the 40% assessment ratio or homestead exemption (both are already
+  // baked into the survey data).
+  const countyInfo = getCountyRateWithSource(stateData, county)
+  if (countyInfo != null) {
+    const taxable = Math.max(0, homeValue)
+    const annualTax = taxable * countyInfo.rate
+    const monthlyTax = annualTax / 12
+    const effectiveRate = homeValue > 0 ? (annualTax / homeValue) * 100 : 0
+    return {
+      homeValue,
+      taxableValueUsed: taxable,
+      countyRate: 0,
+      municipalRate: countyInfo.rate * 100,
+      totalRate: countyInfo.rate * 100,
+      annualTax,
+      monthlyTax,
+      effectiveRate,
+      exemptions: 0,
+      finalTax: annualTax,
+      breakdown: {
+        base: annualTax,
+        municipalAdjustment: 0,
+        subtotal: annualTax,
+        exemptions: 0,
+        final: annualTax,
+      },
+      county,
+      rateSource: 'acs_implied' as RateSource,
+      rateSourceNote:
+        'Rate derived from ACS county-level data: median real estate taxes paid ÷ median home value. Reflects all overlapping taxing units (county, city, school district, state) net of typical homestead exemptions. Individual bills vary — select a specific city for a more precise estimate using GA DOR millage rates.',
+    }
+  }
+
+  throw new Error(
+    `GA tax rates not found for ${county}${town?.trim() ? ` / ${town}` : ''}. Populate millage data or county-level ACS effective rate.`
+  )
 }
 
 function calculatePropertyTaxNj(

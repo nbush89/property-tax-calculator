@@ -422,6 +422,8 @@ function Step2Property({
   error,
 }: Step2Props) {
   const isNj = stateSlug === 'new-jersey'
+  const supportsPropertyType =
+    stateSlug === 'new-jersey' || stateSlug === 'texas' || stateSlug === 'georgia'
   const canContinue = !!homeValue && parseFloat(homeValue) > 0
 
   return (
@@ -455,7 +457,7 @@ function Step2Property({
         )}
       </div>
 
-      {isNj && (
+      {supportsPropertyType && (
         <div>
           <label htmlFor="sc-property-type" className="block text-sm font-medium text-text mb-2">
             Property Type
@@ -621,6 +623,20 @@ function ResultsStep({ result, countyName, townName, stateSlug, countySlug, onSt
     (result.relief?.appliedPrograms?.length ?? 0) > 0 ||
     (result.relief?.informationalProgramsSelected?.length ?? 0) > 0
 
+  // For TX (taxable-value reductions) and GA (homestead off assessed value),
+  // calculatePropertyTax returns baseAnnualTaxBeforeRelief — the bill before
+  // any exemption — alongside the post-exemption annualTax. Show the comparison
+  // so users see why the headline number is lower than rate × FMV.
+  const showExemptionBreakdown =
+    typeof result.baseAnnualTaxBeforeRelief === 'number' &&
+    result.baseAnnualTaxBeforeRelief > result.annualTax
+  const exemptionDollars = showExemptionBreakdown
+    ? result.baseAnnualTaxBeforeRelief! - result.annualTax
+    : 0
+  // GA: taxableValueUsed = assessed value − homestead; differs from FMV.
+  // Surfaces the 40% assessment ratio + exemption visibly.
+  const showTaxableValue = result.taxableValueUsed !== result.homeValue
+
   return (
     <div className="cs-fade space-y-5">
       <div className="flex items-start justify-between gap-4">
@@ -638,6 +654,42 @@ function ResultsStep({ result, countyName, townName, stateSlug, countySlug, onSt
           Adjust inputs
         </button>
       </div>
+
+      {/* Exemption breakdown — only when an exemption reduced the headline */}
+      {showExemptionBreakdown && (
+        <div className="rounded-xl border border-border bg-surface/80 p-4 text-sm">
+          <div className="flex justify-between items-baseline py-1">
+            <span className="text-text-muted">Base estimate (full value)</span>
+            <span className="text-text tabular-nums">
+              {fmtCurrency(result.baseAnnualTaxBeforeRelief!)}
+            </span>
+          </div>
+          <div className="flex justify-between items-baseline py-1">
+            <span className="text-text-muted">Homestead exemption</span>
+            <span className="text-text tabular-nums">−{fmtCurrency(exemptionDollars)}</span>
+          </div>
+          <div className="flex justify-between items-baseline py-1 border-t border-border mt-1 pt-2">
+            <span className="font-medium text-text">After exemption</span>
+            <span className="font-semibold text-text tabular-nums">
+              {fmtCurrency(result.annualTax)}
+            </span>
+          </div>
+        </div>
+      )}
+
+      {/* Adjusted taxable value (GA: assessed - homestead; TX: similar) */}
+      {showTaxableValue && (
+        <div className="rounded-xl border border-primary/20 bg-primary-soft/10 p-4 text-sm">
+          <p className="font-medium text-text">Adjusted taxable value (estimate)</p>
+          <p className="mt-1 tabular-nums text-text">
+            {fmtCurrency(result.taxableValueUsed)}
+          </p>
+          <p className="mt-1 text-xs text-text-muted">
+            Entered home value: {fmtCurrency(result.homeValue)}. Exemptions that reduce
+            taxable value are applied before the rate (where modeled).
+          </p>
+        </div>
+      )}
 
       {/* Rate breakdown */}
       <div className="rounded-xl border border-border bg-surface p-5">
@@ -747,7 +799,7 @@ export default function SteppedCalculatorClient({
   pageType = 'calculator',
 }: SteppedCalculatorClientProps) {
   // Determine if state supports calculation
-  const SUPPORTED = ['new-jersey', 'texas']
+  const SUPPORTED = ['new-jersey', 'texas', 'georgia']
 
   const [step, setStep] = useState<Step>(() => {
     // If state is locked (state-specific route), start at step 1 (location = county selection)

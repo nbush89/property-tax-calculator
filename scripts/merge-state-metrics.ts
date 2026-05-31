@@ -18,11 +18,22 @@ import { TX_RATES_SOURCE_REF } from './state-metrics/tx/config'
 type Unit = 'USD' | 'PERCENT'
 type DataPoint = { year: number; value: number; unit: Unit; sourceRef: string }
 
+type MillageBreakdownIn = {
+  year: number
+  county?: number
+  city?: number
+  school?: number
+  state?: number
+  total: number
+  sourceRef: string
+}
+
 type TownMetricsIn = {
   medianHomeValue?: DataPoint[]
   effectiveTaxRate?: DataPoint[]
   averageResidentialTaxBill?: DataPoint[]
   medianTaxesPaid?: DataPoint[]
+  millage?: MillageBreakdownIn[]
 }
 
 function readJson(p: string): unknown {
@@ -292,6 +303,16 @@ function mergeTexas(stateData: Record<string, unknown>, rawPayload: Record<strin
   const meta = rawPayload.meta as { sourceRefs?: string[] } | undefined
   ensureSourcesTx(stateData, meta?.sourceRefs)
 
+  // State-level metrics (averageTaxRate from ACS at state geography)
+  const statePayload = rawPayload.state as { averageTaxRate?: DataPoint[] } | undefined
+  if (statePayload?.averageTaxRate?.length) {
+    stateData.metrics = (stateData.metrics ?? {}) as Record<string, unknown>
+    ;(stateData.metrics as Record<string, unknown>).averageTaxRate = statePayload.averageTaxRate
+    console.log(
+      `[OK] TX state-level averageTaxRate: ${statePayload.averageTaxRate.length} years`
+    )
+  }
+
   const countyPayload = (rawPayload.counties ?? {}) as Record<
     string,
     { metrics?: TownMetricsIn & { averageResidentialTaxBill?: DataPoint[] } }
@@ -314,6 +335,11 @@ function mergeTexas(stateData: Record<string, unknown>, rawPayload: Record<strin
         county.metrics.averageResidentialTaxBill = countyIn.metrics.averageResidentialTaxBill
         const y = latestYear(countyIn.metrics.averageResidentialTaxBill)
         if (y) county.asOfYear = Math.max(county.asOfYear ?? 0, y)
+      }
+      if ((countyIn.metrics as { medianTaxesPaid?: DataPoint[] }).medianTaxesPaid?.length) {
+        county.metrics.medianTaxesPaid = (
+          countyIn.metrics as { medianTaxesPaid?: DataPoint[] }
+        ).medianTaxesPaid
       }
       if (
         countyIn.metrics.effectiveTaxRate?.length &&
@@ -359,13 +385,137 @@ function mergeTexas(stateData: Record<string, unknown>, rawPayload: Record<strin
   console.log(`[DONE] Texas: counties touched: ${updatedCounties}, towns: ${updatedTowns}`)
 }
 
+function ensureSourcesGa(
+  stateData: Record<string, unknown>,
+  payloadSourceRefs?: string[]
+): void {
+  const sources = (stateData.sources as Record<string, unknown>) ?? {}
+  stateData.sources = sources
+  sources['us_census_acs_profile_dp04'] ??= {
+    publisher: 'U.S. Census Bureau',
+    title: 'ACS 5-year Profile (DP04_0089E median home value)',
+    type: 'api',
+    homepageUrl: 'https://api.census.gov/data.html',
+    notes: 'DP04_0089E = Owner-occupied units: Median value (dollars).',
+  }
+  sources['us_census_acs_b25103'] ??= {
+    publisher: 'U.S. Census Bureau',
+    title: 'ACS 5-year Table B25103 — Median Real Estate Taxes Paid',
+    type: 'api',
+    homepageUrl: 'https://api.census.gov/data.html',
+    notes:
+      'B25103_001E = Median real estate taxes paid (dollars) for all owner-occupied units.',
+  }
+  sources['us_census_acs_county_effective_rate'] ??= {
+    publisher: 'U.S. Census Bureau',
+    title: 'ACS 5-year — County Effective Tax Rate (B25103 / B25077)',
+    type: 'api',
+    homepageUrl: 'https://api.census.gov/data.html',
+    notes:
+      'Effective rate derived as median real estate taxes paid (B25103_001E) divided by median home value (B25077_001E) at the county level.',
+  }
+  if (payloadSourceRefs?.includes('ga_dor_millage_rates')) {
+    sources['ga_dor_millage_rates'] ??= {
+      publisher: 'Georgia Department of Revenue',
+      title: 'Georgia County Ad Valorem Tax Digest Millage Rates',
+      type: 'pdf',
+      homepageUrl:
+        'https://dor.georgia.gov/local-government-services/digest-compliance/property-tax-millage-rates',
+      notes:
+        'Annual consolidated PDF of millage rates by county and tax district (M&O and Bond).',
+    }
+  }
+}
+
+function mergeGeorgia(stateData: Record<string, unknown>, rawPayload: Record<string, unknown>): void {
+  const meta = rawPayload.meta as { sourceRefs?: string[] } | undefined
+  ensureSourcesGa(stateData, meta?.sourceRefs)
+
+  // State-level metrics (averageTaxRate from ACS at state geography)
+  const statePayload = rawPayload.state as { averageTaxRate?: DataPoint[] } | undefined
+  if (statePayload?.averageTaxRate?.length) {
+    stateData.metrics = (stateData.metrics ?? {}) as Record<string, unknown>
+    ;(stateData.metrics as Record<string, unknown>).averageTaxRate = statePayload.averageTaxRate
+    console.log(
+      `[OK] GA state-level averageTaxRate: ${statePayload.averageTaxRate.length} years`
+    )
+  }
+
+  const countyPayload = (rawPayload.counties ?? {}) as Record<
+    string,
+    {
+      metrics?: TownMetricsIn & {
+        averageResidentialTaxBill?: DataPoint[]
+        millage?: MillageBreakdownIn[]
+      }
+    }
+  >
+  const townMetrics = (rawPayload.towns ?? {}) as Record<string, TownMetricsIn>
+  const counties = (stateData.counties as any[]) ?? []
+  let updatedTowns = 0
+  let updatedCounties = 0
+
+  for (const county of counties) {
+    const slug = String(county.slug)
+    const countyIn = countyPayload[slug]
+    if (countyIn?.metrics) {
+      county.metrics = county.metrics ?? {}
+      if (countyIn.metrics.effectiveTaxRate?.length) {
+        county.metrics.effectiveTaxRate = countyIn.metrics.effectiveTaxRate
+        updatedCounties++
+      }
+      if ((countyIn.metrics as { medianTaxesPaid?: DataPoint[] }).medianTaxesPaid?.length) {
+        county.metrics.medianTaxesPaid = (
+          countyIn.metrics as { medianTaxesPaid?: DataPoint[] }
+        ).medianTaxesPaid
+      }
+      if (countyIn.metrics.millage?.length) {
+        county.metrics.millage = countyIn.metrics.millage
+        const y = countyIn.metrics.millage[countyIn.metrics.millage.length - 1].year
+        if (y) county.asOfYear = Math.max(county.asOfYear ?? 0, y)
+      }
+      if (countyIn.metrics.effectiveTaxRate?.length) {
+        const y = latestYear(countyIn.metrics.effectiveTaxRate)
+        if (y) county.asOfYear = Math.max(county.asOfYear ?? 0, y)
+      }
+    }
+
+    for (const town of county.towns ?? []) {
+      const townKey = `${slug}/${town.slug}`
+      const metricsIn = townMetrics[townKey] ?? townMetrics[town.name]
+      if (!metricsIn) continue
+
+      const townObj = town as Record<string, unknown>
+      townObj.metrics = townObj.metrics ?? {}
+      const m = townObj.metrics as Record<string, unknown>
+      if (metricsIn.medianHomeValue?.length) m.medianHomeValue = metricsIn.medianHomeValue
+      if (metricsIn.effectiveTaxRate?.length) m.effectiveTaxRate = metricsIn.effectiveTaxRate
+      if (metricsIn.medianTaxesPaid?.length) m.medianTaxesPaid = metricsIn.medianTaxesPaid
+      if (metricsIn.millage?.length) m.millage = metricsIn.millage
+
+      const y1 = latestYear(metricsIn.medianHomeValue)
+      const y2 = latestYear(metricsIn.effectiveTaxRate)
+      const y4 = latestYear(metricsIn.medianTaxesPaid)
+      const y5 = metricsIn.millage?.length
+        ? metricsIn.millage[metricsIn.millage.length - 1].year
+        : 0
+      const asOf = Math.max(y1 ?? 0, y2 ?? 0, y4 ?? 0, y5 ?? 0)
+      if (asOf > 0) townObj.asOfYear = asOf
+      updatedTowns++
+    }
+  }
+
+  syncStateAsOfYear(stateData)
+  console.log(`[DONE] Georgia: counties touched: ${updatedCounties}, towns: ${updatedTowns}`)
+}
+
 function main() {
   const repoRoot = process.cwd()
   const { state, metricsPath } = parseArgs()
 
   if (!state || !metricsPath) {
     console.error(
-      'Usage: npx tsx scripts/merge-state-metrics.ts --state new-jersey|texas <path-to-payload.json>'
+      'Usage: npx tsx scripts/merge-state-metrics.ts --state new-jersey|texas|georgia <path-to-payload.json>'
     )
     process.exit(1)
   }
@@ -394,6 +544,8 @@ function main() {
     } else {
       mergeNewJerseyUnified(stateData, rawPayload)
     }
+  } else if (state === 'georgia') {
+    mergeGeorgia(stateData, rawPayload)
   } else {
     mergeTexas(stateData, rawPayload)
   }

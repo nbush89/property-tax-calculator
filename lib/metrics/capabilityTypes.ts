@@ -32,6 +32,12 @@ export type StateMetricCapabilities = {
 export type StateCalculatorCapabilities = {
   hasCountyAndMunicipalRates: boolean
   hasComptrollerUnitRates: boolean
+  /**
+   * Georgia-style: assessed value (40% of FMV) × per-jurisdiction millage,
+   * net of statewide homestead exemption. Optional so existing TX/NJ configs
+   * compile without modification.
+   */
+  hasAssessedValueMillage?: boolean
   hasTownPages: boolean
 }
 

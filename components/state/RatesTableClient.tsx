@@ -32,6 +32,11 @@ interface Props {
   counties: CountyRateRow[]
   /** Whether avg bill column is meaningful for this state */
   hasBillData: boolean
+  /**
+   * Short label for the bill column header (e.g. "Avg Bill" for NJ,
+   * "Median Bill" for GA/TX). Defaults to "Avg Bill" if not provided.
+   */
+  billColumnLabel?: string
 }
 
 // ─── Sparkline ────────────────────────────────────────────────────────────────
@@ -90,7 +95,13 @@ function Chevron({ open }: { open: boolean }) {
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
-export default function RatesTableClient({ stateSlug, stateName, counties, hasBillData }: Props) {
+export default function RatesTableClient({
+  stateSlug,
+  stateName,
+  counties,
+  hasBillData,
+  billColumnLabel = 'Avg Bill',
+}: Props) {
   const [expanded, setExpanded] = useState<Set<string>>(new Set())
 
   function toggle(name: string) {
@@ -127,7 +138,7 @@ export default function RatesTableClient({ stateSlug, stateName, counties, hasBi
             </th>
             {hasBillData && (
               <th className="px-4 py-3 text-right font-medium text-text-muted whitespace-nowrap">
-                Avg Bill
+                {billColumnLabel}
               </th>
             )}
             <th className="px-4 py-3 text-right font-medium text-text-muted">Trend</th>

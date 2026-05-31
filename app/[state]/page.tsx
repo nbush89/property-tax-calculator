@@ -19,6 +19,8 @@ import TopCountiesTable from '@/components/state/TopCountiesTable'
 import ChoroplethMap from '@/components/state/ChoroplethMap'
 import type { CountyRateData } from '@/components/state/ChoroplethMap'
 import { getLatestValue } from '@/lib/data/metrics'
+import { Divider } from '@/components/ui/Divider'
+import { getStateReliefConfig } from '@/lib/relief/stateReliefConfigs'
 
 type Props = {
   params: Promise<{ state: string }>
@@ -173,7 +175,9 @@ export default async function StatePage({ params }: Props) {
           const featuredTowns = selectStateFeaturedTowns(stateData, { max: 15 })
           if (featuredTowns.length === 0) return null
           return (
-            <section className="border-t border-border py-8 bg-bg">
+            <>
+              <Divider />
+              <section className="py-8 bg-bg">
               <div className="container-page">
                 <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2 mb-4">
                   <h2 className="text-lg font-semibold text-text">Browse towns</h2>
@@ -198,16 +202,22 @@ export default async function StatePage({ params }: Props) {
                   ))}
                 </ul>
               </div>
-            </section>
+              </section>
+            </>
           )
         })()}
 
-        {/* State relief programs */}
-        <section className="border-t border-border py-8 bg-bg">
-          <div className="container-page">
-            <StateReliefSection stateSlug={state} />
-          </div>
-        </section>
+        {/* State relief programs — only rendered when the state has a relief config */}
+        {getStateReliefConfig(state) && (
+          <>
+            <Divider />
+            <section className="py-8 bg-bg">
+              <div className="container-page">
+                <StateReliefSection stateSlug={state} />
+              </div>
+            </section>
+          </>
+        )}
       </main>
       <Footer />
     </>

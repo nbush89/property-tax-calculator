@@ -65,6 +65,30 @@ const STATE_APPEAL_CONTENT: Record<string, AppealContent> = {
       'https://comptroller.texas.gov/taxes/property-tax/taxpayers/appeals.php',
     officialUrlLabel: 'Texas Comptroller — Property Tax Protests and Appeals',
   },
+
+  georgia: {
+    processOverview:
+      "In Georgia, property owners appeal their assessment by filing a Form PT-311A with the county Board of Tax Assessors within 45 days of the date on their annual assessment notice. The Board of Tax Assessors reviews the appeal first; if the result is unsatisfactory, the case proceeds to the county Board of Equalization (BOE), a Hearing Officer (for non-homestead property over $750,000), or binding arbitration — taxpayer's choice.",
+    appealBoard: 'County Board of Tax Assessors → Board of Equalization',
+    deadlineGuidance:
+      "Georgia gives you 45 days from the date printed on your annual assessment notice to file Form PT-311A with the county Board of Tax Assessors. Annual notices typically mail between April and June — exact timing varies by county. If you miss the 45-day window, you generally cannot appeal that year's assessment. Mark the postmark date as soon as the notice arrives and file electronically through your county's tax assessor portal when available; mail can eat several days you may not have to spare.",
+    requiredDocs: [
+      'Completed Form PT-311A (Appeal of Assessment), signed and dated within the 45-day window',
+      'Recent comparable sales (within the last 12 months) from your neighborhood at similar square footage and condition',
+      'Independent fee appraisal — strongly recommended for appeals over $25,000 in assessed-value difference (or $62,500 in fair market value, since GA assesses at 40%)',
+      'Photos and documentation of any property condition issues, deferred maintenance, or functional obsolescence',
+    ],
+    tips: [
+      "Georgia assesses property at 40% of fair market value. Your assessment notice shows assessed value — multiply by 2.5 to compare against recent comparable sale prices in your neighborhood (a $200,000 assessed value implies $500,000 fair market value).",
+      'Comparable sales from the same county within the last 12 months carry the most weight. Pull 3–5 strong comps, ideally on the same street or in the same subdivision, similar in square footage (±15%) and condition.',
+      "If a Board of Tax Assessors review doesn't go your way, you have the right to escalate to the Board of Equalization (BOE) — a citizen panel that often rules more favorably than the original assessors. The BOE hearing is free; bring the same comps plus any new evidence.",
+      'For homes valued over $750,000 or non-homestead property, you can bypass the BOE and request a Hearing Officer (an experienced appraiser) — usually faster but with a $25 filing fee.',
+      'Third-party services like Ownwell file the appeal and argue it on your behalf, charging only a percentage of the first-year savings if successful.',
+    ],
+    officialUrl:
+      'https://dor.georgia.gov/property-tax-appeals',
+    officialUrlLabel: 'Georgia Department of Revenue — Property Tax Appeals',
+  },
 }
 
 const DEFAULT_APPEAL_CONTENT: AppealContent = {

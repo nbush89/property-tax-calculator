@@ -205,3 +205,18 @@ export function shouldShowCountyAverageTaxBillTrend(stateSlug: string): boolean 
   if (av == null) return true
   return av.supported === true
 }
+
+/**
+ * Whether the county-level median taxes paid trend is allowed for this state.
+ * Used as a fallback when averageResidentialTaxBill is not supported (GA, TX)
+ * but ACS B25103 county-level data is published.
+ *
+ * Note: we deliberately do NOT use effective rate as a trend fallback even
+ * though it's often available — when home values appreciate faster than
+ * millage adjustments, the rate can decline while bills rise, which misleads.
+ */
+export function shouldShowCountyMedianTaxesPaidTrend(stateSlug: string): boolean {
+  const av = getMetricAvailability(stateSlug, 'county', 'medianTaxesPaid')
+  if (av == null) return true
+  return av.supported === true
+}

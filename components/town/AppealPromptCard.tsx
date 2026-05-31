@@ -1,8 +1,10 @@
-import { getStateAffiliateConfig } from '@/lib/affiliates/affiliateConfig'
+import { appendSid, getStateAffiliateConfig } from '@/lib/affiliates/affiliateConfig'
+import { slugifyLocation } from '@/utils/locationUtils'
 
 interface AppealPromptCardProps {
   stateSlug: string
   townDisplayName: string
+  countyName?: string
 }
 
 /**
@@ -10,8 +12,16 @@ interface AppealPromptCardProps {
  * CTA is enabled, surfaces the Ownwell referral link.
  * Renders as static educational copy when the CTA is disabled.
  */
-export function AppealPromptCard({ stateSlug, townDisplayName }: AppealPromptCardProps) {
+export function AppealPromptCard({
+  stateSlug,
+  townDisplayName,
+  countyName,
+}: AppealPromptCardProps) {
   const { appealCta } = getStateAffiliateConfig(stateSlug)
+  const sid = countyName
+    ? `${stateSlug}-${slugifyLocation(countyName)}-${slugifyLocation(townDisplayName)}`
+    : `${stateSlug}-town-${slugifyLocation(townDisplayName)}`
+  const href = appendSid(appealCta.url, sid)
 
   return (
     <section className="mb-8" aria-labelledby="appeal-prompt-heading">
@@ -30,7 +40,7 @@ export function AppealPromptCard({ stateSlug, townDisplayName }: AppealPromptCar
         {appealCta.enabled ? (
           <div>
             <a
-              href={appealCta.url}
+              href={href}
               rel="noopener noreferrer sponsored"
               target="_blank"
               className="inline-block rounded-md bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1"

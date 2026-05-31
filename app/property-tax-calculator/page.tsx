@@ -55,7 +55,9 @@ export default async function PropertyTaxCalculatorPage({ searchParams }: PagePr
         <div className="page-header-bar">
           <div className="container-page">
             <nav className="text-sm text-text-muted mb-3" aria-label="Breadcrumb">
-              <Link href="/" className="hover:text-primary transition-colors">Home</Link>
+              <Link href="/" className="hover:text-primary transition-colors">
+                Home
+              </Link>
               <span className="mx-2">→</span>
               <span className="text-text">Property Tax Calculator</span>
             </nav>
@@ -63,8 +65,9 @@ export default async function PropertyTaxCalculatorPage({ searchParams }: PagePr
               Property Tax Calculator
             </h1>
             <p className="mt-1 text-sm text-text-muted">
-              Select your state, county, and town, then enter your home value for a planning estimate.
-              New Jersey and Texas supported; more states added as data is published.
+              Select your state, county, and town, then enter your home value for a planning
+              estimate. New Jersey, Texas, and Georgia supported; more states added as data is
+              published.
             </p>
           </div>
         </div>

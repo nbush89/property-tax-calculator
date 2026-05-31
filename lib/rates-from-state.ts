@@ -3,8 +3,46 @@
  * Used by the calculator, rate tables, and dropdowns instead of static nj_county_rates / nj_municipal_rates.
  */
 
-import type { StateData, CountyData, TownData } from '@/lib/data/types'
+import type { StateData, CountyData, TownData, MillageBreakdown } from '@/lib/data/types'
 import { getLatestValue, getLatestYear } from '@/lib/data/metrics'
+
+/**
+ * Get the latest MillageBreakdown for a town (preferred) or its county (fallback).
+ * Used by the Georgia calculator path. Returns null when neither is populated.
+ *
+ * Town-level breakdown will include `city` mills + the county + school + state
+ * components. County-level fallback omits city mills (used when the user
+ * has not selected a specific city).
+ */
+export function getGaMillageBreakdown(
+  stateData: StateData | null,
+  countyName: string,
+  townName?: string
+): MillageBreakdown | null {
+  if (!stateData?.counties?.length) return null
+  const county = stateData.counties.find(
+    (c) => c.name.toLowerCase() === countyName.toLowerCase()
+  )
+  if (!county) return null
+
+  if (townName?.trim()) {
+    const town = county.towns?.find(
+      (t) => t.name.toLowerCase() === townName.toLowerCase()
+    )
+    const series = town?.metrics?.millage
+    if (series?.length) {
+      const sorted = [...series].sort((a, b) => a.year - b.year)
+      return sorted[sorted.length - 1]
+    }
+  }
+
+  const countySeries = county.metrics?.millage
+  if (countySeries?.length) {
+    const sorted = [...countySeries].sort((a, b) => a.year - b.year)
+    return sorted[sorted.length - 1]
+  }
+  return null
+}
 
 /**
  * Get county effective tax rate as decimal together with the sourceRef of the latest data point.

@@ -54,10 +54,16 @@ export type CountyPageContent = {
   relatedCounties?: {
     title: string
     intro?: string
+    /** Effective rate for the current county (for comparison) — percent form, e.g. 0.95 */
+    currentCountyRatePct?: number
+    /** Display name of the current county (for "Higher/Lower than X" subtext) */
+    currentCountyName?: string
     counties: Array<{
       name: string
       href: string
       summary?: string
+      /** Effective rate percent (e.g. 0.95 for 0.95%) — used for color/comparison */
+      effectiveRatePct?: number
     }>
   }
 }
@@ -465,6 +471,10 @@ export function buildRelatedCountyLinks(params: {
   if (list.length === 0) return undefined
 
   const heroMetric = (c: CountyData) => getCountyHeroHighlight(stateSlug, c.metrics)
+  const latestRatePct = (c: CountyData): number | undefined => {
+    const series = c.metrics?.effectiveTaxRate ?? []
+    return series.length ? series[series.length - 1].value : undefined
+  }
   const counties = list.map(c => {
     const hero = heroMetric(c)
     let summary: string | undefined
@@ -480,6 +490,7 @@ export function buildRelatedCountyLinks(params: {
       name: c.name,
       href: hrefFor(c),
       summary,
+      effectiveRatePct: latestRatePct(c),
     }
   })
 
@@ -489,6 +500,8 @@ export function buildRelatedCountyLinks(params: {
       fromNeighbors.length > 0
         ? `Other counties next to or near ${county.name} County.`
         : `Other counties in ${params.stateName} from this dataset.`,
+    currentCountyName: county.name,
+    currentCountyRatePct: latestRatePct(county),
     counties,
   }
 }

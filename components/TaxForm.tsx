@@ -27,6 +27,7 @@ type TaxFormProps = {
 function analyticsStateFromSlug(slug: string): string {
   if (slug === 'new-jersey') return 'NJ'
   if (slug === 'texas') return 'TX'
+  if (slug === 'georgia') return 'GA'
   return slug.slice(0, 2).toUpperCase()
 }
 
@@ -48,6 +49,7 @@ export default function TaxForm({
   const analyticsState = analyticsStateFromSlug(stateSlug)
   const isNj = stateSlug === 'new-jersey'
   const isTx = stateSlug === 'texas'
+  const isGa = stateSlug === 'georgia'
   const [homeValue, setHomeValue] = useState('')
   const [county, setCounty] = useState(defaultCounty || '')
   const [town, setTown] = useState(defaultMunicipality || '')
@@ -244,7 +246,7 @@ export default function TaxForm({
         </Select>
       </div>
 
-      {(isNj || isTx) && (
+      {(isNj || isTx || isGa) && (
         <ReliefProgramsCalculatorSection
           stateSlug={stateSlug}
           reliefSelections={reliefSelections}

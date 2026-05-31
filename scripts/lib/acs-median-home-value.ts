@@ -215,6 +215,86 @@ export function medianHomeSeriesForTown(
 }
 
 /**
+ * Fetch a state-level effective tax rate from ACS for a given year.
+ *
+ * Uses the same B25103 (median taxes paid) / B25077 (median home value)
+ * derivation as the county-level helper, but queried at the state geography.
+ * This is the right replacement for "Avg Rate" on the cross-state landing
+ * page when a state doesn't publish its own consolidated statewide rate.
+ *
+ * Returns rate as a PERCENT (e.g. 0.85 for 0.85%), or null if either input
+ * is unavailable or suppressed.
+ */
+export async function fetchAcsStateEffectiveRate(
+  year: number,
+  stateFips: string
+): Promise<number | null> {
+  const homeValueUrl = acsUrl(
+    `https://api.census.gov/data/${year}/acs/acs5?get=NAME,B25077_001E&for=state:${stateFips}`
+  )
+  const taxesUrl = acsUrl(
+    `https://api.census.gov/data/${year}/acs/acs5?get=NAME,B25103_001E&for=state:${stateFips}`
+  )
+  const [hvRows, txRows] = await Promise.all([
+    fetchJson(homeValueUrl) as Promise<string[][]>,
+    fetchJson(taxesUrl) as Promise<string[][]>,
+  ])
+  const hvVal = Number(hvRows[1]?.[hvRows[0].indexOf('B25077_001E')])
+  const txVal = Number(txRows[1]?.[txRows[0].indexOf('B25103_001E')])
+  if (
+    !Number.isFinite(hvVal) ||
+    hvVal <= 0 ||
+    hvVal === CENSUS_SUPPRESSED_NUM ||
+    !Number.isFinite(txVal) ||
+    txVal <= 0 ||
+    txVal === CENSUS_SUPPRESSED_NUM ||
+    txVal === ACS_B25103_TOP_CODE
+  ) {
+    return null
+  }
+  return Math.round((txVal / hvVal) * 100 * 10000) / 10000 // 4-decimal percent
+}
+
+/**
+ * Fetch county-level median real estate taxes paid (B25103_001E) from ACS.
+ *
+ * This is the actual dollar amount homeowners pay annually, in survey-median
+ * form. Distinct from the effective rate (which divides by home value) — for
+ * trend display, the raw dollar figure is much more meaningful to homeowners
+ * than the rate, because the rate can fall while bills rise when home values
+ * appreciate faster than millage.
+ *
+ * Returns a Map keyed by bare county name (e.g. "Fulton", "Harris"). Values
+ * are in USD. Suppressed and top-coded values are filtered.
+ */
+export async function fetchAcsCountyMedianTaxesPaidMap(
+  year: number,
+  stateFips: string
+): Promise<Map<string, number>> {
+  const url = acsUrl(
+    `https://api.census.gov/data/${year}/acs/acs5?get=NAME,B25103_001E&for=county:*&in=state:${stateFips}`
+  )
+  const rows = (await fetchJson(url)) as string[][]
+  const header = rows[0]
+  const nameIdx = header.indexOf('NAME')
+  const valIdx = header.indexOf('B25103_001E')
+  const map = new Map<string, number>()
+  for (const row of rows.slice(1)) {
+    const countyName = normalizeCountyNameFromAcs(row[nameIdx])
+    const taxes = Number(row[valIdx])
+    if (
+      Number.isFinite(taxes) &&
+      taxes > 0 &&
+      taxes !== CENSUS_SUPPRESSED_NUM &&
+      taxes !== ACS_B25103_TOP_CODE
+    ) {
+      map.set(countyName, taxes)
+    }
+  }
+  return map
+}
+
+/**
  * Fetch county-level effective tax rates from ACS for a given year and state.
  *
  * Uses:

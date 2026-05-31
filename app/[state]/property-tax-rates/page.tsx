@@ -20,7 +20,8 @@ import { getTownSlug } from '@/lib/links/towns'
 import { shouldShowCountyAverageTaxBillTrend } from '@/lib/metrics/resolveDisplayMetrics'
 import RatesTableClient from '@/components/state/RatesTableClient'
 import type { CountyRateRow, TownRateRow } from '@/components/state/RatesTableClient'
-import { getLatestValue, getLatestYear } from '@/lib/data/metrics'
+import { Divider } from '@/components/ui/Divider'
+import { getLatestYear } from '@/lib/data/metrics'
 
 type Props = {
   params: Promise<{ state: string }>
@@ -60,24 +61,30 @@ export default async function StatePropertyTaxRatesPage({ params }: Props) {
   const pageUrl = `${SITE_URL}/${encodeURIComponent(state)}/property-tax-rates`
   const fallbackYear = stateData.state.asOfYear ?? new Date().getFullYear()
   const latestRateYearInState = getMaxEffectiveTaxRateYearInState(stateData) ?? fallbackYear
-  const hasBillData = shouldShowCountyAverageTaxBillTrend(state)
+  // States that publish a true county-level average bill (NJ) OR have ACS
+  // county-level median taxes paid populated (GA, TX after re-source). Either
+  // way the table can show a dollar bill column.
+  const hasBillData =
+    shouldShowCountyAverageTaxBillTrend(state) ||
+    stateData.counties.some(c => (c.metrics?.medianTaxesPaid ?? []).length > 0)
 
   // Build county rows for the table, sorted by effective rate descending
   const countyRows: CountyRateRow[] = stateData.counties
     .map(c => {
       const rateSeries = c.metrics?.effectiveTaxRate ?? []
-      const billSeries = c.metrics?.averageResidentialTaxBill ?? []
+      const avgBillSeries = c.metrics?.averageResidentialTaxBill ?? []
+      const medianTaxesSeries = c.metrics?.medianTaxesPaid ?? []
+      // Prefer NJ-style published average; fall back to ACS median.
+      const billSeries = avgBillSeries.length ? avgBillSeries : medianTaxesSeries
 
-      const effectiveRatePct =
-        rateSeries.length ? rateSeries[rateSeries.length - 1].value : null
+      const effectiveRatePct = rateSeries.length ? rateSeries[rateSeries.length - 1].value : null
       const rateYear = getCountyEffectiveTaxRateYear(stateData, c.name)
 
       const avgBill = billSeries.length ? billSeries[billSeries.length - 1].value : null
-      const billYear = billSeries.length
-        ? getLatestYear(billSeries)
-        : null
+      const billYear = billSeries.length ? getLatestYear(billSeries) : null
 
-      // Trend: prefer bill series for NJ, fall back to rate series
+      // Trend prefers a dollar series (any kind); rate fallback only if no
+      // dollar data exists at all.
       const hasBillTrend = billSeries.length >= 2
       const trend = hasBillTrend
         ? billSeries.slice(-5).map(p => p.value)
@@ -98,8 +105,10 @@ export default async function StatePropertyTaxRatesPage({ params }: Props) {
           // Series values are stored in percent form (e.g. 0.710 = 0.710%).
           // avgRate is a legacy decimal (e.g. 0.0071 = 0.71%) and needs * 100.
           const ratePct = rateSeries.length
-            ? rateSeries[rateSeries.length - 1].value           // already percent
-            : typeof t.avgRate === 'number' ? t.avgRate * 100 : null  // decimal → percent
+            ? rateSeries[rateSeries.length - 1].value // already percent
+            : typeof t.avgRate === 'number'
+              ? t.avgRate * 100
+              : null // decimal → percent
           const rateYear = getTownEffectiveTaxRateYear(stateData, c.name, t.name)
           const slug = getTownSlug(t)
           const published = slug != null && isTownPublished(t)
@@ -165,14 +174,17 @@ export default async function StatePropertyTaxRatesPage({ params }: Props) {
       <JsonLd data={faqJsonLd(pageUrl, faqs)} />
       <Header />
       <main className="min-h-screen bg-bg">
-
         {/* Page header */}
         <div className="page-header-bar">
           <div className="container-page">
             <nav className="text-sm text-text-muted mb-3" aria-label="Breadcrumb">
-              <Link href="/" className="hover:text-primary transition-colors">Home</Link>
+              <Link href="/" className="hover:text-primary transition-colors">
+                Home
+              </Link>
               <span className="mx-2">→</span>
-              <Link href={`/${state}`} className="hover:text-primary transition-colors">{stateName}</Link>
+              <Link href={`/${state}`} className="hover:text-primary transition-colors">
+                {stateName}
+              </Link>
               <span className="mx-2">→</span>
               <span className="text-text">Property Tax Rates</span>
             </nav>
@@ -182,8 +194,8 @@ export default async function StatePropertyTaxRatesPage({ params }: Props) {
                   {stateName} Property Tax Rates by County
                 </h1>
                 <p className="mt-1 text-sm text-text-muted">
-                  County and municipal effective rates, ranked highest to lowest.{' '}
-                  Latest data up to {latestRateYearInState}. Click a county row to browse towns.
+                  County and municipal effective rates, ranked highest to lowest. Latest data up to{' '}
+                  {latestRateYearInState}. Click a county row to browse towns.
                 </p>
               </div>
               <div className="flex shrink-0 flex-wrap gap-2">
@@ -220,13 +232,17 @@ export default async function StatePropertyTaxRatesPage({ params }: Props) {
                 stateName={stateName}
                 counties={countyRows}
                 hasBillData={hasBillData}
+                billColumnLabel={
+                  shouldShowCountyAverageTaxBillTrend(state) ? 'Avg Bill' : 'Median Bill'
+                }
               />
             )}
           </div>
         </section>
 
         {/* FAQ + sources */}
-        <section className="border-t border-border py-8 bg-bg">
+        <Divider />
+        <section className="py-8 bg-bg">
           <div className="container-page">
             <h2 className="text-lg font-semibold text-text mb-5">FAQ</h2>
             <dl className="space-y-5">
@@ -245,7 +261,6 @@ export default async function StatePropertyTaxRatesPage({ params }: Props) {
             )}
           </div>
         </section>
-
       </main>
       <Footer />
     </>

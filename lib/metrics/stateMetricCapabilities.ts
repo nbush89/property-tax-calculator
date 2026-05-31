@@ -23,6 +23,19 @@ const TX_SOURCE_KEY = 'tx_comptroller_tax_rates_levies'
 /** ACS-derived blended effective rate source ref for Texas county level */
 const TX_COUNTY_ACS_SOURCE_KEY = 'us_census_acs_county_effective_rate'
 
+/**
+ * Georgia county effective rate: ACS-derived blended rate (B25103 / B25077).
+ * Covers all overlapping taxing units — county + city + school district + state.
+ */
+const GA_RATE_NOTE_COUNTY =
+  'Derived from U.S. Census ACS 5-year estimates: median real estate taxes paid (B25103) divided by median home value (B25077). Reflects the combined effective rate across county government, city, school district, and state levies, net of homestead exemptions already reflected in survey responses.'
+
+const GA_RATE_NOTE_TOWN =
+  'Derived from U.S. Census ACS 5-year estimates at the place (city) level. Reflects the combined effective rate across overlapping taxing units net of typical homestead exemptions.'
+
+const GA_COUNTY_ACS_SOURCE_KEY = 'us_census_acs_county_effective_rate'
+const GA_TOWN_ACS_SOURCE_KEY = 'us_census_acs_county_effective_rate'
+
 export const STATE_METRICS_REGISTRY: Record<string, StateMetricsConfig> = {
   'new-jersey': {
     calculator: {
@@ -77,6 +90,71 @@ export const STATE_METRICS_REGISTRY: Record<string, StateMetricsConfig> = {
           comparability: 'high',
           sourceRef: 'us_census_acs_profile_dp04',
           note: 'Median owner-occupied home value (ACS), where merged for this municipality.',
+        },
+      },
+    },
+  },
+
+  georgia: {
+    calculator: {
+      hasCountyAndMunicipalRates: false,
+      hasComptrollerUnitRates: false,
+      hasAssessedValueMillage: true,
+      hasTownPages: true,
+    },
+    metrics: {
+      state: {},
+      county: {
+        effectiveTaxRate: {
+          supported: true,
+          semantics: 'standard',
+          comparability: 'high',
+          sourceRef: GA_COUNTY_ACS_SOURCE_KEY,
+          note: GA_RATE_NOTE_COUNTY,
+        },
+        averageResidentialTaxBill: {
+          supported: false,
+        },
+        medianTaxesPaid: {
+          supported: true,
+          semantics: 'state_specific',
+          comparability: 'medium',
+          sourceRef: 'us_census_acs_b25103',
+          note:
+            'ACS median real estate taxes paid (B25103_001E): combined annual property tax across overlapping taxing units, net of typical homestead exemptions.',
+        },
+        medianHomeValue: {
+          supported: true,
+          semantics: 'standard',
+          comparability: 'high',
+          sourceRef: 'us_census_acs_profile_dp04',
+          note: 'County-level median home value from ACS DP04_0089E.',
+        },
+      },
+      town: {
+        effectiveTaxRate: {
+          supported: true,
+          semantics: 'state_specific',
+          comparability: 'medium',
+          sourceRef: GA_TOWN_ACS_SOURCE_KEY,
+          note: GA_RATE_NOTE_TOWN,
+        },
+        averageResidentialTaxBill: {
+          supported: false,
+        },
+        medianTaxesPaid: {
+          supported: true,
+          semantics: 'state_specific',
+          comparability: 'medium',
+          sourceRef: 'us_census_acs_b25103',
+          note:
+            'ACS median real estate taxes paid (B25103_001E): combined annual property tax across overlapping taxing units.',
+        },
+        medianHomeValue: {
+          supported: true,
+          semantics: 'standard',
+          comparability: 'high',
+          sourceRef: 'us_census_acs_profile_dp04',
         },
       },
     },

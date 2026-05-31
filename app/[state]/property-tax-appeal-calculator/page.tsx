@@ -10,9 +10,11 @@ import { SITE_URL } from '@/lib/site'
 import { getStateData } from '@/lib/geo'
 import { isValidState } from '@/utils/stateUtils'
 import { getAllCountyRatesFromState, getMaxEffectiveTaxRateYearInState } from '@/lib/rates-from-state'
-import { getStateAffiliateConfig } from '@/lib/affiliates/affiliateConfig'
+import { appendSid, getStateAffiliateConfig } from '@/lib/affiliates/affiliateConfig'
 import { getAppealContent } from '@/lib/appeal/appealContent'
 import AppealCalculator from '@/components/appeal/AppealCalculator'
+import { Divider } from '@/components/ui/Divider'
+import { AccordionItem } from '@/components/ui/Accordion'
 
 type Props = {
   params: Promise<{ state: string }>
@@ -21,7 +23,7 @@ type Props = {
 // ─── Static params ────────────────────────────────────────────────────────────
 
 export async function generateStaticParams() {
-  return ['new-jersey', 'texas'].map(state => ({ state }))
+  return ['new-jersey', 'texas', 'georgia'].map(state => ({ state }))
 }
 
 // ─── Dynamic FAQ builder ──────────────────────────────────────────────────────
@@ -111,7 +113,13 @@ export default async function AppealCalculatorPage({ params }: Props) {
 
   const { name: stateName, abbreviation: abbrev } = stateData.state
   const countyRates = getAllCountyRatesFromState(stateData)
-  const { appealCta } = getStateAffiliateConfig(state)
+  const { appealCta: baseAppealCta } = getStateAffiliateConfig(state)
+  // Mint a page-specific SID so CJ reports can distinguish appeal-page
+  // conversions from town-page conversions.
+  const appealCta = {
+    ...baseAppealCta,
+    url: appendSid(baseAppealCta.url, `${state}-appeal-calc`),
+  }
   const appeal = getAppealContent(state)
 
   const pageUrl = `${SITE_URL}/${encodeURIComponent(state)}/property-tax-appeal-calculator`
@@ -145,7 +153,7 @@ export default async function AppealCalculatorPage({ params }: Props) {
 
       <Header />
       <main className="min-h-screen bg-gradient-to-br from-bg-gradient-from to-bg-gradient-to">
-        <div className="container-page py-8">
+        <div className="container-content py-8">
 
           {/* Breadcrumb */}
           <nav className="text-sm text-text-muted mb-4" aria-label="Breadcrumb">
@@ -158,7 +166,7 @@ export default async function AppealCalculatorPage({ params }: Props) {
 
           {/* H1 + intro */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-text mb-3">
+            <h1 className="text-3xl font-semibold tracking-tight text-text mb-3">
               {stateName} Property Tax Appeal Calculator
             </h1>
             <p className="text-base text-text-muted max-w-prose leading-relaxed">
@@ -168,8 +176,35 @@ export default async function AppealCalculatorPage({ params }: Props) {
             </p>
           </div>
 
+          {/* Passive affiliate CTA — visible before computation. The intent of
+              visitors arriving at an appeals page is already aligned with the
+              offer, so showing this upfront captures users who don't want to
+              compute first. The AppealCalculator still renders a contextual
+              (result-gated) CTA below; both can coexist. */}
+          {appealCta.enabled && (
+            <div className="mb-8 rounded-lg border border-primary/30 bg-primary/5 p-5">
+              <h2 className="text-lg font-semibold text-text mb-2">
+                Skip the math — get a free professional review
+              </h2>
+              <p className="text-sm text-text-muted mb-3">
+                {appealCta.description}
+              </p>
+              <a
+                href={appealCta.url}
+                rel="noopener noreferrer sponsored"
+                target="_blank"
+                className="inline-flex items-center justify-center rounded-md bg-primary px-5 py-2 text-sm font-medium text-white hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1"
+              >
+                {appealCta.label}
+              </a>
+              <p className="mt-2 text-xs text-text-muted">
+                Sponsored — we may earn a referral fee if you sign up.
+              </p>
+            </div>
+          )}
+
           {/* Calculator */}
-          <section className="mb-10 rounded-lg border border-border bg-surface p-6" aria-labelledby="calculator-heading">
+          <section className="mb-10 scroll-mt-24 rounded-lg border border-border bg-surface p-6" aria-labelledby="calculator-heading">
             <h2 id="calculator-heading" className="text-xl font-semibold text-text mb-4">
               Estimate your over-assessment
             </h2>
@@ -182,29 +217,35 @@ export default async function AppealCalculatorPage({ params }: Props) {
           </section>
 
           {/* How the appeal process works */}
-          <section className="mb-10" aria-labelledby="process-heading">
+          <section className="mb-10 scroll-mt-24" aria-labelledby="process-heading">
+            <p className="text-xs font-semibold uppercase tracking-wider text-text-muted mb-1">
+              Process
+            </p>
             <h2 id="process-heading" className="text-2xl font-semibold text-text mb-4">
               How property tax appeals work in {stateName}
             </h2>
-            <p className="text-text-muted mb-4 max-w-prose leading-relaxed">
+            <p className="text-text-muted mb-6 max-w-prose leading-relaxed">
               {appeal.processOverview}
             </p>
-            <div className="grid sm:grid-cols-2 gap-6">
-              <div>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="rounded-lg border border-border bg-surface p-5">
                 <h3 className="font-semibold text-text mb-2 text-sm">Filing deadline</h3>
-                <p className="text-sm text-text-muted">{appeal.deadlineGuidance}</p>
+                <p className="text-sm text-text-muted leading-relaxed">{appeal.deadlineGuidance}</p>
               </div>
-              <div>
+              <div className="rounded-lg border border-border bg-surface p-5">
                 <h3 className="font-semibold text-text mb-2 text-sm">Documents typically needed</h3>
-                <ul className="text-sm text-text-muted space-y-1 list-disc pl-4">
+                <ul className="text-sm text-text-muted space-y-1.5 mt-1">
                   {appeal.requiredDocs.map((doc, i) => (
-                    <li key={i}>{doc}</li>
+                    <li key={i} className="flex gap-2">
+                      <span className="mt-0.5 shrink-0 text-primary">•</span>
+                      <span>{doc}</span>
+                    </li>
                   ))}
                 </ul>
               </div>
             </div>
             {appeal.tips.length > 0 && (
-              <div className="mt-6">
+              <div className="mt-4">
                 <h3 className="font-semibold text-text mb-2 text-sm">Tips for a stronger appeal</h3>
                 <ul className="text-sm text-text-muted space-y-2 list-disc pl-4">
                   {appeal.tips.map((tip, i) => (
@@ -213,7 +254,7 @@ export default async function AppealCalculatorPage({ params }: Props) {
                 </ul>
               </div>
             )}
-            <p className="mt-4 text-sm">
+            <p className="mt-5 text-sm">
               <a
                 href={appeal.officialUrl}
                 target="_blank"
@@ -226,22 +267,25 @@ export default async function AppealCalculatorPage({ params }: Props) {
           </section>
 
           {/* FAQ */}
-          <section className="mb-12" aria-labelledby="faq-heading">
-            <h2 id="faq-heading" className="text-2xl font-semibold text-text mb-4">
-              {stateName} property tax appeal — frequently asked questions
+          <section className="mb-12 scroll-mt-24" aria-labelledby="faq-heading">
+            <p className="text-xs font-semibold uppercase tracking-wider text-text-muted mb-1">
+              FAQ
+            </p>
+            <h2 id="faq-heading" className="text-2xl font-semibold text-text mb-6">
+              {stateName} property tax appeal — FAQ
             </h2>
-            <div className="space-y-4">
+            <div className="space-y-2">
               {faqs.map((faq, i) => (
-                <div key={i} className="rounded-lg border border-border bg-surface p-5">
-                  <h3 className="font-semibold text-text mb-2 text-sm">{faq.question}</h3>
-                  <p className="text-sm text-text-muted leading-relaxed">{faq.answer}</p>
-                </div>
+                <AccordionItem key={i} title={faq.question} headingLevel={3} defaultOpen={i === 0}>
+                  <p className="text-sm leading-relaxed">{faq.answer}</p>
+                </AccordionItem>
               ))}
             </div>
           </section>
 
           {/* Related links */}
-          <section className="mb-10 border-t border-border pt-6">
+          <Divider className="mb-6" />
+          <section className="mb-10">
             <h2 className="text-lg font-semibold text-text mb-3">Related tools</h2>
             <div className="flex flex-wrap gap-3">
               <Link

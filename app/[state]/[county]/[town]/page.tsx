@@ -23,6 +23,7 @@ import CalculatorTaxTrendsChart from '@/components/charts/CalculatorTaxTrendsCha
 import { getMetricLatest } from '@/lib/data/town-helpers'
 import { isValidState } from '@/utils/stateUtils'
 import { resolveTownPageOverview } from '@/lib/town-overview/resolve-page-overview'
+import { Divider } from '@/components/ui/Divider'
 import { resolveTownPageSections } from '@/lib/content/townContent'
 import { getStateCapabilities } from '@/lib/state-capabilities'
 import { buildTownMetadataForRoute, buildTownSeoFields } from '@/lib/seo/townMetadata'
@@ -179,13 +180,15 @@ export default async function TownPropertyTaxPage({ params }: Props) {
   })
 
   const cap = getStateCapabilities(state)
-  // NJ data comes from NJ Div. of Taxation (averages); TX data comes from ACS (medians).
+  // NJ data comes from NJ Div. of Taxation (averages); TX & GA use ACS-derived medians.
   const isNj = state === 'new-jersey'
   const billLabel = isNj ? 'Avg bill' : 'Median bill'
   const billFallbackLabel = isNj ? 'county avg' : 'county median'
   const sourcesBlurb = cap.hasComptrollerUnitRates
     ? 'Texas Comptroller–style taxing-unit rates and other public sources where cited.'
-    : 'New Jersey Division of Taxation, U.S. Census Bureau, and other public data.'
+    : cap.hasAssessedValueMillage
+      ? 'Georgia Department of Revenue millage digest, U.S. Census Bureau, and other public sources where cited.'
+      : 'New Jersey Division of Taxation, U.S. Census Bureau, and other public data.'
 
   return (
     <>
@@ -229,7 +232,7 @@ export default async function TownPropertyTaxPage({ params }: Props) {
       <main className="min-h-screen bg-bg">
         {/* Compact page header */}
         <div className="page-header-bar">
-          <div className="container-page">
+          <div className="container-content">
             <nav className="text-sm text-text-muted mb-3" aria-label="Breadcrumb">
               <Link href="/" className="hover:text-primary transition-colors">Home</Link>
               <span className="mx-2">→</span>
@@ -290,7 +293,7 @@ export default async function TownPropertyTaxPage({ params }: Props) {
           </div>
         </div>
 
-        <div className="container-page py-8">
+        <div className="container-content py-8">
 
           <TownAtAGlance
             townName={townDisplayName}
@@ -301,8 +304,8 @@ export default async function TownPropertyTaxPage({ params }: Props) {
           />
 
           {sections.trendChart && (
-            <section className="mb-10" aria-labelledby="trends-heading">
-              <h2 id="trends-heading" className="text-xl font-semibold mb-3 text-text">
+            <section className="mb-10 scroll-mt-24" aria-labelledby="trends-heading">
+              <h2 id="trends-heading" className="text-2xl font-semibold mb-4 text-text">
                 How {townDisplayName} rates have changed
               </h2>
               <CalculatorTaxTrendsChart
@@ -315,16 +318,27 @@ export default async function TownPropertyTaxPage({ params }: Props) {
             </section>
           )}
 
-          <AppealPromptCard stateSlug={state} townDisplayName={townDisplayName} />
+          <AppealPromptCard
+            stateSlug={state}
+            townDisplayName={townDisplayName}
+            countyName={county.name}
+          />
 
-          <TownAffiliateCtas stateSlug={state} townDisplayName={townDisplayName} />
+          <TownAffiliateCtas
+            stateSlug={state}
+            townDisplayName={townDisplayName}
+            countyName={county.name}
+          />
 
           {sections.overviewParagraphs.length > 0 && (
-            <section className="mb-10" aria-labelledby="town-overview-heading">
-              <h2 id="town-overview-heading" className="text-xl font-semibold text-text mb-3">
+            <section
+              className="mb-10 scroll-mt-24"
+              aria-labelledby="town-overview-heading"
+            >
+              <h2 id="town-overview-heading" className="text-2xl font-semibold text-text mb-4">
                 Overview
               </h2>
-              <div className="prose prose-lg max-w-none text-text-muted space-y-2">
+              <div className="prose prose-lg max-w-[68ch] text-text-muted space-y-4">
                 {sections.overviewParagraphs.map((p, i) => (
                   <p key={i}>{p}</p>
                 ))}
@@ -333,18 +347,23 @@ export default async function TownPropertyTaxPage({ params }: Props) {
           )}
 
           {sections.comparison && sections.comparison.items.length > 0 && (
-            <section className="mb-10" aria-labelledby="town-compare-heading">
-              <h2 id="town-compare-heading" className="text-xl font-semibold text-text mb-3">
+            <section
+              className="mb-10 scroll-mt-24"
+              aria-labelledby="town-compare-heading"
+            >
+              <h2 id="town-compare-heading" className="text-2xl font-semibold text-text mb-4">
                 {sections.comparison.title}
               </h2>
               {sections.comparison.summary && (
-                <p className="text-sm text-text-muted mb-3">{sections.comparison.summary}</p>
+                <p className="text-sm text-text-muted mb-4 measure">
+                  {sections.comparison.summary}
+                </p>
               )}
-              <ul className="space-y-2">
+              <ul className="grid sm:grid-cols-2 gap-3">
                 {sections.comparison.items.map((item, i) => (
                   <li
                     key={i}
-                    className="rounded-lg border border-border bg-surface p-3 text-sm text-text-muted"
+                    className="rounded-lg border border-border bg-surface p-4 text-sm text-text-muted border-l-[3px] border-l-border"
                   >
                     <span className="font-medium text-text">{item.label}</span>
                     <p className="mt-1">{item.body}</p>
@@ -354,11 +373,11 @@ export default async function TownPropertyTaxPage({ params }: Props) {
             </section>
           )}
 
-          <section className="mb-12" aria-labelledby="estimate-heading">
+          <section className="mb-12 scroll-mt-24" aria-labelledby="estimate-heading">
             <h2 id="estimate-heading" className="text-2xl font-semibold mb-4 text-text">
               Estimate property taxes
             </h2>
-            <p className="text-text-muted mb-2">
+            <p className="text-text-muted mb-2 measure">
               Use the calculator below with your home value. Estimates are for planning only—verify
               with your local assessor.
             </p>
@@ -386,11 +405,11 @@ export default async function TownPropertyTaxPage({ params }: Props) {
             </div>
           </section>
 
-          <section className="mb-10" aria-labelledby="town-estimate-guide-heading">
-            <h2 id="town-estimate-guide-heading" className="text-xl font-semibold text-text mb-3">
+          <section className="mb-10 scroll-mt-24" aria-labelledby="town-estimate-guide-heading">
+            <h2 id="town-estimate-guide-heading" className="text-2xl font-semibold text-text mb-4">
               {sections.estimateGuide.title}
             </h2>
-            <ol className="list-decimal pl-5 space-y-2 text-text-muted text-sm">
+            <ol className="list-decimal pl-5 space-y-2 text-text-muted text-sm measure">
               {sections.estimateGuide.steps.map((s, i) => (
                 <li key={i}>{s}</li>
               ))}
@@ -417,7 +436,7 @@ export default async function TownPropertyTaxPage({ params }: Props) {
             />
           )}
 
-          <section className="mb-12" aria-labelledby="faq-heading">
+          <section className="mb-12 scroll-mt-24" aria-labelledby="faq-heading">
             <LocationFAQ
               faqs={faqs}
               title={`${townDisplayName} Property Tax FAQ`}
@@ -426,11 +445,15 @@ export default async function TownPropertyTaxPage({ params }: Props) {
             />
           </section>
 
-          <section className="mb-12 border-t border-border pt-8" aria-labelledby="sources-heading">
+          <Divider className="mb-8" />
+          <section
+            className="mb-12 pt-8 scroll-mt-24"
+            aria-labelledby="sources-heading"
+          >
             <h2 id="sources-heading" className="text-2xl font-semibold mb-4 text-text">
               Sources
             </h2>
-            <p className="text-text-muted mb-4">
+            <p className="text-text-muted mb-4 measure">
               This page provides estimates for planning and comparison only. Actual property tax
               bills depend on official assessments, exemptions, and local decisions. Data as of
               latest available year by source

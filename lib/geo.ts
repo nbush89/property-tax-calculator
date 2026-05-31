@@ -1,5 +1,6 @@
 import njStateDataRaw from '@/data/states/new-jersey.json'
 import texasStateDataRaw from '@/data/states/texas.json'
+import georgiaStateDataRaw from '@/data/states/georgia.json'
 import { slugifyLocation } from '@/utils/locationUtils'
 import { normalizeStateData } from '@/lib/data/adapter'
 import type { StateData, CountyData, TownData } from '@/lib/data/types'
@@ -9,6 +10,7 @@ import { getTownSlug } from '@/lib/links/towns'
 // Normalize the raw JSON data to the new year-aware format
 const njStateData = normalizeStateData(njStateDataRaw as any)
 const texasStateData = normalizeStateData(texasStateDataRaw as any)
+const georgiaStateData = normalizeStateData(georgiaStateDataRaw as any)
 
 /**
  * Registry of state data files
@@ -17,6 +19,7 @@ const texasStateData = normalizeStateData(texasStateDataRaw as any)
 const stateDataRegistry: Record<string, StateData> = {
   'new-jersey': njStateData,
   texas: texasStateData,
+  georgia: georgiaStateData,
 }
 
 // Re-export types for convenience
@@ -123,12 +126,17 @@ export function getTopCountiesForHero(stateSlug: string, limit = 5): TopCountyFo
 
   const counties = data.counties.map(c => {
     const rateSeries = dedupeByYear(c.metrics?.effectiveTaxRate ?? [])
-    const billSeries = dedupeByYear(c.metrics?.averageResidentialTaxBill ?? [])
+    const avgBillSeries = dedupeByYear(c.metrics?.averageResidentialTaxBill ?? [])
+    const medianTaxesSeries = dedupeByYear(c.metrics?.medianTaxesPaid ?? [])
 
     const latestRate = rateSeries.length ? rateSeries[rateSeries.length - 1].value : null
+    // Prefer NJ-style published average bill; fall back to ACS-derived median
+    // taxes paid (GA, TX) so those states show a dollar figure too.
+    const billSeries = avgBillSeries.length ? avgBillSeries : medianTaxesSeries
     const latestBill = billSeries.length ? billSeries[billSeries.length - 1].value : null
 
-    // Prefer bill trend (dollars people actually pay); fall back to rate trend
+    // Trend prefers any dollar series; rate is last resort but kept for parity
+    // (older callers may still consume rate trends).
     const hasBillTrend = billSeries.length >= 2
     const trend = hasBillTrend
       ? billSeries.slice(-5).map(p => p.value)
@@ -150,7 +158,7 @@ export function getTopCountiesForHero(stateSlug: string, limit = 5): TopCountyFo
     }
   })
 
-  // Sort by avg bill desc; fall back to rate desc when bill is null
+  // Sort by bill desc; fall back to rate desc when bill is null
   counties.sort((a, b) => {
     if (a.avgBill != null && b.avgBill != null) return b.avgBill - a.avgBill
     if (a.avgBill != null) return -1

@@ -163,7 +163,7 @@ export default function AppealCalculator({
 
       {/* Results */}
       {result.kind === 'idle' && (
-        <div className="rounded-lg border border-border bg-surface p-5 text-sm text-text-muted">
+        <div className="rounded-lg border border-border bg-surface p-5 text-sm text-text-muted measure">
           Enter your county, assessed value, and estimated market value above to see your
           over-assessment estimate.
         </div>
@@ -188,32 +188,37 @@ export default function AppealCalculator({
 
       {result.kind === 'over-assessed' && (
         <div className="space-y-4">
-          {/* Key numbers */}
-          <div className="grid sm:grid-cols-3 gap-3">
-            <div className="rounded-lg bg-surface border border-border p-4">
-              <p className="text-xs text-text-muted mb-1">Over-assessment</p>
-              <p className="text-2xl font-semibold text-text">{fmt(result.gap)}</p>
-              <p className="text-xs text-text-muted mt-1">
-                {result.gapPct.toFixed(1)}% above estimated market value
+          {/* Hero number — the emotional payload */}
+          <div className="grid gap-3 sm:grid-cols-[1.3fr_1fr]">
+            <div className="rounded-xl border border-amber-300 bg-amber-50 p-5">
+              <p className="text-xs font-medium uppercase tracking-wide text-amber-700">
+                Estimated annual overpayment
               </p>
-            </div>
-            <div className="rounded-lg bg-surface border border-amber-300 dark:border-amber-700 p-4">
-              <p className="text-xs text-text-muted mb-1">Estimated annual overpayment</p>
-              <p className="text-2xl font-semibold text-amber-700 dark:text-amber-400">
+              <p className="text-[40px] leading-none font-semibold text-amber-700 mt-2 tabular-nums">
                 {fmt(result.annualOverpayment)}
               </p>
-              <p className="text-xs text-text-muted mt-1">
-                Using {result.county} County rate of {fmtRate(result.rate)}
+              <p className="text-xs text-amber-700/60 mt-2">
+                {result.county} County rate {fmtRate(result.rate)} · {result.gapPct.toFixed(1)}% over market
               </p>
             </div>
-            <div className="rounded-lg bg-surface border border-green-300 dark:border-green-700 p-4">
-              <p className="text-xs text-text-muted mb-1">Potential 5-year savings</p>
-              <p className="text-2xl font-semibold text-green-700 dark:text-green-400">
-                {fmt(result.annualOverpayment * 5)}
-              </p>
-              <p className="text-xs text-text-muted mt-1">
-                If appeal succeeds and assessment holds
-              </p>
+            {/* Supporting pair — one bordered group, shared hairlines, baseline-aligned */}
+            <div className="grid grid-rows-2 divide-y divide-border rounded-xl border border-border overflow-hidden">
+              <div className="flex items-center justify-between gap-3 px-4 py-3">
+                <div>
+                  <p className="text-xs text-text-muted">Over-assessment</p>
+                  <p className="text-xs text-text-muted">above market value</p>
+                </div>
+                <p className="text-xl font-semibold text-text tabular-nums">{fmt(result.gap)}</p>
+              </div>
+              <div className="flex items-center justify-between gap-3 px-4 py-3">
+                <div>
+                  <p className="text-xs text-text-muted">Potential 5-yr savings</p>
+                  <p className="text-xs text-text-muted">if assessment holds</p>
+                </div>
+                <p className="text-xl font-semibold text-emerald-700 dark:text-emerald-400 tabular-nums">
+                  {fmt(result.annualOverpayment * 5)}
+                </p>
+              </div>
             </div>
           </div>
 
@@ -257,7 +262,7 @@ export default function AppealCalculator({
         </div>
       )}
 
-      <p className="text-xs text-text-muted mt-4">
+      <p className="text-xs text-text-muted mt-4 measure">
         Estimates are for planning purposes only. Actual savings depend on the outcome of your
         appeal, exemptions, and local levy decisions. Not legal or tax advice.
       </p>

@@ -13,6 +13,11 @@ export interface StateCapabilities {
   hasCountyAndMunicipalRates: boolean
   /** Texas-style: Comptroller city/county unit rate; do not add county + city (double count). */
   hasComptrollerUnitRates: boolean
+  /**
+   * Georgia-style: per-jurisdiction millage (county + city + school + state)
+   * applied to assessed value (40% of FMV) net of homestead exemption.
+   */
+  hasAssessedValueMillage: boolean
   /** State/county/town pages may show average residential tax bill (metric capability). */
   hasAverageTaxBill: boolean
   /** Town-level detail pages are available (published when metrics exist). */
@@ -22,6 +27,7 @@ export interface StateCapabilities {
 const defaultCapabilities: StateCapabilities = {
   hasCountyAndMunicipalRates: false,
   hasComptrollerUnitRates: false,
+  hasAssessedValueMillage: false,
   hasAverageTaxBill: false,
   hasTownPages: true,
 }
@@ -38,6 +44,7 @@ export function getStateCapabilities(stateSlug: string): StateCapabilities {
   return {
     hasCountyAndMunicipalRates: cfg.calculator.hasCountyAndMunicipalRates,
     hasComptrollerUnitRates: cfg.calculator.hasComptrollerUnitRates,
+    hasAssessedValueMillage: cfg.calculator.hasAssessedValueMillage === true,
     hasAverageTaxBill: stateSupportsAverageTaxBill(key),
     hasTownPages: cfg.calculator.hasTownPages,
   }
@@ -48,5 +55,9 @@ export function getStateCapabilities(stateSlug: string): StateCapabilities {
  */
 export function canCalculateForState(stateSlug: string): boolean {
   const c = getStateCapabilities(stateSlug)
-  return c.hasCountyAndMunicipalRates || c.hasComptrollerUnitRates
+  return (
+    c.hasCountyAndMunicipalRates ||
+    c.hasComptrollerUnitRates ||
+    c.hasAssessedValueMillage
+  )
 }

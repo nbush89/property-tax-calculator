@@ -60,7 +60,9 @@ export default function UniversalTaxCalculator({
   const towns = selectedCounty?.towns ?? []
 
   const isNj = stateSlug === 'new-jersey'
-  const supportsCalculator = stateSlug === 'new-jersey' || stateSlug === 'texas'
+  const isGa = stateSlug === 'georgia'
+  const supportsCalculator =
+    stateSlug === 'new-jersey' || stateSlug === 'texas' || stateSlug === 'georgia'
   const countyName = selectedCounty?.name ?? ''
   const townName = selectedTown?.name ?? ''
 
@@ -132,7 +134,7 @@ export default function UniversalTaxCalculator({
   useEffect(() => {
     const prefillState = initialValues?.stateSlug
     const prefillSupported =
-      prefillState === 'new-jersey' || prefillState === 'texas'
+      prefillState === 'new-jersey' || prefillState === 'texas' || prefillState === 'georgia'
     if (
       hasAutoCalculated ||
       !prefillSupported ||
@@ -321,7 +323,7 @@ export default function UniversalTaxCalculator({
             )}
           </div>
 
-          {isNj && (
+          {supportsCalculator && (
             <div>
               <label className="block text-sm font-medium text-text mb-2">Property Type</label>
               <Select value={propertyType} onChange={e => setPropertyType(e.target.value)}>
@@ -334,7 +336,7 @@ export default function UniversalTaxCalculator({
             </div>
           )}
 
-          {(stateSlug === 'texas' || isNj) && (
+          {(stateSlug === 'texas' || isNj || isGa) && (
             <ReliefProgramsCalculatorSection
               stateSlug={stateSlug}
               reliefSelections={reliefSelections}
@@ -352,7 +354,7 @@ export default function UniversalTaxCalculator({
               ? 'Calculating...'
               : supportsCalculator
                 ? 'Calculate Property Tax'
-                : 'Select New Jersey or Texas to calculate'}
+                : 'Select New Jersey, Texas, or Georgia to calculate'}
           </Button>
         </form>
       </Card>

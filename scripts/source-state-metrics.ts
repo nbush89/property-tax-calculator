@@ -25,6 +25,8 @@ import {
   fetchAcsMedianHomeValueMap,
   fetchAcsMedianTaxesPaidMap,
   fetchAcsCountyEffectiveRateMap,
+  fetchAcsCountyMedianTaxesPaidMap,
+  fetchAcsStateEffectiveRate,
   medianHomeSeriesForTown,
   medianTaxesSeriesForTown,
   ACS_SOURCE_REF,
@@ -49,6 +51,17 @@ import { STATE_FIPS, isStateMetricsSlug } from './lib/state-metrics-registry'
 import { TX_RATE_YEARS, TX_RATES_SOURCE_REF } from './state-metrics/tx/config'
 import { applyTexasComptrollerRates } from './state-metrics/tx/rates'
 import { buildSeries } from './lib/build-series'
+import {
+  GA_COUNTIES,
+  GA_TOWNS,
+  GA_DOR_MILLAGE_SOURCE_REF,
+  GA_MILLAGE_YEAR,
+} from './state-metrics/ga/config'
+import {
+  parseMillagePdf,
+  buildMillageMap,
+  getTotalMillageForTown,
+} from './state-metrics/ga/millage'
 
 const CURRENT_YEAR = new Date().getFullYear()
 const ACS_YEARS = buildRecentYears({ endYear: CURRENT_YEAR - 2, window: 6 })
@@ -84,6 +97,7 @@ function parseArgs() {
   let out = ''
   let skipModiv = false
   let onlyModiv = false
+  let gaMillagePdf: string | undefined
   for (let i = 0; i < argv.length; i++) {
     if (argv[i] === '--state' && argv[i + 1]) {
       state = argv[++i]
@@ -93,9 +107,11 @@ function parseArgs() {
       skipModiv = true
     } else if (argv[i] === '--only' && argv[i + 1] === 'modiv') {
       onlyModiv = true
+    } else if (argv[i] === '--ga-millage-pdf' && argv[i + 1]) {
+      gaMillagePdf = argv[++i]
     }
   }
-  return { state, out, skipModiv, onlyModiv }
+  return { state, out, skipModiv, onlyModiv, gaMillagePdf }
 }
 
 function loadStateJson<T>(slug: string): T {
@@ -302,7 +318,10 @@ async function sourceTexas(options: { out: string }) {
   // County-level effectiveTaxRate: use ACS B25103/B25077 (blended rate across all taxing units).
   // This replaces the Comptroller county-unit-only rates which only captured the county
   // government's slice (~0.2–0.4%) rather than the full effective rate (~1.5–2.2%).
+  // ALSO fetch county-level median taxes paid (raw dollars) for trend display —
+  // the rate alone is misleading when home values rise faster than millage.
   const countyRateMaps = new Map<number, Map<string, number>>()
+  const countyTaxesMaps = new Map<number, Map<string, number>>()
   for (const y of ACS_YEARS) {
     try {
       const rateMap = await fetchAcsCountyEffectiveRateMap(y, STATE_FIPS.texas)
@@ -312,26 +331,49 @@ async function sourceTexas(options: { out: string }) {
       log(`[WARN] ACS county rates ${y} failed: ${String(e)}`)
       countyRateMaps.set(y, new Map())
     }
+    try {
+      const taxesMap = await fetchAcsCountyMedianTaxesPaidMap(y, STATE_FIPS.texas)
+      countyTaxesMaps.set(y, taxesMap)
+      log(`[OK] ACS county taxes paid ${y}: ${taxesMap.size} TX counties`)
+    } catch (e) {
+      log(`[WARN] ACS county taxes paid ${y} failed: ${String(e)}`)
+      countyTaxesMaps.set(y, new Map())
+    }
   }
   for (const county of stateJson.counties ?? []) {
     const countyName =
       'name' in county && typeof (county as { name: string }).name === 'string'
         ? (county as { name: string }).name
         : county.slug
+    // Effective rate series
     const yearToRate: Record<number, number | undefined> = {}
     for (const [y, rateMap] of countyRateMaps) {
       const rate = rateMap.get(countyName)
       if (rate != null) yearToRate[y] = rate
     }
-    const series = buildSeries(yearToRate, 'PERCENT', ACS_COUNTY_RATE_SOURCE_REF)
-    if (series.length) {
+    const rateSeries = buildSeries(yearToRate, 'PERCENT', ACS_COUNTY_RATE_SOURCE_REF)
+    if (rateSeries.length) {
       countyOut[county.slug] ??= { metrics: {} }
       countyOut[county.slug].metrics ??= {}
-      countyOut[county.slug].metrics!.effectiveTaxRate = series
-      const latest = series[series.length - 1]
+      countyOut[county.slug].metrics!.effectiveTaxRate = rateSeries
+      const latest = rateSeries[rateSeries.length - 1]
       log(`[OK] ${countyName} county ACS rate: ${latest.value.toFixed(2)}% (${latest.year})`)
     } else {
       log(`[WARN] No ACS county rate found for ${countyName}`)
+    }
+    // Median taxes paid series (raw dollars)
+    const yearToTaxes: Record<number, number | undefined> = {}
+    for (const [y, taxesMap] of countyTaxesMaps) {
+      const taxes = taxesMap.get(countyName)
+      if (taxes != null) yearToTaxes[y] = taxes
+    }
+    const taxesSeries = buildSeries(yearToTaxes, 'USD', ACS_TAX_SOURCE_REF)
+    if (taxesSeries.length) {
+      countyOut[county.slug] ??= { metrics: {} }
+      countyOut[county.slug].metrics ??= {}
+      countyOut[county.slug].metrics!.medianTaxesPaid = taxesSeries
+      const latest = taxesSeries[taxesSeries.length - 1]
+      log(`[OK] ${countyName} county median taxes paid: $${latest.value} (${latest.year})`)
     }
   }
 
@@ -352,12 +394,28 @@ async function sourceTexas(options: { out: string }) {
     sourceRefs.push(TX_RATES_SOURCE_REF)
   }
 
+  // State-level effective rate (ACS B25103/B25077 at state geography)
+  const stateRateByYear: Record<number, number | undefined> = {}
+  for (const y of ACS_YEARS) {
+    try {
+      const r = await fetchAcsStateEffectiveRate(y, STATE_FIPS.texas)
+      if (r != null) {
+        stateRateByYear[y] = r
+        log(`[OK] ACS state-level rate ${y}: ${r.toFixed(2)}%`)
+      }
+    } catch (e) {
+      log(`[WARN] ACS state-level rate ${y} failed: ${String(e)}`)
+    }
+  }
+  const stateRateSeries = buildSeries(stateRateByYear, 'PERCENT', ACS_COUNTY_RATE_SOURCE_REF)
+
   const payload: StateMetricsSourcePayload = {
     meta: {
       stateSlug: 'texas',
       generatedAt: new Date().toISOString(),
       sourceRefs,
     },
+    state: stateRateSeries.length ? { averageTaxRate: stateRateSeries } : undefined,
     counties: countyOut,
     towns: townsOut,
   }
@@ -370,21 +428,308 @@ async function sourceTexas(options: { out: string }) {
   )
 }
 
+/**
+ * Georgia sourcing.
+ *
+ * Two data sources:
+ *   1. ACS DP04_0089E (median home value) + B25103_001E (median taxes paid) +
+ *      county effective rate (B25103/B25077). Same pattern as Texas.
+ *   2. GA DOR consolidated millage PDF (OCR-parsed). Provides per-jurisdiction
+ *      M&O + Bond mills, which are summed and stored as MillageBreakdown
+ *      objects on each town (and county fallback).
+ *
+ * The millage PDF must be provided via --ga-millage-pdf <path>. If absent,
+ * the GA pipeline runs ACS-only and writes empty millage payloads — the
+ * calculator will then fall back to the ACS-implied rate.
+ */
+async function sourceGeorgia(options: { out: string; gaMillagePdf?: string }) {
+  const stateJson = loadStateJson<{ counties: CountyList }>('georgia')
+  const log = (m: string) => console.error(m)
+
+  // === ACS layer (mirrors Texas) ===
+  const mhvMaps = new Map<number, Map<string, number>>()
+  const taxMaps = new Map<number, Map<string, number>>()
+  for (const y of ACS_YEARS) {
+    try {
+      const { homeValue } = await fetchAcsDp04Maps(y, STATE_FIPS.georgia, 'texas')
+      mhvMaps.set(y, homeValue)
+      log(`[OK] ACS DP04 ${y}: ${homeValue.size} GA places (homeValue)`)
+    } catch (e) {
+      log(`[WARN] ACS DP04 ${y} failed: ${String(e)}`)
+      mhvMaps.set(y, new Map())
+    }
+    try {
+      const taxMap = await fetchAcsMedianTaxesPaidMap(y, STATE_FIPS.georgia, 'texas')
+      taxMaps.set(y, taxMap)
+      log(`[OK] ACS B25103 ${y}: ${taxMap.size} GA places (medianTaxesPaid)`)
+    } catch (e) {
+      log(`[WARN] ACS B25103 ${y} failed: ${String(e)}`)
+      taxMaps.set(y, new Map())
+    }
+  }
+
+  const countyOut: Record<string, CountyMetricsPayload> = {}
+  for (const county of stateJson.counties ?? []) {
+    countyOut[county.slug] = countyOut[county.slug] ?? { metrics: {} }
+  }
+
+  const townsOut: Record<string, TownMetricsPayload> = {}
+  for (const county of stateJson.counties ?? []) {
+    const countySlug = county.slug
+    for (const town of county.towns ?? []) {
+      const townKey = `${countySlug}/${town.slug}`
+      const { series: mhvSeries, acsMatchKey } = medianHomeSeriesForTown(
+        town.name,
+        'Georgia',
+        ACS_YEARS,
+        mhvMaps,
+        'texas' // Re-uses TX-style "places" lookup; GA places resolve the same way.
+      )
+      const { series: taxSeries } = medianTaxesSeriesForTown(
+        town.name,
+        'Georgia',
+        ACS_YEARS,
+        taxMaps,
+        'texas'
+      )
+      if (mhvSeries.length === 0) {
+        log(`[MISSING] medianHomeValue for ${town.name} (${townKey}) (ACS key: ${acsMatchKey})`)
+      }
+      if (taxSeries.length === 0) {
+        log(`[MISSING] medianTaxesPaid for ${town.name} (${townKey}) (ACS key: ${acsMatchKey})`)
+      }
+      townsOut[townKey] = {
+        medianHomeValue: mhvSeries,
+        medianTaxesPaid: taxSeries,
+        effectiveTaxRate: [],
+        debug: { acsMatchKey, countySlug, townSlug: town.slug, townName: town.name },
+      }
+    }
+  }
+
+  // County-level effective rate (ACS B25103 / B25077) AND
+  // county-level median taxes paid (raw B25103 dollar value).
+  const countyRateMaps = new Map<number, Map<string, number>>()
+  const countyTaxesMaps = new Map<number, Map<string, number>>()
+  for (const y of ACS_YEARS) {
+    try {
+      const rateMap = await fetchAcsCountyEffectiveRateMap(y, STATE_FIPS.georgia)
+      countyRateMaps.set(y, rateMap)
+      log(`[OK] ACS county rates ${y}: ${rateMap.size} GA counties`)
+    } catch (e) {
+      log(`[WARN] ACS county rates ${y} failed: ${String(e)}`)
+      countyRateMaps.set(y, new Map())
+    }
+    try {
+      const taxesMap = await fetchAcsCountyMedianTaxesPaidMap(y, STATE_FIPS.georgia)
+      countyTaxesMaps.set(y, taxesMap)
+      log(`[OK] ACS county taxes paid ${y}: ${taxesMap.size} GA counties`)
+    } catch (e) {
+      log(`[WARN] ACS county taxes paid ${y} failed: ${String(e)}`)
+      countyTaxesMaps.set(y, new Map())
+    }
+  }
+  for (const county of stateJson.counties ?? []) {
+    const countyName =
+      'name' in county && typeof (county as { name: string }).name === 'string'
+        ? (county as { name: string }).name
+        : county.slug
+    // Effective rate series
+    const yearToRate: Record<number, number | undefined> = {}
+    for (const [y, rateMap] of countyRateMaps) {
+      const rate = rateMap.get(countyName)
+      if (rate != null) yearToRate[y] = rate
+    }
+    const rateSeries = buildSeries(yearToRate, 'PERCENT', ACS_COUNTY_RATE_SOURCE_REF)
+    if (rateSeries.length) {
+      countyOut[county.slug] ??= { metrics: {} }
+      countyOut[county.slug].metrics ??= {}
+      countyOut[county.slug].metrics!.effectiveTaxRate = rateSeries
+      const latest = rateSeries[rateSeries.length - 1]
+      log(`[OK] ${countyName} county ACS rate: ${latest.value.toFixed(2)}% (${latest.year})`)
+    } else {
+      log(`[WARN] No ACS county rate found for ${countyName}`)
+    }
+    // Median taxes paid series
+    const yearToTaxes: Record<number, number | undefined> = {}
+    for (const [y, taxesMap] of countyTaxesMaps) {
+      const taxes = taxesMap.get(countyName)
+      if (taxes != null) yearToTaxes[y] = taxes
+    }
+    const taxesSeries = buildSeries(yearToTaxes, 'USD', ACS_TAX_SOURCE_REF)
+    if (taxesSeries.length) {
+      countyOut[county.slug] ??= { metrics: {} }
+      countyOut[county.slug].metrics ??= {}
+      countyOut[county.slug].metrics!.medianTaxesPaid = taxesSeries
+      const latest = taxesSeries[taxesSeries.length - 1]
+      log(`[OK] ${countyName} county median taxes paid: $${latest.value} (${latest.year})`)
+    }
+  }
+
+  // === GA DOR millage layer (OCR-based) ===
+  const sourceRefs: string[] = [ACS_SOURCE_REF, ACS_COUNTY_RATE_SOURCE_REF, ACS_TAX_SOURCE_REF]
+  if (options.gaMillagePdf) {
+    log(`[OK] Parsing GA DOR millage PDF: ${options.gaMillagePdf}`)
+    const rows = await parseMillagePdf(options.gaMillagePdf, { log })
+    const map = buildMillageMap(rows)
+    log(`[OK] Parsed millage: ${rows.length} rows across ${map.size} counties`)
+    const flagged = rows.filter(r => r.flagged)
+    if (flagged.length > 0) {
+      log(`[WARN] ${flagged.length} flagged rows (out-of-range values)`)
+      for (const r of flagged.slice(0, 10)) {
+        log(`  ${r.county}/${r.district}: ${r.flagReason}`)
+      }
+    }
+
+    // County-level: county M&O + school + state
+    for (const { countySlug, countyName } of GA_COUNTIES) {
+      const upper = countyName.toUpperCase()
+      const districts = map.get(upper)
+      if (!districts) {
+        log(`[MISSING] County millage for ${countyName}`)
+        continue
+      }
+      const inc = districts.get('COUNTY INCORPORATED')
+      const sch = districts.get('SCHOOL')
+      const st = districts.get('STATE')
+      if (!inc || !sch) {
+        log(`[MISSING] Required county districts for ${countyName} (incorporated, school)`)
+        continue
+      }
+      const county = (inc.mAndO ?? 0) + (inc.bond ?? 0)
+      const school = (sch.mAndO ?? 0) + (sch.bond ?? 0)
+      const state = st ? (st.mAndO ?? 0) + (st.bond ?? 0) : 0
+      const total = county + school + state
+      countyOut[countySlug] ??= { metrics: {} }
+      countyOut[countySlug].metrics ??= {}
+      countyOut[countySlug].metrics!.millage = [
+        {
+          year: GA_MILLAGE_YEAR,
+          county,
+          school,
+          state,
+          total,
+          sourceRef: GA_DOR_MILLAGE_SOURCE_REF,
+        },
+      ]
+      log(`[OK] ${countyName} county mills: ${total.toFixed(3)} (county=${county.toFixed(3)}, school=${school.toFixed(3)})`)
+    }
+
+    // Town-level: city + county + school + state.
+    //
+    // For cities with an independent school district (Atlanta, Decatur, Marietta,
+    // etc.), use the IND SCHOOL row's mills instead of the county SCHOOL row.
+    // Without this, Atlanta residents would be charged Fulton County Schools
+    // (17.08 mills) instead of Atlanta Public Schools (~21.6 mills), under-
+    // counting their bill by ~$900 on a $500k home.
+    for (const t of GA_TOWNS) {
+      const districts = map.get(t.countySlug.toUpperCase())
+      if (!districts) continue
+      const lookup = t.pdfDistrictName ?? t.townName.toUpperCase()
+      const city = districts.get(lookup)
+      const inc = districts.get('COUNTY INCORPORATED')
+      const indSchool = t.indSchoolDistrictName ? districts.get(t.indSchoolDistrictName) : undefined
+      const countySchool = districts.get('SCHOOL')
+      const sch = indSchool ?? countySchool
+      const usingIndSchool = !!indSchool
+      const st = districts.get('STATE')
+      const townKey = `${t.countySlug}/${t.townSlug}`
+      if (!city || !inc || !sch) {
+        const want = t.indSchoolDistrictName
+          ? `(needed city=${lookup}, county-inc, school=${t.indSchoolDistrictName} or SCHOOL)`
+          : `(lookup: ${lookup})`
+        log(`[MISSING] Town millage for ${townKey} ${want}`)
+        continue
+      }
+      if (t.indSchoolDistrictName && !indSchool) {
+        log(
+          `[WARN] ${townKey}: expected independent school "${t.indSchoolDistrictName}" not found; falling back to county SCHOOL (will undercount).`
+        )
+      }
+      const cityMills = (city.mAndO ?? 0) + (city.bond ?? 0)
+      const countyMills = (inc.mAndO ?? 0) + (inc.bond ?? 0)
+      const schoolMills = (sch.mAndO ?? 0) + (sch.bond ?? 0)
+      const stateMills = st ? (st.mAndO ?? 0) + (st.bond ?? 0) : 0
+      const total = cityMills + countyMills + schoolMills + stateMills
+      townsOut[townKey] ??= {}
+      townsOut[townKey].millage = [
+        {
+          year: GA_MILLAGE_YEAR,
+          city: cityMills,
+          county: countyMills,
+          school: schoolMills,
+          state: stateMills,
+          total,
+          sourceRef: GA_DOR_MILLAGE_SOURCE_REF,
+        },
+      ]
+      log(
+        `[OK] ${townKey} mills: ${total.toFixed(3)} (city=${cityMills.toFixed(3)}, school=${schoolMills.toFixed(3)}${usingIndSchool ? ' [IND]' : ''}, total=${total.toFixed(3)})`
+      )
+    }
+    sourceRefs.push(GA_DOR_MILLAGE_SOURCE_REF)
+  } else {
+    log('[INFO] No --ga-millage-pdf provided; skipping millage layer (calculator will fall back to ACS-implied rate).')
+  }
+
+  // State-level effective rate (ACS B25103/B25077 at state geography) — used
+  // as "Avg Rate" on the cross-state landing page. Time series.
+  const stateRateByYear: Record<number, number | undefined> = {}
+  for (const y of ACS_YEARS) {
+    try {
+      const r = await fetchAcsStateEffectiveRate(y, STATE_FIPS.georgia)
+      if (r != null) {
+        stateRateByYear[y] = r
+        log(`[OK] ACS state-level rate ${y}: ${r.toFixed(2)}%`)
+      }
+    } catch (e) {
+      log(`[WARN] ACS state-level rate ${y} failed: ${String(e)}`)
+    }
+  }
+  const stateRateSeries = buildSeries(stateRateByYear, 'PERCENT', ACS_COUNTY_RATE_SOURCE_REF)
+
+  const payload: StateMetricsSourcePayload = {
+    meta: {
+      stateSlug: 'georgia',
+      generatedAt: new Date().toISOString(),
+      sourceRefs,
+    },
+    state: stateRateSeries.length ? { averageTaxRate: stateRateSeries } : undefined,
+    counties: countyOut,
+    towns: townsOut,
+  }
+
+  const outPath =
+    options.out || path.join(process.cwd(), 'data', 'georgia-town-metrics.json')
+  fs.writeFileSync(outPath, JSON.stringify(payload, null, 2), 'utf8')
+  log(
+    `[OK] Wrote ${outPath} (${Object.keys(countyOut).length} counties, ${Object.keys(townsOut).length} towns)`
+  )
+}
+
 async function main() {
-  const { state, out, skipModiv, onlyModiv } = parseArgs()
+  const { state, out, skipModiv, onlyModiv, gaMillagePdf } = parseArgs()
   if (!state) {
     console.error(
-      'Usage: npx tsx scripts/source-state-metrics.ts --state new-jersey|texas [--out path] [--skip-modiv]\n' +
+      'Usage: npx tsx scripts/source-state-metrics.ts --state new-jersey|texas|georgia [--out path] [--skip-modiv] [--ga-millage-pdf path]\n' +
         '       npx tsx scripts/source-state-metrics.ts --state new-jersey --only modiv  (stdout: legacy MOD IV JSON)'
     )
     process.exit(1)
   }
   if (!isStateMetricsSlug(state)) {
-    console.error(`Unknown state: ${state}. Supported: ${['new-jersey', 'texas'].join(', ')}`)
+    console.error(
+      `Unknown state: ${state}. Supported: ${['new-jersey', 'texas', 'georgia'].join(', ')}`
+    )
     process.exit(1)
   }
   if (state === 'new-jersey') {
     await sourceNewJersey({ out, skipModiv, onlyModiv })
+  } else if (state === 'georgia') {
+    if (onlyModiv) {
+      console.error('--only modiv is only valid for new-jersey')
+      process.exit(1)
+    }
+    await sourceGeorgia({ out, gaMillagePdf })
   } else {
     if (onlyModiv) {
       console.error('--only modiv is only valid for new-jersey')

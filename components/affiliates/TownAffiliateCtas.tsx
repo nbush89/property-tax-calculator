@@ -9,21 +9,24 @@
  * town page without visual clutter.
  */
 
-import { getStateAffiliateConfig } from '@/lib/affiliates/affiliateConfig'
+import { appendSid, getStateAffiliateConfig } from '@/lib/affiliates/affiliateConfig'
 import type { AffiliateCta } from '@/lib/affiliates/affiliateConfig'
+import { slugifyLocation } from '@/utils/locationUtils'
 
 type Props = {
   stateSlug: string
   townDisplayName: string
+  countyName?: string
 }
 
-function CtaCard({ cta }: { cta: AffiliateCta }) {
+function CtaCard({ cta, sid }: { cta: AffiliateCta; sid?: string }) {
   if (!cta.enabled) return null
+  const href = sid ? appendSid(cta.url, sid) : cta.url
   return (
     <div className="rounded-lg border border-border bg-surface p-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
       <p className="text-sm text-text-muted leading-snug">{cta.description}</p>
       <a
-        href={cta.url}
+        href={href}
         target={cta.external ? '_blank' : undefined}
         rel={cta.external ? 'noopener noreferrer sponsored' : undefined}
         className="shrink-0 inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover transition-colors"
@@ -34,17 +37,23 @@ function CtaCard({ cta }: { cta: AffiliateCta }) {
   )
 }
 
-export function TownAffiliateCtas({ stateSlug }: Props) {
+export function TownAffiliateCtas({ stateSlug, townDisplayName, countyName }: Props) {
   const config = getStateAffiliateConfig(stateSlug)
   const hasAppeal = config.appealCta.enabled
   const hasMortgage = config.mortgageCta.enabled
 
   if (!hasAppeal && !hasMortgage) return null
 
+  // SID lets us see in CJ reports which page drove a conversion
+  const townSlug = slugifyLocation(townDisplayName)
+  const sid = countyName
+    ? `${stateSlug}-${slugifyLocation(countyName)}-${townSlug}`
+    : `${stateSlug}-town-${townSlug}`
+
   return (
     <div className="mb-6 flex flex-col gap-3" aria-label="Sponsored resources">
-      <CtaCard cta={config.appealCta} />
-      <CtaCard cta={config.mortgageCta} />
+      <CtaCard cta={config.appealCta} sid={sid} />
+      <CtaCard cta={config.mortgageCta} sid={sid} />
     </div>
   )
 }

@@ -26,6 +26,12 @@ export type StateAffiliateConfig = {
   appealCta: AffiliateCta
   /** Mortgage rate comparison — relevant for users in the home-buying funnel */
   mortgageCta: AffiliateCta
+  /**
+   * Property tax EXEMPTIONS referral — homestead, senior, veteran, disability.
+   * Year-round relevance (unlike appeals, which has tight seasonal windows).
+   * Optional — states without an exemptions program can omit.
+   */
+  exemptionsCta?: AffiliateCta
 }
 
 const DISABLED_CTA: AffiliateCta = {
@@ -73,6 +79,51 @@ const STATE_AFFILIATE_CONFIGS: Record<string, StateAffiliateConfig> = {
       external: true,
     },
   },
+  georgia: {
+    appealCta: {
+      enabled: true,
+      label: 'Get a free property tax review',
+      // CJ tracking link for Ownwell (advertiser 6784655, ad 15710172 → ownwell.com/).
+      // SID is appended per call via `appendSid()` so we can see in CJ
+      // reports which pages convert (e.g. ?sid=georgia-fulton-county).
+      url: 'https://www.tkqlhce.com/click-101739122-15710172',
+      description:
+        'Think your assessment is too high? Ownwell reviews your bill for free — you only pay if they save you money. Georgia appeals must be filed within 45 days of your annual notice.',
+      external: true,
+    },
+    exemptionsCta: {
+      enabled: true,
+      label: 'See which exemptions you qualify for',
+      // CJ tracking link for Ownwell exemptions text link (ad 15707047 →
+      // ownwell.com/exemptions). Year-round relevance.
+      url: 'https://www.tkqlhce.com/click-101739122-15707047',
+      description:
+        'Beyond the statewide $2,000 homestead exemption, many Georgia counties stack senior, veteran, disability, and floating homestead exemptions that can further reduce your bill. Ownwell can check what you qualify for.',
+      external: true,
+    },
+    mortgageCta: {
+      enabled: false,
+      label: 'Compare mortgage rates in Georgia',
+      url: 'https://www.lendingtree.com/home/mortgage/?utm_source=gapropertytax',
+      description: 'See current mortgage rates from multiple lenders. No obligation.',
+      external: true,
+    },
+  },
+}
+
+/**
+ * Append a per-page SID to a CJ tracking URL for sub-tracking in reports.
+ * CJ stores anything after `?sid=` (or `&sid=`) and surfaces it in the
+ * advertiser dashboard alongside conversions.
+ *
+ * Use a deterministic SID format so the data stays comparable:
+ *   {state}-{page-type}[-{slug}]
+ * e.g.: georgia-appeal-calc, georgia-county-fulton, georgia-town-atlanta.
+ */
+export function appendSid(url: string, sid: string): string {
+  if (!sid) return url
+  const sep = url.includes('?') ? '&' : '?'
+  return `${url}${sep}sid=${encodeURIComponent(sid)}`
 }
 
 const DEFAULT_CONFIG: StateAffiliateConfig = {

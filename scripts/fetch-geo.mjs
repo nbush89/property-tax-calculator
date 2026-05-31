@@ -23,6 +23,7 @@ const OUT_DIR = path.join(__dirname, '../public/geo')
 const STATES = [
   { fips: '34', slug: 'new-jersey', resolution: '500k', desc: 'New Jersey' },
   { fips: '48', slug: 'texas',      resolution: '5m',   desc: 'Texas' },
+  { fips: '13', slug: 'georgia',    resolution: '500k', desc: 'Georgia' },
 ]
 
 /**

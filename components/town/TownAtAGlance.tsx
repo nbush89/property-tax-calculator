@@ -82,7 +82,10 @@ export default function TownAtAGlance({
         ? ` (${trendEnd})`
         : ''
 
-  const billMetricKey = stateSlug === 'texas' ? 'medianTaxesPaid' : 'averageResidentialTaxBill'
+  // States that publish ACS-derived combined-bill data use medianTaxesPaid;
+  // NJ-style published average residential tax bill is the alternative.
+  const useAcsBillMetric = stateSlug === 'texas' || stateSlug === 'georgia'
+  const billMetricKey = useAcsBillMetric ? 'medianTaxesPaid' : 'averageResidentialTaxBill'
   const billCap = getMetricAvailability(stateSlug, 'town', billMetricKey)
   const rateCap = getMetricAvailability(stateSlug, 'town', 'effectiveTaxRate')
   const medianCap = getMetricAvailability(stateSlug, 'town', 'medianHomeValue')
@@ -103,7 +106,7 @@ export default function TownAtAGlance({
   }[] = []
   if (billAllowed && o.avgResidentialTaxBill != null) {
     const { shortLabel } = taxBillLabelForState(stateSlug)
-    const countyFallbackQualifier = stateSlug === 'texas' ? 'county median' : 'county average'
+    const countyFallbackQualifier = useAcsBillMetric ? 'county median' : 'county average'
     const label = billIsCountyFallback
       ? `${shortLabel} (${countyFallbackQualifier})`
       : shortLabel
@@ -209,7 +212,7 @@ export default function TownAtAGlance({
 
   return (
     <Card className="mb-8 p-6">
-      <h2 className="text-xl font-semibold text-text mb-4">
+      <h2 className="text-2xl font-semibold text-text mb-4">
         Town at a glance — latest available data by source
       </h2>
 
@@ -221,29 +224,35 @@ export default function TownAtAGlance({
       )}
 
       {bullets.length > 0 && (
-        <ul className="list-disc list-inside space-y-1.5 text-text-muted mb-4">
+        <dl className="rounded-xl border border-border divide-y divide-border mb-5 overflow-hidden">
           {bullets.map((b, i) => (
-            <li key={i} className="flex flex-wrap items-baseline gap-x-1">
-              <span>
-                <span className="text-text">{b.label}:</span> {b.value}
-                {b.yearLabel != null && (
-                  <span className="text-text-muted">{b.yearLabel}</span>
+            <div
+              key={i}
+              className="flex items-baseline justify-between gap-3 px-4 py-2.5 odd:bg-bg/40"
+            >
+              <dt className="text-sm text-text-muted flex items-center gap-1.5">
+                {b.label}
+                {b.caveat && (
+                  <MetricCaveatTrigger
+                    semantics={b.caveat.semantics}
+                    comparability={b.caveat.comparability}
+                    note={b.caveat.note}
+                    catalogCaveat={b.caveat.catalogCaveat}
+                  />
                 )}
-              </span>
-              {b.caveat && (
-                <MetricCaveatTrigger
-                  semantics={b.caveat.semantics}
-                  comparability={b.caveat.comparability}
-                  note={b.caveat.note}
-                  catalogCaveat={b.caveat.catalogCaveat}
-                />
-              )}
-            </li>
+              </dt>
+              <dd className="text-sm font-semibold text-text tabular-nums text-right whitespace-nowrap">
+                {b.value}
+                {b.yearLabel != null && (
+                  <span className="ml-1 text-xs font-normal text-text-muted">{b.yearLabel}</span>
+                )}
+              </dd>
+            </div>
           ))}
-        </ul>
+        </dl>
       )}
 
-      <p className="text-text-muted text-sm leading-relaxed mb-4">{summary}</p>
+      <p className="text-text-muted text-sm leading-relaxed mb-4 max-w-[68ch]">{summary}</p>
 
       {(sources.length > 0 || taxYearForFooter != null) && (
         <p className="text-xs text-text-muted border-t border-border pt-4">

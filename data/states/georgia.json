@@ -1,0 +1,2182 @@
+{
+  "state": {
+    "name": "Georgia",
+    "slug": "georgia",
+    "abbreviation": "GA",
+    "asOfYear": 2025,
+    "taxStructure": {
+      "assessmentRatio": 0.4,
+      "standardHomesteadExemption": 2000,
+      "notes": "Georgia property tax = (0.40 × fair market value − exemptions) × millage rate. Constitutional 40% assessment ratio applies statewide. Standard homestead exemption is $2,000 off assessed value for primary residences. Many counties stack additional local exemptions (Fulton, DeKalb, Cobb, Gwinnett all have age- and disability-based add-ons). HB 581 statewide floating homestead exemption took effect Jan 1, 2025; Fulton, DeKalb, Gwinnett, and Cobb (and their school districts) all opted out, so the traditional calculation applies in these four counties."
+    }
+  },
+  "sources": {
+    "us_census_acs_profile_dp04": {
+      "publisher": "U.S. Census Bureau",
+      "title": "ACS 5-year Profile (DP04_0089E median home value)",
+      "type": "api",
+      "homepageUrl": "https://api.census.gov/data.html",
+      "notes": "DP04_0089E = Owner-occupied units: Median value (dollars)."
+    },
+    "us_census_acs_b25103": {
+      "publisher": "U.S. Census Bureau",
+      "title": "ACS 5-year Table B25103 — Median Real Estate Taxes Paid",
+      "type": "api",
+      "homepageUrl": "https://api.census.gov/data.html",
+      "notes": "B25103_001E = Median real estate taxes paid (dollars) for all owner-occupied units. Covers combined bill across county, city, school district, and special districts net of homestead exemptions."
+    },
+    "us_census_acs_county_effective_rate": {
+      "publisher": "U.S. Census Bureau",
+      "title": "ACS 5-year — County Effective Tax Rate (B25103 / B25077)",
+      "type": "api",
+      "homepageUrl": "https://api.census.gov/data.html",
+      "notes": "Effective rate derived as median real estate taxes paid (B25103_001E) divided by median home value (B25077_001E) at the county level. Represents a homeowner's blended total effective rate across all overlapping taxing units (county + city + school district + state), net of homestead exemptions already reflected in ACS survey responses."
+    },
+    "ga_dor_millage_rates": {
+      "publisher": "Georgia Department of Revenue",
+      "title": "Georgia County Ad Valorem Tax Digest Millage Rates",
+      "type": "pdf",
+      "homepageUrl": "https://dor.georgia.gov/local-government-services/digest-compliance/property-tax-millage-rates",
+      "yearUrls": {
+        "2025": "https://dor.georgia.gov/local-government-services/digest-compliance/property-tax-millage-rates"
+      },
+      "notes": "Annual consolidated PDF of millage rates by county and tax district (M&O and Bond). Used for the per-jurisdiction calculator math: (0.40 × FMV − exemption) × Σ(millage). PDF uses Type 3 fonts without ToUnicode mapping; parsed via OCR."
+    },
+    "ga_dor_property_tax_admin_report": {
+      "publisher": "Georgia Department of Revenue",
+      "title": "Property Tax Administration Annual Report",
+      "type": "pdf",
+      "homepageUrl": "https://dor.georgia.gov/local-government-services/digest-compliance",
+      "notes": "Annual report with county-level digest totals and statewide property tax statistics."
+    }
+  },
+  "metrics": {},
+  "counties": [
+    {
+      "name": "Fulton",
+      "slug": "fulton",
+      "neighborCounties": [
+        "Cobb",
+        "DeKalb",
+        "Gwinnett",
+        "Cherokee",
+        "Forsyth",
+        "Clayton",
+        "Fayette",
+        "Coweta",
+        "Douglas"
+      ],
+      "metrics": {
+        "effectiveTaxRate": [
+          {
+            "year": 2020,
+            "value": 0.9749,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2021,
+            "value": 0.9739,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2022,
+            "value": 0.9116,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2023,
+            "value": 0.8922,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2024,
+            "value": 0.879,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          }
+        ],
+        "millage": [
+          {
+            "year": 2025,
+            "county": 9.039,
+            "school": 17.08,
+            "state": 0,
+            "total": 26.119,
+            "sourceRef": "ga_dor_millage_rates"
+          }
+        ],
+        "medianTaxesPaid": [
+          {
+            "year": 2020,
+            "value": 3185,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2021,
+            "value": 3361,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2022,
+            "value": 3631,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2023,
+            "value": 3847,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2024,
+            "value": 4033,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          }
+        ]
+      },
+      "towns": [
+        {
+          "name": "Atlanta",
+          "slug": "atlanta",
+          "asOfYear": 2025,
+          "rollout": {
+            "tier": 1,
+            "featured": true,
+            "isReady": false,
+            "rank": 1
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 314400,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 346600,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 395600,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 420600,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 439600,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 3067,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 3410,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 3702,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 4061,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 4231,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
+            ],
+            "millage": [
+              {
+                "year": 2025,
+                "city": 10.37,
+                "county": 9.039,
+                "school": 20.5,
+                "state": 0,
+                "total": 39.909,
+                "sourceRef": "ga_dor_millage_rates"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Sandy Springs",
+          "slug": "sandy-springs",
+          "asOfYear": 2025,
+          "rollout": {
+            "tier": 1,
+            "featured": false,
+            "isReady": false,
+            "rank": 2
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 474000,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 490200,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 556300,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 583900,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 619800,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 4605,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 5069,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 5350,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 5357,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 5553,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
+            ],
+            "millage": [
+              {
+                "year": 2025,
+                "city": 4.731,
+                "county": 9.039,
+                "school": 17.08,
+                "state": 0,
+                "total": 30.849999999999998,
+                "sourceRef": "ga_dor_millage_rates"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Roswell",
+          "slug": "roswell",
+          "asOfYear": 2025,
+          "rollout": {
+            "tier": 1,
+            "featured": false,
+            "isReady": false,
+            "rank": 3
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 385800,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 408700,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 479400,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 520500,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 567100,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 3759,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 3883,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 4229,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 4296,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 4383,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
+            ],
+            "millage": [
+              {
+                "year": 2025,
+                "city": 4.949000000000001,
+                "county": 9.039,
+                "school": 17.08,
+                "state": 0,
+                "total": 31.067999999999998,
+                "sourceRef": "ga_dor_millage_rates"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Alpharetta",
+          "slug": "alpharetta",
+          "asOfYear": 2025,
+          "rollout": {
+            "tier": 1,
+            "featured": false,
+            "isReady": false,
+            "rank": 4
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 447400,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 469800,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 562000,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 605700,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 649000,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 4417,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 4628,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 4999,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 5254,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 5142,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
+            ],
+            "millage": [
+              {
+                "year": 2025,
+                "city": 5.75,
+                "county": 9.039,
+                "school": 17.08,
+                "state": 0,
+                "total": 31.869,
+                "sourceRef": "ga_dor_millage_rates"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Johns Creek",
+          "slug": "johns-creek",
+          "asOfYear": 2025,
+          "rollout": {
+            "tier": 1,
+            "featured": false,
+            "isReady": false,
+            "rank": 5
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 423600,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 452700,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 525100,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 583700,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 629400,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 4349,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 4523,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 4847,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 4950,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 5007,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
+            ],
+            "millage": [
+              {
+                "year": 2025,
+                "city": 3.742,
+                "county": 9.039,
+                "school": 17.08,
+                "state": 0,
+                "total": 29.860999999999997,
+                "sourceRef": "ga_dor_millage_rates"
+              }
+            ]
+          }
+        }
+      ],
+      "asOfYear": 2025
+    },
+    {
+      "name": "DeKalb",
+      "slug": "dekalb",
+      "neighborCounties": [
+        "Fulton",
+        "Gwinnett",
+        "Rockdale",
+        "Henry",
+        "Clayton"
+      ],
+      "metrics": {
+        "effectiveTaxRate": [
+          {
+            "year": 2020,
+            "value": 1.0259,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2021,
+            "value": 1.0176,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2022,
+            "value": 0.9485,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2023,
+            "value": 0.9191,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2024,
+            "value": 0.9251,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          }
+        ],
+        "millage": [
+          {
+            "year": 2025,
+            "county": 11.638,
+            "school": 22.78,
+            "state": 0,
+            "total": 34.418,
+            "sourceRef": "ga_dor_millage_rates"
+          }
+        ],
+        "medianTaxesPaid": [
+          {
+            "year": 2020,
+            "value": 2414,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2021,
+            "value": 2601,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2022,
+            "value": 2856,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2023,
+            "value": 3046,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2024,
+            "value": 3310,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          }
+        ]
+      },
+      "towns": [
+        {
+          "name": "Decatur",
+          "slug": "decatur",
+          "asOfYear": 2025,
+          "rollout": {
+            "tier": 1,
+            "featured": true,
+            "isReady": false,
+            "rank": 1
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 547300,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 583900,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 654400,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 655900,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 701400,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 7060,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 7451,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 8454,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 8423,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 9295,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
+            ],
+            "millage": [
+              {
+                "year": 2025,
+                "city": 12.97,
+                "county": 11.638,
+                "school": 20.3,
+                "state": 0,
+                "total": 44.908,
+                "sourceRef": "ga_dor_millage_rates"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Dunwoody",
+          "slug": "dunwoody",
+          "asOfYear": 2025,
+          "rollout": {
+            "tier": 1,
+            "featured": false,
+            "isReady": false,
+            "rank": 2
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 446800,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 468000,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 545200,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 579400,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 602900,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 4610,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 4716,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 5196,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 5334,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 5454,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
+            ],
+            "millage": [
+              {
+                "year": 2025,
+                "city": 3.04,
+                "county": 11.638,
+                "school": 22.78,
+                "state": 0,
+                "total": 37.458,
+                "sourceRef": "ga_dor_millage_rates"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Brookhaven",
+          "slug": "brookhaven",
+          "asOfYear": 2025,
+          "rollout": {
+            "tier": 1,
+            "featured": false,
+            "isReady": false,
+            "rank": 3
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 524800,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 548600,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 626800,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 660300,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 692700,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 5706,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 5931,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 6248,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 6168,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 6537,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
+            ],
+            "millage": [
+              {
+                "year": 2025,
+                "city": 3.21,
+                "county": 11.638,
+                "school": 22.78,
+                "state": 0,
+                "total": 37.628,
+                "sourceRef": "ga_dor_millage_rates"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Stone Mountain",
+          "slug": "stone-mountain",
+          "asOfYear": 2025,
+          "rollout": {
+            "tier": 1,
+            "featured": false,
+            "isReady": false,
+            "rank": 4
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 128300,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 137900,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 162700,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 190700,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 206400,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 1646,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 1795,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 1820,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 1995,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 2352,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
+            ],
+            "millage": [
+              {
+                "year": 2025,
+                "city": 15.827,
+                "county": 11.638,
+                "school": 22.78,
+                "state": 0,
+                "total": 50.245000000000005,
+                "sourceRef": "ga_dor_millage_rates"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Tucker",
+          "slug": "tucker",
+          "asOfYear": 2025,
+          "rollout": {
+            "tier": 1,
+            "featured": false,
+            "isReady": false,
+            "rank": 5
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 272500,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 287600,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 331100,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 359300,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 384500,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 2783,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 3005,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 3209,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 3347,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 3572,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
+            ],
+            "millage": [
+              {
+                "year": 2025,
+                "city": 2.036,
+                "county": 11.638,
+                "school": 22.78,
+                "state": 0,
+                "total": 36.454,
+                "sourceRef": "ga_dor_millage_rates"
+              }
+            ]
+          }
+        }
+      ],
+      "asOfYear": 2025
+    },
+    {
+      "name": "Gwinnett",
+      "slug": "gwinnett",
+      "neighborCounties": [
+        "Fulton",
+        "DeKalb",
+        "Forsyth",
+        "Hall",
+        "Barrow",
+        "Walton",
+        "Rockdale"
+      ],
+      "metrics": {
+        "effectiveTaxRate": [
+          {
+            "year": 2020,
+            "value": 1.1294,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2021,
+            "value": 1.1056,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2022,
+            "value": 1.0166,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2023,
+            "value": 0.978,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2024,
+            "value": 0.9496,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          }
+        ],
+        "millage": [
+          {
+            "year": 2025,
+            "county": 6.95,
+            "school": 20.15,
+            "state": 0,
+            "total": 27.099999999999998,
+            "sourceRef": "ga_dor_millage_rates"
+          }
+        ],
+        "medianTaxesPaid": [
+          {
+            "year": 2020,
+            "value": 2662,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2021,
+            "value": 2838,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2022,
+            "value": 3124,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2023,
+            "value": 3381,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2024,
+            "value": 3617,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          }
+        ]
+      },
+      "towns": [
+        {
+          "name": "Lawrenceville",
+          "slug": "lawrenceville",
+          "asOfYear": 2025,
+          "rollout": {
+            "tier": 1,
+            "featured": true,
+            "isReady": false,
+            "rank": 1
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 183300,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 216800,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 286400,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 335100,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 350600,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 1840,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 1945,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 2532,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 2607,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 2719,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
+            ],
+            "millage": [
+              {
+                "year": 2025,
+                "city": 3.26,
+                "county": 6.95,
+                "school": 20.15,
+                "state": 0,
+                "total": 30.36,
+                "sourceRef": "ga_dor_millage_rates"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Duluth",
+          "slug": "duluth",
+          "asOfYear": 2025,
+          "rollout": {
+            "tier": 1,
+            "featured": false,
+            "isReady": false,
+            "rank": 2
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 254200,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 279000,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 334800,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 366000,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 400800,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 2923,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 3199,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 3460,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 3732,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 3826,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
+            ],
+            "millage": [
+              {
+                "year": 2025,
+                "city": 6.551,
+                "county": 6.95,
+                "school": 20.15,
+                "state": 0,
+                "total": 33.650999999999996,
+                "sourceRef": "ga_dor_millage_rates"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Suwanee",
+          "slug": "suwanee",
+          "asOfYear": 2025,
+          "rollout": {
+            "tier": 1,
+            "featured": false,
+            "isReady": false,
+            "rank": 3
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 325800,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 345600,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 375500,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 439700,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 480600,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 3600,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 3813,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 4242,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 4519,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 4900,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
+            ],
+            "millage": [
+              {
+                "year": 2025,
+                "city": 4.930000000000001,
+                "county": 6.95,
+                "school": 20.15,
+                "state": 0,
+                "total": 32.03,
+                "sourceRef": "ga_dor_millage_rates"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Snellville",
+          "slug": "snellville",
+          "asOfYear": 2025,
+          "rollout": {
+            "tier": 1,
+            "featured": false,
+            "isReady": false,
+            "rank": 4
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 185200,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 206900,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 259500,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 293400,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 335000,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 2141,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 2346,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 2485,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 2721,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 2994,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
+            ],
+            "millage": [
+              {
+                "year": 2025,
+                "city": 4,
+                "county": 6.95,
+                "school": 20.15,
+                "state": 0,
+                "total": 31.099999999999998,
+                "sourceRef": "ga_dor_millage_rates"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Lilburn",
+          "slug": "lilburn",
+          "asOfYear": 2025,
+          "rollout": {
+            "tier": 1,
+            "featured": false,
+            "isReady": false,
+            "rank": 5
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 196900,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 212700,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 257500,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 278600,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 329700,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 2523,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 2851,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 3276,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 3725,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 3686,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
+            ],
+            "millage": [
+              {
+                "year": 2025,
+                "city": 4.43,
+                "county": 6.95,
+                "school": 20.15,
+                "state": 0,
+                "total": 31.529999999999998,
+                "sourceRef": "ga_dor_millage_rates"
+              }
+            ]
+          }
+        }
+      ],
+      "asOfYear": 2025
+    },
+    {
+      "name": "Cobb",
+      "slug": "cobb",
+      "neighborCounties": [
+        "Fulton",
+        "Cherokee",
+        "Bartow",
+        "Paulding",
+        "Douglas"
+      ],
+      "metrics": {
+        "effectiveTaxRate": [
+          {
+            "year": 2020,
+            "value": 0.7236,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2021,
+            "value": 0.7335,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2022,
+            "value": 0.6884,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2023,
+            "value": 0.685,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2024,
+            "value": 0.668,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          }
+        ],
+        "millage": [
+          {
+            "year": 2025,
+            "county": 8.46,
+            "school": 18.7,
+            "state": 0,
+            "total": 27.16,
+            "sourceRef": "ga_dor_millage_rates"
+          }
+        ],
+        "medianTaxesPaid": [
+          {
+            "year": 2020,
+            "value": 1982,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2021,
+            "value": 2155,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2022,
+            "value": 2382,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2023,
+            "value": 2560,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2024,
+            "value": 2720,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          }
+        ]
+      },
+      "towns": [
+        {
+          "name": "Marietta",
+          "slug": "marietta",
+          "asOfYear": 2025,
+          "rollout": {
+            "tier": 1,
+            "featured": true,
+            "isReady": false,
+            "rank": 1
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 310100,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 330700,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 376400,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 401100,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 448500,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 2180,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 2331,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 2408,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 2477,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 2697,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
+            ],
+            "millage": [
+              {
+                "year": 2025,
+                "city": 4.692,
+                "county": 8.46,
+                "school": 17.97,
+                "state": 0,
+                "total": 31.122,
+                "sourceRef": "ga_dor_millage_rates"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Smyrna",
+          "slug": "smyrna",
+          "asOfYear": 2025,
+          "rollout": {
+            "tier": 1,
+            "featured": false,
+            "isReady": false,
+            "rank": 2
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 309000,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 328600,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 380100,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 409000,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 449500,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 2555,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 2893,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 3147,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 3323,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 3600,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
+            ],
+            "millage": [
+              {
+                "year": 2025,
+                "city": 8.99,
+                "county": 8.46,
+                "school": 18.7,
+                "state": 0,
+                "total": 36.150000000000006,
+                "sourceRef": "ga_dor_millage_rates"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Kennesaw",
+          "slug": "kennesaw",
+          "asOfYear": 2025,
+          "rollout": {
+            "tier": 1,
+            "featured": false,
+            "isReady": false,
+            "rank": 3
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 215800,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 225500,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 262000,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 291300,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 335400,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 2051,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 2089,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 2293,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 2400,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 2630,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
+            ],
+            "millage": [
+              {
+                "year": 2025,
+                "city": 8.55,
+                "county": 8.46,
+                "school": 18.7,
+                "state": 0,
+                "total": 35.71,
+                "sourceRef": "ga_dor_millage_rates"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Acworth",
+          "slug": "acworth",
+          "asOfYear": 2025,
+          "rollout": {
+            "tier": 1,
+            "featured": false,
+            "isReady": false,
+            "rank": 4
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 193300,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 219200,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 270600,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 309800,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 339900,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 1736,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 1976,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 2285,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 2524,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 2594,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
+            ],
+            "millage": [
+              {
+                "year": 2025,
+                "city": 8.95,
+                "county": 8.46,
+                "school": 18.7,
+                "state": 0,
+                "total": 36.11,
+                "sourceRef": "ga_dor_millage_rates"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Powder Springs",
+          "slug": "powder-springs",
+          "asOfYear": 2025,
+          "rollout": {
+            "tier": 1,
+            "featured": false,
+            "isReady": false,
+            "rank": 5
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 181000,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 199100,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 241800,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 283700,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 332900,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 1580,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 1775,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 1964,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 2256,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 2462,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
+            ],
+            "millage": [
+              {
+                "year": 2025,
+                "city": 9.5,
+                "county": 8.46,
+                "school": 18.7,
+                "state": 0,
+                "total": 36.66,
+                "sourceRef": "ga_dor_millage_rates"
+              }
+            ]
+          }
+        }
+      ],
+      "asOfYear": 2025
+    }
+  ]
+}
