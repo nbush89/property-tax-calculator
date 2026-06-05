@@ -128,6 +128,11 @@ export default function Hb581ExplainerSection({
         before assessment notices go out.
       </p>
       </div>
+      <p className="mt-4 text-sm">
+        <a href="/georgia/hb-581-opt-out-counties" className="data-link">
+          Full breakdown — HB 581 opt-out counties in Georgia →
+        </a>
+      </p>
     </>
   )
 

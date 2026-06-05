@@ -19,6 +19,7 @@ import {
 } from '@/lib/links/towns'
 import { getMetricLatest } from '@/lib/data/town-helpers'
 import { Divider } from '@/components/ui/Divider'
+import { AccordionItem } from '@/components/ui/Accordion'
 import { AppealPromptCard } from '@/components/town/AppealPromptCard'
 import type { TownData, CountyData } from '@/lib/data/types'
 
@@ -545,17 +546,23 @@ export default async function ComparisonPage({ params }: Props) {
             </div>
           </section>
 
-          {/* FAQ */}
+          {/* FAQ — accordions. First item defaults open. Answers stay in the DOM
+              (native <details>/<summary>) so Google still indexes and the FAQ
+              JSON-LD above stays eligible for rich results. */}
           <section className="mb-12 scroll-mt-24" aria-labelledby="faq-heading">
             <h2 id="faq-heading" className="text-2xl font-semibold text-text mb-4">
               {statsA.displayName} vs {statsB.displayName} — frequently asked questions
             </h2>
-            <div className="divide-y divide-border rounded-xl border border-border bg-surface">
+            <div className="space-y-2">
               {faqs.map((faq, i) => (
-                <div key={i} className="p-5">
-                  <h3 className="font-semibold text-text mb-2 text-sm">{faq.question}</h3>
-                  <p className="text-sm text-text-muted leading-relaxed measure">{faq.answer}</p>
-                </div>
+                <AccordionItem
+                  key={i}
+                  title={faq.question}
+                  defaultOpen={i === 0}
+                  headingLevel={3}
+                >
+                  <p className="text-sm leading-relaxed measure">{faq.answer}</p>
+                </AccordionItem>
               ))}
             </div>
           </section>

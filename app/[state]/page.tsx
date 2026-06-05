@@ -170,6 +170,39 @@ export default async function StatePage({ params }: Props) {
           </div>
         </section>
 
+        {/* GA-only: HB 581 explainer callout. Targets the high-volume
+            "did my county opt out of HB 581" query and gives the page
+            an inbound link from the state landing page (SEO + UX). */}
+        {state === 'georgia' && (
+          <>
+            <Divider />
+            <section className="py-8 bg-bg">
+              <div className="container-page">
+                <Link
+                  href="/georgia/hb-581-opt-out-counties"
+                  className="block max-w-3xl rounded-xl border border-amber-200 bg-amber-50/40 p-5 hover:border-amber-300 transition-colors"
+                >
+                  <div className="flex items-start gap-3">
+                    <span className="inline-flex shrink-0 items-center rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-medium text-amber-900 ring-1 ring-amber-200">
+                      Policy update
+                    </span>
+                    <div>
+                      <p className="font-semibold text-text">
+                        Did your Georgia county opt out of HB 581? →
+                      </p>
+                      <p className="text-sm text-text-muted mt-1">
+                        Georgia&apos;s Save Our Homes Act took effect Jan 1, 2025 — but
+                        Fulton, DeKalb, Gwinnett, and Cobb all opted out. Read the
+                        county-by-county breakdown and what it means for your bill.
+                      </p>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            </section>
+          </>
+        )}
+
         {/* Featured towns — direct links to published town pages */}
         {(() => {
           const featuredTowns = selectStateFeaturedTowns(stateData, { max: 15 })

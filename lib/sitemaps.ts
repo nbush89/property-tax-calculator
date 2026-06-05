@@ -226,6 +226,15 @@ export async function getStateUrls(baseUrl: string, stateSlug: string): Promise<
     lastmod: stateLastmod,
   })
 
+  // GA-only editorial page targeting "did my county opt out of HB 581" queries.
+  // Only render when the state actually has the page (currently GA only).
+  if (stateSlug === 'georgia') {
+    urls.push({
+      loc: joinUrl(baseUrl, `/${stateSlug}/hb-581-opt-out-counties`),
+      lastmod: stateLastmod,
+    })
+  }
+
   for (const county of stateData.counties) {
     const countySlugShort = county.slug || slugifyLocation(county.name)
     const countySlugForPath = slugifyLocation(county.name)

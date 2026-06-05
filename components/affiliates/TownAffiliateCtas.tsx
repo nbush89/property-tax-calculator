@@ -39,10 +39,13 @@ function CtaCard({ cta, sid }: { cta: AffiliateCta; sid?: string }) {
 
 export function TownAffiliateCtas({ stateSlug, townDisplayName, countyName }: Props) {
   const config = getStateAffiliateConfig(stateSlug)
-  const hasAppeal = config.appealCta.enabled
   const hasMortgage = config.mortgageCta.enabled
 
-  if (!hasAppeal && !hasMortgage) return null
+  // appealCta is intentionally NOT rendered here — AppealPromptCard above
+  // already surfaces it with stronger contextual copy (headline question +
+  // educational explanation). Rendering both creates a visible duplicate.
+  // This component only handles the secondary mortgage CTA for now.
+  if (!hasMortgage) return null
 
   // SID lets us see in CJ reports which page drove a conversion
   const townSlug = slugifyLocation(townDisplayName)
@@ -52,7 +55,6 @@ export function TownAffiliateCtas({ stateSlug, townDisplayName, countyName }: Pr
 
   return (
     <div className="mb-6 flex flex-col gap-3" aria-label="Sponsored resources">
-      <CtaCard cta={config.appealCta} sid={sid} />
       <CtaCard cta={config.mortgageCta} sid={sid} />
     </div>
   )

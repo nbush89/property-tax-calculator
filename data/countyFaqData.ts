@@ -69,13 +69,14 @@ export function getCountyFaqData(countyName: string, stateSlug: string): FAQItem
   const hb581 = getHb581Status(stateSlug, countyName)
   if (hb581) {
     const bothOptedOut = hb581.county && hb581.school
+    const seeMore = ' For the metro-wide opt-out breakdown and what it means for your bill, see our HB 581 opt-out guide for Georgia counties.'
     items.push({
       question: `Did ${countyName} County opt out of HB 581 (the Save Our Homes Act)?`,
       answer: bothOptedOut
-        ? `Yes. Both ${countyName} County government and ${countyName} County Schools formally opted out of HB 581 for tax year ${hb581.effectiveYear}. The statewide floating homestead exemption that caps annual taxable-value increases at the rate of inflation does not apply in ${countyName} County — assessed values can rise with market appreciation, subject to the standard 40% assessment ratio. The traditional $2,000 statewide homestead exemption and any local senior or disability exemptions still apply.`
+        ? `Yes. Both ${countyName} County government and ${countyName} County Schools formally opted out of HB 581 for tax year ${hb581.effectiveYear}. The statewide floating homestead exemption that caps annual taxable-value increases at the rate of inflation does not apply in ${countyName} County — assessed values can rise with market appreciation, subject to the standard 40% assessment ratio. The traditional $2,000 statewide homestead exemption and any local senior or disability exemptions still apply.${seeMore}`
         : hb581.county
-          ? `${countyName} County government opted out, but the school district remains opted in. The county portion of your bill is not subject to HB 581's cap; the school portion is. Check the ${countyName} County Board of Tax Assessors for the current status.`
-          : `${countyName} County Schools opted out, but the county government remains opted in. The school portion of your bill is not subject to HB 581's cap; the county portion is. Check the ${countyName} County Board of Tax Assessors for the current status.`,
+          ? `${countyName} County government opted out, but the school district remains opted in. The county portion of your bill is not subject to HB 581's cap; the school portion is. Check the ${countyName} County Board of Tax Assessors for the current status.${seeMore}`
+          : `${countyName} County Schools opted out, but the county government remains opted in. The school portion of your bill is not subject to HB 581's cap; the county portion is. Check the ${countyName} County Board of Tax Assessors for the current status.${seeMore}`,
     })
   }
 

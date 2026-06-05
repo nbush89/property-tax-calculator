@@ -45,7 +45,7 @@ export function getReliefFaqDoesCalculatorIncludeExemptions(stateSlug: string): 
     return [
       'The calculator applies the statewide $2,000 standard homestead exemption to assessed value for primary residences (toggle the primary-residence flag to compare).',
       'Many GA counties stack additional local exemptions (senior age-65, disability, floating homestead) that are not modeled automatically — those typically reduce the bill further.',
-      'HB 581 statewide floating homestead exemption took effect Jan 1, 2025, but Fulton, DeKalb, Gwinnett, and Cobb (and their school districts) all opted out, so the traditional calculation applies in those counties.',
+      'HB 581 statewide floating homestead exemption took effect Jan 1, 2025, but Fulton, DeKalb, Gwinnett, and Cobb (and their school districts) all opted out, so the traditional calculation applies in those counties — see our HB 581 opt-out breakdown for the full county-by-county detail.',
       'Confirm eligibility and amounts with your county tax commissioner.',
     ].join(' ')
   }

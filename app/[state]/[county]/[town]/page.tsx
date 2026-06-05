@@ -139,7 +139,10 @@ export default async function TownPropertyTaxPage({ params }: Props) {
       state,
       countyShortSlug,
       currentTownSlug,
-      t.href.split('/').pop()?.replace(/-property-tax$/, '') ?? ''
+      t.href
+        .split('/')
+        .pop()
+        ?.replace(/-property-tax$/, '') ?? ''
     ),
   }))
 
@@ -234,11 +237,17 @@ export default async function TownPropertyTaxPage({ params }: Props) {
         <div className="page-header-bar">
           <div className="container-content">
             <nav className="text-sm text-text-muted mb-3" aria-label="Breadcrumb">
-              <Link href="/" className="hover:text-primary transition-colors">Home</Link>
+              <Link href="/" className="hover:text-primary transition-colors">
+                Home
+              </Link>
               <span className="mx-2">→</span>
-              <Link href={`/${state}`} className="hover:text-primary transition-colors">{stateName}</Link>
+              <Link href={`/${state}`} className="hover:text-primary transition-colors">
+                {stateName}
+              </Link>
               <span className="mx-2">→</span>
-              <Link href={countyPageUrl} className="hover:text-primary transition-colors">{county.name} County</Link>
+              <Link href={countyPageUrl} className="hover:text-primary transition-colors">
+                {county.name} County
+              </Link>
               <span className="mx-2">→</span>
               <span className="text-text">{townDisplayName}</span>
             </nav>
@@ -251,50 +260,61 @@ export default async function TownPropertyTaxPage({ params }: Props) {
             <div className="mt-3 flex flex-wrap gap-2">
               {pageOverview?.avgResidentialTaxBill != null && (
                 <span className="stat-chip">
-                  {billLabel}{pageOverview.avgResidentialTaxBillYear != null ? ` (${pageOverview.avgResidentialTaxBillYear})` : ''}:{' '}
+                  {billLabel}
+                  {pageOverview.avgResidentialTaxBillYear != null
+                    ? ` (${pageOverview.avgResidentialTaxBillYear})`
+                    : ''}
+                  :{' '}
                   <span className="stat-chip-value">
-                    {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(pageOverview.avgResidentialTaxBill)}
+                    {new Intl.NumberFormat('en-US', {
+                      style: 'currency',
+                      currency: 'USD',
+                      maximumFractionDigits: 0,
+                    }).format(pageOverview.avgResidentialTaxBill)}
                   </span>
-                  {usesCountyFallback && (
-                    <span className="text-xs">({billFallbackLabel})</span>
-                  )}
+                  {usesCountyFallback && <span className="text-xs">({billFallbackLabel})</span>}
                 </span>
               )}
               {pageOverview?.effectiveTaxRatePct != null && (
                 <span className="stat-chip">
-                  Effective rate{pageOverview.effectiveTaxRateYear != null ? ` (${pageOverview.effectiveTaxRateYear})` : ''}:{' '}
-                  <span className="stat-chip-value">{pageOverview.effectiveTaxRatePct.toFixed(3)}%</span>
+                  Effective rate
+                  {pageOverview.effectiveTaxRateYear != null
+                    ? ` (${pageOverview.effectiveTaxRateYear})`
+                    : ''}
+                  :{' '}
+                  <span className="stat-chip-value">
+                    {pageOverview.effectiveTaxRatePct.toFixed(3)}%
+                  </span>
                 </span>
               )}
-              {taxYearForSources != null && pageOverview?.avgResidentialTaxBill == null && pageOverview?.effectiveTaxRatePct == null && (
-                <span className="stat-chip">
-                  Data through <span className="stat-chip-value ml-1">{taxYearForSources}</span>
-                </span>
-              )}
+              {taxYearForSources != null &&
+                pageOverview?.avgResidentialTaxBill == null &&
+                pageOverview?.effectiveTaxRatePct == null && (
+                  <span className="stat-chip">
+                    Data through <span className="stat-chip-value ml-1">{taxYearForSources}</span>
+                  </span>
+                )}
             </div>
 
             {/* Nav links */}
             <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1">
-              <Link href={countyPageUrl} className="sub-nav-link">{county.name} County</Link>
-              <Link href={`/${state}/property-tax-rates`} className="sub-nav-link">{stateName} tax rates</Link>
-              <Link href={buildCalculatorHref({ stateSlug: state })} className="sub-nav-link">{abbrev} calculator</Link>
-              <Link href={`/${state}/property-tax-appeal-calculator`} className="sub-nav-link">Am I over-assessed?</Link>
-              <Link
-                href={buildCalculatorHref({
-                  stateSlug: state,
-                  countySlug: getCountyShortSlug(county),
-                  townSlug: town.slug || slugifyLocation(town.name),
-                })}
-                className="sub-nav-link"
-              >
-                Calculator with {townDisplayName} prefilled
+              <Link href={countyPageUrl} className="sub-nav-link">
+                {county.name} County
+              </Link>
+              <Link href={`/${state}/property-tax-rates`} className="sub-nav-link">
+                {stateName} tax rates
+              </Link>
+              <Link href={buildCalculatorHref({ stateSlug: state })} className="sub-nav-link">
+                {abbrev} calculator
+              </Link>
+              <Link href={`/${state}/property-tax-appeal-calculator`} className="sub-nav-link">
+                Am I over-assessed?
               </Link>
             </div>
           </div>
         </div>
 
         <div className="container-content py-8">
-
           <TownAtAGlance
             townName={townDisplayName}
             countyName={county.name}
@@ -331,10 +351,7 @@ export default async function TownPropertyTaxPage({ params }: Props) {
           />
 
           {sections.overviewParagraphs.length > 0 && (
-            <section
-              className="mb-10 scroll-mt-24"
-              aria-labelledby="town-overview-heading"
-            >
+            <section className="mb-10 scroll-mt-24" aria-labelledby="town-overview-heading">
               <h2 id="town-overview-heading" className="text-2xl font-semibold text-text mb-4">
                 Overview
               </h2>
@@ -347,10 +364,7 @@ export default async function TownPropertyTaxPage({ params }: Props) {
           )}
 
           {sections.comparison && sections.comparison.items.length > 0 && (
-            <section
-              className="mb-10 scroll-mt-24"
-              aria-labelledby="town-compare-heading"
-            >
+            <section className="mb-10 scroll-mt-24" aria-labelledby="town-compare-heading">
               <h2 id="town-compare-heading" className="text-2xl font-semibold text-text mb-4">
                 {sections.comparison.title}
               </h2>
@@ -417,10 +431,7 @@ export default async function TownPropertyTaxPage({ params }: Props) {
             {sections.estimateGuide.note && (
               <p className="mt-3 text-sm text-text-muted border-t border-border pt-3">
                 {sections.estimateGuide.note}{' '}
-                <Link
-                  href="/methodology"
-                  className="data-link"
-                >
+                <Link href="/methodology" className="data-link">
                   Methodology
                 </Link>
                 .
@@ -446,10 +457,7 @@ export default async function TownPropertyTaxPage({ params }: Props) {
           </section>
 
           <Divider className="mb-8" />
-          <section
-            className="mb-12 pt-8 scroll-mt-24"
-            aria-labelledby="sources-heading"
-          >
+          <section className="mb-12 pt-8 scroll-mt-24" aria-labelledby="sources-heading">
             <h2 id="sources-heading" className="text-2xl font-semibold mb-4 text-text">
               Sources
             </h2>
@@ -477,25 +485,16 @@ export default async function TownPropertyTaxPage({ params }: Props) {
             <Link href={`/${state}`} className="data-link">
               {stateName} overview
             </Link>
-            <Link
-              href={`/${state}/property-tax-calculator`}
-              className="data-link"
-            >
+            <Link href={`/${state}/property-tax-calculator`} className="data-link">
               {abbrev} calculator
             </Link>
             <Link href={countyPageUrl} className="data-link">
               {county.name} County
             </Link>
-            <Link
-              href={countyCalculatorHref}
-              className="data-link"
-            >
+            <Link href={countyCalculatorHref} className="data-link">
               {county.name} County calculator
             </Link>
-            <Link
-              href={`/${state}/property-tax-rates`}
-              className="data-link"
-            >
+            <Link href={`/${state}/property-tax-rates`} className="data-link">
               {stateName} property tax rates
             </Link>
           </div>

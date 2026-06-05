@@ -93,23 +93,51 @@ export default async function StatePropertyTaxRatesPage({ params }: Props) {
       const countySlug = c.slug || slugifyLocation(c.name)
 
       // Build town rows — include all towns that have a rate, linked only if published
+      // Derive a town effective rate from ACS data (medianTaxesPaid /
+      // medianHomeValue × 100). Used for states like GA where towns don't carry
+      // a published town-level effectiveTaxRate but do have the ACS components
+      // — matches how we compute the county-level rate so the figures are
+      // comparable. Returns null if either component is missing.
+      const acsImpliedTownRate = (
+        t: (typeof c.towns extends Array<infer U> | undefined ? U : never)
+      ): { value: number; year: number } | null => {
+        const taxes = t.metrics?.medianTaxesPaid
+        const homeVal = t.metrics?.medianHomeValue
+        if (!taxes?.length || !homeVal?.length) return null
+        const latestTaxes = taxes[taxes.length - 1]
+        const latestHomeVal = homeVal[homeVal.length - 1]
+        if (latestHomeVal.value <= 0) return null
+        return {
+          value: Math.round((latestTaxes.value / latestHomeVal.value) * 100 * 10000) / 10000,
+          year: latestTaxes.year,
+        }
+      }
+
       const towns: TownRateRow[] = (c.towns ?? [])
         .filter(t => {
           const rate = t.metrics?.effectiveTaxRate?.length
             ? t.metrics.effectiveTaxRate[t.metrics.effectiveTaxRate.length - 1].value
             : t.avgRate
-          return rate != null
+          return rate != null || acsImpliedTownRate(t) != null
         })
         .map(t => {
           const rateSeries = t.metrics?.effectiveTaxRate ?? []
           // Series values are stored in percent form (e.g. 0.710 = 0.710%).
           // avgRate is a legacy decimal (e.g. 0.0071 = 0.71%) and needs * 100.
-          const ratePct = rateSeries.length
-            ? rateSeries[rateSeries.length - 1].value // already percent
-            : typeof t.avgRate === 'number'
-              ? t.avgRate * 100
-              : null // decimal → percent
-          const rateYear = getTownEffectiveTaxRateYear(stateData, c.name, t.name)
+          // ACS-implied is computed last as a fallback for GA-style towns.
+          let ratePct: number | null
+          let rateYear: number | null
+          if (rateSeries.length) {
+            ratePct = rateSeries[rateSeries.length - 1].value
+            rateYear = getTownEffectiveTaxRateYear(stateData, c.name, t.name)
+          } else if (typeof t.avgRate === 'number') {
+            ratePct = t.avgRate * 100
+            rateYear = getTownEffectiveTaxRateYear(stateData, c.name, t.name)
+          } else {
+            const acs = acsImpliedTownRate(t)
+            ratePct = acs?.value ?? null
+            rateYear = acs?.year ?? null
+          }
           const slug = getTownSlug(t)
           const published = slug != null && isTownPublished(t)
           return {

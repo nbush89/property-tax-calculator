@@ -111,20 +111,14 @@ export function buildTownOverviewSummary(args: BuildSummaryArgs): string {
   const parts: string[] = []
 
   if (usingCountyFallback && (avgResidentialTaxBill != null || effectiveTaxRatePct != null)) {
-    const countyContext = `${countyName} County average`
-    if (avgResidentialTaxBill != null && effectiveTaxRatePct != null) {
-      parts.push(
-        `Based on the most recent finalized tax data, the ${countyContext} residential tax bill was ${formatUSD(avgResidentialTaxBill)} and the effective rate was ${formatPct(effectiveTaxRatePct)}.`
-      )
-    } else if (avgResidentialTaxBill != null) {
-      parts.push(
-        `Based on the most recent finalized tax data, the ${countyContext} residential tax bill was ${formatUSD(avgResidentialTaxBill)}.`
-      )
-    } else if (effectiveTaxRatePct != null) {
-      parts.push(
-        `Based on the most recent finalized tax data, the ${countyContext} effective tax rate was ${formatPct(effectiveTaxRatePct)}.`
-      )
-    }
+    // The "Town at a glance" dl above already shows the county-fallback figures
+    // with proper labels (and a notice that town-level data isn't in our
+    // dataset). Restating those numbers in a sentence below just repeats them
+    // — and with a different label ("residential tax bill" vs the dl's
+    // "Median taxes paid") creates a visible inconsistency. Skip the summary
+    // entirely in this branch; the dl is sufficient. Other branches
+    // (interpretive vs-county/state, trend) still add information not in the
+    // dl and are preserved below.
   } else {
     // Interpretive summary: comparison and trend, year-agnostic framing
     const hasHigher = vsCounty === 'higher' || vsState === 'higher'

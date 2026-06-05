@@ -252,7 +252,7 @@ export default function TownAtAGlance({
         </dl>
       )}
 
-      <p className="text-text-muted text-sm leading-relaxed mb-4 max-w-[68ch]">{summary}</p>
+      <p className="text-text-muted text-sm leading-relaxed mb-4">{summary}</p>
 
       {(sources.length > 0 || taxYearForFooter != null) && (
         <p className="text-xs text-text-muted border-t border-border pt-4">
