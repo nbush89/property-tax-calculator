@@ -87,8 +87,10 @@ const STATE_AFFILIATE_CONFIGS: Record<string, StateAffiliateConfig> = {
       // SID is appended per call via `appendSid()` so we can see in CJ
       // reports which pages convert (e.g. ?sid=georgia-fulton-county).
       url: 'https://www.tkqlhce.com/click-101739122-15710172',
+      // Social-proof stats are attributed to Ownwell ("Ownwell reports") to
+      // make clear they are partner-reported, not independently audited by us.
       description:
-        'Think your assessment is too high? Ownwell reviews your bill for free — you only pay if they save you money. Georgia appeals must be filed within 45 days of your annual notice.',
+        'Ownwell reviews your bill for free — you only pay if they save you money. Ownwell reports an 88% success rate and $774 average annual savings for customers who appeal (4.7★ Google, 3,000+ reviews). Georgia appeals must be filed within 45 days of your annual notice.',
       external: true,
     },
     exemptionsCta: {
@@ -98,7 +100,7 @@ const STATE_AFFILIATE_CONFIGS: Record<string, StateAffiliateConfig> = {
       // ownwell.com/exemptions). Year-round relevance.
       url: 'https://www.tkqlhce.com/click-101739122-15707047',
       description:
-        'Beyond the statewide $2,000 homestead exemption, many Georgia counties stack senior, veteran, disability, and floating homestead exemptions that can further reduce your bill. Ownwell can check what you qualify for.',
+        'Many Georgia counties stack senior, veteran, disability, and floating homestead exemptions on top of the statewide $2,000 standard. Ownwell can check what you qualify for — they report 500,000+ homeowners served and a 4.7★ Google rating.',
       external: true,
     },
     mortgageCta: {

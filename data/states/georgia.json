@@ -7,7 +7,7 @@
     "taxStructure": {
       "assessmentRatio": 0.4,
       "standardHomesteadExemption": 2000,
-      "notes": "Georgia property tax = (0.40 × fair market value − exemptions) × millage rate. Constitutional 40% assessment ratio applies statewide. Standard homestead exemption is $2,000 off assessed value for primary residences. Many counties stack additional local exemptions (Fulton, DeKalb, Cobb, Gwinnett all have age- and disability-based add-ons). HB 581 statewide floating homestead exemption took effect Jan 1, 2025; Fulton, DeKalb, Gwinnett, and Cobb (and their school districts) all opted out, so the traditional calculation applies in these four counties."
+      "notes": "Georgia property tax = (0.40 \u00d7 fair market value \u2212 exemptions) \u00d7 millage rate. Constitutional 40% assessment ratio applies statewide. Standard homestead exemption is $2,000 off assessed value for primary residences. Many counties stack additional local exemptions (Fulton, DeKalb, Cobb, Gwinnett all have age- and disability-based add-ons). HB 581 statewide floating homestead exemption took effect Jan 1, 2025; Fulton, DeKalb, Gwinnett, and Cobb (and their school districts) all opted out, so the traditional calculation applies in these four counties."
     }
   },
   "sources": {
@@ -20,14 +20,14 @@
     },
     "us_census_acs_b25103": {
       "publisher": "U.S. Census Bureau",
-      "title": "ACS 5-year Table B25103 — Median Real Estate Taxes Paid",
+      "title": "ACS 5-year Table B25103 \u2014 Median Real Estate Taxes Paid",
       "type": "api",
       "homepageUrl": "https://api.census.gov/data.html",
       "notes": "B25103_001E = Median real estate taxes paid (dollars) for all owner-occupied units. Covers combined bill across county, city, school district, and special districts net of homestead exemptions."
     },
     "us_census_acs_county_effective_rate": {
       "publisher": "U.S. Census Bureau",
-      "title": "ACS 5-year — County Effective Tax Rate (B25103 / B25077)",
+      "title": "ACS 5-year \u2014 County Effective Tax Rate (B25103 / B25077)",
       "type": "api",
       "homepageUrl": "https://api.census.gov/data.html",
       "notes": "Effective rate derived as median real estate taxes paid (B25103_001E) divided by median home value (B25077_001E) at the county level. Represents a homeowner's blended total effective rate across all overlapping taxing units (county + city + school district + state), net of homestead exemptions already reflected in ACS survey responses."
@@ -40,7 +40,7 @@
       "yearUrls": {
         "2025": "https://dor.georgia.gov/local-government-services/digest-compliance/property-tax-millage-rates"
       },
-      "notes": "Annual consolidated PDF of millage rates by county and tax district (M&O and Bond). Used for the per-jurisdiction calculator math: (0.40 × FMV − exemption) × Σ(millage). PDF uses Type 3 fonts without ToUnicode mapping; parsed via OCR."
+      "notes": "Annual consolidated PDF of millage rates by county and tax district (M&O and Bond). Used for the per-jurisdiction calculator math: (0.40 \u00d7 FMV \u2212 exemption) \u00d7 \u03a3(millage). PDF uses Type 3 fonts without ToUnicode mapping; parsed via OCR."
     },
     "ga_dor_property_tax_admin_report": {
       "publisher": "Georgia Department of Revenue",
@@ -232,11 +232,11 @@
           },
           "copy": {
             "intro": [
-              "Atlanta is the only city in our Georgia coverage that straddles two counties — the bulk of the city sits in Fulton, with a smaller portion in DeKalb. For property tax purposes, that distinction matters less than one of the city's other quirks: Atlanta runs its own independent school district. Atlanta Public Schools (APS) sets its own millage rate, which replaces the county school millage for any home inside city limits. That means the school component of an Atlanta tax bill is materially different from the Fulton Schools rate you would see on a Sandy Springs or Roswell page.",
-              "For 2025, the total combined Atlanta millage was roughly 36.5 mills — city of Atlanta operating plus APS plus Fulton County M&O. On a 40% assessed value, that works out to an effective rate near 1.0% of fair market value for a typical owner-occupied home, before the standard $2,000 homestead exemption. Atlanta also stacks additional homestead amounts inside city limits, so most primary-residence owners see a bill modestly lower than the headline rate suggests. The HB 581 floating homestead exemption does not apply: Fulton, DeKalb, Atlanta Public Schools, and the City of Atlanta all opted out for 2025."
+              "Atlanta is the only city in our Georgia coverage that straddles two counties \u2014 the bulk of the city sits in Fulton, with a smaller portion in DeKalb. For property tax purposes, that distinction matters less than one of the city's other quirks: Atlanta runs its own independent school district. Atlanta Public Schools (APS) sets its own millage rate, which replaces the county school millage for any home inside city limits. That means the school component of an Atlanta tax bill is materially different from the Fulton Schools rate you would see on a Sandy Springs or Roswell page.",
+              "For 2025, the total combined Atlanta millage was roughly 36.5 mills \u2014 city of Atlanta operating plus APS plus Fulton County M&O. On a 40% assessed value, that works out to an effective rate near 1.0% of fair market value for a typical owner-occupied home, before the standard $2,000 homestead exemption. Atlanta also stacks additional homestead amounts inside city limits, so most primary-residence owners see a bill modestly lower than the headline rate suggests. The HB 581 floating homestead exemption does not apply: Fulton, DeKalb, Atlanta Public Schools, and the City of Atlanta all opted out for 2025."
             ],
             "snapshot": [
-              "A median-priced Atlanta home (around $440,000 in 2024) generates an estimated annual property tax bill near $4,200 once the standard homestead exemption is applied. That figure does not include senior age-65 reductions, the Atlanta-specific basic homestead, or any frozen-base benefits earned by long-term homeowners — all of which can reduce the effective bill substantially for qualifying residents. Use the calculator above with your actual assessed value for a precise estimate."
+              "A median-priced Atlanta home (around $440,000 in 2024) generates an estimated annual property tax bill near $4,200 once the standard homestead exemption is applied. That figure does not include senior age-65 reductions, the Atlanta-specific basic homestead, or any frozen-base benefits earned by long-term homeowners \u2014 all of which can reduce the effective bill substantially for qualifying residents. Use the calculator above with your actual assessed value for a precise estimate."
             ]
           }
         },
@@ -329,8 +329,8 @@
           },
           "copy": {
             "intro": [
-              "Sandy Springs is Fulton County's second-largest city by population (incorporated in 2005) and the dominant residential market north of the Perimeter. Unlike Atlanta, Sandy Springs does not run an independent school district — its students attend Fulton County Schools, and the school portion of every Sandy Springs property tax bill matches what county residents in unincorporated north Fulton pay. The city itself runs a relatively lean operating millage on top.",
-              "For 2025, Sandy Springs combined millage came in around 30.85 mills — one of the lower totals in the metro. The biggest single component is Fulton Schools (~17 mills), followed by Fulton County operations (~9 mills) and Sandy Springs city operating (~4.7 mills). The state portion is zero in Georgia since 2016. Fulton opted out of the HB 581 floating homestead exemption for 2025, so the standard 40% assessment ratio plus the $2,000 homestead exemption is what applies — no inflation-only cap on annual value growth."
+              "Sandy Springs is Fulton County's second-largest city by population (incorporated in 2005) and the dominant residential market north of the Perimeter. Unlike Atlanta, Sandy Springs does not run an independent school district \u2014 its students attend Fulton County Schools, and the school portion of every Sandy Springs property tax bill matches what county residents in unincorporated north Fulton pay. The city itself runs a relatively lean operating millage on top.",
+              "For 2025, Sandy Springs combined millage came in around 30.85 mills \u2014 one of the lower totals in the metro. The biggest single component is Fulton Schools (~17 mills), followed by Fulton County operations (~9 mills) and Sandy Springs city operating (~4.7 mills). The state portion is zero in Georgia since 2016. Fulton opted out of the HB 581 floating homestead exemption for 2025, so the standard 40% assessment ratio plus the $2,000 homestead exemption is what applies \u2014 no inflation-only cap on annual value growth."
             ],
             "snapshot": [
               "A median-priced Sandy Springs home (roughly $700,000 in 2024) generates an estimated annual property tax bill in the $8,500 range with the standard homestead applied. Senior age-65, disability, and Fulton's basic homestead exemption (which is larger than the statewide $2,000 minimum for primary residences) can reduce the bill further. Use the calculator with your actual assessed value for a precise estimate."
@@ -426,8 +426,8 @@
           },
           "copy": {
             "intro": [
-              "Roswell sits at the northern edge of Fulton County and shares the same school district structure as Sandy Springs and Alpharetta — students attend Fulton County Schools, so the school portion of every Roswell property tax bill matches the broader Fulton Schools rate. The city itself runs a moderately higher operating millage than Sandy Springs, balanced against historically strong city services and one of the metro's most preserved downtown districts.",
-              "For 2025, Roswell's combined millage was approximately 31.1 mills. The school portion (~17 mills) drives most of the bill, with Fulton County M&O (~9 mills), Roswell city operating (~5 mills), and zero state contribution making up the rest. Fulton, Fulton Schools, and Roswell all opted out of HB 581 for 2025, meaning the floating homestead cap does not apply — annual taxable value rises with market appreciation rather than capping at inflation."
+              "Roswell sits at the northern edge of Fulton County and shares the same school district structure as Sandy Springs and Alpharetta \u2014 students attend Fulton County Schools, so the school portion of every Roswell property tax bill matches the broader Fulton Schools rate. The city itself runs a moderately higher operating millage than Sandy Springs, balanced against historically strong city services and one of the metro's most preserved downtown districts.",
+              "For 2025, Roswell's combined millage was approximately 31.1 mills. The school portion (~17 mills) drives most of the bill, with Fulton County M&O (~9 mills), Roswell city operating (~5 mills), and zero state contribution making up the rest. Fulton, Fulton Schools, and Roswell all opted out of HB 581 for 2025, meaning the floating homestead cap does not apply \u2014 annual taxable value rises with market appreciation rather than capping at inflation."
             ],
             "snapshot": [
               "A median-priced Roswell home (roughly $620,000 in 2024) generates an estimated annual property tax bill near $7,650 with the standard $2,000 homestead exemption applied. Roswell's actual effective bills run close to Sandy Springs because the school and county components dominate. Use the calculator with your actual assessed value for a precise estimate, and check whether you qualify for Fulton's expanded basic homestead exemption."
@@ -789,11 +789,11 @@
           },
           "copy": {
             "intro": [
-              "Decatur is one of the more distinctive tax situations in metro Atlanta because the city runs its own independent school district — City Schools of Decatur — which replaces the DeKalb County Schools millage for any home inside city limits. On top of that, Decatur residents receive a 50% reduction on the DeKalb County M&O portion of their bill (a relic of the city's historic arrangement with the county, formalized in DOR data as the \"DECATUR 50%\" district designation). The result is a combined millage rate that looks dramatically different from anywhere else in DeKalb.",
-              "For 2025, Decatur's total combined millage was approximately 47.4 mills — heavily weighted toward City Schools of Decatur (~20.3 mills) and the 50%-rate DeKalb component (~11.2 mills). City of Decatur operating millage adds about 13 mills, with no state portion. Both DeKalb County and City Schools of Decatur opted out of the HB 581 floating homestead exemption for 2025, so the standard 40% assessment ratio and $2,000 homestead exemption are what apply."
+              "Decatur is one of the more distinctive tax situations in metro Atlanta because the city runs its own independent school district \u2014 City Schools of Decatur \u2014 which replaces the DeKalb County Schools millage for any home inside city limits. On top of that, Decatur residents receive a 50% reduction on the DeKalb County M&O portion of their bill (a relic of the city's historic arrangement with the county, formalized in DOR data as the \"DECATUR 50%\" district designation). The result is a combined millage rate that looks dramatically different from anywhere else in DeKalb.",
+              "For 2025, Decatur's total combined millage was approximately 47.4 mills \u2014 heavily weighted toward City Schools of Decatur (~20.3 mills) and the 50%-rate DeKalb component (~11.2 mills). City of Decatur operating millage adds about 13 mills, with no state portion. Both DeKalb County and City Schools of Decatur opted out of the HB 581 floating homestead exemption for 2025, so the standard 40% assessment ratio and $2,000 homestead exemption are what apply."
             ],
             "snapshot": [
-              "A median-priced Decatur home (roughly $640,000 in 2024) generates an estimated annual property tax bill near $11,900 once the statewide homestead is applied. Decatur is one of metro Atlanta's higher-tax cities by total bill — a consequence of its independent school district and dense city services — but residents also receive correspondingly more local infrastructure and walkable amenities than most metro suburbs. Use the calculator with your actual assessed value for a precise estimate."
+              "A median-priced Decatur home (roughly $640,000 in 2024) generates an estimated annual property tax bill near $11,900 once the statewide homestead is applied. Decatur is one of metro Atlanta's higher-tax cities by total bill \u2014 a consequence of its independent school district and dense city services \u2014 but residents also receive correspondingly more local infrastructure and walkable amenities than most metro suburbs. Use the calculator with your actual assessed value for a precise estimate."
             ]
           }
         },
@@ -1860,11 +1860,11 @@
           },
           "copy": {
             "intro": [
-              "Marietta is the county seat of Cobb and one of the few Georgia cities that runs its own independent school district. Marietta City Schools (often shortened to MCS) sets its own millage rate, which replaces the Cobb County Schools millage for any home inside city limits. That makes Marietta's school portion materially different from what residents of Smyrna, Kennesaw, or Acworth pay — Marietta's independent district millage typically runs a point or two below the surrounding Cobb Schools rate.",
-              "For 2025, Marietta's total combined millage came in around 31.85 mills — Marietta City Schools (~17.97 mills), Cobb County operations (~8.5 mills), and Marietta city operating (~4.7 mills, including a small bond component). Cobb County and Marietta City Schools both opted out of the HB 581 floating homestead exemption for 2025, so the standard 40% assessment ratio plus the statewide $2,000 homestead is what applies — annual taxable value rises with the market rather than capping at inflation."
+              "Marietta is the county seat of Cobb and one of the few Georgia cities that runs its own independent school district. Marietta City Schools (often shortened to MCS) sets its own millage rate, which replaces the Cobb County Schools millage for any home inside city limits. That makes Marietta's school portion materially different from what residents of Smyrna, Kennesaw, or Acworth pay \u2014 Marietta's independent district millage typically runs a point or two below the surrounding Cobb Schools rate.",
+              "For 2025, Marietta's total combined millage came in around 31.85 mills \u2014 Marietta City Schools (~17.97 mills), Cobb County operations (~8.5 mills), and Marietta city operating (~4.7 mills, including a small bond component). Cobb County and Marietta City Schools both opted out of the HB 581 floating homestead exemption for 2025, so the standard 40% assessment ratio plus the statewide $2,000 homestead is what applies \u2014 annual taxable value rises with the market rather than capping at inflation."
             ],
             "snapshot": [
-              "A median-priced Marietta home (roughly $400,000 in 2024) generates an estimated annual property tax bill in the $5,000–$5,200 range with the standard homestead applied. Cobb County offers one of the metro's more generous senior age-65 exemptions, which can reduce the bill substantially for qualifying residents — worth confirming with the Cobb Tax Commissioner once you turn 65. Use the calculator with your actual assessed value for a precise estimate."
+              "A median-priced Marietta home (roughly $400,000 in 2024) generates an estimated annual property tax bill in the $5,000\u2013$5,200 range with the standard homestead applied. Cobb County offers one of the metro's more generous senior age-65 exemptions, which can reduce the bill substantially for qualifying residents \u2014 worth confirming with the Cobb Tax Commissioner once you turn 65. Use the calculator with your actual assessed value for a precise estimate."
             ]
           }
         },
@@ -2216,6 +2216,271 @@
                 "state": 0,
                 "total": 36.66,
                 "sourceRef": "ga_dor_millage_rates"
+              }
+            ]
+          }
+        }
+      ],
+      "asOfYear": 2025
+    },
+    {
+      "name": "Douglas",
+      "slug": "douglas",
+      "neighborCounties": [
+        "Cobb",
+        "Fulton",
+        "Carroll",
+        "Paulding",
+        "Coweta",
+        "Haralson"
+      ],
+      "metrics": {
+        "effectiveTaxRate": [
+          {
+            "year": 2020,
+            "value": 0.9119,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2021,
+            "value": 0.9183,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2022,
+            "value": 0.8231,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2023,
+            "value": 0.7929,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2024,
+            "value": 0.745,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          }
+        ],
+        "millage": [
+          {
+            "year": 2025,
+            "county": 12.063,
+            "school": 19.35,
+            "state": 0,
+            "total": 31.413,
+            "sourceRef": "ga_dor_millage_rates"
+          }
+        ],
+        "medianTaxesPaid": [
+          {
+            "year": 2020,
+            "value": 1562,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2021,
+            "value": 1674,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2022,
+            "value": 1875,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2023,
+            "value": 2079,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2024,
+            "value": 2212,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          }
+        ]
+      },
+      "towns": [
+        {
+          "name": "Douglasville",
+          "slug": "douglasville",
+          "asOfYear": 2025,
+          "rollout": {
+            "tier": 1,
+            "featured": true,
+            "isReady": true,
+            "rank": 1
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 196400,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 214300,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 274500,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 313500,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 359200,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 2072,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 2213,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 2653,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 2898,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 3286,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
+            ],
+            "millage": [
+              {
+                "year": 2025,
+                "city": 10.036,
+                "county": 12.063,
+                "school": 19.35,
+                "state": 0,
+                "total": 41.449,
+                "sourceRef": "ga_dor_millage_rates"
+              }
+            ]
+          },
+          "copy": {
+            "intro": [
+              "Douglasville is the county seat of Douglas County and the largest incorporated city in the western Atlanta metro. Unlike Atlanta, Decatur, or Marietta, Douglasville does not run an independent school district \u2014 students attend Douglas County School District, which covers the entire county and is the 17th largest in Georgia. That means the school portion of every Douglasville property tax bill matches what residents of Lithia Springs, Winston, and the unincorporated parts of the county pay. Douglasville layers a city operating millage on top.",
+              "For 2025, Douglasville's total combined millage came in around 41.45 mills \u2014 Douglas County Schools (~19.35 mills including a 0.5-mill bond), Douglas County operations (~12.06 mills), and Douglasville city operating (~10.04 mills, including a 1.29-mill bond). The state portion is zero in Georgia since 2016. Douglas County is the cleanest example of HB 581 implementation in our coverage: the Board of Commissioners, the school district, and every incorporated city in the county all opted out for 2025, so the standard 40% assessment ratio and statewide $2,000 homestead exemption are what apply \u2014 no floating cap on annual taxable value growth."
+            ],
+            "snapshot": [
+              "A median-priced Douglasville home (roughly $359,000 in 2024) generates an estimated annual property tax bill near $5,900 with the standard $2,000 homestead applied. Real-world median bills are materially lower (ACS reports $3,286 for 2024) because Douglas County offers one of the metro's more generous senior school millage exemptions \u2014 qualifying age-62 homeowners are exempted from the school portion entirely (conditions apply), which is the largest single component of the bill. Use the calculator with your actual assessed value for a precise estimate, and check whether you qualify for the senior or disability exemption with the Douglas County Tax Commissioner."
+            ]
+          }
+        },
+        {
+          "name": "Lithia Springs",
+          "slug": "lithia-springs",
+          "asOfYear": 2025,
+          "rollout": {
+            "tier": 1,
+            "featured": false,
+            "isReady": false,
+            "rank": 2
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 131700,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 149800,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 171600,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 199500,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 220000,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 1172,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 1250,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 1161,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 1353,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 1422,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
               }
             ]
           }

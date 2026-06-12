@@ -72,6 +72,14 @@ const HB581_OPT_OUT: Array<{
     exampleHomeFmv: 425000,
     effectiveRatePct: 0.67,
   },
+  {
+    countyName: 'Douglas',
+    countySlug: 'douglas',
+    countyGovOptedOut: true,
+    schoolDistrictOptedOut: true,
+    exampleHomeFmv: 359000,
+    effectiveRatePct: 0.74,
+  },
 ]
 
 function buildFaqs(): { question: string; answer: string }[] {
@@ -84,12 +92,12 @@ function buildFaqs(): { question: string; answer: string }[] {
     {
       question: 'Which Georgia counties opted out of HB 581?',
       answer:
-        'All four metro Atlanta counties — Fulton, DeKalb, Gwinnett, and Cobb — formally opted out for tax year 2025, including each of their school districts. Several other large counties (Chatham, Richmond) and most metro school districts opted out as well, citing concerns about long-term revenue stability and the absence of any state mechanism to reimburse them for capped growth.',
+        'All four core metro Atlanta counties — Fulton, DeKalb, Gwinnett, and Cobb — formally opted out for tax year 2025, including each of their school districts. Douglas County also opted out across the board (county government, school district, and every incorporated city). Many other Georgia counties opted out as well, often in mixed combinations — for example a school board opting out while the county commission did not, or a city staying in while its county opted out. Because GA does not maintain a central public list, status outside the counties on this page must be verified through each county Board of Tax Assessors.',
     },
     {
       question: 'Where is opt-out status published for each county?',
       answer:
-        "Opt-out status is published by each county individually — typically on the Board of Tax Assessors website and in county commission meeting minutes from late 2024. The state does not maintain a central public-facing list. The four metro counties covered on this page (Fulton, DeKalb, Gwinnett, Cobb) have confirmed status reflected in the calculator. Status for other counties is available through county-level sources, and opt-out decisions can be revisited annually.",
+        "Opt-out status is published by each county individually — typically on the Board of Tax Assessors website and in county commission meeting minutes from late 2024. The state does not maintain a central public-facing list. The five counties covered on this page (Fulton, DeKalb, Gwinnett, Cobb, Douglas) have confirmed status reflected in the calculator. Status for other counties is available through county-level sources, and opt-out decisions can be revisited annually.",
     },
     {
       question: 'What does opt-out mean for my property tax bill?',
@@ -109,7 +117,7 @@ function buildFaqs(): { question: string; answer: string }[] {
     {
       question: 'What protections remain for homeowners in opted-out counties?',
       answer:
-        'Three mechanisms remain unchanged by the opt-out. The $2,000 statewide standard homestead exemption applies to primary residences; local senior age-65, disability, and veteran exemptions continue to apply where homeowners qualify (these are typically larger than the statewide $2,000 minimum); and the appeal process remains available — Georgia homeowners have 45 days from the date on their annual assessment notice to file Form PT-311A. Cobb and DeKalb have particularly large senior exemptions, and Fulton stacks additional homestead amounts inside the City of Atlanta.',
+        'Three mechanisms remain unchanged by the opt-out. The $2,000 statewide standard homestead exemption applies to primary residences; local senior age-65, disability, and veteran exemptions continue to apply where homeowners qualify (these are typically larger than the statewide $2,000 minimum); and the appeal process remains available — Georgia homeowners have 45 days from the date on their annual assessment notice to file Form PT-311A. Cobb and DeKalb have particularly large senior exemptions, Fulton stacks additional homestead amounts inside the City of Atlanta, and Douglas exempts qualifying age-62 seniors from the school portion of the bill entirely (conditions apply).',
     },
   ]
 }
@@ -121,17 +129,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (state !== 'georgia') return { title: 'Not Found | Property Tax Calculator' }
   const path = '/georgia/hb-581-opt-out-counties'
   return buildMetadata({
-    title: 'Did Your Georgia County Opt Out of HB 581? (Fulton, DeKalb, Gwinnett, Cobb) | 2025',
+    title: 'Did Your Georgia County Opt Out of HB 581? (Fulton, DeKalb, Gwinnett, Cobb, Douglas) | 2025',
     absoluteTitle: true,
     description:
-      "Georgia's HB 581 floating homestead exemption took effect Jan 1, 2025 — but Fulton, DeKalb, Gwinnett, and Cobb all opted out. Here's what that means for your property tax bill, county by county.",
+      "Georgia's HB 581 floating homestead exemption took effect Jan 1, 2025 — but Fulton, DeKalb, Gwinnett, Cobb, and Douglas all opted out. Here's what that means for your property tax bill, county by county.",
     path,
     keywords:
-      'HB 581 Georgia, HB 581 opt out, Georgia floating homestead exemption, Save Our Homes Act Georgia, Fulton HB 581, DeKalb HB 581, Gwinnett HB 581, Cobb HB 581, Georgia property tax 2025',
+      'HB 581 Georgia, HB 581 opt out, Georgia floating homestead exemption, Save Our Homes Act Georgia, Fulton HB 581, DeKalb HB 581, Gwinnett HB 581, Cobb HB 581, Douglas HB 581, Georgia property tax 2025',
     openGraph: {
       title: 'Georgia HB 581 — Which Counties Opted Out (and What That Means)',
       description:
-        'Fulton, DeKalb, Gwinnett, and Cobb all opted out of the statewide floating homestead. Here is the breakdown plus what each opt-out means for homeowners.',
+        'Fulton, DeKalb, Gwinnett, Cobb, and Douglas all opted out of the statewide floating homestead. Here is the breakdown plus what each opt-out means for homeowners.',
       type: 'article',
     },
   })
@@ -180,8 +188,8 @@ export default async function Hb581OptOutPage({ params }: Props) {
               created a statewide floating homestead exemption that caps annual growth in a
               homestead&apos;s taxable value at inflation. But counties and school districts
               could opt out via public hearing, and a large share of them did — including all
-              four metro Atlanta counties our calculator currently covers. Below is the
-              confirmed status for those four, plus what opting out means for your bill.
+              five Georgia counties our calculator currently covers. Below is the confirmed
+              status for those five, plus what opting out means for your bill.
             </p>
           </div>
         </div>
@@ -190,12 +198,13 @@ export default async function Hb581OptOutPage({ params }: Props) {
           {/* Quick lookup table */}
           <section className="mb-10 scroll-mt-24" aria-labelledby="lookup-heading">
             <h2 id="lookup-heading" className="text-2xl font-semibold text-text mb-2">
-              Quick lookup — metro Atlanta counties (confirmed)
+              Quick lookup — Atlanta-area counties (confirmed)
             </h2>
             <p className="text-sm text-text-muted mb-4 measure">
-              These are the four counties our calculator currently covers in Georgia. Status
-              for each was confirmed from Board of Tax Assessors public records. Many other
-              Georgia counties also opted out — see below for how to check yours.
+              These are the five Georgia counties our calculator currently covers. Status for
+              each was confirmed from Board of Tax Assessors public records and county
+              commission minutes. Many other Georgia counties also opted out — see below for
+              how to check yours.
             </p>
             <div className="rounded-xl border border-border bg-surface divide-y divide-border overflow-hidden">
               {HB581_OPT_OUT.map(c => {
@@ -318,8 +327,10 @@ export default async function Hb581OptOutPage({ params }: Props) {
                 residences, plus any local senior age-65, veteran, disability, or pre-existing
                 floating homesteads that homeowners already qualified for. Cobb and DeKalb
                 offer large senior exemptions; Fulton stacks additional homestead amounts
-                inside the City of Atlanta. None of those mechanisms were modified by the
-                opt-out.
+                inside the City of Atlanta; Douglas exempts qualifying age-62 seniors from
+                the school millage entirely (conditions apply, and the school portion is the
+                largest single component of the bill). None
+                of those mechanisms were modified by the opt-out.
               </p>
               <p>
                 The effect varies with length of ownership. A homeowner in an opted-in county
@@ -435,8 +446,8 @@ export default async function Hb581OptOutPage({ params }: Props) {
                 .
               </li>
               <li>
-                County Board of Tax Assessors public records: Fulton, DeKalb, Gwinnett, and Cobb —
-                opt-out resolutions adopted Nov–Dec 2024.
+                County Board of Tax Assessors public records: Fulton, DeKalb, Gwinnett, Cobb,
+                and Douglas — opt-out resolutions adopted Nov 2024–Feb 2025.
               </li>
               <li>
                 U.S. Census Bureau ACS 5-year estimates — median home values and median real estate

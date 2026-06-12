@@ -143,6 +143,10 @@ function buildComparisonTitle(
   const location = `${countyName} County, ${stateAbbrev}`
 
   if (statsA.effectiveRatePct != null && statsB.effectiveRatePct != null) {
+    const equiv = Math.abs(statsA.effectiveRatePct - statsB.effectiveRatePct) < 0.005
+    if (equiv) {
+      return `${base}: ${fmtRate(statsA.effectiveRatePct)} both | ${location}`
+    }
     return `${base}: ${fmtRate(statsA.effectiveRatePct)} vs ${fmtRate(statsB.effectiveRatePct)} | ${location}`
   }
   if (statsA.avgBill != null && statsB.avgBill != null) {
@@ -164,9 +168,12 @@ function buildComparisonDescription(
   const yearSuffix = year ? ` (${year} data)` : ''
 
   if (statsA.effectiveRatePct != null && statsB.effectiveRatePct != null) {
+    const diff = Math.abs(statsA.effectiveRatePct - statsB.effectiveRatePct)
+    if (diff < 0.005) {
+      return `${statsA.displayName} and ${statsB.displayName} share an effective property tax rate of ${fmtRate(statsA.effectiveRatePct!)}${yearSuffix.trim()} in our ${countyName} County dataset. Side-by-side comparison of rates, average bills, and median home values.`
+    }
     const lower = statsA.effectiveRatePct <= statsB.effectiveRatePct ? statsA : statsB
     const higher = lower === statsA ? statsB : statsA
-    const diff = Math.abs(statsA.effectiveRatePct - statsB.effectiveRatePct)
     return `${lower.displayName} has a lower effective property tax rate (${fmtRate(lower.effectiveRatePct!)}) than ${higher.displayName} (${fmtRate(higher.effectiveRatePct!)}), a difference of ${diff.toFixed(3)} points. Side-by-side comparison for ${countyName} County, ${stateName}${yearSuffix}.`
   }
   return `Side-by-side property tax comparison for ${statsA.displayName} and ${statsB.displayName} in ${countyName} County, ${stateName}${yearSuffix}. Effective rates, average bills, and median home values.`
@@ -190,21 +197,29 @@ function buildIntroParagraph(
   )
 
   if (statsA.effectiveRatePct != null && statsB.effectiveRatePct != null) {
-    const lower = statsA.effectiveRatePct <= statsB.effectiveRatePct ? statsA : statsB
-    const higher = lower === statsA ? statsB : statsA
-    const diff = Math.abs(statsA.effectiveRatePct - statsB.effectiveRatePct).toFixed(3)
-    parts.push(
-      `Based on the most recent available data${year ? ` (${year})` : ''}, ${lower.displayName} carries a lower effective property tax rate of ${fmtRate(lower.effectiveRatePct!)} compared to ${higher.displayName} at ${fmtRate(higher.effectiveRatePct!)}, a difference of ${diff} percentage points.`
-    )
+    const diff = Math.abs(statsA.effectiveRatePct - statsB.effectiveRatePct)
+    if (diff < 0.005) {
+      parts.push(
+        `Based on the most recent available data${year ? ` (${year})` : ''}, both towns carry the same effective property tax rate of ${fmtRate(statsA.effectiveRatePct!)} in our dataset — the figure shown is the ${countyName} County rate, since our dataset doesn't yet publish a distinct municipal rate for either municipality.`
+      )
+    } else {
+      const lower = statsA.effectiveRatePct <= statsB.effectiveRatePct ? statsA : statsB
+      const higher = lower === statsA ? statsB : statsA
+      parts.push(
+        `Based on the most recent available data${year ? ` (${year})` : ''}, ${lower.displayName} carries a lower effective property tax rate of ${fmtRate(lower.effectiveRatePct!)} compared to ${higher.displayName} at ${fmtRate(higher.effectiveRatePct!)}, a difference of ${diff.toFixed(3)} percentage points.`
+      )
+    }
   }
 
   if (statsA.avgBill != null && statsB.avgBill != null) {
-    const lower = statsA.avgBill <= statsB.avgBill ? statsA : statsB
-    const higher = lower === statsA ? statsB : statsA
     const diff = Math.abs(statsA.avgBill - statsB.avgBill)
-    parts.push(
-      `The average residential property tax bill is ${fmt(diff)} lower in ${lower.displayName} (${fmt(lower.avgBill!)}) than in ${higher.displayName} (${fmt(higher.avgBill!)}).`
-    )
+    if (diff >= 10) {
+      const lower = statsA.avgBill <= statsB.avgBill ? statsA : statsB
+      const higher = lower === statsA ? statsB : statsA
+      parts.push(
+        `The average residential property tax bill is ${fmt(diff)} lower in ${lower.displayName} (${fmt(lower.avgBill!)}) than in ${higher.displayName} (${fmt(higher.avgBill!)}).`
+      )
+    }
   }
 
   parts.push(
@@ -226,15 +241,29 @@ function buildComparisonFaqs(
 ): { question: string; answer: string }[] {
   const faqs: { question: string; answer: string }[] = []
 
+  // Treat tiny rate or bill gaps as equivalent. Where towns share a county
+  // fallback rate the difference is exactly zero; even with distinct figures,
+  // sub-0.005-point or sub-$10 deltas aren't materially informative.
+  const RATE_EQUIV_THRESHOLD = 0.005 // percentage points
+  const BILL_EQUIV_THRESHOLD = 10 // USD
+
   // Primary comparison question — always first
   if (statsA.effectiveRatePct != null && statsB.effectiveRatePct != null) {
-    const lower = statsA.effectiveRatePct <= statsB.effectiveRatePct ? statsA : statsB
-    const higher = lower === statsA ? statsB : statsA
-    const diff = Math.abs(statsA.effectiveRatePct - statsB.effectiveRatePct).toFixed(3)
-    faqs.push({
-      question: `Which has lower property taxes, ${statsA.displayName} or ${statsB.displayName}?`,
-      answer: `${lower.displayName} has a lower effective property tax rate (${fmtRate(lower.effectiveRatePct!)}) compared to ${higher.displayName} (${fmtRate(higher.effectiveRatePct!)}), a difference of ${diff} percentage points${lower.effectiveRateYear ? ` as of ${lower.effectiveRateYear}` : ''}.`,
-    })
+    const rateDelta = Math.abs(statsA.effectiveRatePct - statsB.effectiveRatePct)
+    if (rateDelta < RATE_EQUIV_THRESHOLD) {
+      faqs.push({
+        question: `Which has lower property taxes, ${statsA.displayName} or ${statsB.displayName}?`,
+        answer: `Effective rates for ${statsA.displayName} and ${statsB.displayName} are essentially the same in our dataset (${fmtRate(statsA.effectiveRatePct!)}${statsA.effectiveRateYear ? ` for ${statsA.effectiveRateYear}` : ''}). Both towns sit within ${countyName} County and our dataset doesn't yet publish a distinct municipal effective rate at the town level. For a more granular comparison, use the calculator with the actual assessed values and total millage for a specific address in each town.`,
+      })
+    } else {
+      const lower = statsA.effectiveRatePct <= statsB.effectiveRatePct ? statsA : statsB
+      const higher = lower === statsA ? statsB : statsA
+      const diff = rateDelta.toFixed(3)
+      faqs.push({
+        question: `Which has lower property taxes, ${statsA.displayName} or ${statsB.displayName}?`,
+        answer: `${lower.displayName} has a lower effective property tax rate (${fmtRate(lower.effectiveRatePct!)}) compared to ${higher.displayName} (${fmtRate(higher.effectiveRatePct!)}), a difference of ${diff} percentage points${lower.effectiveRateYear ? ` as of ${lower.effectiveRateYear}` : ''}.`,
+      })
+    }
   } else {
     faqs.push({
       question: `Which has lower property taxes, ${statsA.displayName} or ${statsB.displayName}?`,
@@ -242,13 +271,25 @@ function buildComparisonFaqs(
     })
   }
 
-  // Per-town rate questions
-  for (const s of [statsA, statsB]) {
-    if (s.effectiveRatePct != null) {
-      faqs.push({
-        question: `What is the property tax rate in ${s.displayName}?`,
-        answer: `The effective property tax rate in ${s.displayName} is ${fmtRate(s.effectiveRatePct)}${s.effectiveRateYear ? ` (${s.effectiveRateYear})` : ''}. The effective rate is the ratio of the average tax bill to the median home value — it accounts for assessments, exemptions, and all overlapping taxing jurisdictions.`,
-      })
+  // Per-town rate questions — skip the second when both rates are equivalent
+  // (the per-town answer would just restate the same figure twice).
+  const ratesEquivalent =
+    statsA.effectiveRatePct != null &&
+    statsB.effectiveRatePct != null &&
+    Math.abs(statsA.effectiveRatePct - statsB.effectiveRatePct) < RATE_EQUIV_THRESHOLD
+  if (ratesEquivalent) {
+    faqs.push({
+      question: `What is the property tax rate in ${statsA.displayName} and ${statsB.displayName}?`,
+      answer: `Both ${statsA.displayName} and ${statsB.displayName} carry an effective property tax rate of ${fmtRate(statsA.effectiveRatePct!)}${statsA.effectiveRateYear ? ` (${statsA.effectiveRateYear})` : ''} in our dataset. The effective rate reflects the ratio of the typical residential bill to median home value across all overlapping taxing jurisdictions — for towns where our dataset doesn't yet publish a distinct municipal figure, both show the same county-level rate.`,
+    })
+  } else {
+    for (const s of [statsA, statsB]) {
+      if (s.effectiveRatePct != null) {
+        faqs.push({
+          question: `What is the property tax rate in ${s.displayName}?`,
+          answer: `The effective property tax rate in ${s.displayName} is ${fmtRate(s.effectiveRatePct)}${s.effectiveRateYear ? ` (${s.effectiveRateYear})` : ''}. The effective rate is the ratio of the average tax bill to the median home value — it accounts for assessments, exemptions, and all overlapping taxing jurisdictions.`,
+        })
+      }
     }
   }
 
@@ -262,15 +303,17 @@ function buildComparisonFaqs(
     }
   }
 
-  // Bill difference question
+  // Bill difference question — suppress when bills are equivalent
   if (statsA.avgBill != null && statsB.avgBill != null) {
     const diff = Math.abs(statsA.avgBill - statsB.avgBill)
-    const lower = statsA.avgBill <= statsB.avgBill ? statsA : statsB
-    const higher = lower === statsA ? statsB : statsA
-    faqs.push({
-      question: `How much higher is the average property tax bill in ${higher.displayName} than ${lower.displayName}?`,
-      answer: `The average residential tax bill in ${higher.displayName} (${fmt(higher.avgBill!)}) is approximately ${fmt(diff)} higher than in ${lower.displayName} (${fmt(lower.avgBill!)}). This difference reflects a combination of higher assessed values and a higher effective rate.`,
-    })
+    if (diff >= BILL_EQUIV_THRESHOLD) {
+      const lower = statsA.avgBill <= statsB.avgBill ? statsA : statsB
+      const higher = lower === statsA ? statsB : statsA
+      faqs.push({
+        question: `How much higher is the average property tax bill in ${higher.displayName} than ${lower.displayName}?`,
+        answer: `The average residential tax bill in ${higher.displayName} (${fmt(higher.avgBill!)}) is approximately ${fmt(diff)} higher than in ${lower.displayName} (${fmt(lower.avgBill!)}). This difference reflects a combination of higher assessed values and a higher effective rate.`,
+      })
+    }
   }
 
   // Home value question
