@@ -6,10 +6,19 @@ import type { StateReliefConfig } from '../types'
 
 /**
  * Simplified statewide residence homestead amount applied to **taxable value** before rate.
- * Texas has raised the general residence homestead exemption (notably for school district M&O).
- * Local optional exemptions and multi–taxing-unit detail are not modeled; see methodology notes.
+ * Texas raised the general residence homestead school-district M&O exemption from $40K
+ * to $100K via Prop 4 (Nov 2023), then to $140K effective 2025. Senior (65+) homeowners
+ * receive an additional $60,000 ($200K total) plus a school tax ceiling that freezes
+ * their school taxes at the qualifying year's amount.
+ *
+ * Note: this constant captures the general homestead only — the calculator does not
+ * yet model the senior/disabled additional exemption, school tax ceiling, or the 10%
+ * appraisal cap. See lib/relief/states/texasRelief.ts programs list + the
+ * /texas/property-tax-exemptions page for the editorial overview.
+ *
+ * Source: Texas Tax Code §11.13(b); confirmed via Texas Comptroller exemptions page.
  */
-export const TEXAS_GENERAL_RESIDENCE_HOMESTEAD_EXEMPTION_AMOUNT = 100_000
+export const TEXAS_GENERAL_RESIDENCE_HOMESTEAD_EXEMPTION_AMOUNT = 140_000
 
 export const texasReliefConfig: StateReliefConfig = {
   stateSlug: 'texas',

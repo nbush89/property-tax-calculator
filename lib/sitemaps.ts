@@ -235,6 +235,16 @@ export async function getStateUrls(baseUrl: string, stateSlug: string): Promise<
     })
   }
 
+  // TX-only editorial page covering homestead/senior/disabled exemptions plus
+  // the 2-year retroactive filing window under Tax Code §11.431. Mirrors the
+  // GA HB 581 page's gating pattern.
+  if (stateSlug === 'texas') {
+    urls.push({
+      loc: joinUrl(baseUrl, `/${stateSlug}/property-tax-exemptions`),
+      lastmod: stateLastmod,
+    })
+  }
+
   for (const county of stateData.counties) {
     const countySlugShort = county.slug || slugifyLocation(county.name)
     const countySlugForPath = slugifyLocation(county.name)

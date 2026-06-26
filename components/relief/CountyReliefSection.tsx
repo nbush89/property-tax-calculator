@@ -103,7 +103,15 @@ export function CountyReliefSection({ stateSlug, countyDisplayName }: Props) {
 
       <p className="mt-4">
         <Link
-          href={`/${encState}`}
+          href={
+            // Per-state deep-dive routing. TX has a dedicated exemptions guide
+            // (/texas/property-tax-exemptions) — that's where relief detail
+            // actually lives. Other states fall back to the state landing
+            // page until they have an equivalent deep-dive.
+            config.stateSlug === 'texas'
+              ? `/${encState}/property-tax-exemptions`
+              : `/${encState}`
+          }
           className="text-sm font-medium text-primary hover:underline"
         >
           View full {config.stateName} relief program details →

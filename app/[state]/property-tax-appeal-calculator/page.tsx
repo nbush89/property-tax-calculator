@@ -300,6 +300,22 @@ export default async function AppealCalculatorPage({ params }: Props) {
               >
                 {stateName} tax rates by county
               </Link>
+              {state === 'texas' && (
+                <Link
+                  href={`/${state}/property-tax-exemptions`}
+                  className="text-sm data-link"
+                >
+                  Texas property tax exemptions guide
+                </Link>
+              )}
+              {state === 'georgia' && (
+                <Link
+                  href={`/${state}/hb-581-opt-out-counties`}
+                  className="text-sm data-link"
+                >
+                  Did your county opt out of HB 581?
+                </Link>
+              )}
               <Link
                 href={`/${state}`}
                 className="text-sm data-link"

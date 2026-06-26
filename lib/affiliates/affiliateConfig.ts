@@ -65,10 +65,29 @@ const STATE_AFFILIATE_CONFIGS: Record<string, StateAffiliateConfig> = {
   },
   texas: {
     appealCta: {
-      enabled: false,
+      enabled: true,
+      // CJ tracking link (publisher 101739122, ad 15710172 → ownwell.com/) is
+      // reused from the GA config because CJ ad IDs are landing-page-specific,
+      // not state-locked. Publisher attribution still routes to this account.
+      // Per-page differentiation (e.g. ?sid=texas-harris-houston) is appended
+      // via appendSid() so we still get clean per-URL conversion reporting in
+      // CJ. If Sal needs cleaner TX/GA campaign separation on his side later,
+      // swap to a TX-specific ad ID when he provides one.
       label: 'Get a free property tax review',
-      url: 'https://ownwell.com/?utm_source=txpropertytax&utm_medium=referral', // replace with your referral URL
-      description: 'Think your appraisal is too high? Ownwell protests on your behalf — free to start, you pay only if they save you money.',
+      url: 'https://www.tkqlhce.com/click-101739122-15710172',
+      description:
+        'Ownwell reviews your appraisal for free — you only pay if they save you money. Ownwell reports an 88% success rate and $774 average annual savings for customers who appeal (4.7★ Google, 3,000+ reviews). Texas protests must be filed within 30 days of your appraisal notice or by May 15, whichever is later.',
+      external: true,
+    },
+    exemptionsCta: {
+      enabled: true,
+      // Same reasoning as appealCta — reusing GA exemptions ad (15707047 →
+      // ownwell.com/exemptions) since it's landing-page-specific, not
+      // state-locked. SID appended via appendSid() distinguishes TX traffic.
+      label: 'File or check your Texas exemptions',
+      url: 'https://www.tkqlhce.com/click-101739122-15707047',
+      description:
+        'Ownwell files Texas general residence homestead and senior (65+) exemptions on your behalf — and can recover up to 2 years of overpaid taxes through retroactive filing (the Texas state limit). Many homeowners who forgot to file when they bought are owed a refund.',
       external: true,
     },
     mortgageCta: {

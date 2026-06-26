@@ -180,7 +180,7 @@ export default async function StatePage({ params }: Props) {
               <div className="container-page">
                 <Link
                   href="/georgia/hb-581-opt-out-counties"
-                  className="block max-w-3xl rounded-xl border border-amber-200 bg-amber-50/40 p-5 hover:border-amber-300 transition-colors"
+                  className="mx-auto block max-w-5xl rounded-xl border border-amber-200 bg-amber-50/40 p-5 hover:border-amber-300 transition-colors"
                 >
                   <div className="flex items-start gap-3">
                     <span className="inline-flex shrink-0 items-center rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-medium text-amber-900 ring-1 ring-amber-200">
@@ -194,6 +194,39 @@ export default async function StatePage({ params }: Props) {
                         Georgia&apos;s Save Our Homes Act took effect Jan 1, 2025 — but
                         Fulton, DeKalb, Gwinnett, and Cobb all opted out. Read the
                         county-by-county breakdown and what it means for your bill.
+                      </p>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            </section>
+          </>
+        )}
+
+        {/* TX-only: exemptions explainer callout. Targets queries around the
+            $140K homestead amount, senior 65+ benefits, and the often-missed
+            2-year retroactive filing window under Tax Code §11.431. */}
+        {state === 'texas' && (
+          <>
+            <Divider />
+            <section className="py-8 bg-bg">
+              <div className="container-page">
+                <Link
+                  href="/texas/property-tax-exemptions"
+                  className="mx-auto block max-w-5xl rounded-xl border border-amber-200 bg-amber-50/40 p-5 hover:border-amber-300 transition-colors"
+                >
+                  <div className="flex items-start gap-3">
+                    <span className="inline-flex shrink-0 items-center rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-medium text-amber-900 ring-1 ring-amber-200">
+                      Money on the table
+                    </span>
+                    <div>
+                      <p className="font-semibold text-text">
+                        Texas property tax exemptions — including 2-year retroactive recovery →
+                      </p>
+                      <p className="text-sm text-text-muted mt-1">
+                        Texas raised the homestead exemption to $140,000 in 2025 (seniors get
+                        $200,000). If you forgot to file when you bought, Tax Code §11.431
+                        lets you recover up to 2 years of overpaid tax. Full guide here.
                       </p>
                     </div>
                   </div>

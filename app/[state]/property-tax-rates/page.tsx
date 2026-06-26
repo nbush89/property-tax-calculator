@@ -227,6 +227,22 @@ export default async function StatePropertyTaxRatesPage({ params }: Props) {
                 </p>
               </div>
               <div className="flex shrink-0 flex-wrap gap-2">
+                {state === 'texas' && (
+                  <Link
+                    href={`/${state}/property-tax-exemptions`}
+                    className="text-sm font-medium text-primary hover:text-primary-hover whitespace-nowrap"
+                  >
+                    TX exemptions guide →
+                  </Link>
+                )}
+                {state === 'georgia' && (
+                  <Link
+                    href={`/${state}/hb-581-opt-out-counties`}
+                    className="text-sm font-medium text-primary hover:text-primary-hover whitespace-nowrap"
+                  >
+                    HB 581 opt-out status →
+                  </Link>
+                )}
                 <Link
                   href={`/${state}/property-tax-calculator`}
                   className="text-sm font-medium text-primary hover:text-primary-hover whitespace-nowrap"
