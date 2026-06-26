@@ -87,6 +87,41 @@ export interface StateMetrics {
 }
 
 /**
+ * Per-jurisdiction HB 581 opt-out status for a given millage entry. Each
+ * boolean indicates whether THAT jurisdiction opted OUT of the statewide
+ * floating homestead exemption for the entry's tax year.
+ *
+ * Semantics:
+ *   - `true`  → opted out → traditional math (FMV × 40% − $2,000) applies to
+ *               this jurisdiction's portion of the bill.
+ *   - `false` → stayed in → HB 581 floating cap applies (taxable value capped
+ *               at base-year × (1 + CPI)).
+ *   - missing/undefined → treat as opted out (status-quo behavior). This is
+ *               deliberately conservative so existing pre-refactor data
+ *               continues to produce identical results without backfill.
+ *
+ * State portion is intentionally absent — the State did not (and could not)
+ * opt out of HB 581 as a taxing entity, and GA state millage has been 0 since
+ * 2016 anyway, so the question is moot.
+ *
+ * Examples:
+ *   - Fulton/Atlanta:   { county: true,  school: true,  city: true  } (fully out)
+ *   - Henry/McDonough:  { county: false, school: true,  city: false } (schools-only out)
+ *   - Rockdale/Conyers: { county: false, school: false, city: false } (fully in)
+ */
+export interface Hb581OptOutFlags {
+  /** County government (BOC) opted out for this year. */
+  county?: boolean
+  /** School district that applies to this jurisdiction opted out (county-wide
+   *  school OR the independent school district for cities like Atlanta,
+   *  Decatur, Marietta). */
+  school?: boolean
+  /** City taxing unit opted out for this year. Town-level millage entries
+   *  only — county-level entries don't carry a city flag. */
+  city?: boolean
+}
+
+/**
  * Per-jurisdiction millage breakdown for states that publish discrete county /
  * city / school / state mill rates (currently Georgia). Values are in mills,
  * NOT decimal — divide by 1000 before multiplying assessed value.
@@ -104,6 +139,21 @@ export interface MillageBreakdown {
   state?: number
   /** Total = sum of present components. Persisted to avoid recomputation. */
   total: number
+  /**
+   * HB 581 opt-out status per jurisdiction for this tax year. When absent,
+   * each component is treated as opted-out (traditional math). See
+   * `Hb581OptOutFlags` for full semantics.
+   */
+  hb581OptOut?: Hb581OptOutFlags
+  /**
+   * True if this jurisdiction (typically a county) has its own pre-existing
+   * local floating homestead exemption that pre-dates HB 581 (e.g. Cobb,
+   * Gwinnett). The calculator v1 does NOT model the alternative cap math
+   * for these jurisdictions — it just treats them per their `hb581OptOut`
+   * flags. This field is a reservation for future enrichment so we can add
+   * disclosures or alternate cap math without a schema migration.
+   */
+  hasPreExistingLocalCap?: boolean
   /** sourceRef key into the state-level sources map. */
   sourceRef: string
 }

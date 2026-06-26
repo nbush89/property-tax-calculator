@@ -48,6 +48,32 @@ export type TaxReliefSummary = {
  */
 export type RateSource = 'comptroller' | 'acs_implied' | 'state_records' | 'ga_assessed_millage'
 
+/**
+ * Per-jurisdiction breakdown row used by the Georgia path. Surfaces the
+ * dollar contribution of each taxing unit AND its HB 581 status so the UI
+ * can flag jurisdictions where the homeowner's actual taxable value may be
+ * capped below the headline estimate.
+ */
+export type GaJurisdictionRow = {
+  /** "County", "School", "City", "State" — used as the display label */
+  label: 'County' | 'School' | 'City' | 'State'
+  /** Mills assigned to this taxing unit (e.g. 12.063 for Douglas County) */
+  mills: number
+  /** Dollar portion of the annual bill attributable to this taxing unit
+   *  (computed using the unit's mills × the taxable assessed value). */
+  portion: number
+  /**
+   * True when this taxing unit STAYED IN HB 581 for the relevant tax year,
+   * meaning the homeowner's taxable value on this portion is capped at base-
+   * year assessed value × (1 + inflation index rate). The calculator returns
+   * the headline (uncapped) estimate; the UI uses this flag to render a
+   * "your actual bill may be lower" disclosure on capped rows.
+   *
+   * False when the unit opted out — traditional math is the actual bill.
+   */
+  isHb581Capped: boolean
+}
+
 export type TaxCalculationResult = {
   homeValue: number
   /** Taxable value used after homestead-style adjustments (Texas); else same as homeValue */
@@ -70,6 +96,20 @@ export type TaxCalculationResult = {
     exemptions: number
     final: number
   }
+  /**
+   * Per-jurisdiction breakdown (Georgia only). Present when the GA path has
+   * discrete millage data. Exposes each taxing unit's portion of the annual
+   * bill and its HB 581 cap status — drives the "cap may reduce this portion"
+   * disclosure in TaxResults. Absent for NJ / TX / fallback paths.
+   */
+  gaJurisdictionBreakdown?: GaJurisdictionRow[]
+  /**
+   * True when at least one component of the Georgia bill is HB 581-capped
+   * (i.e. the homeowner's actual taxable value on that portion may be lower
+   * than the headline estimate due to the floating homestead cap). UI uses
+   * this to surface a summary disclosure above the breakdown.
+   */
+  gaHasHb581CappedComponents?: boolean
   county: string
   relief?: TaxReliefSummary
   /**
@@ -132,6 +172,16 @@ export function calculatePropertyTax(
  *   taxable_value  = assessed_value − homestead_exemption (if primary residence)
  *   annual_tax     = taxable_value × (total_mills / 1000)
  *
+ * HB 581 handling (mixed-jurisdiction architecture):
+ * The calculator returns the headline (uncapped) traditional estimate for the
+ * total annual bill, and exposes per-jurisdiction rows via
+ * `gaJurisdictionBreakdown` annotated with `isHb581Capped`. The cap can only
+ * REDUCE a jurisdiction's portion below the headline (it's a ceiling on
+ * taxable value, not a floor), so the headline is the upper bound for every
+ * homeowner regardless of acquisition year. Cap reduction is address-specific
+ * (depends on base-year assessed value, which we don't know), so v1 surfaces
+ * the cap status as a disclosure rather than estimating dollar savings.
+ *
  * Falls back to ACS-implied effective rate when millage data is not yet
  * populated (early-rollout / new cities not yet covered by the GA pipeline).
  */
@@ -174,6 +224,51 @@ function calculatePropertyTaxGeorgia(
     // these makes the displayed math fail (e.g. subtotal 6,170 − 2,000 ≠ 6,108).
     const homesteadDollarSavings = homesteadApplied * totalRateDec
 
+    // Build per-jurisdiction breakdown with HB 581 cap status.
+    // The cap status is read off `millage.hb581OptOut` per component. Missing
+    // flags default to TRUE (opted out → not capped) so existing pre-refactor
+    // data continues to render identically without backfill.
+    const optOut = millage.hb581OptOut ?? {}
+    const buildRow = (
+      label: GaJurisdictionRow['label'],
+      mills: number,
+      optedOut: boolean | undefined
+    ): GaJurisdictionRow => ({
+      label,
+      mills,
+      // Use taxable value (post-homestead) so individual rows sum to the
+      // displayed annual tax. The homestead reduces assessed value once;
+      // mills are then applied to that common reduced base.
+      portion: taxableValueUsed * (mills / 1000),
+      // optedOut === true → opted out → NOT capped. False or undefined →
+      // capped. We deliberately treat undefined as "opted out" here for
+      // backward compat — see the type docs.
+      isHb581Capped: optedOut === false,
+    })
+
+    const rows: GaJurisdictionRow[] = []
+    if ((millage.county ?? 0) > 0) {
+      rows.push(buildRow('County', millage.county ?? 0, optOut.county))
+    }
+    if ((millage.school ?? 0) > 0) {
+      rows.push(buildRow('School', millage.school ?? 0, optOut.school))
+    }
+    if ((millage.city ?? 0) > 0) {
+      rows.push(buildRow('City', millage.city ?? 0, optOut.city))
+    }
+    if ((millage.state ?? 0) > 0) {
+      // State portion can never be capped (state is not a HB 581 opt-in
+      // jurisdiction). State millage has been 0 in GA since 2016 so this
+      // row almost never renders, but we expose it for completeness.
+      rows.push({
+        label: 'State',
+        mills: millage.state ?? 0,
+        portion: taxableValueUsed * ((millage.state ?? 0) / 1000),
+        isHb581Capped: false,
+      })
+    }
+    const hasCapped = rows.some(r => r.isHb581Capped)
+
     return {
       homeValue,
       taxableValueUsed,
@@ -193,12 +288,17 @@ function calculatePropertyTaxGeorgia(
         exemptions: homesteadDollarSavings,
         final: annualTax,
       },
+      gaJurisdictionBreakdown: rows,
+      gaHasHb581CappedComponents: hasCapped,
       county,
       rateSource: 'ga_assessed_millage' as RateSource,
       rateSourceNote:
         'Estimate uses the GA constitutional 40% assessment ratio. Millage rates sourced from the Georgia Department of Revenue annual consolidated digest (M&O + Bond). Standard $2,000 homestead exemption applied for primary residences (reduces taxable value by $2,000, saving roughly $' +
         homesteadDollarSavings.toFixed(0) +
-        ' at this millage). Additional local homestead exemptions (senior, veteran, disability) are not modeled and will further reduce the actual bill.',
+        ' at this millage). Additional local homestead exemptions (senior, veteran, disability) are not modeled and will further reduce the actual bill.' +
+        (hasCapped
+          ? ' One or more taxing units in this jurisdiction stayed in HB 581 — your actual taxable value on those portions is capped at the 2024 base year × inflation index, which may be lower than the headline estimate. See the HB 581 page for details.'
+          : ''),
     }
   }
 

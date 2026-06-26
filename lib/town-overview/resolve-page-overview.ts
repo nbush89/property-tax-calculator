@@ -31,16 +31,25 @@ function defaultSourcesFromMetrics(
     const last = s?.[s.length - 1]
     if (last?.sourceRef) refs.add(last.sourceRef)
   }
+  // Resolve refs to publisher+url tuples, then dedupe — multiple distinct
+  // sourceRefs (e.g. acs_profile_dp04, b25103, county_effective_rate) all
+  // resolve to publisher "U.S. Census Bureau", which without this collapse
+  // renders as three identical "U.S. Census Bureau" lines in the at-a-glance
+  // sources footer.
+  const seen = new Set<string>()
   const out: NonNullable<TownOverview['sources']> = []
+  const retrieved = new Date().toISOString().slice(0, 10)
   for (const ref of refs) {
     const src = resolveSource(stateData, ref)
-    if (src) {
-      out.push({
-        name: src.publisher,
-        url: src.homepageUrl,
-        retrieved: new Date().toISOString().slice(0, 10),
-      })
-    }
+    if (!src) continue
+    const key = `${src.publisher}|${src.homepageUrl ?? ''}`
+    if (seen.has(key)) continue
+    seen.add(key)
+    out.push({
+      name: src.publisher,
+      url: src.homepageUrl,
+      retrieved,
+    })
   }
   if (out.length === 0 && stateData.state.name) {
     out.push({

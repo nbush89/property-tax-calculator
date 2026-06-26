@@ -36,6 +36,50 @@ type TownMetricsIn = {
   millage?: MillageBreakdownIn[]
 }
 
+/**
+ * Fields that live on an existing millage entry but are NOT produced by the
+ * OCR-based source pipeline. These come from manual research / editorial
+ * decisions and must be preserved across re-runs of source + merge.
+ *
+ *   - hb581OptOut: per-jurisdiction status from county/school/city resolutions
+ *   - hasPreExistingLocalCap: annotation that a county has its own local
+ *     floating exemption pre-dating HB 581
+ *
+ * The source pipeline overwrites the millage array wholesale on each run, so
+ * without this preservation step, every re-source would silently strip the
+ * HB 581 architecture from georgia.json. Always carry these forward by year.
+ */
+type PreservedMillageFields = {
+  hb581OptOut?: unknown
+  hasPreExistingLocalCap?: unknown
+}
+
+/**
+ * Merge a freshly-parsed millage array (`incoming`) over the existing array
+ * (`existing`), carrying forward any per-year hand-set fields (HB 581 flags,
+ * pre-existing local cap annotation) from existing entries with the same year.
+ * Returns the merged array — caller assigns it to county/town.metrics.millage.
+ */
+function mergeMillagePreservingFlags(
+  incoming: MillageBreakdownIn[],
+  existing: Array<MillageBreakdownIn & PreservedMillageFields> | undefined
+): Array<MillageBreakdownIn & PreservedMillageFields> {
+  const existingByYear = new Map<number, MillageBreakdownIn & PreservedMillageFields>()
+  for (const e of existing ?? []) {
+    existingByYear.set(e.year, e)
+  }
+  return incoming.map(newM => {
+    const prior = existingByYear.get(newM.year)
+    if (!prior) return newM
+    const merged: MillageBreakdownIn & PreservedMillageFields = { ...newM }
+    if (prior.hb581OptOut !== undefined) merged.hb581OptOut = prior.hb581OptOut
+    if (prior.hasPreExistingLocalCap !== undefined) {
+      merged.hasPreExistingLocalCap = prior.hasPreExistingLocalCap
+    }
+    return merged
+  })
+}
+
 function readJson(p: string): unknown {
   return JSON.parse(fs.readFileSync(p, 'utf8'))
 }
@@ -470,7 +514,10 @@ function mergeGeorgia(stateData: Record<string, unknown>, rawPayload: Record<str
         ).medianTaxesPaid
       }
       if (countyIn.metrics.millage?.length) {
-        county.metrics.millage = countyIn.metrics.millage
+        county.metrics.millage = mergeMillagePreservingFlags(
+          countyIn.metrics.millage,
+          county.metrics.millage as Array<MillageBreakdownIn & PreservedMillageFields> | undefined
+        )
         const y = countyIn.metrics.millage[countyIn.metrics.millage.length - 1].year
         if (y) county.asOfYear = Math.max(county.asOfYear ?? 0, y)
       }
@@ -491,7 +538,12 @@ function mergeGeorgia(stateData: Record<string, unknown>, rawPayload: Record<str
       if (metricsIn.medianHomeValue?.length) m.medianHomeValue = metricsIn.medianHomeValue
       if (metricsIn.effectiveTaxRate?.length) m.effectiveTaxRate = metricsIn.effectiveTaxRate
       if (metricsIn.medianTaxesPaid?.length) m.medianTaxesPaid = metricsIn.medianTaxesPaid
-      if (metricsIn.millage?.length) m.millage = metricsIn.millage
+      if (metricsIn.millage?.length) {
+        m.millage = mergeMillagePreservingFlags(
+          metricsIn.millage,
+          m.millage as Array<MillageBreakdownIn & PreservedMillageFields> | undefined
+        )
+      }
 
       const y1 = latestYear(metricsIn.medianHomeValue)
       const y2 = latestYear(metricsIn.effectiveTaxRate)

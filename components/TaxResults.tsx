@@ -210,19 +210,48 @@ export default function TaxResults({ stateSlug = 'new-jersey' }: TaxResultsProps
         <div className="border-b border-border pb-4">
           <h3 className="font-semibold text-text mb-3">Tax Breakdown</h3>
           <div className="space-y-2 text-sm">
-            <div className="flex justify-between">
-              <span className="muted">Base Tax (County)</span>
-              <span className="font-medium text-text tabular-nums">
-                {formatCurrency(result.breakdown.base)}
-              </span>
-            </div>
-            {result.breakdown.municipalAdjustment > 0 && (
-              <div className="flex justify-between">
-                <span className="muted">Municipal Adjustment</span>
-                <span className="font-medium text-text tabular-nums">
-                  {formatCurrency(result.breakdown.municipalAdjustment)}
-                </span>
-              </div>
+            {/* Georgia path: per-jurisdiction rows when available, with HB 581
+                cap badges on units that stayed in. This replaces the generic
+                "Base Tax (County)" / "Municipal Adjustment" pair with the
+                actual taxing-unit breakdown (county, school, city, state). */}
+            {result.gaJurisdictionBreakdown && result.gaJurisdictionBreakdown.length > 0 ? (
+              <>
+                {result.gaJurisdictionBreakdown.map(row => (
+                  <div key={row.label} className="flex justify-between gap-3">
+                    <span className="muted flex items-center gap-2 flex-wrap">
+                      {row.label} ({formatNumber(row.mills, 3)} mills)
+                      {row.isHb581Capped && (
+                        <span
+                          className="inline-flex items-center rounded-full bg-amber-50 px-2 py-0.5 text-[10px] font-medium text-amber-800 ring-1 ring-amber-200 whitespace-nowrap"
+                          title="This taxing unit stayed in HB 581. Your actual taxable value on this portion is capped at the 2024 base year × annual inflation index — likely lower than this headline figure for owners who held homestead status in 2024."
+                        >
+                          HB 581 cap may reduce
+                        </span>
+                      )}
+                    </span>
+                    <span className="font-medium text-text tabular-nums shrink-0">
+                      {formatCurrency(row.portion)}
+                    </span>
+                  </div>
+                ))}
+              </>
+            ) : (
+              <>
+                <div className="flex justify-between">
+                  <span className="muted">Base Tax (County)</span>
+                  <span className="font-medium text-text tabular-nums">
+                    {formatCurrency(result.breakdown.base)}
+                  </span>
+                </div>
+                {result.breakdown.municipalAdjustment > 0 && (
+                  <div className="flex justify-between">
+                    <span className="muted">Municipal Adjustment</span>
+                    <span className="font-medium text-text tabular-nums">
+                      {formatCurrency(result.breakdown.municipalAdjustment)}
+                    </span>
+                  </div>
+                )}
+              </>
             )}
             <div className="flex justify-between border-t border-border pt-2">
               <span className="muted font-medium">Subtotal</span>
@@ -243,6 +272,25 @@ export default function TaxResults({ stateSlug = 'new-jersey' }: TaxResultsProps
               <span className="text-text tabular-nums">{formatCurrency(result.finalTax)}</span>
             </div>
           </div>
+
+          {/* Summary disclosure for GA jurisdictions where at least one taxing
+              unit stayed in HB 581. The cap is address-specific (depends on
+              base-year assessed value and length of ownership), so we don't
+              estimate the dollar reduction — we surface that the headline is
+              an upper bound and where to learn more. */}
+          {result.gaHasHb581CappedComponents && (
+            <div className="mt-4 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-900">
+              <p>
+                <span className="font-semibold">Headline estimate — actual bill may be lower.</span>{' '}
+                One or more taxing units in this jurisdiction stayed in HB 581. For homeowners
+                who held the homestead exemption in 2024, the taxable value on capped portions
+                is held at the 2024 base year × the annual inflation index (CPI-U), which is
+                typically lower than the current market value the headline uses. New buyers
+                this year are unaffected — the cap doesn't bind until the year after homestead
+                status begins.
+              </p>
+            </div>
+          )}
         </div>
 
         <div>

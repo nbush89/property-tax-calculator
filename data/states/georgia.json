@@ -7,7 +7,7 @@
     "taxStructure": {
       "assessmentRatio": 0.4,
       "standardHomesteadExemption": 2000,
-      "notes": "Georgia property tax = (0.40 \u00d7 fair market value \u2212 exemptions) \u00d7 millage rate. Constitutional 40% assessment ratio applies statewide. Standard homestead exemption is $2,000 off assessed value for primary residences. Many counties stack additional local exemptions (Fulton, DeKalb, Cobb, Gwinnett all have age- and disability-based add-ons). HB 581 statewide floating homestead exemption took effect Jan 1, 2025; Fulton, DeKalb, Gwinnett, and Cobb (and their school districts) all opted out, so the traditional calculation applies in these four counties."
+      "notes": "Georgia property tax = (0.40 × fair market value − exemptions) × millage rate. Constitutional 40% assessment ratio applies statewide. Standard homestead exemption is $2,000 off assessed value for primary residences. Many counties stack additional local exemptions (Fulton, DeKalb, Cobb, Gwinnett all have age- and disability-based add-ons). HB 581 statewide floating homestead exemption took effect Jan 1, 2025; Fulton, DeKalb, Gwinnett, and Cobb (and their school districts) all opted out, so the traditional calculation applies in these four counties."
     }
   },
   "sources": {
@@ -20,14 +20,14 @@
     },
     "us_census_acs_b25103": {
       "publisher": "U.S. Census Bureau",
-      "title": "ACS 5-year Table B25103 \u2014 Median Real Estate Taxes Paid",
+      "title": "ACS 5-year Table B25103 — Median Real Estate Taxes Paid",
       "type": "api",
       "homepageUrl": "https://api.census.gov/data.html",
       "notes": "B25103_001E = Median real estate taxes paid (dollars) for all owner-occupied units. Covers combined bill across county, city, school district, and special districts net of homestead exemptions."
     },
     "us_census_acs_county_effective_rate": {
       "publisher": "U.S. Census Bureau",
-      "title": "ACS 5-year \u2014 County Effective Tax Rate (B25103 / B25077)",
+      "title": "ACS 5-year — County Effective Tax Rate (B25103 / B25077)",
       "type": "api",
       "homepageUrl": "https://api.census.gov/data.html",
       "notes": "Effective rate derived as median real estate taxes paid (B25103_001E) divided by median home value (B25077_001E) at the county level. Represents a homeowner's blended total effective rate across all overlapping taxing units (county + city + school district + state), net of homestead exemptions already reflected in ACS survey responses."
@@ -40,7 +40,7 @@
       "yearUrls": {
         "2025": "https://dor.georgia.gov/local-government-services/digest-compliance/property-tax-millage-rates"
       },
-      "notes": "Annual consolidated PDF of millage rates by county and tax district (M&O and Bond). Used for the per-jurisdiction calculator math: (0.40 \u00d7 FMV \u2212 exemption) \u00d7 \u03a3(millage). PDF uses Type 3 fonts without ToUnicode mapping; parsed via OCR."
+      "notes": "Annual consolidated PDF of millage rates by county and tax district (M&O and Bond). Used for the per-jurisdiction calculator math: (0.40 × FMV − exemption) × Σ(millage). PDF uses Type 3 fonts without ToUnicode mapping; parsed via OCR."
     },
     "ga_dor_property_tax_admin_report": {
       "publisher": "Georgia Department of Revenue",
@@ -50,7 +50,40 @@
       "notes": "Annual report with county-level digest totals and statewide property tax statistics."
     }
   },
-  "metrics": {},
+  "metrics": {
+    "averageTaxRate": [
+      {
+        "year": 2020,
+        "value": 0.9075,
+        "unit": "PERCENT",
+        "sourceRef": "us_census_acs_county_effective_rate"
+      },
+      {
+        "year": 2021,
+        "value": 0.895,
+        "unit": "PERCENT",
+        "sourceRef": "us_census_acs_county_effective_rate"
+      },
+      {
+        "year": 2022,
+        "value": 0.8329,
+        "unit": "PERCENT",
+        "sourceRef": "us_census_acs_county_effective_rate"
+      },
+      {
+        "year": 2023,
+        "value": 0.8113,
+        "unit": "PERCENT",
+        "sourceRef": "us_census_acs_county_effective_rate"
+      },
+      {
+        "year": 2024,
+        "value": 0.7718,
+        "unit": "PERCENT",
+        "sourceRef": "us_census_acs_county_effective_rate"
+      }
+    ]
+  },
   "counties": [
     {
       "name": "Fulton",
@@ -106,7 +139,11 @@
             "school": 17.08,
             "state": 0,
             "total": 26.119,
-            "sourceRef": "ga_dor_millage_rates"
+            "sourceRef": "ga_dor_millage_rates",
+            "hb581OptOut": {
+              "county": true,
+              "school": true
+            }
           }
         ],
         "medianTaxesPaid": [
@@ -226,17 +263,22 @@
                 "school": 20.5,
                 "state": 0,
                 "total": 39.909,
-                "sourceRef": "ga_dor_millage_rates"
+                "sourceRef": "ga_dor_millage_rates",
+                "hb581OptOut": {
+                  "county": true,
+                  "school": true,
+                  "city": true
+                }
               }
             ]
           },
           "copy": {
             "intro": [
-              "Atlanta is the only city in our Georgia coverage that straddles two counties \u2014 the bulk of the city sits in Fulton, with a smaller portion in DeKalb. For property tax purposes, that distinction matters less than one of the city's other quirks: Atlanta runs its own independent school district. Atlanta Public Schools (APS) sets its own millage rate, which replaces the county school millage for any home inside city limits. That means the school component of an Atlanta tax bill is materially different from the Fulton Schools rate you would see on a Sandy Springs or Roswell page.",
-              "For 2025, the total combined Atlanta millage was roughly 36.5 mills \u2014 city of Atlanta operating plus APS plus Fulton County M&O. On a 40% assessed value, that works out to an effective rate near 1.0% of fair market value for a typical owner-occupied home, before the standard $2,000 homestead exemption. Atlanta also stacks additional homestead amounts inside city limits, so most primary-residence owners see a bill modestly lower than the headline rate suggests. The HB 581 floating homestead exemption does not apply: Fulton, DeKalb, Atlanta Public Schools, and the City of Atlanta all opted out for 2025."
+              "Atlanta is the only city in our Georgia coverage that straddles two counties — the bulk of the city sits in Fulton, with a smaller portion in DeKalb. For property tax purposes, that distinction matters less than one of the city's other quirks: Atlanta runs its own independent school district. Atlanta Public Schools (APS) sets its own millage rate, which replaces the county school millage for any home inside city limits. That means the school component of an Atlanta tax bill is materially different from the Fulton Schools rate you would see on a Sandy Springs or Roswell page.",
+              "For 2025, the total combined Atlanta millage was roughly 36.5 mills — city of Atlanta operating plus APS plus Fulton County M&O. On a 40% assessed value, that works out to an effective rate near 1.0% of fair market value for a typical owner-occupied home, before the standard $2,000 homestead exemption. Atlanta also stacks additional homestead amounts inside city limits, so most primary-residence owners see a bill modestly lower than the headline rate suggests. The HB 581 floating homestead exemption does not apply: Fulton, DeKalb, Atlanta Public Schools, and the City of Atlanta all opted out for 2025."
             ],
             "snapshot": [
-              "A median-priced Atlanta home (around $440,000 in 2024) generates an estimated annual property tax bill near $4,200 once the standard homestead exemption is applied. That figure does not include senior age-65 reductions, the Atlanta-specific basic homestead, or any frozen-base benefits earned by long-term homeowners \u2014 all of which can reduce the effective bill substantially for qualifying residents. Use the calculator above with your actual assessed value for a precise estimate."
+              "A median-priced Atlanta home (around $440,000 in 2024) generates an estimated annual property tax bill near $4,200 once the standard homestead exemption is applied. That figure does not include senior age-65 reductions, the Atlanta-specific basic homestead, or any frozen-base benefits earned by long-term homeowners — all of which can reduce the effective bill substantially for qualifying residents. Use the calculator above with your actual assessed value for a precise estimate."
             ]
           }
         },
@@ -323,14 +365,19 @@
                 "school": 17.08,
                 "state": 0,
                 "total": 30.849999999999998,
-                "sourceRef": "ga_dor_millage_rates"
+                "sourceRef": "ga_dor_millage_rates",
+                "hb581OptOut": {
+                  "county": true,
+                  "school": true,
+                  "city": true
+                }
               }
             ]
           },
           "copy": {
             "intro": [
-              "Sandy Springs is Fulton County's second-largest city by population (incorporated in 2005) and the dominant residential market north of the Perimeter. Unlike Atlanta, Sandy Springs does not run an independent school district \u2014 its students attend Fulton County Schools, and the school portion of every Sandy Springs property tax bill matches what county residents in unincorporated north Fulton pay. The city itself runs a relatively lean operating millage on top.",
-              "For 2025, Sandy Springs combined millage came in around 30.85 mills \u2014 one of the lower totals in the metro. The biggest single component is Fulton Schools (~17 mills), followed by Fulton County operations (~9 mills) and Sandy Springs city operating (~4.7 mills). The state portion is zero in Georgia since 2016. Fulton opted out of the HB 581 floating homestead exemption for 2025, so the standard 40% assessment ratio plus the $2,000 homestead exemption is what applies \u2014 no inflation-only cap on annual value growth."
+              "Sandy Springs is Fulton County's second-largest city by population (incorporated in 2005) and the dominant residential market north of the Perimeter. Unlike Atlanta, Sandy Springs does not run an independent school district — its students attend Fulton County Schools, and the school portion of every Sandy Springs property tax bill matches what county residents in unincorporated north Fulton pay. The city itself runs a relatively lean operating millage on top.",
+              "For 2025, Sandy Springs combined millage came in around 30.85 mills — one of the lower totals in the metro. The biggest single component is Fulton Schools (~17 mills), followed by Fulton County operations (~9 mills) and Sandy Springs city operating (~4.7 mills). The state portion is zero in Georgia since 2016. Fulton opted out of the HB 581 floating homestead exemption for 2025, so the standard 40% assessment ratio plus the $2,000 homestead exemption is what applies — no inflation-only cap on annual value growth."
             ],
             "snapshot": [
               "A median-priced Sandy Springs home (roughly $700,000 in 2024) generates an estimated annual property tax bill in the $8,500 range with the standard homestead applied. Senior age-65, disability, and Fulton's basic homestead exemption (which is larger than the statewide $2,000 minimum for primary residences) can reduce the bill further. Use the calculator with your actual assessed value for a precise estimate."
@@ -420,14 +467,19 @@
                 "school": 17.08,
                 "state": 0,
                 "total": 31.067999999999998,
-                "sourceRef": "ga_dor_millage_rates"
+                "sourceRef": "ga_dor_millage_rates",
+                "hb581OptOut": {
+                  "county": true,
+                  "school": true,
+                  "city": true
+                }
               }
             ]
           },
           "copy": {
             "intro": [
-              "Roswell sits at the northern edge of Fulton County and shares the same school district structure as Sandy Springs and Alpharetta \u2014 students attend Fulton County Schools, so the school portion of every Roswell property tax bill matches the broader Fulton Schools rate. The city itself runs a moderately higher operating millage than Sandy Springs, balanced against historically strong city services and one of the metro's most preserved downtown districts.",
-              "For 2025, Roswell's combined millage was approximately 31.1 mills. The school portion (~17 mills) drives most of the bill, with Fulton County M&O (~9 mills), Roswell city operating (~5 mills), and zero state contribution making up the rest. Fulton, Fulton Schools, and Roswell all opted out of HB 581 for 2025, meaning the floating homestead cap does not apply \u2014 annual taxable value rises with market appreciation rather than capping at inflation."
+              "Roswell sits at the northern edge of Fulton County and shares the same school district structure as Sandy Springs and Alpharetta — students attend Fulton County Schools, so the school portion of every Roswell property tax bill matches the broader Fulton Schools rate. The city itself runs a moderately higher operating millage than Sandy Springs, balanced against historically strong city services and one of the metro's most preserved downtown districts.",
+              "For 2025, Roswell's combined millage was approximately 31.1 mills. The school portion (~17 mills) drives most of the bill, with Fulton County M&O (~9 mills), Roswell city operating (~5 mills), and zero state contribution making up the rest. Fulton, Fulton Schools, and Roswell all opted out of HB 581 for 2025, meaning the floating homestead cap does not apply — annual taxable value rises with market appreciation rather than capping at inflation."
             ],
             "snapshot": [
               "A median-priced Roswell home (roughly $620,000 in 2024) generates an estimated annual property tax bill near $7,650 with the standard $2,000 homestead exemption applied. Roswell's actual effective bills run close to Sandy Springs because the school and county components dominate. Use the calculator with your actual assessed value for a precise estimate, and check whether you qualify for Fulton's expanded basic homestead exemption."
@@ -517,7 +569,12 @@
                 "school": 17.08,
                 "state": 0,
                 "total": 31.869,
-                "sourceRef": "ga_dor_millage_rates"
+                "sourceRef": "ga_dor_millage_rates",
+                "hb581OptOut": {
+                  "county": true,
+                  "school": true,
+                  "city": true
+                }
               }
             ]
           }
@@ -605,7 +662,12 @@
                 "school": 17.08,
                 "state": 0,
                 "total": 29.860999999999997,
-                "sourceRef": "ga_dor_millage_rates"
+                "sourceRef": "ga_dor_millage_rates",
+                "hb581OptOut": {
+                  "county": true,
+                  "school": true,
+                  "city": true
+                }
               }
             ]
           }
@@ -663,7 +725,11 @@
             "school": 22.78,
             "state": 0,
             "total": 34.418,
-            "sourceRef": "ga_dor_millage_rates"
+            "sourceRef": "ga_dor_millage_rates",
+            "hb581OptOut": {
+              "county": true,
+              "school": true
+            }
           }
         ],
         "medianTaxesPaid": [
@@ -783,17 +849,22 @@
                 "school": 20.3,
                 "state": 0,
                 "total": 44.908,
-                "sourceRef": "ga_dor_millage_rates"
+                "sourceRef": "ga_dor_millage_rates",
+                "hb581OptOut": {
+                  "county": true,
+                  "school": true,
+                  "city": true
+                }
               }
             ]
           },
           "copy": {
             "intro": [
-              "Decatur is one of the more distinctive tax situations in metro Atlanta because the city runs its own independent school district \u2014 City Schools of Decatur \u2014 which replaces the DeKalb County Schools millage for any home inside city limits. On top of that, Decatur residents receive a 50% reduction on the DeKalb County M&O portion of their bill (a relic of the city's historic arrangement with the county, formalized in DOR data as the \"DECATUR 50%\" district designation). The result is a combined millage rate that looks dramatically different from anywhere else in DeKalb.",
-              "For 2025, Decatur's total combined millage was approximately 47.4 mills \u2014 heavily weighted toward City Schools of Decatur (~20.3 mills) and the 50%-rate DeKalb component (~11.2 mills). City of Decatur operating millage adds about 13 mills, with no state portion. Both DeKalb County and City Schools of Decatur opted out of the HB 581 floating homestead exemption for 2025, so the standard 40% assessment ratio and $2,000 homestead exemption are what apply."
+              "Decatur is one of the more distinctive tax situations in metro Atlanta because the city runs its own independent school district — City Schools of Decatur — which replaces the DeKalb County Schools millage for any home inside city limits. On top of that, Decatur residents receive a 50% reduction on the DeKalb County M&O portion of their bill (a relic of the city's historic arrangement with the county, formalized in DOR data as the \"DECATUR 50%\" district designation). The result is a combined millage rate that looks dramatically different from anywhere else in DeKalb.",
+              "For 2025, Decatur's total combined millage was approximately 47.4 mills — heavily weighted toward City Schools of Decatur (~20.3 mills) and the 50%-rate DeKalb component (~11.2 mills). City of Decatur operating millage adds about 13 mills, with no state portion. Both DeKalb County and City Schools of Decatur opted out of the HB 581 floating homestead exemption for 2025, so the standard 40% assessment ratio and $2,000 homestead exemption are what apply."
             ],
             "snapshot": [
-              "A median-priced Decatur home (roughly $640,000 in 2024) generates an estimated annual property tax bill near $11,900 once the statewide homestead is applied. Decatur is one of metro Atlanta's higher-tax cities by total bill \u2014 a consequence of its independent school district and dense city services \u2014 but residents also receive correspondingly more local infrastructure and walkable amenities than most metro suburbs. Use the calculator with your actual assessed value for a precise estimate."
+              "A median-priced Decatur home (roughly $640,000 in 2024) generates an estimated annual property tax bill near $11,900 once the statewide homestead is applied. Decatur is one of metro Atlanta's higher-tax cities by total bill — a consequence of its independent school district and dense city services — but residents also receive correspondingly more local infrastructure and walkable amenities than most metro suburbs. Use the calculator with your actual assessed value for a precise estimate."
             ]
           }
         },
@@ -880,7 +951,12 @@
                 "school": 22.78,
                 "state": 0,
                 "total": 37.458,
-                "sourceRef": "ga_dor_millage_rates"
+                "sourceRef": "ga_dor_millage_rates",
+                "hb581OptOut": {
+                  "county": true,
+                  "school": true,
+                  "city": true
+                }
               }
             ]
           }
@@ -968,7 +1044,12 @@
                 "school": 22.78,
                 "state": 0,
                 "total": 37.628,
-                "sourceRef": "ga_dor_millage_rates"
+                "sourceRef": "ga_dor_millage_rates",
+                "hb581OptOut": {
+                  "county": true,
+                  "school": true,
+                  "city": true
+                }
               }
             ]
           }
@@ -1056,7 +1137,12 @@
                 "school": 22.78,
                 "state": 0,
                 "total": 50.245000000000005,
-                "sourceRef": "ga_dor_millage_rates"
+                "sourceRef": "ga_dor_millage_rates",
+                "hb581OptOut": {
+                  "county": true,
+                  "school": true,
+                  "city": true
+                }
               }
             ]
           }
@@ -1144,7 +1230,12 @@
                 "school": 22.78,
                 "state": 0,
                 "total": 36.454,
-                "sourceRef": "ga_dor_millage_rates"
+                "sourceRef": "ga_dor_millage_rates",
+                "hb581OptOut": {
+                  "county": true,
+                  "school": true,
+                  "city": true
+                }
               }
             ]
           }
@@ -1204,7 +1295,12 @@
             "school": 20.15,
             "state": 0,
             "total": 27.099999999999998,
-            "sourceRef": "ga_dor_millage_rates"
+            "sourceRef": "ga_dor_millage_rates",
+            "hb581OptOut": {
+              "county": true,
+              "school": true
+            },
+            "hasPreExistingLocalCap": true
           }
         ],
         "medianTaxesPaid": [
@@ -1324,7 +1420,13 @@
                 "school": 20.15,
                 "state": 0,
                 "total": 30.36,
-                "sourceRef": "ga_dor_millage_rates"
+                "sourceRef": "ga_dor_millage_rates",
+                "hb581OptOut": {
+                  "county": true,
+                  "school": true,
+                  "city": true
+                },
+                "hasPreExistingLocalCap": true
               }
             ]
           }
@@ -1412,7 +1514,13 @@
                 "school": 20.15,
                 "state": 0,
                 "total": 33.650999999999996,
-                "sourceRef": "ga_dor_millage_rates"
+                "sourceRef": "ga_dor_millage_rates",
+                "hb581OptOut": {
+                  "county": true,
+                  "school": true,
+                  "city": true
+                },
+                "hasPreExistingLocalCap": true
               }
             ]
           }
@@ -1500,7 +1608,13 @@
                 "school": 20.15,
                 "state": 0,
                 "total": 32.03,
-                "sourceRef": "ga_dor_millage_rates"
+                "sourceRef": "ga_dor_millage_rates",
+                "hb581OptOut": {
+                  "county": true,
+                  "school": true,
+                  "city": true
+                },
+                "hasPreExistingLocalCap": true
               }
             ]
           }
@@ -1588,7 +1702,13 @@
                 "school": 20.15,
                 "state": 0,
                 "total": 31.099999999999998,
-                "sourceRef": "ga_dor_millage_rates"
+                "sourceRef": "ga_dor_millage_rates",
+                "hb581OptOut": {
+                  "county": true,
+                  "school": true,
+                  "city": true
+                },
+                "hasPreExistingLocalCap": true
               }
             ]
           }
@@ -1676,7 +1796,13 @@
                 "school": 20.15,
                 "state": 0,
                 "total": 31.529999999999998,
-                "sourceRef": "ga_dor_millage_rates"
+                "sourceRef": "ga_dor_millage_rates",
+                "hb581OptOut": {
+                  "county": true,
+                  "school": true,
+                  "city": true
+                },
+                "hasPreExistingLocalCap": true
               }
             ]
           }
@@ -1734,7 +1860,12 @@
             "school": 18.7,
             "state": 0,
             "total": 27.16,
-            "sourceRef": "ga_dor_millage_rates"
+            "sourceRef": "ga_dor_millage_rates",
+            "hb581OptOut": {
+              "county": true,
+              "school": true
+            },
+            "hasPreExistingLocalCap": true
           }
         ],
         "medianTaxesPaid": [
@@ -1854,17 +1985,23 @@
                 "school": 17.97,
                 "state": 0,
                 "total": 31.122,
-                "sourceRef": "ga_dor_millage_rates"
+                "sourceRef": "ga_dor_millage_rates",
+                "hb581OptOut": {
+                  "county": true,
+                  "school": true,
+                  "city": true
+                },
+                "hasPreExistingLocalCap": true
               }
             ]
           },
           "copy": {
             "intro": [
-              "Marietta is the county seat of Cobb and one of the few Georgia cities that runs its own independent school district. Marietta City Schools (often shortened to MCS) sets its own millage rate, which replaces the Cobb County Schools millage for any home inside city limits. That makes Marietta's school portion materially different from what residents of Smyrna, Kennesaw, or Acworth pay \u2014 Marietta's independent district millage typically runs a point or two below the surrounding Cobb Schools rate.",
-              "For 2025, Marietta's total combined millage came in around 31.85 mills \u2014 Marietta City Schools (~17.97 mills), Cobb County operations (~8.5 mills), and Marietta city operating (~4.7 mills, including a small bond component). Cobb County and Marietta City Schools both opted out of the HB 581 floating homestead exemption for 2025, so the standard 40% assessment ratio plus the statewide $2,000 homestead is what applies \u2014 annual taxable value rises with the market rather than capping at inflation."
+              "Marietta is the county seat of Cobb and one of the few Georgia cities that runs its own independent school district. Marietta City Schools (often shortened to MCS) sets its own millage rate, which replaces the Cobb County Schools millage for any home inside city limits. That makes Marietta's school portion materially different from what residents of Smyrna, Kennesaw, or Acworth pay — Marietta's independent district millage typically runs a point or two below the surrounding Cobb Schools rate.",
+              "For 2025, Marietta's total combined millage came in around 31.85 mills — Marietta City Schools (~17.97 mills), Cobb County operations (~8.5 mills), and Marietta city operating (~4.7 mills, including a small bond component). Cobb County and Marietta City Schools both opted out of the HB 581 floating homestead exemption for 2025, so the standard 40% assessment ratio plus the statewide $2,000 homestead is what applies — annual taxable value rises with the market rather than capping at inflation."
             ],
             "snapshot": [
-              "A median-priced Marietta home (roughly $400,000 in 2024) generates an estimated annual property tax bill in the $5,000\u2013$5,200 range with the standard homestead applied. Cobb County offers one of the metro's more generous senior age-65 exemptions, which can reduce the bill substantially for qualifying residents \u2014 worth confirming with the Cobb Tax Commissioner once you turn 65. Use the calculator with your actual assessed value for a precise estimate."
+              "A median-priced Marietta home (roughly $400,000 in 2024) generates an estimated annual property tax bill in the $5,000–$5,200 range with the standard homestead applied. Cobb County offers one of the metro's more generous senior age-65 exemptions, which can reduce the bill substantially for qualifying residents — worth confirming with the Cobb Tax Commissioner once you turn 65. Use the calculator with your actual assessed value for a precise estimate."
             ]
           }
         },
@@ -1951,7 +2088,13 @@
                 "school": 18.7,
                 "state": 0,
                 "total": 36.150000000000006,
-                "sourceRef": "ga_dor_millage_rates"
+                "sourceRef": "ga_dor_millage_rates",
+                "hb581OptOut": {
+                  "county": true,
+                  "school": true,
+                  "city": true
+                },
+                "hasPreExistingLocalCap": true
               }
             ]
           }
@@ -2039,7 +2182,13 @@
                 "school": 18.7,
                 "state": 0,
                 "total": 35.71,
-                "sourceRef": "ga_dor_millage_rates"
+                "sourceRef": "ga_dor_millage_rates",
+                "hb581OptOut": {
+                  "county": true,
+                  "school": true,
+                  "city": true
+                },
+                "hasPreExistingLocalCap": true
               }
             ]
           }
@@ -2127,7 +2276,13 @@
                 "school": 18.7,
                 "state": 0,
                 "total": 36.11,
-                "sourceRef": "ga_dor_millage_rates"
+                "sourceRef": "ga_dor_millage_rates",
+                "hb581OptOut": {
+                  "county": true,
+                  "school": true,
+                  "city": true
+                },
+                "hasPreExistingLocalCap": true
               }
             ]
           }
@@ -2215,7 +2370,13 @@
                 "school": 18.7,
                 "state": 0,
                 "total": 36.66,
-                "sourceRef": "ga_dor_millage_rates"
+                "sourceRef": "ga_dor_millage_rates",
+                "hb581OptOut": {
+                  "county": true,
+                  "school": true,
+                  "city": true
+                },
+                "hasPreExistingLocalCap": true
               }
             ]
           }
@@ -2273,8 +2434,12 @@
             "county": 12.063,
             "school": 19.35,
             "state": 0,
-            "total": 31.413,
-            "sourceRef": "ga_dor_millage_rates"
+            "total": 31.413000000000004,
+            "sourceRef": "ga_dor_millage_rates",
+            "hb581OptOut": {
+              "county": true,
+              "school": true
+            }
           }
         ],
         "medianTaxesPaid": [
@@ -2389,29 +2554,34 @@
             "millage": [
               {
                 "year": 2025,
-                "city": 10.036,
+                "city": 10.036000000000001,
                 "county": 12.063,
                 "school": 19.35,
                 "state": 0,
-                "total": 41.449,
-                "sourceRef": "ga_dor_millage_rates"
+                "total": 41.449000000000005,
+                "sourceRef": "ga_dor_millage_rates",
+                "hb581OptOut": {
+                  "county": true,
+                  "school": true,
+                  "city": true
+                }
               }
             ]
           },
           "copy": {
             "intro": [
-              "Douglasville is the county seat of Douglas County and the largest incorporated city in the western Atlanta metro. Unlike Atlanta, Decatur, or Marietta, Douglasville does not run an independent school district \u2014 students attend Douglas County School District, which covers the entire county and is the 17th largest in Georgia. That means the school portion of every Douglasville property tax bill matches what residents of Lithia Springs, Winston, and the unincorporated parts of the county pay. Douglasville layers a city operating millage on top.",
-              "For 2025, Douglasville's total combined millage came in around 41.45 mills \u2014 Douglas County Schools (~19.35 mills including a 0.5-mill bond), Douglas County operations (~12.06 mills), and Douglasville city operating (~10.04 mills, including a 1.29-mill bond). The state portion is zero in Georgia since 2016. Douglas County is the cleanest example of HB 581 implementation in our coverage: the Board of Commissioners, the school district, and every incorporated city in the county all opted out for 2025, so the standard 40% assessment ratio and statewide $2,000 homestead exemption are what apply \u2014 no floating cap on annual taxable value growth."
+              "Douglasville is the county seat of Douglas County and the largest incorporated city in the western Atlanta metro. Unlike Atlanta, Decatur, or Marietta, Douglasville does not run an independent school district — students attend Douglas County School District, which covers the entire county and is the 17th largest in Georgia. That means the school portion of every Douglasville property tax bill matches what residents of Lithia Springs, Winston, and the unincorporated parts of the county pay. Douglasville layers a city operating millage on top.",
+              "For 2025, Douglasville's total combined millage came in around 41.45 mills — Douglas County Schools (~19.35 mills including a 0.5-mill bond), Douglas County operations (~12.06 mills), and Douglasville city operating (~10.04 mills, including a 1.29-mill bond). The state portion is zero in Georgia since 2016. Douglas County is the cleanest example of HB 581 implementation in our coverage: the Board of Commissioners, the school district, and every incorporated city in the county all opted out for 2025, so the standard 40% assessment ratio and statewide $2,000 homestead exemption are what apply — no floating cap on annual taxable value growth."
             ],
             "snapshot": [
-              "A median-priced Douglasville home (roughly $359,000 in 2024) generates an estimated annual property tax bill near $5,900 with the standard $2,000 homestead applied. Real-world median bills are materially lower (ACS reports $3,286 for 2024) because Douglas County offers one of the metro's more generous senior school millage exemptions \u2014 qualifying age-62 homeowners are exempted from the school portion entirely (conditions apply), which is the largest single component of the bill. Use the calculator with your actual assessed value for a precise estimate, and check whether you qualify for the senior or disability exemption with the Douglas County Tax Commissioner."
+              "A median-priced Douglasville home (roughly $359,000 in 2024) generates an estimated annual property tax bill near $5,900 with the standard $2,000 homestead applied. Real-world median bills are materially lower (ACS reports $3,286 for 2024) because Douglas County offers one of the metro's more generous senior school millage exemptions — qualifying age-62 homeowners are exempted from the school portion entirely (conditions apply), which is the largest single component of the bill. Use the calculator with your actual assessed value for a precise estimate, and check whether you qualify for the senior or disability exemption with the Douglas County Tax Commissioner."
             ]
           }
         },
         {
           "name": "Lithia Springs",
           "slug": "lithia-springs",
-          "asOfYear": 2025,
+          "asOfYear": 2024,
           "rollout": {
             "tier": 1,
             "featured": false,
@@ -2487,6 +2657,2155 @@
         }
       ],
       "asOfYear": 2025
+    },
+    {
+      "name": "Henry",
+      "slug": "henry",
+      "neighborCounties": [
+        "Clayton",
+        "DeKalb",
+        "Rockdale",
+        "Newton",
+        "Butts",
+        "Spalding",
+        "Fayette"
+      ],
+      "asOfYear": 2025,
+      "metrics": {
+        "effectiveTaxRate": [
+          {
+            "year": 2020,
+            "value": 1.0301,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2021,
+            "value": 1.0549,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2022,
+            "value": 0.9763,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2023,
+            "value": 0.9225,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2024,
+            "value": 0.8732,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          }
+        ],
+        "medianTaxesPaid": [
+          {
+            "year": 2020,
+            "value": 1953,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2021,
+            "value": 2134,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2022,
+            "value": 2394,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2023,
+            "value": 2559,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2024,
+            "value": 2741,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          }
+        ],
+        "millage": [
+          {
+            "year": 2025,
+            "county": 7.042,
+            "school": 21.8,
+            "state": 0,
+            "total": 28.842,
+            "sourceRef": "ga_dor_millage_rates",
+            "hb581OptOut": {
+              "county": false,
+              "school": true
+            }
+          }
+        ]
+      },
+      "towns": [
+        {
+          "name": "McDonough",
+          "slug": "mcdonough",
+          "asOfYear": 2025,
+          "rollout": {
+            "tier": 1,
+            "featured": true,
+            "isReady": true,
+            "rank": 1
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 173200,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 191700,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 246800,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 285800,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 314600,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 1912,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 2245,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 2520,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 2812,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 2973,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
+            ],
+            "millage": [
+              {
+                "year": 2025,
+                "city": 3.033,
+                "county": 7.042,
+                "school": 21.8,
+                "state": 0,
+                "total": 31.875,
+                "sourceRef": "ga_dor_millage_rates",
+                "hb581OptOut": {
+                  "county": false,
+                  "school": true,
+                  "city": false
+                }
+              }
+            ]
+          },
+          "copy": {
+            "intro": [
+              "McDonough is the county seat of Henry County, anchoring the southern Atlanta metro along Interstate 75 about 30 miles south of downtown. Unlike Atlanta or Decatur, McDonough does not run an independent school district — students attend Henry County Schools — so the school portion of every McDonough tax bill matches what residents of Stockbridge, Hampton, and Locust Grove pay. The city itself runs a relatively lean operating millage.",
+              "For 2025, McDonough's combined millage came in around 31.88 mills — Henry County Schools (~21.80 including a 2.0-mill bond), Henry County operations (~7.04 mills), and McDonough city operating (~3.03 mills). The state portion is zero. Henry's HB 581 status is split: the school district opted out for 2025, but the Henry County government and the McDonough city council both stayed in. That means roughly 68% of a McDonough homeowner's bill (the school portion) uses traditional 40% × FMV math, while the remaining 32% (county + city) is capped at the 2024 base year × annual inflation index for homeowners who held homestead status in 2024."
+            ],
+            "snapshot": [
+              "A median-priced McDonough home (roughly $315,000 in 2024) generates an estimated annual property tax bill near $3,950 with the standard $2,000 homestead exemption applied. Real-world median bills are lower (ACS reports $2,973 for 2024) — local senior, disability, and the Henry County frozen-base exemption (a separate longstanding mechanism that pre-dates HB 581) further reduce the effective bill for qualifying homeowners. Use the calculator with your actual assessed value for a precise estimate, and check the breakdown to see which portions are HB 581-capped."
+            ]
+          }
+        },
+        {
+          "name": "Stockbridge",
+          "slug": "stockbridge",
+          "asOfYear": 2025,
+          "rollout": {
+            "tier": 1,
+            "featured": false,
+            "isReady": false,
+            "rank": 2
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 187900,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 204100,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 241400,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 248000,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 276700,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 2085,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 2385,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 2566,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 2461,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 2541,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
+            ],
+            "millage": [
+              {
+                "year": 2025,
+                "city": 3.77,
+                "county": 7.042,
+                "school": 21.8,
+                "state": 0,
+                "total": 32.612,
+                "sourceRef": "ga_dor_millage_rates",
+                "hb581OptOut": {
+                  "county": false,
+                  "school": true,
+                  "city": false
+                }
+              }
+            ]
+          }
+        },
+        {
+          "name": "Hampton",
+          "slug": "hampton",
+          "asOfYear": 2025,
+          "rollout": {
+            "tier": 1,
+            "featured": false,
+            "isReady": false,
+            "rank": 3
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 156400,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 162500,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 224900,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 265100,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 283700,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 1593,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 1741,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 2241,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 2577,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 2830,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
+            ],
+            "millage": [
+              {
+                "year": 2025,
+                "city": 4.995,
+                "county": 7.042,
+                "school": 21.8,
+                "state": 0,
+                "total": 33.837,
+                "sourceRef": "ga_dor_millage_rates",
+                "hb581OptOut": {
+                  "county": false,
+                  "school": true,
+                  "city": false
+                }
+              }
+            ]
+          }
+        },
+        {
+          "name": "Locust Grove",
+          "slug": "locust-grove",
+          "asOfYear": 2025,
+          "rollout": {
+            "tier": 1,
+            "featured": false,
+            "isReady": false,
+            "rank": 4
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 163700,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 169500,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 193800,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 261500,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 307300,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 1513,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 1591,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 2032,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 2308,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 3030,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
+            ],
+            "millage": [
+              {
+                "year": 2025,
+                "city": 4.087,
+                "county": 7.042,
+                "school": 21.8,
+                "state": 0,
+                "total": 32.929,
+                "sourceRef": "ga_dor_millage_rates",
+                "hb581OptOut": {
+                  "county": false,
+                  "school": true,
+                  "city": false
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Paulding",
+      "slug": "paulding",
+      "neighborCounties": [
+        "Cobb",
+        "Bartow",
+        "Polk",
+        "Haralson",
+        "Carroll",
+        "Douglas"
+      ],
+      "asOfYear": 2025,
+      "metrics": {
+        "effectiveTaxRate": [
+          {
+            "year": 2020,
+            "value": 0.9668,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2021,
+            "value": 0.9546,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2022,
+            "value": 0.8969,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2023,
+            "value": 0.8457,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2024,
+            "value": 0.8026,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          }
+        ],
+        "medianTaxesPaid": [
+          {
+            "year": 2020,
+            "value": 1779,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2021,
+            "value": 1954,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2022,
+            "value": 2252,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2023,
+            "value": 2444,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2024,
+            "value": 2619,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          }
+        ],
+        "millage": [
+          {
+            "year": 2025,
+            "county": 5.1,
+            "school": 17.675,
+            "state": 0,
+            "total": 22.775,
+            "sourceRef": "ga_dor_millage_rates",
+            "hb581OptOut": {
+              "county": false,
+              "school": true
+            }
+          }
+        ]
+      },
+      "towns": [
+        {
+          "name": "Dallas",
+          "slug": "dallas",
+          "asOfYear": 2025,
+          "rollout": {
+            "tier": 1,
+            "featured": true,
+            "isReady": true,
+            "rank": 1
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 162500,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 174000,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 207300,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 234700,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 251800,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 1462,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 1386,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 1646,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 1999,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 2333,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
+            ],
+            "millage": [
+              {
+                "year": 2025,
+                "city": 6.5,
+                "county": 5.1,
+                "school": 17.675,
+                "state": 0,
+                "total": 29.275,
+                "sourceRef": "ga_dor_millage_rates",
+                "hb581OptOut": {
+                  "county": false,
+                  "school": true,
+                  "city": false
+                }
+              }
+            ]
+          },
+          "copy": {
+            "intro": [
+              "Dallas is the county seat of Paulding County and the largest incorporated city in the rapidly growing western exurban metro about 30 miles northwest of downtown Atlanta. Dallas does not run an independent school district — students attend Paulding County Schools — so the school portion of every Dallas tax bill matches the broader Paulding Schools rate. The city operates on a moderate millage, slightly above Hiram and most surrounding municipalities.",
+              "For 2025, Dallas's combined millage came in around 29.28 mills — Paulding County Schools (17.68 mills), Paulding County operations (~5.10 including a 0.80-mill bond), and Dallas city operating (6.50 mills). The state portion is zero. Paulding's HB 581 status mirrors Henry's: the school district opted out for 2025, but the Paulding County Board of Commissioners and the City of Dallas both stayed in. That means roughly 60% of a Dallas homeowner's bill (the school portion) uses traditional math, while the remaining 40% (county + city) is HB 581-capped for homeowners who held homestead status in 2024."
+            ],
+            "snapshot": [
+              "A median-priced Dallas home (roughly $252,000 in 2024) generates an estimated annual property tax bill near $2,900 with the standard $2,000 homestead exemption applied. Real-world median bills are slightly lower (ACS reports $2,333 for 2024) reflecting local senior and disability exemptions. Use the calculator with your actual assessed value for a precise estimate, and check the breakdown to see which portions of your bill are HB 581-capped versus on traditional math."
+            ]
+          }
+        },
+        {
+          "name": "Hiram",
+          "slug": "hiram",
+          "asOfYear": 2025,
+          "rollout": {
+            "tier": 1,
+            "featured": false,
+            "isReady": false,
+            "rank": 2
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 157200,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 172500,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 205900,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 236700,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 303200,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 1368,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 1571,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 1483,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 1650,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 1800,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
+            ],
+            "millage": [
+              {
+                "year": 2025,
+                "city": 0,
+                "county": 5.1,
+                "school": 17.675,
+                "state": 0,
+                "total": 22.775,
+                "sourceRef": "ga_dor_millage_rates",
+                "hb581OptOut": {
+                  "county": false,
+                  "school": true,
+                  "city": false
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Rockdale",
+      "slug": "rockdale",
+      "neighborCounties": [
+        "DeKalb",
+        "Gwinnett",
+        "Walton",
+        "Newton",
+        "Henry"
+      ],
+      "asOfYear": 2025,
+      "metrics": {
+        "effectiveTaxRate": [
+          {
+            "year": 2020,
+            "value": 0.7584,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2021,
+            "value": 0.8265,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2022,
+            "value": 0.7543,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2023,
+            "value": 0.7182,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2024,
+            "value": 0.7081,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          }
+        ],
+        "medianTaxesPaid": [
+          {
+            "year": 2020,
+            "value": 1290,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2021,
+            "value": 1443,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2022,
+            "value": 1673,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2023,
+            "value": 1843,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2024,
+            "value": 2074,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          }
+        ],
+        "millage": [
+          {
+            "year": 2025,
+            "county": 18.282,
+            "school": 20,
+            "state": 0,
+            "total": 38.282,
+            "sourceRef": "ga_dor_millage_rates",
+            "hb581OptOut": {
+              "county": false,
+              "school": false
+            }
+          }
+        ]
+      },
+      "towns": [
+        {
+          "name": "Conyers",
+          "slug": "conyers",
+          "asOfYear": 2025,
+          "rollout": {
+            "tier": 1,
+            "featured": true,
+            "isReady": true,
+            "rank": 1
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 151600,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 161900,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 170600,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 218000,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 284300,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 1262,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 1489,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 1594,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 1698,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 2445,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
+            ],
+            "millage": [
+              {
+                "year": 2025,
+                "city": 14.6,
+                "county": 18.282,
+                "school": 20,
+                "state": 0,
+                "total": 52.882,
+                "sourceRef": "ga_dor_millage_rates",
+                "hb581OptOut": {
+                  "county": false,
+                  "school": false,
+                  "city": false
+                }
+              }
+            ]
+          },
+          "copy": {
+            "intro": [
+              "Conyers is the county seat of Rockdale County and the only incorporated city in the county, located about 24 miles east of downtown Atlanta along Interstate 20. Conyers does not run an independent school district — students attend Rockdale County Public Schools — so the school portion of every Conyers tax bill matches the county-wide Rockdale Schools rate. The city operates on a substantially higher millage than most of its peer-sized Atlanta-area cities, in part because Conyers funds an unusually broad set of municipal services directly.",
+              "For 2025, Conyers's combined millage came in around 52.88 mills — Rockdale County operations (18.28 mills), Rockdale County Schools (20.00 mills), and Conyers city operating (~14.60 mills, including a 1.10-mill bond component). The state portion is zero. Rockdale is the only county in our Georgia coverage that is fully opted into HB 581: the Rockdale County government, Rockdale County Schools (where a 3-4 vote to opt out failed on February 27, 2025), and the City of Conyers all stayed in. That means the entire bill is HB 581-capped for homeowners who held homestead status in 2024 — taxable value is held at the 2024 base year × the annual inflation index (0% for 2025, 2.7% for 2026), substantially below what current market values would imply."
+            ],
+            "snapshot": [
+              "A median-priced Conyers home (roughly $284,000 in 2024) generates an estimated annual property tax bill near $5,900 using traditional math with the standard $2,000 homestead exemption applied. The actual median bill is materially lower (ACS reports $2,445 for 2024) for two reasons. First, longstanding owners benefit from Rockdale's local senior, disability, and veteran exemptions that stack on top of the statewide $2,000. Second — and uniquely in our coverage — every component of the Conyers bill is HB 581-capped, so the headline traditional estimate substantially overstates what most existing homesteaded owners actually pay. Use the calculator with your actual assessed value for a precise estimate. Rockdale County also publishes an official HB 581 estimator on the Tax Commissioner's site, which uses the same 2024-base-year cap math."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cherokee",
+      "slug": "cherokee",
+      "neighborCounties": [
+        "Cobb",
+        "Fulton",
+        "Forsyth",
+        "Bartow",
+        "Pickens",
+        "Dawson"
+      ],
+      "asOfYear": 2025,
+      "metrics": {
+        "effectiveTaxRate": [
+          {
+            "year": 2020,
+            "value": 0.7512,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2021,
+            "value": 0.766,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2022,
+            "value": 0.7132,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2023,
+            "value": 0.7014,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2024,
+            "value": 0.686,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          }
+        ],
+        "medianTaxesPaid": [
+          {
+            "year": 2020,
+            "value": 2038,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2021,
+            "value": 2239,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2022,
+            "value": 2556,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2023,
+            "value": 2734,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2024,
+            "value": 2985,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          }
+        ],
+        "millage": [
+          {
+            "year": 2025,
+            "county": 5.412999999999999,
+            "school": 17.95,
+            "state": 0,
+            "total": 23.363,
+            "sourceRef": "ga_dor_millage_rates",
+            "hb581OptOut": {
+              "county": false,
+              "school": true
+            },
+            "hasPreExistingLocalCap": true
+          }
+        ]
+      },
+      "towns": [
+        {
+          "name": "Canton",
+          "slug": "canton",
+          "asOfYear": 2025,
+          "rollout": {
+            "tier": 1,
+            "featured": true,
+            "isReady": true,
+            "rank": 1
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 237800,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 261100,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 324000,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 369700,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 407800,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 1756,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 2032,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 2230,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 2276,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 2548,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
+            ],
+            "millage": [
+              {
+                "year": 2025,
+                "city": 5.25,
+                "county": 5.412999999999999,
+                "school": 17.95,
+                "state": 0,
+                "total": 28.613,
+                "sourceRef": "ga_dor_millage_rates",
+                "hb581OptOut": {
+                  "county": false,
+                  "school": true,
+                  "city": false
+                },
+                "hasPreExistingLocalCap": true
+              }
+            ]
+          },
+          "copy": {
+            "intro": [
+              "Canton is the county seat of Cherokee County, about 40 miles north of downtown Atlanta along I-575. The city sits in one of the metro's fastest-growing exurban corridors — Cherokee added more than 60,000 residents between 2010 and 2020 — and Canton itself has roughly doubled in population over that period. The city does not run an independent school district; students attend Cherokee County Schools, so the school portion of every Canton tax bill matches what residents of Woodstock, Holly Springs, and unincorporated Cherokee pay.",
+              "For 2025, Canton's combined millage was approximately 28.61 mills — Cherokee County Schools (~17.95 mills, including a 1.5-mill bond), Cherokee County operations (~5.41 mills, including a 0.26-mill bond), and Canton city operating (~5.25 mills). The state portion is zero. Cherokee's HB 581 picture is two-layered: Cherokee County has had its own pre-existing local floating homestead exemption on the county M&O millage for years, so HB 581 doesn't materially change the county-side cap for existing homesteaded owners. The Cherokee County School District separately opted out of HB 581 for 2025 (to preserve its budget under a pre-existing assessment growth pattern), so the school portion — roughly 63% of the bill — uses the traditional 40% × FMV math."
+            ],
+            "snapshot": [
+              "A median-priced Canton home (roughly $408,000 in 2024) generates an estimated annual property tax bill near $4,600 with the standard $2,000 homestead exemption applied. Real-world median bills are materially lower (ACS reports $2,548 for 2024) because most homesteaded Canton homeowners qualify for Cherokee County's local floating exemption on the county M&O portion plus senior, disability, and veteran exemptions that stack on top of the statewide $2,000. Use the calculator with your actual assessed value for a precise estimate."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Forsyth",
+      "slug": "forsyth",
+      "neighborCounties": [
+        "Fulton",
+        "Cherokee",
+        "Hall",
+        "Dawson",
+        "Gwinnett"
+      ],
+      "asOfYear": 2025,
+      "metrics": {
+        "effectiveTaxRate": [
+          {
+            "year": 2020,
+            "value": 0.8247,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2021,
+            "value": 0.827,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2022,
+            "value": 0.7759,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2023,
+            "value": 0.7588,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2024,
+            "value": 0.7304,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          }
+        ],
+        "medianTaxesPaid": [
+          {
+            "year": 2020,
+            "value": 2988,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2021,
+            "value": 3189,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2022,
+            "value": 3500,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2023,
+            "value": 3747,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2024,
+            "value": 4020,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          }
+        ],
+        "millage": [
+          {
+            "year": 2025,
+            "county": 5.091,
+            "school": 16.626,
+            "state": 0,
+            "total": 21.717000000000002,
+            "sourceRef": "ga_dor_millage_rates",
+            "hb581OptOut": {
+              "county": false,
+              "school": true
+            },
+            "hasPreExistingLocalCap": true
+          }
+        ]
+      },
+      "towns": [
+        {
+          "name": "Cumming",
+          "slug": "cumming",
+          "asOfYear": 2025,
+          "rollout": {
+            "tier": 1,
+            "featured": true,
+            "isReady": true,
+            "rank": 1
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 239500,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 249700,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 331900,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 366800,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 382900,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 1653,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 1714,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 2067,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 2085,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 2426,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
+            ],
+            "millage": [
+              {
+                "year": 2025,
+                "city": 0,
+                "county": 5.091,
+                "school": 16.626,
+                "state": 0,
+                "total": 21.717000000000002,
+                "sourceRef": "ga_dor_millage_rates",
+                "hb581OptOut": {
+                  "county": false,
+                  "school": true,
+                  "city": false
+                },
+                "hasPreExistingLocalCap": true
+              }
+            ]
+          },
+          "copy": {
+            "intro": [
+              "Cumming is the county seat of Forsyth County, located about 40 miles northeast of downtown Atlanta along GA-400. The city is small in absolute terms (roughly 8,000 residents inside city limits) but anchors a county that has become one of the wealthiest and fastest-growing in Georgia — Forsyth's median home value sits among the highest in the metro. Cumming does not run an independent school district; students attend Forsyth County Schools, so the school portion of every Cumming tax bill matches what residents of unincorporated Forsyth pay.",
+              "For 2025, Cumming's combined millage was approximately 21.72 mills — Forsyth County Schools (~16.63 mills, including a 1.42-mill bond) and Forsyth County operations (~5.09 mills, including a 0.30-mill bond). The City of Cumming itself levies a city operating millage of 0.000 — the city funds services through sales tax (SPLOST), business licenses, and other non-property-tax sources, an unusual arrangement among Georgia incorporated cities. Forsyth's HB 581 picture has two parts: Forsyth County has its own pre-existing 4% local cap on county M&O assessments (under HB 717), so existing homesteaded owners were already protected on the county portion. The Forsyth County School District separately opted out of HB 581 for 2025 to retain its own local 4% cap on school assessments — so the school portion uses the existing local mechanism rather than the statewide HB 581 cap."
+            ],
+            "snapshot": [
+              "A median-priced Cumming home (roughly $383,000 in 2024) generates an estimated annual property tax bill near $3,300 with the standard $2,000 homestead exemption applied — a low figure relative to home value because there is no city millage. Real-world median bills are similar (ACS reports $2,426 for 2024), with the gap explained by senior and disability exemptions and Forsyth's pre-existing 4% local caps on both county and school assessments. Use the calculator with your actual assessed value for a precise estimate."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Clayton",
+      "slug": "clayton",
+      "neighborCounties": [
+        "Fulton",
+        "DeKalb",
+        "Henry",
+        "Fayette",
+        "Spalding"
+      ],
+      "asOfYear": 2025,
+      "metrics": {
+        "effectiveTaxRate": [
+          {
+            "year": 2020,
+            "value": 1.0147,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2021,
+            "value": 0.9927,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2022,
+            "value": 0.9109,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2023,
+            "value": 0.8931,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2024,
+            "value": 0.8695,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          }
+        ],
+        "medianTaxesPaid": [
+          {
+            "year": 2020,
+            "value": 1239,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2021,
+            "value": 1356,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2022,
+            "value": 1523,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2023,
+            "value": 1737,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2024,
+            "value": 1933,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          }
+        ],
+        "millage": [
+          {
+            "year": 2025,
+            "county": 14.552,
+            "school": 19.6,
+            "state": 0,
+            "total": 34.152,
+            "sourceRef": "ga_dor_millage_rates",
+            "hb581OptOut": {
+              "county": true,
+              "school": true
+            }
+          }
+        ]
+      },
+      "towns": [
+        {
+          "name": "Jonesboro",
+          "slug": "jonesboro",
+          "asOfYear": 2025,
+          "rollout": {
+            "tier": 1,
+            "featured": true,
+            "isReady": true,
+            "rank": 1
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 80700,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 94600,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 123600,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 142900,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 188300,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 595,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 785,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 1042,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 937,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 1350,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
+            ],
+            "millage": [
+              {
+                "year": 2025,
+                "city": 9,
+                "county": 14.552,
+                "school": 19.6,
+                "state": 0,
+                "total": 43.152,
+                "sourceRef": "ga_dor_millage_rates",
+                "hb581OptOut": {
+                  "county": true,
+                  "school": true,
+                  "city": false
+                }
+              }
+            ]
+          },
+          "copy": {
+            "intro": [
+              "Jonesboro is the county seat of Clayton County, about 20 miles south of downtown Atlanta and adjacent to Hartsfield-Jackson airport. The city is small (roughly 5,000 residents) and serves as the historic and administrative center of a county with a larger population in Forest Park, Riverdale, and unincorporated areas. Jonesboro does not run an independent school district; students attend Clayton County Schools, so the school portion of every Jonesboro tax bill matches what residents of College Park (Clayton side), Forest Park, and Lake City pay.",
+              "For 2025, Jonesboro's combined millage was approximately 43.15 mills — among the higher totals in the metro — Clayton County Schools (19.60 mills), Clayton County operations (14.55 mills), and Jonesboro city operating (9.00 mills). The state portion is zero. Clayton has the most aggressive opt-out posture in our coverage: both the Clayton County Board of Commissioners (3-2 vote on February 20, 2025) and the Clayton County School District (unanimous vote) opted out of HB 581 for 2025, choosing to pursue expanded local exemptions through targeted legislation instead. The City of Jonesboro itself stayed in HB 581, so the city portion (~21% of the bill) gets the floating cap while the county and school portions — roughly 79% — use the traditional 40% × FMV math."
+            ],
+            "snapshot": [
+              "A median-priced Jonesboro home (roughly $188,000 in 2024) generates an estimated annual property tax bill near $3,160 with the standard $2,000 homestead exemption applied. Real-world median bills are materially lower (ACS reports $1,350 for 2024), reflecting Clayton County's existing senior, disabled, and veteran homestead exemptions on the county and school portions, plus the homeowner's age-65+ exemption that significantly reduces the school tax for qualifying residents. Use the calculator with your actual assessed value for a precise estimate."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Fayette",
+      "slug": "fayette",
+      "neighborCounties": [
+        "Fulton",
+        "Clayton",
+        "Henry",
+        "Spalding",
+        "Coweta"
+      ],
+      "asOfYear": 2025,
+      "metrics": {
+        "effectiveTaxRate": [
+          {
+            "year": 2020,
+            "value": 0.9138,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2021,
+            "value": 0.8975,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2022,
+            "value": 0.8261,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2023,
+            "value": 0.7811,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2024,
+            "value": 0.7527,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          }
+        ],
+        "medianTaxesPaid": [
+          {
+            "year": 2020,
+            "value": 2681,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2021,
+            "value": 2776,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2022,
+            "value": 3054,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2023,
+            "value": 3168,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2024,
+            "value": 3285,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          }
+        ],
+        "millage": [
+          {
+            "year": 2025,
+            "county": 3.763,
+            "school": 19.6,
+            "state": 0,
+            "total": 23.363,
+            "sourceRef": "ga_dor_millage_rates",
+            "hb581OptOut": {
+              "county": false,
+              "school": true
+            },
+            "hasPreExistingLocalCap": true
+          }
+        ]
+      },
+      "towns": [
+        {
+          "name": "Fayetteville",
+          "slug": "fayetteville",
+          "asOfYear": 2025,
+          "rollout": {
+            "tier": 1,
+            "featured": true,
+            "isReady": true,
+            "rank": 1
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 238300,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 257400,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 299500,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 331700,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 368200,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 2225,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 2260,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 2522,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 2690,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 2798,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
+            ],
+            "millage": [
+              {
+                "year": 2025,
+                "city": 5.646,
+                "county": 3.763,
+                "school": 19.6,
+                "state": 0,
+                "total": 29.009,
+                "sourceRef": "ga_dor_millage_rates",
+                "hb581OptOut": {
+                  "county": false,
+                  "school": true,
+                  "city": false
+                },
+                "hasPreExistingLocalCap": true
+              }
+            ]
+          },
+          "copy": {
+            "intro": [
+              "Fayetteville is the county seat of Fayette County, about 22 miles south of downtown Atlanta. The city is smaller than nearby Peachtree City but serves as the historic and administrative core of one of the most affluent counties in the metro — Fayette has among the highest median household incomes in Georgia. Fayetteville does not run an independent school district; students attend Fayette County Schools, so the school portion of every Fayetteville tax bill matches what residents of Peachtree City, Tyrone, and unincorporated Fayette pay.",
+              "For 2025, Fayetteville's combined millage was approximately 29.01 mills — Fayette County Schools (19.60 mills), Fayetteville city operating (5.65 mills), and Fayette County operations (3.76 mills). The state portion is zero. Fayette's HB 581 posture is layered: the Fayette County Board of Commissioners did not formally opt out and the City of Fayetteville voted to deny its opt-out resolution on February 25, 2025 — both effectively staying in HB 581. The Fayette County School District separately opted out of HB 581 to preserve a pre-existing local floating exemption under HB 1166, which provides a similar but slightly different cap mechanism. The net result: county and city portions get the statewide HB 581 cap, while the school portion (~68% of the bill) uses the HB 1166 local cap."
+            ],
+            "snapshot": [
+              "A median-priced Fayetteville home (roughly $368,000 in 2024) generates an estimated annual property tax bill near $4,200 with the standard $2,000 homestead exemption applied. Real-world median bills are materially lower (ACS reports $2,798 for 2024) because Fayette County stacks local senior, disability, and veteran exemptions on top of the statewide $2,000 — and most longtime homesteaded owners benefit from the HB 1166 floating exemption on the school portion of the bill. Use the calculator with your actual assessed value for a precise estimate."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Coweta",
+      "slug": "coweta",
+      "neighborCounties": [
+        "Fulton",
+        "Fayette",
+        "Spalding",
+        "Meriwether",
+        "Heard",
+        "Carroll",
+        "Douglas"
+      ],
+      "asOfYear": 2025,
+      "metrics": {
+        "effectiveTaxRate": [
+          {
+            "year": 2020,
+            "value": 0.8889,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2021,
+            "value": 0.8793,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2022,
+            "value": 0.7975,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2023,
+            "value": 0.771,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2024,
+            "value": 0.734,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          }
+        ],
+        "medianTaxesPaid": [
+          {
+            "year": 2020,
+            "value": 2000,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2021,
+            "value": 2135,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2022,
+            "value": 2328,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2023,
+            "value": 2482,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2024,
+            "value": 2624,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          }
+        ],
+        "millage": [
+          {
+            "year": 2025,
+            "county": 4.817,
+            "school": 15,
+            "state": 0,
+            "total": 19.817,
+            "sourceRef": "ga_dor_millage_rates",
+            "hb581OptOut": {
+              "county": false,
+              "school": true
+            }
+          }
+        ]
+      },
+      "towns": [
+        {
+          "name": "Newnan",
+          "slug": "newnan",
+          "asOfYear": 2025,
+          "rollout": {
+            "tier": 1,
+            "featured": true,
+            "isReady": true,
+            "rank": 1
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 214600,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 233900,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 284600,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 327800,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 364700,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 2124,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 2250,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 2409,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 2545,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 2784,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
+            ],
+            "millage": [
+              {
+                "year": 2025,
+                "city": 3.082,
+                "county": 4.817,
+                "school": 15,
+                "state": 0,
+                "total": 22.899,
+                "sourceRef": "ga_dor_millage_rates",
+                "hb581OptOut": {
+                  "county": false,
+                  "school": true,
+                  "city": false
+                }
+              }
+            ]
+          },
+          "copy": {
+            "intro": [
+              "Newnan is the county seat of Coweta County, about 40 miles southwest of downtown Atlanta along I-85. The city anchors one of the metro's fastest-growing southwestern exurbs and has the historic core of Coweta's economy and government. Newnan does not run an independent school district; students attend Coweta County Schools, so the school portion of every Newnan tax bill matches what residents of Senoia, Sharpsburg, and unincorporated Coweta pay.",
+              "For 2025, Newnan's combined millage was approximately 22.90 mills — among the lower totals in our coverage — Coweta County Schools (15.00 mills), Coweta County operations (4.82 mills), and Newnan city operating (3.08 mills). The state portion is zero. Coweta's HB 581 status is split: the Coweta County School District opted out of HB 581 on February 11, 2025, simultaneously passing a resolution to pursue a local 5% annual cap on assessment growth plus expanded senior exemptions through state legislation. The Coweta County Board of Commissioners and the City of Newnan both stayed in HB 581 — meaning county and city portions are subject to the floating cap while the school portion (~66% of the bill) uses traditional 40% × FMV math for now."
+            ],
+            "snapshot": [
+              "A median-priced Newnan home (roughly $365,000 in 2024) generates an estimated annual property tax bill near $3,300 with the standard $2,000 homestead exemption applied. Real-world median bills are slightly lower (ACS reports $2,784 for 2024) reflecting local senior and disability exemptions. Use the calculator with your actual assessed value for a precise estimate, and check whether you qualify for Coweta's expanded senior exemption if you're 65 or older."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Newton",
+      "slug": "newton",
+      "neighborCounties": [
+        "Rockdale",
+        "Walton",
+        "Morgan",
+        "Jasper",
+        "Butts",
+        "Henry"
+      ],
+      "asOfYear": 2025,
+      "metrics": {
+        "effectiveTaxRate": [
+          {
+            "year": 2020,
+            "value": 1.0019,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2021,
+            "value": 1.0341,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2022,
+            "value": 0.9511,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2023,
+            "value": 0.9143,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          },
+          {
+            "year": 2024,
+            "value": 0.886,
+            "unit": "PERCENT",
+            "sourceRef": "us_census_acs_county_effective_rate"
+          }
+        ],
+        "medianTaxesPaid": [
+          {
+            "year": 2020,
+            "value": 1595,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2021,
+            "value": 1730,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2022,
+            "value": 1905,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2023,
+            "value": 2133,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          },
+          {
+            "year": 2024,
+            "value": 2348,
+            "unit": "USD",
+            "sourceRef": "us_census_acs_b25103"
+          }
+        ],
+        "millage": [
+          {
+            "year": 2025,
+            "county": 8.567,
+            "school": 15.5,
+            "state": 0,
+            "total": 24.067,
+            "sourceRef": "ga_dor_millage_rates",
+            "hb581OptOut": {
+              "county": false,
+              "school": true
+            }
+          }
+        ]
+      },
+      "towns": [
+        {
+          "name": "Covington",
+          "slug": "covington",
+          "asOfYear": 2025,
+          "rollout": {
+            "tier": 1,
+            "featured": true,
+            "isReady": true,
+            "rank": 1
+          },
+          "metrics": {
+            "medianHomeValue": [
+              {
+                "year": 2020,
+                "value": 178800,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2021,
+                "value": 179400,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2022,
+                "value": 219400,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2023,
+                "value": 242700,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              },
+              {
+                "year": 2024,
+                "value": 301900,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_profile_dp04"
+              }
+            ],
+            "medianTaxesPaid": [
+              {
+                "year": 2020,
+                "value": 1881,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2021,
+                "value": 1793,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2022,
+                "value": 1851,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2023,
+                "value": 2164,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              },
+              {
+                "year": 2024,
+                "value": 2549,
+                "unit": "USD",
+                "sourceRef": "us_census_acs_b25103"
+              }
+            ],
+            "millage": [
+              {
+                "year": 2025,
+                "city": 6.406,
+                "county": 8.567,
+                "school": 15.5,
+                "state": 0,
+                "total": 30.473,
+                "sourceRef": "ga_dor_millage_rates",
+                "hb581OptOut": {
+                  "county": false,
+                  "school": true,
+                  "city": false
+                }
+              }
+            ]
+          },
+          "copy": {
+            "intro": [
+              "Covington is the county seat of Newton County, about 35 miles east of downtown Atlanta along I-20. The city is widely recognized as a film and television production hub — it has stood in for towns across the South in dozens of productions, most famously \"The Vampire Diaries\" — and anchors a county that has shifted from rural to suburban as Atlanta's eastern growth ring has expanded. Covington does not run an independent school district; students attend Newton County Schools, so the school portion of every Covington tax bill matches what residents of Oxford, Porterdale, and unincorporated Newton pay.",
+              "For 2025, Covington's combined millage was approximately 30.47 mills — Newton County Schools (15.50 mills), Newton County operations (8.57 mills), and Covington city operating (6.41 mills). The state portion is zero. Newton's HB 581 posture is the schools-only-out pattern: the Newton County Government explicitly elected to remain in HB 581, the City of Covington also confirmed it would remain in, but the Newton County School District voted unanimously to opt out on February 25, 2025 — projecting more than $30 million in cumulative revenue loss over three years if the cap took effect. Practically, county and city portions of the bill (about half of the total) are HB 581-capped, while the school portion uses the traditional 40% × FMV math."
+            ],
+            "snapshot": [
+              "A median-priced Covington home (roughly $302,000 in 2024) generates an estimated annual property tax bill near $3,620 with the standard $2,000 homestead exemption applied. Real-world median bills are lower (ACS reports $2,549 for 2024), reflecting local senior, disability, and veteran exemptions stacking on top of the statewide $2,000. Use the calculator with your actual assessed value for a precise estimate."
+            ]
+          }
+        }
+      ]
     }
   ]
 }
